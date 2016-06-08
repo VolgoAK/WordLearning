@@ -9,12 +9,11 @@ import static xyz.volgoak.wordlearning.WordsSqlHelper.*;
 /**
  * Created by 777 on 07.06.2016.
  */
-public class WordsDbAdapter {
+class WordsDbAdapter {
     private SQLiteDatabase db;
-    private Context context;
 
     public WordsDbAdapter(Context context){
-        this.context = context;
+        Context context1 = context;
         WordsSqlHelper helper = new WordsSqlHelper(context);
         db = helper.getWritableDatabase();
     }
@@ -30,6 +29,11 @@ public class WordsDbAdapter {
 
     public Cursor fetchAllWords(){
         Cursor cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE, null);
+        // if db is empty add some test words
+        if(!cursor.moveToFirst()){
+            insertTestData();
+            cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE, null);
+        }
         return cursor;
     }
 

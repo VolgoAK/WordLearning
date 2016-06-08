@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by 777 on 07.06.2016.
  */
-public class WordsSqlHelper extends SQLiteOpenHelper {
+class WordsSqlHelper extends SQLiteOpenHelper {
     public final static int DB_VERSION = 1;
 
     public final static String DB_NAME = "WORDS_DATABASE";
