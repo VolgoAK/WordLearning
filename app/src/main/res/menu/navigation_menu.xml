@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/navigation_menu_word_trans"
+        android:orderInCategory="100"
+        android:title="@string/word_translation"/>
+
+    <item android:id="@+id/navigation_menu_trans_word"
+        android:orderInCategory="200"
+        android:title="@string/translation_word"/>
+
+    <item android:id="@+id/navigation_menu_redactor"
+        android:orderInCategory="300"
+        android:title="@string/start_redactor"/>
+
+    <item android:id="@+id/navigation_menu_exit"
+        android:orderInCategory="400"
+        android:title="@string/exit"/>
+</menu>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WordLearning</string>
+    <string name="exit">Выход</string>
+    <string name="start_redactor">Редактор</string>
+    <string name="translation_word">Перевод - слово</string>
+    <string name="word_translation">Слово - перевод</string>
+</resources>
