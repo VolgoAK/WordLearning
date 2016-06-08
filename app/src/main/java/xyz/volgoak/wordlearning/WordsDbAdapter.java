@@ -11,6 +11,8 @@ import static xyz.volgoak.wordlearning.WordsSqlHelper.*;
  */
 class WordsDbAdapter {
     private SQLiteDatabase db;
+    //for test
+    static int wordCount = 0;
 
     public WordsDbAdapter(Context context){
         Context context1 = context;
@@ -22,9 +24,14 @@ class WordsDbAdapter {
         ContentValues values = new ContentValues();
         values.put(COLUMN_WORD, word);
         values.put(COLUMN_TRANSLATION, translation);
-        values.put(COLUMN_TRAINED_WT, 0);
+        if(wordCount > 5) {
+            values.put(COLUMN_TRAINED_WT, 0);
+        }else{
+            values.put(COLUMN_TRAINED_WT, 1);
+        }
         values.put(COLUMN_TRAINED_TW, 0);
         db.insert(WORDS_TABLE, null, values);
+        wordCount++;
     }
 
     public Cursor fetchAllWords(){
@@ -33,6 +40,15 @@ class WordsDbAdapter {
         if(!cursor.moveToFirst()){
             insertTestData();
             cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE, null);
+        }
+        return cursor;
+    }
+
+    public Cursor fetchWardsByTrained(){
+        Cursor cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE + " ORDER BY " + COLUMN_TRAINED_WT + ";", null);
+        if(!cursor.moveToFirst()){
+            insertTestData();
+            cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE + " ORDER BY " + COLUMN_TRAINED_WT + ";", null);
         }
         return cursor;
     }

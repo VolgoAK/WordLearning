@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by 777 on 07.06.2016.
  */
 class WordsSqlHelper extends SQLiteOpenHelper {
-    public final static int DB_VERSION = 1;
+    public final static int DB_VERSION = 4;
 
     public final static String DB_NAME = "WORDS_DATABASE";
     public final static String WORDS_TABLE = "WORDS_TABLE";
@@ -38,5 +38,6 @@ class WordsSqlHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
         db.execSQL("DROP TABLE IF EXISTS " + WORDS_TABLE + ";");
+        onCreate(db);
     }
 }
