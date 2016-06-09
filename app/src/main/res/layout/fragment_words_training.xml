@@ -4,10 +4,48 @@
     android:layout_height="match_parent"
     tools:context="xyz.volgoak.wordlearning.WordsTrainingFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
+    <Button
+        android:layout_width="172dp"
+        android:layout_height="82dp"
+        android:text="New Button"
+        android:id="@+id/button_var1"
+        android:layout_gravity="left|center_vertical" />
+
+    <Button
+        android:layout_width="182dp"
+        android:layout_height="72dp"
+        android:text="New Button"
+        android:id="@+id/button_var2"
+        android:layout_gravity="right|center_vertical" />
+
+    <Button
+        android:layout_width="172dp"
+        android:layout_height="201dp"
+        android:text="New Button"
+        android:id="@+id/button_var3"
+        android:layout_gravity="left|bottom" />
+
+    <Button
+        android:layout_width="168dp"
+        android:layout_height="195dp"
+        android:text="New Button"
+        android:id="@+id/button_var4"
+        android:layout_gravity="right|bottom" />
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Words training fragment" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/textView_word"
+        android:layout_gravity="center_horizontal|top" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button_next"
+        android:layout_gravity="right|top" />
 
 </FrameLayout>

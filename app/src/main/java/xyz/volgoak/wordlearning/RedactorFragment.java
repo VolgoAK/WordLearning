@@ -38,7 +38,7 @@ public class RedactorFragment extends Fragment {
     public void onStart(){
         super.onStart();
         dbAdapter = new WordsDbAdapter(getContext());
-        Cursor cursor = dbAdapter.fetchWardsByTrained();
+        Cursor cursor = dbAdapter.fetchWardsByTrained(WordsSqlHelper.COLUMN_TRAINED_WT);
         ListView listView = (ListView) getView().findViewById(R.id.redactor_list_view);
         cursorAdapter = new SimpleCursorAdapter(getContext(), R.layout.redactor_cursor_adapter, cursor,
                 new String[]{COLUMN_WORD, COLUMN_TRANSLATION, COLUMN_TRAINED_WT},
@@ -57,5 +57,11 @@ public class RedactorFragment extends Fragment {
                 cursorAdapter.changeCursor(dbAdapter.fetchAllWords());
             }
         });
+
+        dbAdapter.changeTrainedStatus(2, WordsDbAdapter.INCREASE, WordsSqlHelper.COLUMN_TRAINED_WT);
+        dbAdapter.changeTrainedStatus(2, WordsDbAdapter.INCREASE, WordsSqlHelper.COLUMN_TRAINED_WT);
+        dbAdapter.changeTrainedStatus(2, WordsDbAdapter.INCREASE, WordsSqlHelper.COLUMN_TRAINED_WT);
+        dbAdapter.changeTrainedStatus(2, WordsDbAdapter.INCREASE, WordsSqlHelper.COLUMN_TRAINED_WT);
     }
+
 }

@@ -13,13 +13,15 @@ public class PlayWord {
         private String word;
         private String translation;
         private List<String> vars;
+        private int id;
 
-        public PlayWord(String word, String translation, String[] vars){
+        public PlayWord(String word, String translation, String[] vars, int id){
             this.word = word;
             this.translation = translation;
             this.vars = new ArrayList<>();
+            this.id = id;
             Collections.addAll(this.vars, vars);
-            this.vars.add(word);
+            this.vars.add(translation);
             Collections.shuffle(this.vars);
         }
 
@@ -29,10 +31,22 @@ public class PlayWord {
         }
 
         public boolean checkAnswer(int answerNum){
-            return vars.get(answerNum).equals(word);
+            return vars.get(answerNum).equals(translation);
         }
 
         public boolean checkAnswer(String answer){
-            return word.equals(answer);
+            return translation.equals(answer);
         }
+
+        public int getId() {
+            return id;
+        }
+
+         public String getWord() {
+            return word;
+         }
+
+    public String getTranslation() {
+        return translation;
+    }
 }
