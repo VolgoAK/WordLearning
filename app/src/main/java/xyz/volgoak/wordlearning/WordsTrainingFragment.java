@@ -16,6 +16,8 @@ import android.widget.TextView;
  */
 public class WordsTrainingFragment extends Fragment {
 
+    private FragmentListener listener;
+
     private Training training;
     private TrainingWord trainingWord;
 
@@ -37,6 +39,7 @@ public class WordsTrainingFragment extends Fragment {
         TrainingFabric fabric = new TrainingFabric(getContext());
         // TODO: 09.06.2016 implement possibility for run diffirent kind of trainings
         training = fabric.getTraining(TrainingFabric.WORD_TRANSLATION);
+        listener = (FragmentListener)getActivity();
         return inflater.inflate(R.layout.fragment_words_training, container, false);
     }
 
@@ -90,6 +93,10 @@ public class WordsTrainingFragment extends Fragment {
 
     public void nextWord(){
         trainingWord = training.getNextWord();
+        if(trainingWord == null){
+            listener.startResultsFragment();
+            return;
+        }
         String[] vars = trainingWord.getVars();
         var1Button.setText(vars[0]);
         var2Button.setText(vars[1]);

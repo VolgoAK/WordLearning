@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * Created by 777 on 08.06.2016.
  */
 public class Training {
+
     private ArrayList<PlayWord> playWords;
     private int currentPosition = 0;
     private int tries = 0;
@@ -23,16 +24,22 @@ public class Training {
     }
 
     public TrainingWord getNextWord(){
+        if(currentPosition >= playWords.size()){
+            return null;
+        }
         currentWord = playWords.get(currentPosition);
-        Log.d("Training " , currentWord.getWord() + " " + currentWord.getTranslation());
         TrainingWord tw = new TrainingWord(currentWord.getWord(), currentWord.getVars());
-        Log.d("Training : ", "next word pos " + currentPosition);
+
         tries++;
         return tw;
     }
 
-    public int getResults(){
-        return 0;
+    public int[] getResults(){
+        int[] results = new int[2];
+        results[0] = score;
+        results[1] = playWords.size() - score;
+
+        return results;
     }
 
     public boolean checkAnswer(String answer){

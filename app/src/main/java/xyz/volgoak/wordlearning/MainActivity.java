@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentListener{
 
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawerLayout;
@@ -65,20 +65,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int itemId = item.getItemId();
         switch (itemId){
             case R.id.navigation_menu_trans_word :
-                startTrainingFragment();
+                startTrainingTWFragment();
                 break;
             case R.id.navigation_menu_word_trans :
-                startTrainingFragment();
+                startTrainingWTFragment();
                 break;
             case R.id.navigation_menu_redactor :
-                startRedactor();
+                startRedactorFragment();
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return false;
     }
 
-    public void startRedactor(){
+    public void startRedactorFragment(){
         RedactorFragment redactorFragment = new RedactorFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_container, redactorFragment);
@@ -87,10 +87,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ft.commit();
     }
 
-    public void startTrainingFragment(){
+    public void startTrainingWTFragment(){
         WordsTrainingFragment trainingFragment = new WordsTrainingFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_container, trainingFragment);
+        ft.addToBackStack(null);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commit();
+    }
+
+    public void startTrainingTWFragment(){
+
+    }
+
+    public void startResultsFragment(){
+        ResultsFragment resultsFragment = ResultsFragment.getResultFragment(10, 20);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_container, resultsFragment);
         ft.addToBackStack(null);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
