@@ -1,7 +1,6 @@
 package xyz.volgoak.wordlearning;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,8 +25,7 @@ public class PlayWord {
         }
 
         public String[] getVars(){
-            String[] varStrings = vars.toArray(new String[vars.size()]);
-            return varStrings;
+            return vars.toArray(new String[vars.size()]);
         }
 
         public boolean checkAnswer(int answerNum){
@@ -46,7 +44,4 @@ public class PlayWord {
             return word;
          }
 
-    public String getTranslation() {
-        return translation;
-    }
 }

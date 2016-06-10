@@ -16,6 +16,8 @@ import android.widget.TextView;
  */
 public class WordsTrainingFragment extends Fragment {
 
+    private String trainingType;
+
     private FragmentListener listener;
 
     private Training training;
@@ -31,6 +33,12 @@ public class WordsTrainingFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static WordsTrainingFragment getWordTrainingFragment(String trainingType){
+        WordsTrainingFragment fragment = new WordsTrainingFragment();
+        fragment.trainingType = trainingType;
+        return fragment;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,7 +46,7 @@ public class WordsTrainingFragment extends Fragment {
         // Inflate the layout for this fragment
         TrainingFabric fabric = new TrainingFabric(getContext());
         // TODO: 09.06.2016 implement possibility for run diffirent kind of trainings
-        training = fabric.getTraining(TrainingFabric.WORD_TRANSLATION);
+        training = fabric.getTraining(trainingType);
         listener = (FragmentListener)getActivity();
         return inflater.inflate(R.layout.fragment_words_training, container, false);
     }
@@ -94,7 +102,8 @@ public class WordsTrainingFragment extends Fragment {
     public void nextWord(){
         trainingWord = training.getNextWord();
         if(trainingWord == null){
-            listener.startResultsFragment();
+            int[] results = training.getResults();
+            listener.startResultsFragment(results[0], results[1]);
             return;
         }
         String[] vars = trainingWord.getVars();

@@ -19,8 +19,8 @@ import static xyz.volgoak.wordlearning.WordsSqlHelper.*;
  */
 public class RedactorFragment extends Fragment {
 
-    WordsDbAdapter dbAdapter;
-    SimpleCursorAdapter cursorAdapter;
+    private WordsDbAdapter dbAdapter;
+    private SimpleCursorAdapter cursorAdapter;
 
     public RedactorFragment() {
         // Required empty public constructor

@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import static xyz.volgoak.wordlearning.WordsSqlHelper.*;
 
@@ -22,7 +21,6 @@ class WordsDbAdapter {
     static int wordCount = 0;
 
     public WordsDbAdapter(Context context){
-        Context context1 = context;
         WordsSqlHelper helper = new WordsSqlHelper(context);
         db = helper.getWritableDatabase();
     }

@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void startTrainingWTFragment(){
-        WordsTrainingFragment trainingFragment = new WordsTrainingFragment();
+        WordsTrainingFragment trainingFragment = WordsTrainingFragment.getWordTrainingFragment(TrainingFabric.WORD_TRANSLATION);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_container, trainingFragment);
         ft.addToBackStack(null);
@@ -97,11 +97,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void startTrainingTWFragment(){
-
+        WordsTrainingFragment trainingFragment = WordsTrainingFragment.getWordTrainingFragment(TrainingFabric.TRANSLATION_WORD);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_container, trainingFragment);
+        ft.addToBackStack(null);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commit();
     }
 
-    public void startResultsFragment(){
-        ResultsFragment resultsFragment = ResultsFragment.getResultFragment(10, 20);
+    public void startResultsFragment(int correctAnswers, int wrongAnswers){
+        ResultsFragment resultsFragment = ResultsFragment.getResultFragment(correctAnswers, wrongAnswers);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_container, resultsFragment);
         ft.addToBackStack(null);

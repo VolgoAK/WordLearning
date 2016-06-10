@@ -59,7 +59,7 @@ public class Training {
             updater.updateWord(currentWord.getId());
             currentPosition++;
             Log.d("Training : ", "current position " + currentPosition);
-            if(tries < playWords.size()) score++;
+            if(tries <= playWords.size()) score++;
         }else{
             playWords.add(currentWord);
             playWords.remove(currentPosition);

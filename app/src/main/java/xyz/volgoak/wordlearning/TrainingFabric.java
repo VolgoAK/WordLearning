@@ -2,9 +2,9 @@ package xyz.volgoak.wordlearning;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static xyz.volgoak.wordlearning.WordsSqlHelper.*;
 
@@ -49,7 +49,6 @@ public class TrainingFabric implements Training.WordUpdater{
         //fill lists with words and variants
         for(int n = 0; n < 20; n++){
             variants.add(cursor.getString(variantsColumn));
-            //Log.d("Training fabric : ", "words size " + words.size());
             if(n<10) {
                 words.add(cursor.getString(wordColumn));
                 translations.add(cursor.getString(variantsColumn));
@@ -62,26 +61,26 @@ public class TrainingFabric implements Training.WordUpdater{
         for(int n = 0; n < words.size(); n++){
             String word = words.get(n);
             String translation = translations.get(n);
-            String[] vars = new String[3];
-
+            //String[] vars = new String[3];
+            List<String>vars = new ArrayList<>();
             //now vars can provide to equals word
             //make each var difrent
             for(int m = 0; m < 3;){
                 int randomPosition = (int)(Math.random() * variants.size());
                 String var = variants.get(randomPosition);
-                if(!translation.equals(var)){
-                    vars[m] = var;
+                if(!translation.equals(var) && !vars.contains(var)){
+                    vars.add(var);
                     m++;
                 }
             }
-            PlayWord playWord = new PlayWord(word, translation, vars, cursor.getInt(idColumn));
+            String[] varArray = vars.toArray(new String[vars.size()]);
+            PlayWord playWord = new PlayWord(word, translation, varArray, cursor.getInt(idColumn));
            // Log.d("Train fab", word + ", " + translation);
             playWords.add(playWord);
             cursor.moveToNext();
         }
 
-        Training training = new Training(playWords, this, trainingType);
-        return training;
+        return new Training(playWords, this, trainingType);
     }
 
 
