@@ -85,7 +85,17 @@ public class TrainingFabric implements Training.WordUpdater{
 
 
 
-    public void updateWord(int id){
-        // TODO: 09.06.2016 implement this method for correct updating
+    public void updateWord(int id, String trainingType){
+        String trainedType = "";
+        switch (trainingType){
+            case WORD_TRANSLATION :
+                trainedType = COLUMN_TRAINED_WT;
+                break;
+            case TRANSLATION_WORD :
+                trainedType = COLUMN_TRAINED_TW;
+                break;
+        }
+
+        dbAdapter.changeTrainedStatus(id, WordsDbAdapter.INCREASE, trainedType);
     }
 }

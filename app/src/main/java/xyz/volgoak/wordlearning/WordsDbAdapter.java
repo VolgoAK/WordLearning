@@ -72,9 +72,12 @@ class WordsDbAdapter {
         }
         ContentValues values = new ContentValues();
         values.put(trainedType, currentStatus);
-        values.put(COLUMN_WORD, "wer");
 
         db.update(WORDS_TABLE, values, COLUMN_ID + "=?", new String[]{Integer.toString(id)});
+    }
+
+    public void deleteWordById(int id){
+        db.delete(WORDS_TABLE, COLUMN_ID + "=?", new String[]{Integer.toString(id)});
     }
 
     public void insertTestData(){

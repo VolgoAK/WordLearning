@@ -1,12 +1,16 @@
 package xyz.volgoak.wordlearning;
 
 
+import android.app.Dialog;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -17,7 +21,7 @@ import static xyz.volgoak.wordlearning.WordsSqlHelper.*;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RedactorFragment extends Fragment {
+public class RedactorFragment extends Fragment{
 
     private WordsDbAdapter dbAdapter;
     private SimpleCursorAdapter cursorAdapter;
@@ -41,8 +45,8 @@ public class RedactorFragment extends Fragment {
         Cursor cursor = dbAdapter.fetchWardsByTrained(WordsSqlHelper.COLUMN_TRAINED_WT);
         ListView listView = (ListView) getView().findViewById(R.id.redactor_list_view);
         cursorAdapter = new SimpleCursorAdapter(getContext(), R.layout.redactor_cursor_adapter, cursor,
-                new String[]{COLUMN_WORD, COLUMN_TRANSLATION, COLUMN_TRAINED_WT},
-                new int[]{R.id.adapter_text_1, R.id.adapter_text_2, R.id.adapter_text_3}, 0);
+                new String[]{COLUMN_WORD, COLUMN_TRANSLATION, COLUMN_TRAINED_WT, COLUMN_TRAINED_TW},
+                new int[]{R.id.adapter_text_1, R.id.adapter_text_2, R.id.adapter_text_3, R.id.adapter_text_4}, 0);
         listView.setAdapter(cursorAdapter);
 
         final EditText wordEdit = (EditText) getView().findViewById(R.id.redactor_edit_word);
@@ -58,10 +62,48 @@ public class RedactorFragment extends Fragment {
             }
         });
 
-        dbAdapter.changeTrainedStatus(2, WordsDbAdapter.INCREASE, WordsSqlHelper.COLUMN_TRAINED_WT);
-        dbAdapter.changeTrainedStatus(2, WordsDbAdapter.INCREASE, WordsSqlHelper.COLUMN_TRAINED_WT);
-        dbAdapter.changeTrainedStatus(2, WordsDbAdapter.INCREASE, WordsSqlHelper.COLUMN_TRAINED_WT);
-        dbAdapter.changeTrainedStatus(2, WordsDbAdapter.INCREASE, WordsSqlHelper.COLUMN_TRAINED_WT);
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                fireCustomDialog((int) id);
+                return true;
+            }
+        });
     }
+
+    public void fireCustomDialog(final int id){
+        final Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.redactor_dialog);
+        Button toTrainingButton = (Button) dialog.findViewById(R.id.red_dialog_zero_button);
+        toTrainingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 10.06.2016 add method for change all trained collumns to zero at once
+                dbAdapter.changeTrainedStatus(id, WordsDbAdapter.TO_ZERO, COLUMN_TRAINED_WT );
+                dbAdapter.changeTrainedStatus(id, WordsDbAdapter.TO_ZERO, COLUMN_TRAINED_TW);
+                cursorAdapter.changeCursor(dbAdapter.fetchWardsByTrained(COLUMN_TRAINED_WT));
+                dialog.dismiss();
+            }
+        });
+
+        Button deleteButton = (Button) dialog.findViewById(R.id.red_dialog_delete_button);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dbAdapter.deleteWordById(id);
+                cursorAdapter.changeCursor(dbAdapter.fetchWardsByTrained(COLUMN_TRAINED_WT));
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+
+
+
+
+
 
 }

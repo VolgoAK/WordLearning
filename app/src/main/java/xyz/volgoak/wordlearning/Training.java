@@ -17,6 +17,8 @@ public class Training {
     private WordUpdater updater;
     private String trainingType;
 
+    private boolean accessable = false;
+
     public Training(ArrayList<PlayWord> playWords, WordUpdater updater, String trainingType){
         this.playWords = playWords;
         this.updater = updater;
@@ -31,6 +33,7 @@ public class Training {
         TrainingWord tw = new TrainingWord(currentWord.getWord(), currentWord.getVars());
 
         tries++;
+        accessable = true;
         return tw;
     }
 
@@ -55,8 +58,9 @@ public class Training {
     }
 
     private void answerOperations(boolean correctness){
+        if(!accessable) return;
         if(correctness){
-            updater.updateWord(currentWord.getId());
+            updater.updateWord(currentWord.getId(), trainingType);
             currentPosition++;
             Log.d("Training : ", "current position " + currentPosition);
             if(tries <= playWords.size()) score++;
@@ -64,6 +68,7 @@ public class Training {
             playWords.add(currentWord);
             playWords.remove(currentPosition);
         }
+        accessable = false;
     }
 
     public String getTrainingType() {
@@ -71,6 +76,6 @@ public class Training {
     }
 
     public interface WordUpdater{
-        void updateWord(int id);
+        void updateWord(int id, String trainedType);
     }
 }
