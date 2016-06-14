@@ -19,6 +19,7 @@ class WordsSqlHelper extends SQLiteOpenHelper {
     public final static String COLUMN_TRAINED_WT = "WT_TRAINED";
     public final static String COLUMN_TRAINED_TW = "TW_TRAINED";
 
+
     public final static String CREATE_WORDS_TABLE = "CREATE TABLE " + WORDS_TABLE +
             " ( " + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_WORD + " TEXT, " +

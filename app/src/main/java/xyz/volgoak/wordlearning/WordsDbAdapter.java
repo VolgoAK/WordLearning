@@ -50,7 +50,7 @@ class WordsDbAdapter {
         return cursor;
     }
 
-    public Cursor fetchWardsByTrained(String trainedType){
+    public Cursor fetchWordsByTrained(String trainedType){
         Cursor cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE + " ORDER BY " + trainedType + ";", null);
         if(!cursor.moveToFirst()){
             insertTestData();
@@ -58,6 +58,10 @@ class WordsDbAdapter {
         }
         return cursor;
     }
+
+    /*public Cursor fetchWordsByTrained(){
+        Cursor
+    }*/
 
     public void changeTrainedStatus(int id, int operation, String trainedType){
         int currentStatus;

@@ -32,11 +32,11 @@ public class TrainingFabric implements Training.WordUpdater{
         int variantsColumn = 0;
 
         if(trainingType.equals(WORD_TRANSLATION)){
-            cursor = dbAdapter.fetchWardsByTrained(COLUMN_TRAINED_WT);
+            cursor = dbAdapter.fetchWordsByTrained(COLUMN_TRAINED_WT);
             wordColumn = cursor.getColumnIndex(COLUMN_WORD);
             variantsColumn = cursor.getColumnIndex(COLUMN_TRANSLATION);
         }else if(trainingType.equals(TRANSLATION_WORD)){
-            cursor = dbAdapter.fetchWardsByTrained(COLUMN_TRAINED_TW);
+            cursor = dbAdapter.fetchWordsByTrained(COLUMN_TRAINED_TW);
             wordColumn = cursor.getColumnIndex(COLUMN_TRANSLATION);
             variantsColumn = cursor.getColumnIndex(COLUMN_WORD);
         }
