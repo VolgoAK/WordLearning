@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by 777 on 07.06.2016.
  */
 class WordsSqlHelper extends SQLiteOpenHelper {
-    public final static int DB_VERSION = 4;
+    public final static int DB_VERSION = 5;
 
     public final static String DB_NAME = "WORDS_DATABASE";
     public final static String WORDS_TABLE = "WORDS_TABLE";
@@ -18,14 +18,15 @@ class WordsSqlHelper extends SQLiteOpenHelper {
     public final static String COLUMN_TRANSLATION = "TRANSLATION";
     public final static String COLUMN_TRAINED_WT = "WT_TRAINED";
     public final static String COLUMN_TRAINED_TW = "TW_TRAINED";
-
+    public final static String COLUMN_STUDIED = "STUDIED";
 
     public final static String CREATE_WORDS_TABLE = "CREATE TABLE " + WORDS_TABLE +
             " ( " + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_WORD + " TEXT, " +
             COLUMN_TRANSLATION + " TEXT, " +
             COLUMN_TRAINED_WT + " INTEGER, " +
-            COLUMN_TRAINED_TW + " INTEGER);";
+            COLUMN_TRAINED_TW + " INTEGER, " +
+            COLUMN_STUDIED + " INTEGER);";
 
     public WordsSqlHelper(Context context){
         super(context, DB_NAME, null, DB_VERSION);

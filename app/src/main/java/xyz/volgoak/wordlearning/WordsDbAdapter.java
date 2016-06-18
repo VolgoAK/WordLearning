@@ -29,13 +29,9 @@ class WordsDbAdapter {
         ContentValues values = new ContentValues();
         values.put(COLUMN_WORD, word);
         values.put(COLUMN_TRANSLATION, translation);
-        //begin of test data
-        if(wordCount > 5) {
-            values.put(COLUMN_TRAINED_WT, 0);
-        }else{
-            values.put(COLUMN_TRAINED_WT, 1);
-        }
+        values.put(COLUMN_TRAINED_WT, 0);
         values.put(COLUMN_TRAINED_TW, 0);
+        values.put(COLUMN_STUDIED, 0);
         db.insert(WORDS_TABLE, null, values);
         wordCount++;
     }
@@ -59,23 +55,34 @@ class WordsDbAdapter {
         return cursor;
     }
 
-    /*public Cursor fetchWordsByTrained(){
-        Cursor
-    }*/
+    public Cursor fetchWordsByTrained(){
+        Cursor cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE + " ORDER BY " + COLUMN_STUDIED + ";", null);
+        if(!cursor.moveToFirst()){
+            insertTestData();
+            cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE + " ORDER BY " + COLUMN_STUDIED + ";", null);
+        }
+        return cursor;
+    }
 
     public void changeTrainedStatus(int id, int operation, String trainedType){
         int currentStatus;
+        int studiedStatus;
         Cursor cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE + " WHERE " + COLUMN_ID + "=" + id, null);
         cursor.moveToFirst();
+
         currentStatus = cursor.getInt(cursor.getColumnIndex(trainedType));
+        studiedStatus = cursor.getInt(cursor.getColumnIndex(COLUMN_STUDIED));
 
         if(operation == INCREASE && currentStatus < 3){
             currentStatus++;
+            studiedStatus++;
         }else if(operation == TO_ZERO){
             currentStatus = 0;
+            studiedStatus -= currentStatus;
         }
         ContentValues values = new ContentValues();
         values.put(trainedType, currentStatus);
+        values.put(COLUMN_STUDIED, studiedStatus);
 
         db.update(WORDS_TABLE, values, COLUMN_ID + "=?", new String[]{Integer.toString(id)});
     }

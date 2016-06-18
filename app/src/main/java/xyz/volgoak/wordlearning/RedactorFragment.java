@@ -41,7 +41,7 @@ public class RedactorFragment extends Fragment{
     public void onStart(){
         super.onStart();
         dbAdapter = new WordsDbAdapter(getContext());
-        Cursor cursor = dbAdapter.fetchWordsByTrained(WordsSqlHelper.COLUMN_TRAINED_WT);
+        Cursor cursor = dbAdapter.fetchWordsByTrained();
         ListView listView = (ListView) getView().findViewById(R.id.redactor_list_view);
         cursorAdapter = new SimpleCursorAdapter(getContext(), R.layout.redactor_cursor_adapter, cursor,
                 new String[]{COLUMN_WORD, COLUMN_TRANSLATION, COLUMN_TRAINED_WT, COLUMN_TRAINED_TW},
@@ -81,7 +81,7 @@ public class RedactorFragment extends Fragment{
                 // TODO: 10.06.2016 add method for change all trained collumns to zero at once
                 dbAdapter.changeTrainedStatus(id, WordsDbAdapter.TO_ZERO, COLUMN_TRAINED_WT );
                 dbAdapter.changeTrainedStatus(id, WordsDbAdapter.TO_ZERO, COLUMN_TRAINED_TW);
-                cursorAdapter.changeCursor(dbAdapter.fetchWordsByTrained(COLUMN_TRAINED_WT));
+                cursorAdapter.changeCursor(dbAdapter.fetchWordsByTrained());
                 dialog.dismiss();
             }
         });
@@ -91,7 +91,7 @@ public class RedactorFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 dbAdapter.deleteWordById(id);
-                cursorAdapter.changeCursor(dbAdapter.fetchWordsByTrained(COLUMN_TRAINED_WT));
+                cursorAdapter.changeCursor(dbAdapter.fetchWordsByTrained());
                 dialog.dismiss();
             }
         });
