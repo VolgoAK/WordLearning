@@ -14,6 +14,9 @@
     <string name="no">No</string>
     <string name="delete">Delete</string>
 
+    <string name="correct_answers">Correct answers</string>
+    <string name="wrong_answers">Wrong answers</string>
+
     <string name="drawer_open">Drawer open</string>
     <string name="drawer_close">Drawer close</string>
 

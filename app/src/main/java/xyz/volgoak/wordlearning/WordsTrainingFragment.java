@@ -54,6 +54,7 @@ public class WordsTrainingFragment extends Fragment {
     @Override
     public void onStart(){
         super.onStart();
+        //noinspection NullableProblems
         Button nextButton = (Button) getView().findViewById(R.id.button_next);
          var1Button = (Button) getView().findViewById(R.id.button_var1);
          var2Button = (Button) getView().findViewById(R.id.button_var2);
@@ -95,6 +96,8 @@ public class WordsTrainingFragment extends Fragment {
                 nextWord();
             }
         });
+        //load first word at start time
+        nextWord();
     }
 
     // TODO: 09.06.2016 when training has no word run the result fragment
