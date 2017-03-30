@@ -23,6 +23,7 @@ class WordsDbAdapter {
     public WordsDbAdapter(Context context){
         WordsSqlHelper helper = new WordsSqlHelper(context);
         db = helper.getWritableDatabase();
+        //insertTestData();
     }
 
     public void insertWord(String word, String translation){
@@ -47,21 +48,47 @@ class WordsDbAdapter {
     }
 
     public Cursor fetchWordsByTrained(String trainedType){
-        Cursor cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE + " ORDER BY " + trainedType + ";", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE + " ORDER BY " + trainedType +
+                " LIMIT 10;", null);
         if(!cursor.moveToFirst()){
             insertTestData();
-            cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE + " ORDER BY " + trainedType + ";", null);
+            cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE + " ORDER BY " + trainedType  +
+                    " LIMIT 10;", null);
         }
         return cursor;
     }
 
     public Cursor fetchWordsByTrained(){
-        Cursor cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE + " ORDER BY " + COLUMN_STUDIED + ";", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE + " ORDER BY " + COLUMN_STUDIED +
+                " LIMIT 10;", null);
         if(!cursor.moveToFirst()){
             insertTestData();
-            cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE + " ORDER BY " + COLUMN_STUDIED + ";", null);
+            cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE + " ORDER BY " + COLUMN_STUDIED +
+                    " LIMIT 10;", null);
         }
         return cursor;
+    }
+
+    public Cursor rawQuery(String query){
+        return db.rawQuery(query, null);
+    }
+
+    public String[] getVariants(int id, String column){
+        Cursor cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE
+                + " WHERE " + COLUMN_ID + " != " + id
+                + " ORDER BY RANDOM() LIMIT 3", null);
+        cursor.moveToFirst();
+
+        String[] variants = new String[cursor.getCount()];
+        for(int a = 0; a < cursor.getCount(); a++){
+            variants[a] = cursor.getString(cursor.getColumnIndex(column));
+            cursor.moveToNext();
+        }
+        return variants;
+    }
+
+    public void changeTrainedStatus(int operation, String trainedType, int...id){
+
     }
 
     public void changeTrainedStatus(int id, int operation, String trainedType){
@@ -72,6 +99,8 @@ class WordsDbAdapter {
 
         currentStatus = cursor.getInt(cursor.getColumnIndex(trainedType));
         studiedStatus = cursor.getInt(cursor.getColumnIndex(COLUMN_STUDIED));
+
+        cursor.close();
 
         if(operation == INCREASE && currentStatus < 3){
             currentStatus++;
