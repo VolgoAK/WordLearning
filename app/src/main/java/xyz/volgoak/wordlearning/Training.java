@@ -7,6 +7,8 @@ import java.util.ArrayList;
 /**
  * Created by 777 on 08.06.2016.
  */
+
+// TODO: 28.01.2017 move this class into training package
 public class Training {
 
     private ArrayList<PlayWord> playWords;
@@ -15,11 +17,11 @@ public class Training {
     private int score = 0;
     private PlayWord currentWord;
     private WordUpdater updater;
-    private String trainingType;
+    private int trainingType;
 
-    private boolean accessable = false;
+    private boolean accessible = false;
 
-    public Training(ArrayList<PlayWord> playWords, WordUpdater updater, String trainingType){
+    public Training(ArrayList<PlayWord> playWords, WordUpdater updater, int trainingType){
         this.playWords = playWords;
         this.updater = updater;
         this.trainingType = trainingType;
@@ -33,7 +35,7 @@ public class Training {
         TrainingWord tw = new TrainingWord(currentWord.getWord(), currentWord.getVars());
 
         tries++;
-        accessable = true;
+        accessible = true;
         return tw;
     }
 
@@ -58,7 +60,7 @@ public class Training {
     }
 
     private void answerOperations(boolean correctness){
-        if(!accessable) return;
+        if(!accessible) return;
         if(correctness){
             updater.updateWord(currentWord.getId(), trainingType);
             currentPosition++;
@@ -68,14 +70,14 @@ public class Training {
             playWords.add(currentWord);
             playWords.remove(currentPosition);
         }
-        accessable = false;
+        accessible = false;
     }
 
-    public String getTrainingType() {
+    public int getTrainingType() {
         return trainingType;
     }
 
     public interface WordUpdater{
-        void updateWord(int id, String trainedType);
+        void updateWord(int id, int trainedType);
     }
 }
