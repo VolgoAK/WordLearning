@@ -1,35 +1,45 @@
 package xyz.volgoak.wordlearning;
 
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 /**
- * Created by 777 on 08.06.2016.
+ * Keep information about word and provides variants
+ * of translating.
  */
 public class PlayWord {
 
+        public static final String TAG = "PlayWord";
+
         private String word;
         private String translation;
-        private List<String> vars;
+        private String[] vars;
         private int id;
 
         public PlayWord(String word, String translation, String[] vars, int id){
             this.word = word;
             this.translation = translation;
-            this.vars = new ArrayList<>();
             this.id = id;
-            Collections.addAll(this.vars, vars);
-            this.vars.add(translation);
-            Collections.shuffle(this.vars);
+            //create array of vars which contains all variants and right translation
+            this.vars = Arrays.copyOf(vars, vars.length + 1);
+            this.vars[this.vars.length - 1] = translation;
         }
 
         public String[] getVars(){
-            return vars.toArray(new String[vars.size()]);
+            //create list from array and snuffle it before returning
+            ArrayList<String> variants = new ArrayList<>();
+            Collections.addAll(variants, vars);
+            Collections.shuffle(variants);
+            vars = variants.toArray(new String[variants.size()]);
+            return vars;
         }
 
         public boolean checkAnswer(int answerNum){
-            return vars.get(answerNum).equals(translation);
+            Log.d(TAG, "checkAnswer: answerNum" + answerNum + " word at position " + vars[answerNum]);
+            return vars[answerNum].equals(translation);
         }
 
         public boolean checkAnswer(String answer){
