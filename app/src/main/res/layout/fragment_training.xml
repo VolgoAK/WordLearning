@@ -1,0 +1,128 @@
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="fragment"
+            type="xyz.volgoak.wordlearning.TrainingFragment"/>
+
+
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="xyz.volgoak.wordlearning.TrainingFragment"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@{fragment.mWord}"
+                android:id="@+id/textView_word"
+                android:layout_gravity="center_horizontal|center_vertical" />
+
+
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="@{fragment.mVarArray[0]}"
+                android:id="@+id/button_var1"
+                android:tag="0"
+                android:onClick="@{fragment::checkAnswer}"
+                android:layout_gravity="left|center_vertical"
+                android:background="@drawable/blue_button"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="@{fragment.mVarArray[1]}"
+                android:id="@+id/button_var2"
+                android:tag="1"
+                android:onClick="@{fragment::checkAnswer}"
+                android:layout_gravity="right|center_vertical"
+                android:background="@drawable/blue_button"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="5dp" />
+
+        </LinearLayout>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="0dp"
+           android:orientation="horizontal"
+           android:layout_weight="2">
+
+           <Button
+               android:layout_width="0dp"
+               android:layout_weight="1"
+               android:layout_height="match_parent"
+               android:text="@{fragment.mVarArray[2]}"
+               android:id="@+id/button_var3"
+               android:tag="2"
+               android:onClick="@{fragment::checkAnswer}"
+               android:background="@drawable/blue_button"
+               android:layout_marginLeft="25dp"
+               android:layout_marginTop="5dp"
+               android:layout_marginRight="5dp"
+               android:layout_marginBottom="10dp" />
+
+           <Button
+               android:layout_width="0dp"
+               android:layout_weight="1"
+               android:layout_height="match_parent"
+               android:text="@{fragment.mVarArray[3]}"
+               android:id="@+id/button_var4"
+               android:tag="3"
+               android:onClick="@{fragment::checkAnswer}"
+               android:background="@drawable/blue_button"
+               android:layout_marginLeft="5dp"
+               android:layout_marginTop="5dp"
+               android:layout_marginRight="25dp"
+               android:layout_marginBottom="10dp"
+               android:textSize="20sp" />
+       </LinearLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2">
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="New Button"
+                android:id="@+id/button_next"
+                android:layout_gravity="right|center_vertical"
+                android:background="@drawable/blue_button"/>
+
+        </FrameLayout>
+    </LinearLayout>
+</layout>
