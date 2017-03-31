@@ -2,8 +2,11 @@ package xyz.volgoak.wordlearning;
 
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +19,13 @@ import android.widget.TextView;
  */
 public class WordsTrainingFragment extends Fragment {
 
-    private String trainingType;
+    private int trainingType;
 
     private FragmentListener listener;
 
     private Training training;
     private TrainingWord trainingWord;
+
 
     Button var1Button;
     Button var2Button;
@@ -33,7 +37,7 @@ public class WordsTrainingFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static WordsTrainingFragment getWordTrainingFragment(String trainingType){
+    public static WordsTrainingFragment getWordTrainingFragment(int  trainingType){
         WordsTrainingFragment fragment = new WordsTrainingFragment();
         fragment.trainingType = trainingType;
         return fragment;
@@ -45,7 +49,6 @@ public class WordsTrainingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         TrainingFabric fabric = new TrainingFabric(getContext());
-        // TODO: 09.06.2016 implement possibility for run diffirent kind of trainings
         training = fabric.getTraining(trainingType);
         listener = (FragmentListener)getActivity();
         return inflater.inflate(R.layout.fragment_words_training, container, false);
@@ -65,28 +68,28 @@ public class WordsTrainingFragment extends Fragment {
         var1Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer(0);
+                checkAnswer(0, var1Button);
             }
         });
 
         var2Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer(1);
+                checkAnswer(1, var2Button);
             }
         });
 
         var3Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer(2);
+                checkAnswer(2, var3Button);
             }
         });
 
         var4Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer(3);
+                checkAnswer(3, var4Button);
             }
         });
 
@@ -115,16 +118,34 @@ public class WordsTrainingFragment extends Fragment {
         var3Button.setText(vars[2]);
         var4Button.setText(vars[3]);
         wordText.setText(trainingWord.getWord());
+
+        Drawable backGround;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            backGround = getResources().getDrawable(R.drawable.blue_button, getContext().getTheme());
+        }else backGround = ResourcesCompat.getDrawable(getResources(), R.drawable.blue_button, null);
+        var1Button.setBackground(backGround);
+        var2Button.setBackground(backGround);
+        var3Button.setBackground(backGround);
+        var4Button.setBackground(backGround);
+
+        Button nextbutton = (Button)getView().findViewById(R.id.button_next);
+        nextbutton.setVisibility(View.INVISIBLE);
     }
 
-    public void checkAnswer(int number){
-        // TODO: 09.06.2016 button must turn green if answer is correct and red when it's wrong
+    //checks is answer correct and sets background for button
+    private void checkAnswer(int number, Button button){
         boolean correct = training.checkAnswer(number);
-        if(correct){
-            wordText.setBackgroundColor(Color.argb(66, 66, 66, 55));
-        }else{
-            wordText.setBackgroundColor(Color.argb(77, 22, 22, 22));
-        }
+        int backgroundId = correct ? R.drawable.green_button : R.drawable.orange_button;
+        Drawable background;
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+           background =  getResources().getDrawable(backgroundId, getContext().getTheme());
+        }else background = ResourcesCompat.getDrawable(getResources(), backgroundId, null);
+
+        button.setBackground(background);
+
+        Button nextButton = (Button)getView().findViewById(R.id.button_next);
+        nextButton.setVisibility(View.VISIBLE);
     }
 
 }
