@@ -6,4 +6,10 @@
     <color name="blue">#4969f9</color>
     <color name="mid_blue">#448aff</color>
     <color name="light_blue">#4fc3f7</color>
+    <color name="dark_green">#05992d</color>
+    <color name="green">#08c23a</color>
+    <color name="light_green">#10f236</color>
+    <color name="dark_orange">#d96a09</color>
+    <color name="orange">#ff7e0e</color>
+    <color name="light_orange">#ffb109</color>
 </resources>

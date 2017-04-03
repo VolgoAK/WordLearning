@@ -8,4 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="VarButton">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:layout_width">@dimen/var_buttons_width</item>
+        <item name="android:layout_height">@dimen/var_button_height</item>
+        <item name="android:background">@drawable/blue_button</item>
+        <item name="android:layout_margin">@dimen/views_horizontal_margin</item>
+    </style>
+
 </resources>

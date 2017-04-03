@@ -14,28 +14,28 @@
         tools:context="xyz.volgoak.wordlearning.TrainingFragment"
         >
 
-            <TextView
-                android:id="@+id/tv_word_tf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@{fragment.mWord}"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintRight_toRightOf="parent"/>
+        <TextView
+            android:id="@+id/tv_word_tf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@{fragment.mWord}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
 
-            <Button
-                android:id="@+id/bt_var1_tf"
-                style="@style/VarButton"
-                android:text="@{fragment.mVarArray[0]}"
-                android:tag="0"
-                android:onClick="@{fragment::checkAnswer}"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/bt_var2_tf"
-                app:layout_constraintTop_toBottomOf="@+id/guideline_ft"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                android:layout_marginTop="0dp" />
+        <Button
+            android:id="@+id/bt_var1_tf"
+            style="@style/VarButton"
+            android:text="@{fragment.mVarArray[0]}"
+            android:tag="0"
+            android:onClick="@{fragment::checkAnswer}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/bt_var2_tf"
+            app:layout_constraintTop_toBottomOf="@+id/guideline_ft"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            android:layout_marginTop="0dp" />
 
         <Button
             android:id="@+id/bt_var2_tf"

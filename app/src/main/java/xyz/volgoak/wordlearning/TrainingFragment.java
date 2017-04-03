@@ -66,7 +66,7 @@ public class TrainingFragment extends Fragment {
     @Override
     public void onStart(){
         super.onStart();
-        mBinding.buttonNext.setOnClickListener(new View.OnClickListener() {
+        mBinding.btNextTf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 nextWord();
@@ -94,12 +94,12 @@ public class TrainingFragment extends Fragment {
             backGround = getResources().getDrawable(R.drawable.blue_button, getContext().getTheme());
         }else backGround = ResourcesCompat.getDrawable(getResources(), R.drawable.blue_button, null);
 
-        mBinding.buttonVar1.setBackground(backGround);
-        mBinding.buttonVar2.setBackground(backGround);
-        mBinding.buttonVar3.setBackground(backGround);
-        mBinding.buttonVar4.setBackground(backGround);
+        mBinding.btVar1Tf.setBackground(backGround);
+        mBinding.btVar2Tf.setBackground(backGround);
+        mBinding.btVar3Tf.setBackground(backGround);
+        mBinding.btVar4Tf.setBackground(backGround);
 
-        mBinding.buttonNext.setVisibility(View.INVISIBLE);
+        mBinding.btNextTf.setVisibility(View.INVISIBLE);
     }
 
     //checks is answer correct and sets background for button
@@ -121,7 +121,7 @@ public class TrainingFragment extends Fragment {
         button.setBackground(background);
 
         //show nextButton
-        mBinding.buttonNext.setVisibility(View.VISIBLE);
+        mBinding.btNextTf.setVisibility(View.VISIBLE);
     }
 
 }

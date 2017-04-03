@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close);
-        drawerLayout.setDrawerListener(drawerToggle);
+        drawerLayout.addDrawerListener(drawerToggle);
 
         drawerToggle.syncState();
 
@@ -80,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return false;
     }
 
+    // TODO: 31.03.2017 replace all of this with one method startFragment
+
     public void startRedactorFragment(){
         RedactorFragment redactorFragment = new RedactorFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -90,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void startTrainingWTFragment(){
-        WordsTrainingFragment trainingFragment = WordsTrainingFragment.getWordTrainingFragment(TrainingFabric.WORD_TRANSLATION);
+        TrainingFragment trainingFragment = TrainingFragment.getWordTrainingFragment(TrainingFabric.WORD_TRANSLATION);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_container, trainingFragment);
         ft.addToBackStack(null);
@@ -99,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void startTrainingTWFragment(){
-        WordsTrainingFragment trainingFragment = WordsTrainingFragment.getWordTrainingFragment(TrainingFabric.TRANSLATION_WORD);
+        TrainingFragment trainingFragment = TrainingFragment.getWordTrainingFragment(TrainingFabric.TRANSLATION_WORD);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_container, trainingFragment);
         ft.addToBackStack(null);
