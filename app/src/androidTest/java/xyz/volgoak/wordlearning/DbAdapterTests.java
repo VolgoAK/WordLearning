@@ -8,6 +8,8 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import xyz.volgoak.wordlearning.data.WordsDbAdapter;
+
 import static org.junit.Assert.*;
 
 /**

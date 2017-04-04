@@ -1,4 +1,4 @@
-package xyz.volgoak.wordlearning;
+package xyz.volgoak.wordlearning.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by 777 on 07.06.2016.
  */
-class WordsSqlHelper extends SQLiteOpenHelper {
+public class WordsSqlHelper extends SQLiteOpenHelper {
     public final static int DB_VERSION = 5;
 
     public final static String DB_NAME = "WORDS_DATABASE";

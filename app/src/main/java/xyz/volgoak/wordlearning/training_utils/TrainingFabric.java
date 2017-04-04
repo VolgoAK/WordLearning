@@ -1,14 +1,16 @@
-package xyz.volgoak.wordlearning;
+package xyz.volgoak.wordlearning.training_utils;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
-import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import static xyz.volgoak.wordlearning.WordsSqlHelper.*;
+import xyz.volgoak.wordlearning.data.WordsDbAdapter;
+import xyz.volgoak.wordlearning.training_utils.PlayWord;
+import xyz.volgoak.wordlearning.training_utils.Training;
+
+import static xyz.volgoak.wordlearning.data.WordsSqlHelper.*;
 
 /**
  * Created by 777 on 08.06.2016.

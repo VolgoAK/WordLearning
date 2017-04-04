@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import xyz.volgoak.wordlearning.databinding.FragmentTrainingBinding;
+import xyz.volgoak.wordlearning.training_utils.Training;
+import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
 
 /**
@@ -35,6 +37,7 @@ public class TrainingFragment extends Fragment {
 
     public final ObservableField<String[]> mVarArray = new ObservableField<>();
     public final ObservableField<String> mWord = new ObservableField<>();
+    public final ObservableField<Boolean> mAnswered = new ObservableField<>();
 
 
 
@@ -86,6 +89,7 @@ public class TrainingFragment extends Fragment {
 
         mVarArray.set(trainingWord.getVars());
         mWord.set(trainingWord.getWord());
+        mAnswered.set(false);
         mBinding.notifyPropertyChanged(BR.fragment);
 
         //change buttons background to default
@@ -98,8 +102,6 @@ public class TrainingFragment extends Fragment {
         mBinding.btVar2Tf.setBackground(backGround);
         mBinding.btVar3Tf.setBackground(backGround);
         mBinding.btVar4Tf.setBackground(backGround);
-
-        mBinding.btNextTf.setVisibility(View.INVISIBLE);
     }
 
     //checks is answer correct and sets background for button
@@ -120,8 +122,8 @@ public class TrainingFragment extends Fragment {
 
         button.setBackground(background);
 
-        //show nextButton
-        mBinding.btNextTf.setVisibility(View.VISIBLE);
+        mAnswered.set(true);
+        mBinding.notifyPropertyChanged(BR.fragment);
     }
 
 }

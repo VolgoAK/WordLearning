@@ -14,7 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import static xyz.volgoak.wordlearning.WordsSqlHelper.*;
+
+import xyz.volgoak.wordlearning.data.WordsDbAdapter;
+
+import static xyz.volgoak.wordlearning.data.WordsSqlHelper.*;
 
 
 /**

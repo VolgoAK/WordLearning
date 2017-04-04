@@ -1,8 +1,11 @@
-package xyz.volgoak.wordlearning;
+package xyz.volgoak.wordlearning.training_utils;
 
 import android.util.Log;
 
 import java.util.ArrayList;
+
+import xyz.volgoak.wordlearning.TrainingWord;
+import xyz.volgoak.wordlearning.training_utils.PlayWord;
 
 /**
  * Created by 777 on 08.06.2016.

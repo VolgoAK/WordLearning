@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentListener{
 
     private ActionBarDrawerToggle drawerToggle;

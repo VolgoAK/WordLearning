@@ -12,6 +12,9 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import xyz.volgoak.wordlearning.data.WordsDbAdapter;
+import xyz.volgoak.wordlearning.data.WordsSqlHelper;
+
 import static org.junit.Assert.*;
 
 @RunWith (AndroidJUnit4.class )

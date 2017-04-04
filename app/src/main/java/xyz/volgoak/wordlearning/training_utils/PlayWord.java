@@ -1,4 +1,4 @@
-package xyz.volgoak.wordlearning;
+package xyz.volgoak.wordlearning.training_utils;
 
 import android.util.Log;
 

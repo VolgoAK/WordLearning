@@ -1,16 +1,16 @@
-package xyz.volgoak.wordlearning;
+package xyz.volgoak.wordlearning.data;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import static xyz.volgoak.wordlearning.WordsSqlHelper.*;
+import static xyz.volgoak.wordlearning.data.WordsSqlHelper.*;
 
 /**
  * Created by 777 on 07.06.2016.
  */
-class WordsDbAdapter {
+public class WordsDbAdapter {
 
     public final static int INCREASE = 1;
     public final static int DECREASE = 2;
