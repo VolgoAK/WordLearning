@@ -81,7 +81,7 @@
 
             <Button
                 style="@style/VarButton"
-                android:text="New Button"
+                android:text="@string/next_word"
                 android:id="@+id/bt_next_tf"
                 android:visibility="@{fragment.mAnswered ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintBottom_toBottomOf="parent"
