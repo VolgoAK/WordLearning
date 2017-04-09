@@ -1,13 +1,48 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="xyz.volgoak.wordlearning.StartFragment">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+        <variable
+            name="listener"
+            type="xyz.volgoak.wordlearning.FragmentListener"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Start fragment" />
+        tools:context="xyz.volgoak.wordlearning.StartFragment">
 
-</FrameLayout>
+        <Button
+            android:id="@+id/bt_word_trans_startfrag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/word_translation"
+            android:onClick="@{() -> listener.startTrainingWTFragment()}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <Button
+            android:id="@+id/bt_trans_word_startfrag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/translation_word"
+            android:onClick="@{() -> listener.startTrainingTWFragment()}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bt_word_trans_startfrag"/>
+
+        <Button
+            android:id="@+id/bt_redactor_startfrag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/start_redactor"
+            android:onClick="@{() -> listener.startRedactorFragment()}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bt_trans_word_startfrag"/>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
