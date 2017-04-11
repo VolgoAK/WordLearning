@@ -6,11 +6,16 @@ import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 
+import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.training_utils.PlayWord;
 import xyz.volgoak.wordlearning.training_utils.Training;
 
-import static xyz.volgoak.wordlearning.data.WordsSqlHelper.*;
+import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_TRAINED_TW;
+import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_TRAINED_WT;
+import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_TRANSLATION;
+import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_WORD;
+
 
 /**
  * Created by 777 on 08.06.2016.
@@ -45,7 +50,7 @@ public class TrainingFabric implements Training.WordUpdater{
             variantsColumnString = COLUMN_WORD;
         }
         cursor.moveToFirst();
-        int idColumn = cursor.getColumnIndex(COLUMN_ID);
+        int idColumn = cursor.getColumnIndex(DatabaseContract.Words._ID);
 
         ArrayList<PlayWord> playWords = new ArrayList<>();
         int cursorCount = cursor.getCount();

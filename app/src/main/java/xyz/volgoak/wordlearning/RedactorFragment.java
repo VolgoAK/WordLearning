@@ -17,7 +17,10 @@ import android.widget.SimpleCursorAdapter;
 
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 
-import static xyz.volgoak.wordlearning.data.WordsSqlHelper.*;
+import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_TRAINED_TW;
+import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_TRAINED_WT;
+import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_TRANSLATION;
+import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_WORD;
 
 
 /**

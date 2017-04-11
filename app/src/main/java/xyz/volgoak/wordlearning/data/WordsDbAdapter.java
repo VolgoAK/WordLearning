@@ -4,8 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
-import static xyz.volgoak.wordlearning.data.WordsSqlHelper.*;
 
 /**
  * Created by 777 on 07.06.2016.
@@ -28,42 +28,41 @@ public class WordsDbAdapter {
 
     public void insertWord(String word, String translation){
         ContentValues values = new ContentValues();
-        values.put(COLUMN_WORD, word);
-        values.put(COLUMN_TRANSLATION, translation);
-        values.put(COLUMN_TRAINED_WT, 0);
-        values.put(COLUMN_TRAINED_TW, 0);
-        values.put(COLUMN_STUDIED, 0);
-        db.insert(WORDS_TABLE, null, values);
+        values.put(DatabaseContract.Words.COLUMN_WORD, word);
+        values.put(DatabaseContract.Words.COLUMN_TRANSLATION, translation);
+
+        db.insert(DatabaseContract.Words.TABLE_NAME, null, values);
         wordCount++;
     }
 
     public Cursor fetchAllWords(){
-        Cursor cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME, null);
         // if db is empty add some test words
         if(!cursor.moveToFirst()){
             insertTestData();
-            cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE, null);
+            cursor = db.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME
+                    , null);
         }
         return cursor;
     }
 
     public Cursor fetchWordsByTrained(String trainedType){
-        Cursor cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE + " ORDER BY " + trainedType +
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME + " ORDER BY " + trainedType +
                 " LIMIT 10;", null);
         if(!cursor.moveToFirst()){
             insertTestData();
-            cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE + " ORDER BY " + trainedType  +
+            cursor = db.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME + " ORDER BY " + trainedType  +
                     " LIMIT 10;", null);
         }
         return cursor;
     }
 
     public Cursor fetchWordsByTrained(){
-        Cursor cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE + " ORDER BY " + COLUMN_STUDIED +
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME + " ORDER BY " + DatabaseContract.Words.COLUMN_STUDIED +
                 " LIMIT 10;", null);
         if(!cursor.moveToFirst()){
             insertTestData();
-            cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE + " ORDER BY " + COLUMN_STUDIED +
+            cursor = db.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME + " ORDER BY " + DatabaseContract.Words.COLUMN_STUDIED +
                     " LIMIT 10;", null);
         }
         return cursor;
@@ -74,8 +73,8 @@ public class WordsDbAdapter {
     }
 
     public String[] getVariants(int id, String column){
-        Cursor cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE
-                + " WHERE " + COLUMN_ID + " != " + id
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME
+                + " WHERE " + DatabaseContract.Words._ID + " != " + id
                 + " ORDER BY RANDOM() LIMIT 3", null);
         cursor.moveToFirst();
 
@@ -94,11 +93,12 @@ public class WordsDbAdapter {
     public void changeTrainedStatus(int id, int operation, String trainedType){
         int currentStatus;
         int studiedStatus;
-        Cursor cursor = db.rawQuery("SELECT * FROM " + WORDS_TABLE + " WHERE " + COLUMN_ID + "=" + id, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME
+                + " WHERE " + DatabaseContract.Words._ID + "=" + id, null);
         cursor.moveToFirst();
 
         currentStatus = cursor.getInt(cursor.getColumnIndex(trainedType));
-        studiedStatus = cursor.getInt(cursor.getColumnIndex(COLUMN_STUDIED));
+        studiedStatus = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Words.COLUMN_STUDIED));
 
         cursor.close();
 
@@ -111,13 +111,13 @@ public class WordsDbAdapter {
         }
         ContentValues values = new ContentValues();
         values.put(trainedType, currentStatus);
-        values.put(COLUMN_STUDIED, studiedStatus);
+        values.put(DatabaseContract.Words.COLUMN_STUDIED, studiedStatus);
 
-        db.update(WORDS_TABLE, values, COLUMN_ID + "=?", new String[]{Integer.toString(id)});
+        db.update(DatabaseContract.Words.TABLE_NAME, values, DatabaseContract.Words._ID + "=?", new String[]{Integer.toString(id)});
     }
 
     public void deleteWordById(int id){
-        db.delete(WORDS_TABLE, COLUMN_ID + "=?", new String[]{Integer.toString(id)});
+        db.delete(DatabaseContract.Words.TABLE_NAME,  DatabaseContract.Words._ID + "=?", new String[]{Integer.toString(id)});
     }
 
     public void insertTestData(){
@@ -133,6 +133,25 @@ public class WordsDbAdapter {
         insertWord("Beach", "Пляж");
         insertWord("Temple", "Храм");
         insertWord("Country", "Страна");
+    }
+
+    static class WordsSqlHelper extends SQLiteOpenHelper {
+
+
+        public WordsSqlHelper(Context context){
+            super(context, DatabaseContract.DB_NAME, null, DatabaseContract.DB_VERSION);
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db){
+            db.execSQL(DatabaseContract.Words.CREATE_TABLE);
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
+            db.execSQL("DROP TABLE IF EXISTS " + DatabaseContract.Words.TABLE_NAME + ";");
+            onCreate(db);
+        }
     }
 
 }
