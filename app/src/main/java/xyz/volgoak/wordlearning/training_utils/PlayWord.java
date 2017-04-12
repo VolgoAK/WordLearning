@@ -2,6 +2,7 @@ package xyz.volgoak.wordlearning.training_utils;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,7 +11,7 @@ import java.util.Collections;
  * Keep information about word and provides variants
  * of translating.
  */
-public class PlayWord {
+public class PlayWord implements Serializable{
 
         public static final String TAG = "PlayWord";
 
