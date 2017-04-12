@@ -24,16 +24,14 @@ public class PlayWord {
             this.translation = translation;
             this.id = id;
             //create array of vars which contains all variants and right translation
-            this.vars = Arrays.copyOf(vars, vars.length + 1);
-            this.vars[this.vars.length - 1] = translation;
+            ArrayList<String> variants = new ArrayList<>();
+            Collections.addAll(variants, vars);
+            variants.add(translation);
+            Collections.shuffle(variants);
+            this.vars = variants.toArray(new String[variants.size()]);
         }
 
         public String[] getVars(){
-            //create list from array and snuffle it before returning
-            ArrayList<String> variants = new ArrayList<>();
-            Collections.addAll(variants, vars);
-            Collections.shuffle(variants);
-            vars = variants.toArray(new String[variants.size()]);
             return vars;
         }
 

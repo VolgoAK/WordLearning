@@ -2,6 +2,7 @@ package xyz.volgoak.wordlearning.training_utils;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import xyz.volgoak.wordlearning.TrainingWord;
@@ -11,8 +12,7 @@ import xyz.volgoak.wordlearning.training_utils.PlayWord;
  * Created by 777 on 08.06.2016.
  */
 
-// TODO: 28.01.2017 move this class into training package
-public class Training {
+public class Training implements Serializable{
 
     private ArrayList<PlayWord> playWords;
     private int currentPosition = 0;
@@ -30,15 +30,25 @@ public class Training {
         this.trainingType = trainingType;
     }
 
+    public TrainingWord getFirstWord(){
+        currentPosition = 0;
+        currentWord = playWords.get(currentPosition);
+        accessible = true;
+        return new TrainingWord(currentWord.getWord(), currentWord.getVars());
+    }
+
     public TrainingWord getNextWord(){
         if(currentPosition >= playWords.size()){
             return null;
         }
         currentWord = playWords.get(currentPosition);
         TrainingWord tw = new TrainingWord(currentWord.getWord(), currentWord.getVars());
-
-        tries++;
         accessible = true;
+        return tw;
+    }
+
+    public TrainingWord getCurrentWord(){
+        TrainingWord tw = new TrainingWord(currentWord.getWord(), currentWord.getVars());
         return tw;
     }
 

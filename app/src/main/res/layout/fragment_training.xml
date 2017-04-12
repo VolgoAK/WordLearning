@@ -84,6 +84,7 @@
                 android:text="@string/next_word"
                 android:id="@+id/bt_next_tf"
                 android:visibility="@{fragment.mAnswered ? View.VISIBLE : View.INVISIBLE}"
+                android:onClick="@{() -> fragment.nextWord()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
 

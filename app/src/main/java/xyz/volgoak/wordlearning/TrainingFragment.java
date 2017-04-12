@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.Arrays;
+
 import xyz.volgoak.wordlearning.databinding.FragmentTrainingBinding;
 import xyz.volgoak.wordlearning.training_utils.Training;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
@@ -25,13 +27,17 @@ import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 public class TrainingFragment extends Fragment {
 
     public static final String TAG = "TrainingFragment";
+    public static final String TRAINING_TAG = "train_tag";
+    public static final String ANSWERED = "answered";
+    public static final String SAVED_BACKGROUNDS = "saved_backgrounds";
 
     private int trainingType;
+    private boolean mAnswerSaved;
 
     private FragmentListener listener;
 
-    private Training training;
-    private TrainingWord trainingWord;
+    private Training mTraining;
+    private TrainingWord mTrainingWord;
 
     private FragmentTrainingBinding mBinding;
 
@@ -39,7 +45,9 @@ public class TrainingFragment extends Fragment {
     public final ObservableField<String> mWord = new ObservableField<>();
     public final ObservableField<Boolean> mAnswered = new ObservableField<>();
 
-
+    private Drawable mDefaultBackground;
+    private Drawable mWrongAnswerBackground;
+    private Drawable mCorrectAnswerBackground;
 
     public TrainingFragment() {
         // Required empty public constructor
@@ -59,8 +67,28 @@ public class TrainingFragment extends Fragment {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_training, container, false);
         mBinding.setFragment(this);
 
-        TrainingFabric fabric = new TrainingFabric(getContext());
-        training = fabric.getTraining(trainingType);
+        //load backgrounds for buttons
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            mDefaultBackground = getResources().getDrawable(R.drawable.blue_button, getContext().getTheme());
+            mWrongAnswerBackground = getResources().getDrawable(R.drawable.orange_button, getContext().getTheme());
+            mCorrectAnswerBackground = getResources().getDrawable(R.drawable.green_button, getContext().getTheme());
+        }else{
+            mDefaultBackground = ResourcesCompat.getDrawable(getResources(), R.drawable.blue_button, null);
+            mWrongAnswerBackground = ResourcesCompat.getDrawable(getResources(), R.drawable.orange_button, null);
+            mCorrectAnswerBackground = ResourcesCompat.getDrawable(getResources(), R.drawable.green_button, null);
+        }
+
+        if(savedInstanceState != null){
+            mTraining =(Training) savedInstanceState.getSerializable(TRAINING_TAG);
+            mTrainingWord = mTraining.getCurrentWord();
+            boolean answered = savedInstanceState.getBoolean(ANSWERED, false);
+            mAnswered.set(answered);
+        }else {
+            TrainingFabric fabric = new TrainingFabric(getContext());
+            mAnswered.set(false);
+            mTraining = fabric.getTraining(trainingType);
+            mTrainingWord = mTraining.getFirstWord();
+        }
         listener = (FragmentListener)getActivity();
 
         return mBinding.getRoot();
@@ -69,39 +97,32 @@ public class TrainingFragment extends Fragment {
     @Override
     public void onStart(){
         super.onStart();
-        mBinding.btNextTf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                nextWord();
-            }
-        });
         //load first word at start time
-        nextWord();
+        showWord();
+    }
+
+    public void showWord(){
+
+        mVarArray.set(mTrainingWord.getVars());
+        mWord.set(mTrainingWord.getWord());
+
+        mBinding.btVar1Tf.setBackground(mDefaultBackground);
+        mBinding.btVar2Tf.setBackground(mDefaultBackground);
+        mBinding.btVar3Tf.setBackground(mDefaultBackground);
+        mBinding.btVar4Tf.setBackground(mDefaultBackground);
+
+        mBinding.notifyPropertyChanged(BR.fragment);
     }
 
     public void nextWord(){
-        trainingWord = training.getNextWord();
-        if(trainingWord == null){
-            int[] results = training.getResults();
+        mTrainingWord = mTraining.getNextWord();
+        if(mTrainingWord == null){
+            int[] results = mTraining.getResults();
             listener.startResultsFragment(results[0], results[1]);
             return;
         }
-
-        mVarArray.set(trainingWord.getVars());
-        mWord.set(trainingWord.getWord());
         mAnswered.set(false);
-        mBinding.notifyPropertyChanged(BR.fragment);
-
-        //change buttons background to default
-        Drawable backGround;
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            backGround = getResources().getDrawable(R.drawable.blue_button, getContext().getTheme());
-        }else backGround = ResourcesCompat.getDrawable(getResources(), R.drawable.blue_button, null);
-
-        mBinding.btVar1Tf.setBackground(backGround);
-        mBinding.btVar2Tf.setBackground(backGround);
-        mBinding.btVar3Tf.setBackground(backGround);
-        mBinding.btVar4Tf.setBackground(backGround);
+        showWord();
     }
 
     //checks is answer correct and sets background for button
@@ -112,13 +133,9 @@ public class TrainingFragment extends Fragment {
         String tag = (String) button.getTag();
         int number = Integer.parseInt(tag);
 
-        boolean correct = training.checkAnswer(number);
-        int backgroundId = correct ? R.drawable.green_button : R.drawable.orange_button;
-        Drawable background;
+        boolean correct = mTraining.checkAnswer(number);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-           background =  getResources().getDrawable(backgroundId, getContext().getTheme());
-        }else background = ResourcesCompat.getDrawable(getResources(), backgroundId, null);
+        Drawable background = correct ? mCorrectAnswerBackground : mWrongAnswerBackground;
 
         button.setBackground(background);
 
@@ -126,4 +143,11 @@ public class TrainingFragment extends Fragment {
         mBinding.notifyPropertyChanged(BR.fragment);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(TRAINING_TAG, mTraining );
+        boolean answered = mAnswered.get();
+        outState.putBoolean(ANSWERED, answered);
+    }
 }
