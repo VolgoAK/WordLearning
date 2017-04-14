@@ -1,0 +1,93 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="fragment"
+            type="xyz.volgoak.wordlearning.TrainingFragment"/>
+
+        <import type="android.view.View"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="xyz.volgoak.wordlearning.TrainingFragment"
+        >
+
+        <TextView
+            android:id="@+id/tv_word_tf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@{fragment.mWord}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <Button
+            android:id="@+id/bt_var1_tf"
+            style="@style/VarButton"
+            android:text="@{fragment.mVarArray[0]}"
+            android:tag="0"
+            android:onClick="@{fragment::checkAnswer}"
+            android:clickable="@{!fragment.mAnswered}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/bt_var2_tf"
+            app:layout_constraintTop_toBottomOf="@id/tv_word_tf"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            android:layout_marginTop="0dp" />
+
+        <Button
+            android:id="@+id/bt_var2_tf"
+            style="@style/VarButton"
+            android:layout_marginTop="0dp"
+            android:onClick="@{fragment::checkAnswer}"
+            android:clickable="@{!fragment.mAnswered}"
+            android:tag="1"
+            android:text="@{fragment.mVarArray[1]}"
+            app:layout_constraintHorizontal_bias="0.51"
+            app:layout_constraintLeft_toRightOf="@id/bt_var1_tf"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/bt_var1_tf"
+            app:layout_constraintBottom_toBottomOf="@+id/bt_var1_tf"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            style="@style/VarButton"
+            android:text="@{fragment.mVarArray[2]}"
+            android:id="@+id/bt_var3_tf"
+            android:tag="2"
+            android:onClick="@{fragment::checkAnswer}"
+            android:clickable="@{!fragment.mAnswered}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/bt_var4_tf"
+            app:layout_constraintTop_toBottomOf="@id/bt_var1_tf"
+            app:layout_constraintHorizontal_chainStyle="packed" />
+
+        <Button
+            style="@style/VarButton"
+            android:text="@{fragment.mVarArray[3]}"
+            android:id="@+id/bt_var4_tf"
+            android:tag="3"
+            android:onClick="@{fragment::checkAnswer}"
+            android:clickable="@{!fragment.mAnswered}"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/bt_var3_tf"
+            app:layout_constraintTop_toTopOf="@id/bt_var3_tf"
+            app:layout_constraintBottom_toBottomOf="@id/bt_var3_tf" />
+
+        <Button
+            style="@style/VarButton"
+            android:text="@string/next_word"
+            android:id="@+id/bt_next_tf"
+            android:visibility="@{fragment.mAnswered ? View.VISIBLE : View.INVISIBLE}"
+            android:onClick="@{() -> fragment.nextWord()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

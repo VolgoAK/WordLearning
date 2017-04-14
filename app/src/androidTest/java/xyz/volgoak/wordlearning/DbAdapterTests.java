@@ -22,9 +22,21 @@ public class DbAdapterTests {
     private WordsDbAdapter dbAdapter = new WordsDbAdapter(context);
 
     @Test
+    public void notEmptyTest(){
+        Cursor cursor = dbAdapter.fetchAllWords();
+        assertTrue(cursor.getCount() > 0);
+    }
+
+    @Test
     public void getWordsByTrainedCountTest(){
         Cursor cursor = dbAdapter.fetchWordsByTrained();
         assertEquals(10, cursor.getCount());
+    }
+
+    @Test
+    public void getWordsInDictionaryTest(){
+        Cursor cursor = dbAdapter.fetchDictionaryWords();
+        assertTrue(cursor.getCount() > 0);
     }
 
 }

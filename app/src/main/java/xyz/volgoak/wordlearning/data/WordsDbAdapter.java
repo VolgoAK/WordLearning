@@ -2,9 +2,11 @@ package xyz.volgoak.wordlearning.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.preference.PreferenceManager;
 
 
 /**
@@ -16,13 +18,19 @@ public class WordsDbAdapter {
     public final static int DECREASE = 2;
     public final static int TO_ZERO = 3;
 
-    private SQLiteDatabase db;
+    private final static String USER_SET_NAME = "user_set";
+    //key of preference which stores id of default user dictionary
+    private final static String DEFAULT_DICTIONARY_ID = "def_dictionary";
+
+    private SQLiteDatabase mDb;
+    private Context mContext;
     //for test
     static int wordCount = 0;
 
     public WordsDbAdapter(Context context){
         WordsSqlHelper helper = new WordsSqlHelper(context);
-        db = helper.getWritableDatabase();
+        mDb = helper.getWritableDatabase();
+        mContext = context;
         //insertTestData();
     }
 
@@ -31,49 +39,75 @@ public class WordsDbAdapter {
         values.put(DatabaseContract.Words.COLUMN_WORD, word);
         values.put(DatabaseContract.Words.COLUMN_TRANSLATION, translation);
 
-        db.insert(DatabaseContract.Words.TABLE_NAME, null, values);
+        mDb.insert(DatabaseContract.Words.TABLE_NAME, null, values);
+        wordCount++;
+    }
+
+
+    public void insertWord(String word, String translation, long setId){
+        //if set id -1 save word in the default word set
+        if(setId == -1){
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+            setId = preferences.getLong(DEFAULT_DICTIONARY_ID, 0);
+        }
+
+        ContentValues values = new ContentValues();
+        values.put(DatabaseContract.Words.COLUMN_WORD, word);
+        values.put(DatabaseContract.Words.COLUMN_TRANSLATION, translation);
+        values.put(DatabaseContract.Words.COLUMN_SET_ID, setId);
+
+        mDb.insert(DatabaseContract.Words.TABLE_NAME, null, values);
         wordCount++;
     }
 
     public Cursor fetchAllWords(){
-        Cursor cursor = db.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME, null);
-        // if db is empty add some test words
+        Cursor cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME, null);
+        // if mDb is empty add some test words
         if(!cursor.moveToFirst()){
             insertTestData();
-            cursor = db.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME
+            cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME
                     , null);
         }
         return cursor;
     }
 
+    public Cursor fetchDictionaryWords(){
+        String select = "SELECT a.* FROM " + DatabaseContract.Words.TABLE_NAME + " a, " + DatabaseContract.Sets.TABLE_NAME + " b " +
+                " WHERE a." + DatabaseContract.Words.COLUMN_SET_ID + " = b." + DatabaseContract.Sets._ID +
+                " AND b." + DatabaseContract.Sets.COLUMN_STATUS + " = " + DatabaseContract.Sets.IN_DICTIONARY;
+
+        Cursor cursor = mDb.rawQuery(select, null);
+        return cursor;
+    }
+
     public Cursor fetchWordsByTrained(String trainedType){
-        Cursor cursor = db.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME + " ORDER BY " + trainedType +
+        Cursor cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME + " ORDER BY " + trainedType +
                 " LIMIT 10;", null);
         if(!cursor.moveToFirst()){
             insertTestData();
-            cursor = db.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME + " ORDER BY " + trainedType  +
+            cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME + " ORDER BY " + trainedType  +
                     " LIMIT 10;", null);
         }
         return cursor;
     }
 
     public Cursor fetchWordsByTrained(){
-        Cursor cursor = db.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME + " ORDER BY " + DatabaseContract.Words.COLUMN_STUDIED +
+        Cursor cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME + " ORDER BY " + DatabaseContract.Words.COLUMN_STUDIED +
                 " LIMIT 10;", null);
         if(!cursor.moveToFirst()){
             insertTestData();
-            cursor = db.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME + " ORDER BY " + DatabaseContract.Words.COLUMN_STUDIED +
+            cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME + " ORDER BY " + DatabaseContract.Words.COLUMN_STUDIED +
                     " LIMIT 10;", null);
         }
         return cursor;
     }
 
     public Cursor rawQuery(String query){
-        return db.rawQuery(query, null);
+        return mDb.rawQuery(query, null);
     }
 
     public String[] getVariants(int id, String column){
-        Cursor cursor = db.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME
+        Cursor cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME
                 + " WHERE " + DatabaseContract.Words._ID + " != " + id
                 + " ORDER BY RANDOM() LIMIT 3", null);
         cursor.moveToFirst();
@@ -93,7 +127,7 @@ public class WordsDbAdapter {
     public void changeTrainedStatus(int id, int operation, String trainedType){
         int currentStatus;
         int studiedStatus;
-        Cursor cursor = db.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME
+        Cursor cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME
                 + " WHERE " + DatabaseContract.Words._ID + "=" + id, null);
         cursor.moveToFirst();
 
@@ -113,26 +147,38 @@ public class WordsDbAdapter {
         values.put(trainedType, currentStatus);
         values.put(DatabaseContract.Words.COLUMN_STUDIED, studiedStatus);
 
-        db.update(DatabaseContract.Words.TABLE_NAME, values, DatabaseContract.Words._ID + "=?", new String[]{Integer.toString(id)});
+        mDb.update(DatabaseContract.Words.TABLE_NAME, values, DatabaseContract.Words._ID + "=?", new String[]{Integer.toString(id)});
     }
 
     public void deleteWordById(int id){
-        db.delete(DatabaseContract.Words.TABLE_NAME,  DatabaseContract.Words._ID + "=?", new String[]{Integer.toString(id)});
+        mDb.delete(DatabaseContract.Words.TABLE_NAME,  DatabaseContract.Words._ID + "=?", new String[]{Integer.toString(id)});
     }
 
     public void insertTestData(){
-        insertWord("Cat", "Кот");
-        insertWord("Dog", "Собака");
-        insertWord("Monkey", "Обезьяна");
-        insertWord("Donkey", "Осел");
-        insertWord("Pigeon", "Голубь");
-        insertWord("Run", "Бежать");
-        insertWord("Perfect", "Совершенный");
-        insertWord("Stupid", "Тупой");
-        insertWord("Asshole", "Придурок");
-        insertWord("Beach", "Пляж");
-        insertWord("Temple", "Храм");
-        insertWord("Country", "Страна");
+        ContentValues values = new ContentValues();
+        values.put(DatabaseContract.Sets.COLUMN_NAME, USER_SET_NAME);
+        values.put(DatabaseContract.Sets.COLUMN_STATUS, DatabaseContract.Sets.IN_DICTIONARY);
+        values.put(DatabaseContract.Sets.COLUMN_VISIBILITY, DatabaseContract.Sets.INVISIBLE);
+
+        long setId = mDb.insert(DatabaseContract.Sets.TABLE_NAME, null, values);
+        //save id of default set for storage users words
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putLong(DEFAULT_DICTIONARY_ID, setId);
+        editor.apply();
+
+        insertWord("Cat", "Кот", setId);
+        insertWord("Dog", "Собака", setId);
+        insertWord("Monkey", "Обезьяна", setId);
+        insertWord("Donkey", "Осел", setId);
+        insertWord("Pigeon", "Голубь", setId);
+        insertWord("Run", "Бежать", setId);
+        insertWord("Perfect", "Совершенный", setId);
+        insertWord("Stupid", "Тупой", setId);
+        insertWord("Asshole", "Придурок", setId);
+        insertWord("Beach", "Пляж", setId);
+        insertWord("Temple", "Храм", setId);
+        insertWord("Country", "Страна", setId);
     }
 
     static class WordsSqlHelper extends SQLiteOpenHelper {
@@ -144,12 +190,14 @@ public class WordsDbAdapter {
 
         @Override
         public void onCreate(SQLiteDatabase db){
+            db.execSQL(DatabaseContract.Sets.CREATE_TABLE);
             db.execSQL(DatabaseContract.Words.CREATE_TABLE);
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
-            db.execSQL("DROP TABLE IF EXISTS " + DatabaseContract.Words.TABLE_NAME + ";");
+            db.execSQL(DatabaseContract.Words.DELETE_TABLE);
+            db.execSQL(DatabaseContract.Sets.DELETE_TABLE);
             onCreate(db);
         }
     }

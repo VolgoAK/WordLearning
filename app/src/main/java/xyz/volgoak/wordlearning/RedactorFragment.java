@@ -47,7 +47,7 @@ public class RedactorFragment extends Fragment{
     public void onStart(){
         super.onStart();
         dbAdapter = new WordsDbAdapter(getContext());
-        Cursor cursor = dbAdapter.fetchWordsByTrained();
+        Cursor cursor = dbAdapter.fetchDictionaryWords();
         ListView listView = (ListView) getView().findViewById(R.id.redactor_list_view);
         cursorAdapter = new SimpleCursorAdapter(getContext(), R.layout.redactor_cursor_adapter, cursor,
                 new String[]{COLUMN_WORD, COLUMN_TRANSLATION, COLUMN_TRAINED_WT, COLUMN_TRAINED_TW},
@@ -60,7 +60,7 @@ public class RedactorFragment extends Fragment{
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dbAdapter.insertWord(wordEdit.getText().toString(), translationEdit.getText().toString());
+                dbAdapter.insertWord(wordEdit.getText().toString(), translationEdit.getText().toString(), -1);
                 wordEdit.setText("");
                 translationEdit.setText("");
                 cursorAdapter.changeCursor(dbAdapter.fetchAllWords());
@@ -104,11 +104,5 @@ public class RedactorFragment extends Fragment{
 
         dialog.show();
     }
-
-
-
-
-
-
 
 }
