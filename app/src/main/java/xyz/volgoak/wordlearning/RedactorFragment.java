@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
+import xyz.volgoak.wordlearning.utils.DictionaryCursorAdapter;
 
 import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_TRAINED_TW;
 import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_TRAINED_WT;
@@ -49,9 +50,7 @@ public class RedactorFragment extends Fragment{
         dbAdapter = new WordsDbAdapter(getContext());
         Cursor cursor = dbAdapter.fetchDictionaryWords();
         ListView listView = (ListView) getView().findViewById(R.id.redactor_list_view);
-        cursorAdapter = new SimpleCursorAdapter(getContext(), R.layout.redactor_cursor_adapter, cursor,
-                new String[]{COLUMN_WORD, COLUMN_TRANSLATION, COLUMN_TRAINED_WT, COLUMN_TRAINED_TW},
-                new int[]{R.id.adapter_text_1, R.id.adapter_text_2, R.id.adapter_text_3, R.id.adapter_text_4}, 0);
+        cursorAdapter = new DictionaryCursorAdapter(cursor, getContext());
         listView.setAdapter(cursorAdapter);
 
         final EditText wordEdit = (EditText) getView().findViewById(R.id.redactor_edit_word);
