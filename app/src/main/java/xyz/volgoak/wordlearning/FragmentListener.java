@@ -7,5 +7,6 @@ public interface FragmentListener {
     void startTrainingWTFragment();
     void startTrainingTWFragment();
     void startRedactorFragment();
+    void startSetsFragment();
     void startResultsFragment(int correctAnswers, int wrongAnswers);
 }

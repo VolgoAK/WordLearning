@@ -131,6 +131,12 @@ public class WordsDbAdapter {
         return cursor;
     }
 
+    public Cursor fetchSets(){
+        String query = "SELECT * FROM " + DatabaseContract.Sets.TABLE_NAME +
+                " WHERE " + DatabaseContract.Sets.COLUMN_VISIBILITY + " = " + DatabaseContract.Sets.IN_DICTIONARY;
+        return mDb.rawQuery(query, null);
+    }
+
     public Cursor rawQuery(String query){
         return mDb.rawQuery(query, null);
     }
