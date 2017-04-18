@@ -115,6 +115,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startFragment(wordSetsFragment);
     }
 
+    @Override
+    public void startSetFragment(long id) {
+        SetFragment fragment = SetFragment.newInstance(id);
+        startFragment(fragment);
+    }
+
     public void startResultsFragment(int correctAnswers, int wrongAnswers){
         ResultsFragment resultsFragment = ResultsFragment.getResultFragment(correctAnswers, wrongAnswers, this);
         startFragment(resultsFragment);

@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
@@ -19,6 +20,7 @@ import xyz.volgoak.wordlearning.data.WordsDbAdapter;
  */
 public class WordSetsFragment extends Fragment {
 
+    private FragmentListener mFragmentListener;
 
     public WordSetsFragment() {
         // Required empty public constructor
@@ -29,6 +31,7 @@ public class WordSetsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        mFragmentListener = (FragmentListener) getActivity();
         return inflater.inflate(R.layout.fragment_word_sets, container, false);
     }
 
@@ -38,11 +41,20 @@ public class WordSetsFragment extends Fragment {
         int[] to = new int[]{android.R.id.text1};
         String[] from = new String[]{DatabaseContract.Sets.COLUMN_NAME};
         Cursor setsCursor = new WordsDbAdapter(getContext()).fetchSets();
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(getContext(), android.R.layout.simple_expandable_list_item_1,
+        final SimpleCursorAdapter adapter = new SimpleCursorAdapter(getContext(), android.R.layout.simple_expandable_list_item_1,
             setsCursor, from, to, 0);
 
         ListView list = (ListView) getView().findViewById(R.id.lv_setsfrag);
         list.setAdapter(adapter);
+
+        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                long setId = adapter.getItemId(position);
+                mFragmentListener.startSetFragment(setId);
+                return true;
+            }
+        });
 
     }
 }
