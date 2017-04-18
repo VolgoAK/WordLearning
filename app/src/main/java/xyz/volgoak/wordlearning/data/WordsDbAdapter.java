@@ -181,6 +181,11 @@ public class WordsDbAdapter {
         insertWord("Country", "Страна", setId);
     }
 
+    public void close(){
+        mContext = null;
+        mDb.close();
+    }
+
     static class WordsSqlHelper extends SQLiteOpenHelper {
 
 
