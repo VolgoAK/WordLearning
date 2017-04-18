@@ -7,6 +7,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.preference.PreferenceManager;
+import android.util.Log;
+
+import xyz.volgoak.wordlearning.utils.SetsParser;
+
+import static xyz.volgoak.wordlearning.utils.SetsParser.TAG;
 
 
 /**
@@ -34,17 +39,7 @@ public class WordsDbAdapter {
         //insertTestData();
     }
 
-    public void insertWord(String word, String translation){
-        ContentValues values = new ContentValues();
-        values.put(DatabaseContract.Words.COLUMN_WORD, word);
-        values.put(DatabaseContract.Words.COLUMN_TRANSLATION, translation);
-
-        mDb.insert(DatabaseContract.Words.TABLE_NAME, null, values);
-        wordCount++;
-    }
-
-
-    public void insertWord(String word, String translation, long setId){
+    public long insertWord(String word, String translation, long setId){
         //if set id -1 save word in the default word set
         if(setId == -1){
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -56,11 +51,44 @@ public class WordsDbAdapter {
         values.put(DatabaseContract.Words.COLUMN_TRANSLATION, translation);
         values.put(DatabaseContract.Words.COLUMN_SET_ID, setId);
 
-        mDb.insert(DatabaseContract.Words.TABLE_NAME, null, values);
-        wordCount++;
+        return  mDb.insert(DatabaseContract.Words.TABLE_NAME, null, values);
     }
 
-    public Cursor fetchAllWords(){
+    public void insertTestData(){
+        ContentValues values = new ContentValues();
+        values.put(DatabaseContract.Sets.COLUMN_NAME, USER_SET_NAME);
+        values.put(DatabaseContract.Sets.COLUMN_STATUS, DatabaseContract.Sets.IN_DICTIONARY);
+        values.put(DatabaseContract.Sets.COLUMN_VISIBILITY, DatabaseContract.Sets.INVISIBLE);
+
+        long setId = mDb.insert(DatabaseContract.Sets.TABLE_NAME, null, values);
+        //save id of default set for storage users words
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putLong(DEFAULT_DICTIONARY_ID, setId);
+        editor.apply();
+
+        insertWord("Cat", "Кот", setId);
+        insertWord("Dog", "Собака", setId);
+        insertWord("Monkey", "Обезьяна", setId);
+        insertWord("Donkey", "Осел", setId);
+        insertWord("Pigeon", "Голубь", setId);
+        insertWord("Run", "Бежать", setId);
+        insertWord("Perfect", "Совершенный", setId);
+        insertWord("Stupid", "Тупой", setId);
+        insertWord("Asshole", "Придурок", setId);
+        insertWord("Beach", "Пляж", setId);
+        insertWord("Temple", "Храм", setId);
+        insertWord("Country", "Страна", setId);
+
+        SetsParser.loadStartBase(mContext);
+    }
+
+    public long insertSet(ContentValues set){
+        Log.d(TAG, "insertSet: ");
+        return mDb.insert(DatabaseContract.Sets.TABLE_NAME, null, set);
+    }
+
+   /* public Cursor fetchAllWords(){
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME, null);
         // if mDb is empty add some test words
         if(!cursor.moveToFirst()){
@@ -69,10 +97,11 @@ public class WordsDbAdapter {
                     , null);
         }
         return cursor;
-    }
+    }*/
 
     public Cursor fetchDictionaryWords(){
-        String select = "SELECT a.* FROM " + DatabaseContract.Words.TABLE_NAME + " a, " + DatabaseContract.Sets.TABLE_NAME + " b " +
+        String select = "SELECT a.*, b. " + DatabaseContract.Sets._ID +
+                " FROM " + DatabaseContract.Words.TABLE_NAME + " a, " + DatabaseContract.Sets.TABLE_NAME + " b " +
                 " WHERE a." + DatabaseContract.Words.COLUMN_SET_ID + " = b." + DatabaseContract.Sets._ID +
                 " AND b." + DatabaseContract.Sets.COLUMN_STATUS + " = " + DatabaseContract.Sets.IN_DICTIONARY;
 
@@ -152,33 +181,6 @@ public class WordsDbAdapter {
 
     public void deleteWordById(int id){
         mDb.delete(DatabaseContract.Words.TABLE_NAME,  DatabaseContract.Words._ID + "=?", new String[]{Integer.toString(id)});
-    }
-
-    public void insertTestData(){
-        ContentValues values = new ContentValues();
-        values.put(DatabaseContract.Sets.COLUMN_NAME, USER_SET_NAME);
-        values.put(DatabaseContract.Sets.COLUMN_STATUS, DatabaseContract.Sets.IN_DICTIONARY);
-        values.put(DatabaseContract.Sets.COLUMN_VISIBILITY, DatabaseContract.Sets.INVISIBLE);
-
-        long setId = mDb.insert(DatabaseContract.Sets.TABLE_NAME, null, values);
-        //save id of default set for storage users words
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putLong(DEFAULT_DICTIONARY_ID, setId);
-        editor.apply();
-
-        insertWord("Cat", "Кот", setId);
-        insertWord("Dog", "Собака", setId);
-        insertWord("Monkey", "Обезьяна", setId);
-        insertWord("Donkey", "Осел", setId);
-        insertWord("Pigeon", "Голубь", setId);
-        insertWord("Run", "Бежать", setId);
-        insertWord("Perfect", "Совершенный", setId);
-        insertWord("Stupid", "Тупой", setId);
-        insertWord("Asshole", "Придурок", setId);
-        insertWord("Beach", "Пляж", setId);
-        insertWord("Temple", "Храм", setId);
-        insertWord("Country", "Страна", setId);
     }
 
     public void close(){
