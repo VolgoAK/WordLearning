@@ -8,7 +8,7 @@ import android.provider.BaseColumns;
 
 public final class DatabaseContract {
 
-    public final static int DB_VERSION = 9;
+    public final static int DB_VERSION = 10;
     public final static String DB_NAME = "WORDS_DATABASE";
 
 
@@ -54,9 +54,9 @@ public final class DatabaseContract {
         public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME +
                 "( " + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_NAME + " TEXT, " +
-                COLUMN_NUM_OF_WORDS + " INTEGER, " +
-                COLUMN_VISIBILITY + " INTEGER, " +
-                COLUMN_STATUS + " INTEGER);";
+                COLUMN_NUM_OF_WORDS + " INTEGER DEFAULT 0, " +
+                COLUMN_VISIBILITY + " INTEGER DEFAULT " + VISIBLE + ", " +
+                COLUMN_STATUS + " INTEGER DEFAULT " + OUT_OF_DICTIONARY + ");";
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
