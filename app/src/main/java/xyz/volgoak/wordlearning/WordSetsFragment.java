@@ -13,6 +13,9 @@ import android.widget.SimpleCursorAdapter;
 
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
+import xyz.volgoak.wordlearning.utils.SetsCursorAdapter;
+
+import static android.R.id.list;
 
 
 /**
@@ -41,8 +44,8 @@ public class WordSetsFragment extends Fragment {
         int[] to = new int[]{android.R.id.text1};
         String[] from = new String[]{DatabaseContract.Sets.COLUMN_NAME};
         Cursor setsCursor = new WordsDbAdapter(getContext()).fetchSets();
-        final SimpleCursorAdapter adapter = new SimpleCursorAdapter(getContext(), android.R.layout.simple_expandable_list_item_1,
-            setsCursor, from, to, 0);
+
+        final SetsCursorAdapter adapter = new SetsCursorAdapter(getContext(), setsCursor);
 
         ListView list = (ListView) getView().findViewById(R.id.lv_setsfrag);
         list.setAdapter(adapter);
