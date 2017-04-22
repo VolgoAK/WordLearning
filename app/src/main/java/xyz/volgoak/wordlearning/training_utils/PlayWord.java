@@ -18,7 +18,7 @@ public class PlayWord implements Serializable{
         private String word;
         private String translation;
         private String[] vars;
-        private int id;
+        private long id;
 
         public PlayWord(String word, String translation, String[] vars, int id){
             this.word = word;
@@ -45,7 +45,7 @@ public class PlayWord implements Serializable{
             return translation.equals(answer);
         }
 
-        public int getId() {
+        public long getId() {
             return id;
         }
 
