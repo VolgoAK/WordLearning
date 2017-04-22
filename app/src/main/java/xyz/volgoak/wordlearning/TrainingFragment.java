@@ -14,11 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import java.util.Arrays;
-
 import xyz.volgoak.wordlearning.databinding.FragmentTrainingBinding;
+import xyz.volgoak.wordlearning.training_utils.Results;
 import xyz.volgoak.wordlearning.training_utils.Training;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
+import xyz.volgoak.wordlearning.training_utils.TrainingWord;
 
 
 /**
@@ -117,8 +117,8 @@ public class TrainingFragment extends Fragment {
     public void nextWord(){
         mTrainingWord = mTraining.getNextWord();
         if(mTrainingWord == null){
-            int[] results = mTraining.getResults();
-            listener.startResultsFragment(results[0], results[1]);
+            Results results = mTraining.getResults();
+            listener.startResultsFragment(results);
             return;
         }
         mAnswered.set(false);

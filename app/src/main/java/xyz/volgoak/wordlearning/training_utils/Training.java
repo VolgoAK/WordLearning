@@ -5,8 +5,7 @@ import android.util.Log;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import xyz.volgoak.wordlearning.TrainingWord;
-import xyz.volgoak.wordlearning.training_utils.PlayWord;
+import xyz.volgoak.wordlearning.data.DatabaseContract;
 
 /**
  * Created by 777 on 08.06.2016.
@@ -18,15 +17,15 @@ public class Training implements Serializable{
     private int currentPosition = 0;
     private int tries = 0;
     private int score = 0;
+    private ArrayList<Long> mIdsForUpdate = new ArrayList<>();
     private PlayWord currentWord;
-    private WordUpdater updater;
+    //private WordUpdater updater;
     private int trainingType;
 
     private boolean accessible = false;
 
-    public Training(ArrayList<PlayWord> playWords, WordUpdater updater, int trainingType){
+    public Training(ArrayList<PlayWord> playWords, int trainingType){
         this.playWords = playWords;
-        this.updater = updater;
         this.trainingType = trainingType;
     }
 
@@ -52,10 +51,22 @@ public class Training implements Serializable{
         return tw;
     }
 
-    public int[] getResults(){
-        int[] results = new int[2];
-        results[0] = score;
-        results[1] = playWords.size() - score;
+    public Results getResults(){
+        String trainedType = "";
+        switch (trainingType){
+            case TrainingFabric.TRANSLATION_WORD :
+                trainedType = DatabaseContract.Words.COLUMN_TRAINED_TW;
+                break;
+            case TrainingFabric.WORD_TRANSLATION:
+                trainedType = DatabaseContract.Words.COLUMN_TRAINED_WT;
+                break;
+        }
+
+        Results results = new Results();
+        results.correctAnswers = score;
+        results.wordCount = playWords.size();
+        results.idsForUpdate = mIdsForUpdate;
+        results.trainedType = trainedType;
 
         return results;
     }
@@ -75,7 +86,8 @@ public class Training implements Serializable{
     private void answerOperations(boolean correctness){
         if(!accessible) return;
         if(correctness){
-            updater.updateWord(currentWord.getId(), trainingType);
+            //updater.updateWord(currentWord.getId(), trainingType);
+            mIdsForUpdate.add(currentWord.getId());
             currentPosition++;
             Log.d("Training : ", "current position " + currentPosition);
             if(tries <= playWords.size()) score++;
@@ -90,7 +102,5 @@ public class Training implements Serializable{
         return trainingType;
     }
 
-    public interface WordUpdater{
-        void updateWord(int id, int trainedType);
-    }
+
 }

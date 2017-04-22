@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import xyz.volgoak.wordlearning.training_utils.Results;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentListener{
@@ -121,8 +122,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startFragment(fragment);
     }
 
-    public void startResultsFragment(int correctAnswers, int wrongAnswers){
-        ResultsFragment resultsFragment = ResultsFragment.getResultFragment(correctAnswers, wrongAnswers, this);
+    @Override
+    public void startResultsFragment(Results results){
+        ResultsFragment resultsFragment = ResultsFragment.getResultFragment(results, this);
         startFragment(resultsFragment);
     }
 

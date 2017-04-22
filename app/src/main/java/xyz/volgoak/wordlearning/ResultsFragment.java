@@ -8,21 +8,24 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import xyz.volgoak.wordlearning.data.WordsDbAdapter;
+import xyz.volgoak.wordlearning.training_utils.Results;
+
 
 public class ResultsFragment extends Fragment {
 
-    private int rightAnswers;
-    private int wrongAnswers;
+    //private int rightAnswers;
+    //private int wrongAnswers;
+    private Results mResults;
     private FragmentListener fragmentListener;
 
     public ResultsFragment() {
         // Required empty public constructor
     }
 
-    public static ResultsFragment getResultFragment(int rightAnswers, int wrongAnswers, FragmentListener listener){
+    public static ResultsFragment getResultFragment(Results results, FragmentListener listener){
         ResultsFragment fragment = new ResultsFragment();
-        fragment.rightAnswers = rightAnswers;
-        fragment.wrongAnswers = wrongAnswers;
+        fragment.mResults = results;
         fragment.fragmentListener = listener;
         return fragment;
     }
@@ -39,9 +42,9 @@ public class ResultsFragment extends Fragment {
     public void onStart(){
         super.onStart();
         TextView correctText = (TextView) getView().findViewById(R.id.result_text_correct);
-        correctText.setText(Integer.toString(rightAnswers));
+        correctText.setText(Integer.toString(mResults.correctAnswers));
         TextView wrongText = (TextView) getView().findViewById(R.id.result_text_wrong);
-        wrongText.setText(Integer.toString(wrongAnswers));
+        wrongText.setText(Integer.toString(mResults.wordCount));
 
         Button redactorButton  = (Button)getView().findViewById(R.id.result_start_redactor);
         redactorButton.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +61,16 @@ public class ResultsFragment extends Fragment {
                 fragmentListener.startTrainingWTFragment();
             }
         });
+
+        updateWordsStatus();
+    }
+
+    private void updateWordsStatus(){
+        WordsDbAdapter adapter = new WordsDbAdapter(getContext());
+        for(Long id : mResults.idsForUpdate){
+            adapter.changeTrainedStatus(id, WordsDbAdapter.INCREASE, mResults.trainedType);
+        }
+        adapter.close();
     }
 
 }

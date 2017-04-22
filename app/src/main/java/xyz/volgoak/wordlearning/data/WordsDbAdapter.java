@@ -161,11 +161,7 @@ public class WordsDbAdapter {
         return variants;
     }
 
-    public void changeTrainedStatus(int operation, String trainedType, int...id){
-
-    }
-
-    public void changeTrainedStatus(int id, int operation, String trainedType){
+    public void changeTrainedStatus(long id, int operation, String trainedType){
         int currentStatus;
         int studiedStatus;
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME
@@ -188,7 +184,7 @@ public class WordsDbAdapter {
         values.put(trainedType, currentStatus);
         values.put(DatabaseContract.Words.COLUMN_STUDIED, studiedStatus);
 
-        mDb.update(DatabaseContract.Words.TABLE_NAME, values, DatabaseContract.Words._ID + "=?", new String[]{Integer.toString(id)});
+        mDb.update(DatabaseContract.Words.TABLE_NAME, values, DatabaseContract.Words._ID + "=?", new String[]{Long.toString(id)});
     }
 
     public void changeSetStatus(long id, int status){

@@ -20,7 +20,7 @@ import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_WORD;
 /**
  * Created by 777 on 08.06.2016.
  */
-public class TrainingFabric implements Training.WordUpdater{
+public class TrainingFabric {
 
     public final static int WORD_TRANSLATION = 0;
     public final static int TRANSLATION_WORD = 1;
@@ -63,7 +63,7 @@ public class TrainingFabric implements Training.WordUpdater{
             playWords.add(playWord);
             cursor.moveToNext();
         }
-        return new Training(playWords, this, trainingType);
+        return new Training(playWords, trainingType);
     }
 
 
