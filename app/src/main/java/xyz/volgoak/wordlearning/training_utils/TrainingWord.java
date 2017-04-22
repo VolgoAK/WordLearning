@@ -1,4 +1,4 @@
-package xyz.volgoak.wordlearning;
+package xyz.volgoak.wordlearning.training_utils;
 
 /**
  * Created by 777 on 09.06.2016.
