@@ -45,13 +45,14 @@ public class SetsCursorAdapter extends SimpleCursorAdapter{
             view.setTag(holder);
         }
 
-        holder.setNameTv.setText(cursor.getString(cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_NAME)));
+        final String setName = cursor.getString(cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_NAME));
+        holder.setNameTv.setText(setName);
 
         final long setId = cursor.getLong(cursor.getColumnIndex(DatabaseContract.Sets._ID));
         holder.addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSetStatusChanger.changeSetStatus(setId, DatabaseContract.Sets.IN_DICTIONARY);
+                mSetStatusChanger.changeSetStatus(setId, DatabaseContract.Sets.IN_DICTIONARY, setName);
             }
         });
     }
@@ -64,6 +65,6 @@ public class SetsCursorAdapter extends SimpleCursorAdapter{
     }
 
     public interface SetStatusChanger{
-        void changeSetStatus(long setId, int newStatus);
+        void changeSetStatus(long setId, int newStatus, String setName);
     }
 }

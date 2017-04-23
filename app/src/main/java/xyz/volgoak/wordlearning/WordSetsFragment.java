@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
@@ -73,7 +74,9 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
     }
 
     @Override
-    public void changeSetStatus(long setId, int newStatus) {
+    public void changeSetStatus(long setId, int newStatus, String setName) {
+        String message = getString(R.string.set_added_message, setName);
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
         mDbAdapter.changeSetStatus(setId, newStatus);
     }
 

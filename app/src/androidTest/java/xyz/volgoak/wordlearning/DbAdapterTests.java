@@ -21,15 +21,10 @@ public class DbAdapterTests {
     private Context context = InstrumentationRegistry.getTargetContext();
     private WordsDbAdapter dbAdapter = new WordsDbAdapter(context);
 
-    @Test
-    public void notEmptyTest(){
-        Cursor cursor = dbAdapter.fetchAllWords();
-        assertTrue(cursor.getCount() > 0);
-    }
 
     @Test
     public void getWordsByTrainedCountTest(){
-        Cursor cursor = dbAdapter.fetchWordsByTrained();
+        Cursor cursor = dbAdapter.fetchWordsByTrained(null);
         assertEquals(10, cursor.getCount());
     }
 

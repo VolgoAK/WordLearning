@@ -2,7 +2,9 @@
 <resources>
     <string name="app_name">WordLearning</string>
     <string name="exit">Выход</string>
-    <string name="start_redactor">Редактор</string>
+    <string name="start_redactor">Словарь</string>
     <string name="translation_word">Перевод - слово</string>
     <string name="word_translation">Слово - перевод</string>
+
+    <string name="set_added_message">Набор %1$s добавлен в словарь</string>
 </resources>
