@@ -100,7 +100,7 @@ public class WordsDbAdapter {
     }*/
 
     public Cursor fetchDictionaryWords(){
-        String select = "SELECT a.*, b. " + DatabaseContract.Sets._ID +
+        String select = "SELECT a.* " +
                 " FROM " + DatabaseContract.Words.TABLE_NAME + " a, " + DatabaseContract.Sets.TABLE_NAME + " b " +
                 " WHERE a." + DatabaseContract.Words.COLUMN_SET_ID + " = b." + DatabaseContract.Sets._ID +
                 " AND b." + DatabaseContract.Sets.COLUMN_STATUS + " = " + DatabaseContract.Sets.IN_DICTIONARY;
@@ -110,17 +110,18 @@ public class WordsDbAdapter {
     }
 
     public Cursor fetchWordsByTrained(String trainedType){
-        Cursor cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME + " ORDER BY " + trainedType +
-                " LIMIT 10;", null);
-        if(!cursor.moveToFirst()){
-            insertTestData();
-            cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME + " ORDER BY " + trainedType  +
-                    " LIMIT 10;", null);
-        }
-        return cursor;
+        if(trainedType == null) trainedType = DatabaseContract.Words.COLUMN_STUDIED;
+
+        String select = "SELECT a.* FROM " + DatabaseContract.Words.TABLE_NAME + " a," +
+                DatabaseContract.Sets.TABLE_NAME + " b " +
+                " WHERE a." + DatabaseContract.Words.COLUMN_SET_ID + " = b." + DatabaseContract.Sets._ID +
+                " AND b." + DatabaseContract.Sets.COLUMN_STATUS + " = " + DatabaseContract.Sets.IN_DICTIONARY +
+                " ORDER BY " + trainedType +
+                " LIMIT 10;";
+        return mDb.rawQuery(select, null);
     }
 
-    public Cursor fetchWordsByTrained(){
+    /*public Cursor fetchWordsByTrained(int a){
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME + " ORDER BY " + DatabaseContract.Words.COLUMN_STUDIED +
                 " LIMIT 10;", null);
         if(!cursor.moveToFirst()){
@@ -130,6 +131,16 @@ public class WordsDbAdapter {
         }
         return cursor;
     }
+
+    public Cursor fetchWordsByTrained(){
+        String select = "SELECT a.* FROM " + DatabaseContract.Words.TABLE_NAME + " a," +
+                DatabaseContract.Sets.TABLE_NAME + " b " +
+                " WHERE a." + DatabaseContract.Words.COLUMN_SET_ID + " = b." + DatabaseContract.Sets._ID +
+                " AND b." + DatabaseContract.Sets.COLUMN_STATUS + " = " + DatabaseContract.Sets.IN_DICTIONARY +
+                " ORDER BY " + DatabaseContract.Words.COLUMN_STUDIED +
+                " LIMIT 10;";
+        return mDb.rawQuery(select, null);
+    }*/
 
     public Cursor fetchSets(){
         String query = "SELECT * FROM " + DatabaseContract.Sets.TABLE_NAME +
@@ -191,7 +202,7 @@ public class WordsDbAdapter {
         ContentValues values = new ContentValues();
         values.put(DatabaseContract.Sets.COLUMN_STATUS, DatabaseContract.Sets.IN_DICTIONARY);
 
-        mDb.update(DatabaseContract.Sets.TABLE_NAME, values, DatabaseContract.Sets._ID, new String[]{String.valueOf(id)});
+        mDb.update(DatabaseContract.Sets.TABLE_NAME, values, DatabaseContract.Sets._ID + "=?", new String[]{String.valueOf(id)});
     }
 
     public void deleteWordById(int id){
