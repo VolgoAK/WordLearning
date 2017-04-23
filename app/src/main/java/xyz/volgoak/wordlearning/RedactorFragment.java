@@ -86,7 +86,7 @@ public class RedactorFragment extends Fragment{
                 // TODO: 10.06.2016 add method for change all trained collumns to zero at once
                 dbAdapter.changeTrainedStatus(id, WordsDbAdapter.TO_ZERO, COLUMN_TRAINED_WT );
                 dbAdapter.changeTrainedStatus(id, WordsDbAdapter.TO_ZERO, COLUMN_TRAINED_TW);
-                cursorAdapter.changeCursor(dbAdapter.fetchWordsByTrained());
+                cursorAdapter.changeCursor(dbAdapter.fetchWordsByTrained(null));
                 dialog.dismiss();
             }
         });
@@ -96,7 +96,7 @@ public class RedactorFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 dbAdapter.deleteWordById(id);
-                cursorAdapter.changeCursor(dbAdapter.fetchWordsByTrained());
+                cursorAdapter.changeCursor(dbAdapter.fetchWordsByTrained(null));
                 dialog.dismiss();
             }
         });

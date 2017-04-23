@@ -19,13 +19,29 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Example set"/>
 
+        <TextView
+            android:id="@+id/tv_description_setsadapter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_name_setsadapter"/>
+
         <Button
-            android:id="@+id/bt_goto_sets"
+            android:id="@+id/bt_open_sets"
             android:text="goto"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageButton
+            android:id="@+id/ibt_add_sets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_volume_up_black_48dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/bt_open_sets"/>
 
 
 

@@ -21,9 +21,11 @@ import static android.R.id.list;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WordSetsFragment extends Fragment {
+public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetStatusChanger{
 
     private FragmentListener mFragmentListener;
+    private WordsDbAdapter mDbAdapter;
+    private SetsCursorAdapter mCursorAdapter;
 
     public WordSetsFragment() {
         // Required empty public constructor
@@ -43,21 +45,37 @@ public class WordSetsFragment extends Fragment {
         super.onStart();
         int[] to = new int[]{android.R.id.text1};
         String[] from = new String[]{DatabaseContract.Sets.COLUMN_NAME};
-        Cursor setsCursor = new WordsDbAdapter(getContext()).fetchSets();
+        mDbAdapter = new WordsDbAdapter(getContext());
+        Cursor setsCursor = mDbAdapter.fetchSets();
 
-        final SetsCursorAdapter adapter = new SetsCursorAdapter(getContext(), setsCursor);
+        mCursorAdapter = new SetsCursorAdapter(getContext(), setsCursor);
+        mCursorAdapter.setStatusChanger(this);
 
         ListView list = (ListView) getView().findViewById(R.id.lv_setsfrag);
-        list.setAdapter(adapter);
+        list.setAdapter(mCursorAdapter);
 
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                long setId = adapter.getItemId(position);
+                long setId = mCursorAdapter.getItemId(position);
                 mFragmentListener.startSetFragment(setId);
                 return true;
             }
         });
 
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mDbAdapter.close();
+        mCursorAdapter.getCursor().close();
+    }
+
+    @Override
+    public void changeSetStatus(long setId, int newStatus) {
+        mDbAdapter.changeSetStatus(setId, newStatus);
+    }
+
+
 }
