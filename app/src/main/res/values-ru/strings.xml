@@ -7,4 +7,5 @@
     <string name="word_translation">Слово - перевод</string>
 
     <string name="set_added_message">Набор %1$s добавлен в словарь</string>
+    <string name="set_removed_message">Набор %1$s удален из словаря</string>
 </resources>

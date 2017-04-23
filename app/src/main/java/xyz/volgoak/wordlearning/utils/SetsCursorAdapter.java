@@ -2,6 +2,8 @@ package xyz.volgoak.wordlearning.utils;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -10,6 +12,8 @@ import android.widget.TextView;
 
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
+
+import static android.R.attr.button;
 
 /**
  * Created by Volgoak on 18.04.2017.
@@ -49,12 +53,20 @@ public class SetsCursorAdapter extends SimpleCursorAdapter{
         holder.setNameTv.setText(setName);
 
         final long setId = cursor.getLong(cursor.getColumnIndex(DatabaseContract.Sets._ID));
+        final int setStatus = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_STATUS));
+        //we need final variable since we gonna use it from within inner class
+
         holder.addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSetStatusChanger.changeSetStatus(setId, DatabaseContract.Sets.IN_DICTIONARY, setName);
+                int newStatus = setStatus == DatabaseContract.Sets.IN_DICTIONARY ? DatabaseContract.Sets.OUT_OF_DICTIONARY :
+                        DatabaseContract.Sets.IN_DICTIONARY;
+                mSetStatusChanger.changeSetStatus(setId, newStatus, setName);
             }
         });
+
+        int drawableId = setStatus == DatabaseContract.Sets.IN_DICTIONARY ? R.drawable.ic_added : R.drawable.ic_add;
+        holder.addButton.setImageDrawable(ContextCompat.getDrawable(mContext, drawableId));
     }
 
     private class ViewHolder{

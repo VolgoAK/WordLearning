@@ -200,7 +200,7 @@ public class WordsDbAdapter {
 
     public void changeSetStatus(long id, int status){
         ContentValues values = new ContentValues();
-        values.put(DatabaseContract.Sets.COLUMN_STATUS, DatabaseContract.Sets.IN_DICTIONARY);
+        values.put(DatabaseContract.Sets.COLUMN_STATUS, status);
 
         mDb.update(DatabaseContract.Sets.TABLE_NAME, values, DatabaseContract.Sets._ID + "=?", new String[]{String.valueOf(id)});
     }

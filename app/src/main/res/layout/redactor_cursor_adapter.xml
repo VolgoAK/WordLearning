@@ -41,7 +41,7 @@
     <ImageButton android:id="@+id/adapter_button"
         android:layout_height="match_parent"
         android:background="@null"
-        android:src="@drawable/ic_volume_up_black_48dp"
+        android:src="@drawable/ic_sound"
         android:layout_marginEnd="@dimen/views_horizontal_margin"
         android:layout_width="0dp"
         android:layout_weight="1"/>

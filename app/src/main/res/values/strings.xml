@@ -16,6 +16,7 @@
     <string name="next_word">Next word</string>
 
     <string name="set_added_message">Set %1$s was added into dictionary</string>
+    <string name="set_removed_message">Set %1$s was removed from dictionary</string>
 
     <string name="correct_answers">Correct answers</string>
     <string name="wrong_answers">Wrong answers</string>

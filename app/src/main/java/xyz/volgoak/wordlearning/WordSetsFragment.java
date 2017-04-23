@@ -75,9 +75,13 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
 
     @Override
     public void changeSetStatus(long setId, int newStatus, String setName) {
-        String message = getString(R.string.set_added_message, setName);
+        String message ;
+        message = newStatus == DatabaseContract.Sets.IN_DICTIONARY ? getString(R.string.set_added_message, setName) :
+                getString(R.string.set_removed_message, setName);
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
         mDbAdapter.changeSetStatus(setId, newStatus);
+
+        mCursorAdapter.swapCursor(mDbAdapter.fetchSets());
     }
 
 
