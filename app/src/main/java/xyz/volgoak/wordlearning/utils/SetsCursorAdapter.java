@@ -2,6 +2,7 @@ package xyz.volgoak.wordlearning.utils;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -54,7 +55,6 @@ public class SetsCursorAdapter extends SimpleCursorAdapter{
 
         final long setId = cursor.getLong(cursor.getColumnIndex(DatabaseContract.Sets._ID));
         final int setStatus = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_STATUS));
-        //we need final variable since we gonna use it from within inner class
 
         holder.addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +67,11 @@ public class SetsCursorAdapter extends SimpleCursorAdapter{
 
         int drawableId = setStatus == DatabaseContract.Sets.IN_DICTIONARY ? R.drawable.ic_added : R.drawable.ic_add;
         holder.addButton.setImageDrawable(ContextCompat.getDrawable(mContext, drawableId));
+
+        String firstChar = setName.substring(0, 1);
+        holder.openButton.setText(firstChar);
+        holder.openButton.setTextColor(Color.BLUE);
+
     }
 
     private class ViewHolder{

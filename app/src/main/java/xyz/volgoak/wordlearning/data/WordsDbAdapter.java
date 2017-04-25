@@ -2,6 +2,7 @@ package xyz.volgoak.wordlearning.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -88,17 +89,6 @@ public class WordsDbAdapter {
         return mDb.insert(DatabaseContract.Sets.TABLE_NAME, null, set);
     }
 
-   /* public Cursor fetchAllWords(){
-        Cursor cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME, null);
-        // if mDb is empty add some test words
-        if(!cursor.moveToFirst()){
-            insertTestData();
-            cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME
-                    , null);
-        }
-        return cursor;
-    }*/
-
     public Cursor fetchDictionaryWords(){
         String select = "SELECT a.* " +
                 " FROM " + DatabaseContract.Words.TABLE_NAME + " a, " + DatabaseContract.Sets.TABLE_NAME + " b " +
@@ -109,38 +99,18 @@ public class WordsDbAdapter {
         return cursor;
     }
 
-    public Cursor fetchWordsByTrained(String trainedType){
+    public Cursor fetchWordsByTrained(String trainedType, int wordsLimit, int trainedLimit){
         if(trainedType == null) trainedType = DatabaseContract.Words.COLUMN_STUDIED;
 
         String select = "SELECT a.* FROM " + DatabaseContract.Words.TABLE_NAME + " a," +
                 DatabaseContract.Sets.TABLE_NAME + " b " +
                 " WHERE a." + DatabaseContract.Words.COLUMN_SET_ID + " = b." + DatabaseContract.Sets._ID +
                 " AND b." + DatabaseContract.Sets.COLUMN_STATUS + " = " + DatabaseContract.Sets.IN_DICTIONARY +
+                " AND a." + trainedType + " <= " + trainedLimit +
                 " ORDER BY " + trainedType +
-                " LIMIT 10;";
+                " LIMIT " + wordsLimit + ";";
         return mDb.rawQuery(select, null);
     }
-
-    /*public Cursor fetchWordsByTrained(int a){
-        Cursor cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME + " ORDER BY " + DatabaseContract.Words.COLUMN_STUDIED +
-                " LIMIT 10;", null);
-        if(!cursor.moveToFirst()){
-            insertTestData();
-            cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME + " ORDER BY " + DatabaseContract.Words.COLUMN_STUDIED +
-                    " LIMIT 10;", null);
-        }
-        return cursor;
-    }
-
-    public Cursor fetchWordsByTrained(){
-        String select = "SELECT a.* FROM " + DatabaseContract.Words.TABLE_NAME + " a," +
-                DatabaseContract.Sets.TABLE_NAME + " b " +
-                " WHERE a." + DatabaseContract.Words.COLUMN_SET_ID + " = b." + DatabaseContract.Sets._ID +
-                " AND b." + DatabaseContract.Sets.COLUMN_STATUS + " = " + DatabaseContract.Sets.IN_DICTIONARY +
-                " ORDER BY " + DatabaseContract.Words.COLUMN_STUDIED +
-                " LIMIT 10;";
-        return mDb.rawQuery(select, null);
-    }*/
 
     public Cursor fetchSets(){
         String query = "SELECT * FROM " + DatabaseContract.Sets.TABLE_NAME +

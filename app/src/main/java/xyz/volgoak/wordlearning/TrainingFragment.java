@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import xyz.volgoak.wordlearning.databinding.FragmentTrainingBinding;
 import xyz.volgoak.wordlearning.training_utils.Results;
@@ -35,7 +36,7 @@ public class TrainingFragment extends Fragment {
     public int mTrainingType;
     private boolean mAnswerSaved;
 
-    private FragmentListener listener;
+    private FragmentListener mListener;
 
     private Training mTraining;
     private TrainingWord mTrainingWord;
@@ -93,9 +94,12 @@ public class TrainingFragment extends Fragment {
             TrainingFabric fabric = new TrainingFabric(getContext());
             mAnswered.set(false);
             mTraining = fabric.getTraining(mTrainingType);
-            mTrainingWord = mTraining.getFirstWord();
+            //if training is null, we have to go to the dictionary
+            if(mTraining != null) {
+                mTrainingWord = mTraining.getFirstWord();
+            }
         }
-        listener = (FragmentListener)getActivity();
+        mListener = (FragmentListener)getActivity();
 
         return mBinding.getRoot();
     }
@@ -103,6 +107,11 @@ public class TrainingFragment extends Fragment {
     @Override
     public void onStart(){
         super.onStart();
+        //finish training and go to the dictionary if there is nothing to train
+        if(mTraining == null){
+            goToDictionary();
+            return;
+        }
         //load first word at start time
         showWord();
     }
@@ -126,7 +135,7 @@ public class TrainingFragment extends Fragment {
         mTrainingWord = mTraining.getNextWord();
         if(mTrainingWord == null){
             Results results = mTraining.getResults();
-            listener.startResultsFragment(results);
+            mListener.startResultsFragment(results);
             return;
         }
         mAnswered.set(false);
@@ -161,6 +170,11 @@ public class TrainingFragment extends Fragment {
         outState.putSerializable(TRAINING_TAG, mTraining );
         boolean answered = mAnswered.get();
         outState.putBoolean(ANSWERED, answered);
+    }
+
+    private void goToDictionary(){
+        Toast.makeText(getContext(), getString(R.string.all_words_studied_message), Toast.LENGTH_LONG).show();
+        mListener.startSetsFragment();
     }
 
     public int getTrainingType(){

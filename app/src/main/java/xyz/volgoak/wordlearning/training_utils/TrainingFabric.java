@@ -24,6 +24,7 @@ public class TrainingFabric {
 
     public final static int WORD_TRANSLATION = 0;
     public final static int TRANSLATION_WORD = 1;
+    public final static int TRAINING_LIMIT = 2;
 
     private WordsDbAdapter dbAdapter;
 
@@ -31,7 +32,6 @@ public class TrainingFabric {
         dbAdapter = new WordsDbAdapter(context);
     }
 
-    @NonNull
     public Training getTraining(int trainingType){
         int wordColumn = 0;
         int variantsColumn = 0;
@@ -39,17 +39,20 @@ public class TrainingFabric {
         Cursor cursor = null;
 
         if(trainingType == WORD_TRANSLATION){
-            cursor = dbAdapter.fetchWordsByTrained(COLUMN_TRAINED_WT);
+            cursor = dbAdapter.fetchWordsByTrained(COLUMN_TRAINED_WT, 10, TRAINING_LIMIT);
             wordColumn = cursor.getColumnIndex(COLUMN_WORD);
             variantsColumn = cursor.getColumnIndex(COLUMN_TRANSLATION);
             variantsColumnString = COLUMN_TRANSLATION;
         }else if(trainingType == TRANSLATION_WORD){
-            cursor = dbAdapter.fetchWordsByTrained(COLUMN_TRAINED_TW);
+            cursor = dbAdapter.fetchWordsByTrained(COLUMN_TRAINED_TW, 10,TRAINING_LIMIT);
             wordColumn = cursor.getColumnIndex(COLUMN_TRANSLATION);
             variantsColumn = cursor.getColumnIndex(COLUMN_WORD);
             variantsColumnString = COLUMN_WORD;
         }
-        cursor.moveToFirst();
+        if(!cursor.moveToFirst()){
+            //no untrained words in a dictionary
+            return null;
+        }
         int idColumn = cursor.getColumnIndex(DatabaseContract.Words._ID);
 
         ArrayList<PlayWord> playWords = new ArrayList<>();
@@ -64,21 +67,5 @@ public class TrainingFabric {
             cursor.moveToNext();
         }
         return new Training(playWords, trainingType);
-    }
-
-
-
-    public void updateWord(int id, int trainingType){
-        String trainedType = "";
-        switch (trainingType){
-            case WORD_TRANSLATION :
-                trainedType = COLUMN_TRAINED_WT;
-                break;
-            case TRANSLATION_WORD :
-                trainedType = COLUMN_TRAINED_TW;
-                break;
-        }
-
-        dbAdapter.changeTrainedStatus(id, WordsDbAdapter.INCREASE, trainedType);
     }
 }

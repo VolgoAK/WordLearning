@@ -24,7 +24,7 @@ public class Training implements Serializable{
 
     private boolean accessible = false;
 
-    public Training(ArrayList<PlayWord> playWords, int trainingType){
+    Training(ArrayList<PlayWord> playWords, int trainingType){
         this.playWords = playWords;
         this.trainingType = trainingType;
     }
