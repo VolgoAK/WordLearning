@@ -19,6 +19,7 @@ import xyz.volgoak.wordlearning.training_utils.Results;
 import xyz.volgoak.wordlearning.training_utils.Training;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 import xyz.volgoak.wordlearning.training_utils.TrainingWord;
+import xyz.volgoak.wordlearning.utils.WordSpeaker;
 
 
 /**
@@ -31,7 +32,7 @@ public class TrainingFragment extends Fragment {
     public static final String ANSWERED = "answered";
     public static final String SAVED_BACKGROUNDS = "saved_backgrounds";
 
-    private int trainingType;
+    public int mTrainingType;
     private boolean mAnswerSaved;
 
     private FragmentListener listener;
@@ -49,13 +50,15 @@ public class TrainingFragment extends Fragment {
     private Drawable mWrongAnswerBackground;
     private Drawable mCorrectAnswerBackground;
 
+    private WordSpeaker mSpeaker;
+
     public TrainingFragment() {
         // Required empty public constructor
     }
 
     public static TrainingFragment getWordTrainingFragment(int  trainingType){
         TrainingFragment fragment = new TrainingFragment();
-        fragment.trainingType = trainingType;
+        fragment.mTrainingType = trainingType;
         return fragment;
     }
 
@@ -66,6 +69,9 @@ public class TrainingFragment extends Fragment {
 
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_training, container, false);
         mBinding.setFragment(this);
+
+        //we need word speaker only if we train word-translation
+        if(mTrainingType == TrainingFabric.WORD_TRANSLATION) mSpeaker = new WordSpeaker(getContext());
 
         //load backgrounds for buttons
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
@@ -86,7 +92,7 @@ public class TrainingFragment extends Fragment {
         }else {
             TrainingFabric fabric = new TrainingFabric(getContext());
             mAnswered.set(false);
-            mTraining = fabric.getTraining(trainingType);
+            mTraining = fabric.getTraining(mTrainingType);
             mTrainingWord = mTraining.getFirstWord();
         }
         listener = (FragmentListener)getActivity();
@@ -112,6 +118,8 @@ public class TrainingFragment extends Fragment {
         mBinding.btVar4Tf.setBackground(mDefaultBackground);
 
         mBinding.notifyPropertyChanged(BR.fragment);
+
+        pronounceWord();
     }
 
     public void nextWord(){
@@ -123,6 +131,10 @@ public class TrainingFragment extends Fragment {
         }
         mAnswered.set(false);
         showWord();
+    }
+
+    public void pronounceWord(){
+        if(mSpeaker != null) mSpeaker.speakWord(mTrainingWord.getWord());
     }
 
     //checks is answer correct and sets background for button
@@ -149,5 +161,9 @@ public class TrainingFragment extends Fragment {
         outState.putSerializable(TRAINING_TAG, mTraining );
         boolean answered = mAnswered.get();
         outState.putBoolean(ANSWERED, answered);
+    }
+
+    public int getTrainingType(){
+        return mTrainingType;
     }
 }

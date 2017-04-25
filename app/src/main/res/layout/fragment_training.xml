@@ -8,6 +8,7 @@
             type="xyz.volgoak.wordlearning.TrainingFragment"/>
 
         <import type="android.view.View"/>
+        <import type="xyz.volgoak.wordlearning.training_utils.TrainingFabric"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -26,6 +27,18 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
+
+        <ImageButton
+            android:id="@+id/ibt_sound_tf"
+            android:src="@drawable/ic_sound"
+            android:background="@null"
+            app:layout_constraintLeft_toRightOf="@id/tv_word_tf"
+            app:layout_constraintTop_toTopOf="@id/tv_word_tf"
+            app:layout_constraintBottom_toBottomOf="@id/tv_word_tf"
+            android:onClick="@{() -> fragment.pronounceWord()}"
+            android:visibility="@{fragment.mTrainingType == TrainingFabric.WORD_TRANSLATION ? View.VISIBLE : View.GONE}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/bt_var1_tf"
