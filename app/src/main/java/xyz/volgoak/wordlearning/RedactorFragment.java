@@ -67,7 +67,7 @@ public class RedactorFragment extends Fragment{
                 dbAdapter.insertWord(wordEdit.getText().toString(), translationEdit.getText().toString(), -1);
                 wordEdit.setText("");
                 translationEdit.setText("");
-                cursorAdapter.changeCursor(dbAdapter.fetchDictionaryWords());
+                cursorAdapter.changeCursor(dbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE));
             }
         });
 

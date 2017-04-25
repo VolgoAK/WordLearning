@@ -50,9 +50,14 @@ public class SetsCursorAdapter extends SimpleCursorAdapter{
             view.setTag(holder);
         }
 
+        //set text for name and description fields
         final String setName = cursor.getString(cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_NAME));
         holder.setNameTv.setText(setName);
 
+        String description = mContext.getString(R.string.bogus_text);
+        holder.setDescriptionTv.setText(description);
+
+        //add or remove set from dictionary on button click
         final long setId = cursor.getLong(cursor.getColumnIndex(DatabaseContract.Sets._ID));
         final int setStatus = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_STATUS));
 
