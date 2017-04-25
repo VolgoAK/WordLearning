@@ -14,19 +14,16 @@ import xyz.volgoak.wordlearning.training_utils.Results;
 
 public class ResultsFragment extends Fragment {
 
-    //private int rightAnswers;
-    //private int wrongAnswers;
     private Results mResults;
-    private FragmentListener fragmentListener;
+    private FragmentListener mListener;
 
     public ResultsFragment() {
         // Required empty public constructor
     }
 
-    public static ResultsFragment getResultFragment(Results results, FragmentListener listener){
+    public static ResultsFragment getResultFragment(Results results){
         ResultsFragment fragment = new ResultsFragment();
         fragment.mResults = results;
-        fragment.fragmentListener = listener;
         return fragment;
     }
 
@@ -35,12 +32,16 @@ public class ResultsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        mListener = (FragmentListener) getActivity();
         return inflater.inflate(R.layout.fragment_results, container, false);
     }
 
     @Override
     public void onStart(){
         super.onStart();
+
+        mListener.setActionBarTitle(getString(R.string.results));
+
         TextView correctText = (TextView) getView().findViewById(R.id.result_text_correct);
         correctText.setText(Integer.toString(mResults.correctAnswers));
         TextView wrongText = (TextView) getView().findViewById(R.id.result_text_wrong);
@@ -50,7 +51,7 @@ public class ResultsFragment extends Fragment {
         redactorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentListener.startRedactorFragment();
+                mListener.startRedactorFragment();
             }
         });
 
@@ -58,7 +59,7 @@ public class ResultsFragment extends Fragment {
         startWTbutton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                fragmentListener.startTrainingWTFragment();
+                mListener.startTrainingWTFragment();
             }
         });
 

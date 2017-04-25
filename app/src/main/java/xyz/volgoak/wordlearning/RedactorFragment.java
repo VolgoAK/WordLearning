@@ -31,6 +31,7 @@ public class RedactorFragment extends Fragment{
 
     private WordsDbAdapter dbAdapter;
     private SimpleCursorAdapter cursorAdapter;
+    private FragmentListener mFragmentListener;
 
     public RedactorFragment() {
         // Required empty public constructor
@@ -41,12 +42,16 @@ public class RedactorFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        mFragmentListener = (FragmentListener) getActivity();
         return inflater.inflate(R.layout.fragment_redactor, container, false);
     }
 
     @Override
     public void onStart(){
         super.onStart();
+
+        mFragmentListener.setActionBarTitle(getString(R.string.redactor));
+
         dbAdapter = new WordsDbAdapter(getContext());
         Cursor cursor = dbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE);
         ListView listView = (ListView) getView().findViewById(R.id.redactor_list_view);

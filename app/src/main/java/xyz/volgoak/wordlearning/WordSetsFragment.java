@@ -32,7 +32,6 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,6 +43,9 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
     @Override
     public void onStart() {
         super.onStart();
+
+        mFragmentListener.setActionBarTitle(getString(R.string.sets));
+
         int[] to = new int[]{android.R.id.text1};
         String[] from = new String[]{DatabaseContract.Sets.COLUMN_NAME};
         mDbAdapter = new WordsDbAdapter(getContext());

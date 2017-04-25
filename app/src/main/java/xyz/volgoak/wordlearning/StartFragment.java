@@ -37,6 +37,7 @@ public class StartFragment extends Fragment {
         super.onStart();
         mBinding.setListener(mListener);
         mBinding.notifyPropertyChanged(BR._all);
+        mListener.setActionBarTitle(getString(R.string.app_name));
     }
 
     @Override

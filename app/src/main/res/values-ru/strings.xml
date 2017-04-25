@@ -8,4 +8,10 @@
 
     <string name="set_added_message">Набор %1$s добавлен в словарь</string>
     <string name="set_removed_message">Набор %1$s удален из словаря</string>
+    <string name="next_word">Следующее слово</string>
+    <string name="send_to_training">На тренировку</string>
+    <string name="sets">Наборы</string>
+    <string name="translation">Перевод</string>
+    <string name="word">Слово</string>
+    <string name="wrong_answers">Неправильные ответы</string>
 </resources>

@@ -20,6 +20,7 @@ public class SetFragment extends Fragment {
 
     private WordsDbAdapter mDbAdapter;
     private long mSetId;
+    private FragmentListener mListener;
 
     public static SetFragment newInstance(long setId){
         SetFragment fragment = new SetFragment();
@@ -36,12 +37,16 @@ public class SetFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        mListener = (FragmentListener) getActivity();
         return inflater.inflate(R.layout.fragment_set, container, false);
     }
 
     @Override
     public void onStart() {
         super.onStart();
+
+        mListener.setActionBarTitle(getString(R.string.set));
+
         mDbAdapter = new WordsDbAdapter(getContext());
         Cursor cursor = mDbAdapter.fetchWordsBySetId(mSetId);
 

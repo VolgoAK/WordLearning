@@ -112,6 +112,8 @@ public class TrainingFragment extends Fragment {
             goToDictionary();
             return;
         }
+        int titleId = mTrainingType == TrainingFabric.TRANSLATION_WORD ? R.string.translation_word : R.string.word_translation;
+        mListener.setActionBarTitle(getString(titleId));
         //load first word at start time
         showWord();
     }

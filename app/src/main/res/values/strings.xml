@@ -1,10 +1,18 @@
 <resources>
     <string name="app_name">WordLearning</string>
+
+    <!-- fragment and menu titles -->
     <string name="word_translation">Word - translation</string>
     <string name="translation_word">Translation - word</string>
     <string name="start_redactor">Redactor</string>
-    <string name="home">Home</string>
+    <string name="results">Results</string>
+    <string name="redactor">Redactor</string>
+    <string name="sets">Sets</string>
+    <string name="set">Set</string>
     <string name="exit">Exit</string>
+
+    <string name="home">Home</string>
+
     <string name="add">Add</string>
     <string name="word">Word</string>
     <string name="translation">Translation</string>
@@ -15,6 +23,7 @@
     <string name="delete">Delete</string>
     <string name="next_word">Next word</string>
 
+    <!-- messages -->
     <string name="set_added_message">Set %1$s was added into dictionary</string>
     <string name="set_removed_message">Set %1$s was removed from dictionary</string>
     <string name="all_words_studied_message">All words studied. Please select new set or set old ones to training</string>
@@ -25,6 +34,5 @@
     <string name="drawer_open">Drawer open</string>
     <string name="drawer_close">Drawer close</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void startResultsFragment(Results results){
-        ResultsFragment resultsFragment = ResultsFragment.getResultFragment(results, this);
+        ResultsFragment resultsFragment = ResultsFragment.getResultFragment(results);
         startFragment(resultsFragment);
     }
 
@@ -141,5 +141,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         getSupportFragmentManager().putFragment(outState, SAVED_FRAGMENT_TAG, mMyFragment);
+    }
+
+    @Override
+    public void setActionBarTitle(String title){
+        if(getSupportActionBar() != null)
+        getSupportActionBar().setTitle(title);
     }
 }

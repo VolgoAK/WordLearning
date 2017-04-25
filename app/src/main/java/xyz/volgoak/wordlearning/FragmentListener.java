@@ -12,4 +12,5 @@ public interface FragmentListener {
     void startSetsFragment();
     void startSetFragment(long id);
     void startResultsFragment(Results results);
+    void setActionBarTitle(String title);
 }
