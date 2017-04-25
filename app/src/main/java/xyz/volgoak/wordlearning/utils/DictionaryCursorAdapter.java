@@ -25,7 +25,7 @@ import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_WORD;
 public class DictionaryCursorAdapter extends SimpleCursorAdapter {
 
     private static final String[] FROM = new String[]{COLUMN_WORD, COLUMN_TRANSLATION, COLUMN_TRAINED_WT, COLUMN_TRAINED_TW};
-    private static final int[] TO = new int[]{R.id.adapter_text_1, R.id.adapter_text_2, R.id.adapter_text_3, R.id.adapter_text_4};
+    private static final int[] TO = new int[]{R.id.tv_word_adapter, R.id.tv_translation_adapter, R.id.adapter_text_3, R.id.adapter_text_4};
 
     private static int mLayoutId = R.layout.redactor_cursor_adapter;
     private Context mContext;
@@ -42,8 +42,8 @@ public class DictionaryCursorAdapter extends SimpleCursorAdapter {
         ViewHolder holder =(ViewHolder) view.getTag();
         if(holder == null){
             holder = new ViewHolder();
-            holder.wordText = (TextView) view.findViewById(R.id.adapter_text_1);
-            holder.translationText = (TextView) view.findViewById(R.id.adapter_text_2);
+            holder.wordText = (TextView) view.findViewById(R.id.tv_word_adapter);
+            holder.translationText = (TextView) view.findViewById(R.id.tv_translation_adapter);
             holder.trainWtText = (TextView) view.findViewById(R.id.adapter_text_3);
             holder.trainTWText = (TextView) view.findViewById(R.id.adapter_text_4);
             holder.soundButton = (ImageButton) view.findViewById(R.id.adapter_button);
