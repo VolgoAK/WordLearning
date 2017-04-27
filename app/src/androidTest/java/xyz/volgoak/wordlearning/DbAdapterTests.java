@@ -1,7 +1,9 @@
 package xyz.volgoak.wordlearning;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.preference.PreferenceManager;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -33,6 +35,20 @@ public class DbAdapterTests {
     public void getWordsInDictionaryTest(){
         Cursor cursor = dbAdapter.fetchDictionaryWords();
         assertTrue(cursor.getCount() > 0);
+    }
+
+    @Test
+    public void getAllWordsTest(){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        long setId = preferences.getLong(WordsDbAdapter.DEFAULT_DICTIONARY_ID, -1);
+        Cursor cursor = dbAdapter.fetchWordsBySetId(setId);
+        System.out.println("Cursor default dictionary count is " + cursor.getCount());
+
+        cursor = dbAdapter.fetchDictionaryWords();
+        System.out.println("Cursor dictionary words count is " + cursor.getCount());
+
+        cursor = dbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE);
+        System.out.println("Cursor words by trained count is " + cursor.getCount());
     }
 
     @Test

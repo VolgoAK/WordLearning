@@ -54,7 +54,7 @@ public class SetsCursorAdapter extends SimpleCursorAdapter{
         final String setName = cursor.getString(cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_NAME));
         holder.setNameTv.setText(setName);
 
-        String description = mContext.getString(R.string.bogus_text);
+        String description = cursor.getString(cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_DESCRIPTION));
         holder.setDescriptionTv.setText(description);
 
         //add or remove set from dictionary on button click

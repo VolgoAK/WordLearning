@@ -8,7 +8,7 @@ import android.provider.BaseColumns;
 
 public final class DatabaseContract {
 
-    public final static int DB_VERSION = 13;
+    public final static int DB_VERSION = 21;
     public final static String DB_NAME = "WORDS_DATABASE";
 
 
@@ -27,9 +27,9 @@ public final class DatabaseContract {
                 " ( " + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_WORD + " TEXT, " +
                 COLUMN_TRANSLATION + " TEXT, " +
-                COLUMN_TRAINED_WT + " INTEGER, " +
-                COLUMN_TRAINED_TW + " INTEGER, " +
-                COLUMN_STUDIED + " INTEGER, " +
+                COLUMN_TRAINED_WT + " INTEGER DEFAULT 0, " +
+                COLUMN_TRAINED_TW + " INTEGER DEFAULT 0, " +
+                COLUMN_STUDIED + " INTEGER DEFAULT 0, " +
                 COLUMN_SET_ID + " INTEGER NOT NULL, " +
                 " FOREIGN KEY (" + COLUMN_SET_ID + ") REFERENCES " + Sets.TABLE_NAME + "(" +
                 Sets._ID + "));";
@@ -50,10 +50,12 @@ public final class DatabaseContract {
         public static final String COLUMN_NUM_OF_WORDS = "WORDS_COUNT";
         public static final String COLUMN_STATUS = "STATUS";
         public static final String COLUMN_VISIBILITY = "VISIBILITY";
+        public static final String COLUMN_DESCRIPTION = "DESCRIPTION";
 
         public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME +
                 "( " + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_NAME + " TEXT, " +
+                COLUMN_DESCRIPTION + " TEXT, " +
                 COLUMN_NUM_OF_WORDS + " INTEGER DEFAULT 0, " +
                 COLUMN_VISIBILITY + " INTEGER DEFAULT " + VISIBLE + ", " +
                 COLUMN_STATUS + " INTEGER DEFAULT " + OUT_OF_DICTIONARY + ");";

@@ -2,7 +2,6 @@ package xyz.volgoak.wordlearning.data;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.utils.SetsParser;
 
 import static xyz.volgoak.wordlearning.utils.SetsParser.TAG;
@@ -20,13 +20,16 @@ import static xyz.volgoak.wordlearning.utils.SetsParser.TAG;
  */
 public class WordsDbAdapter {
 
+    public static final String TAG = "WordsDbAdapter";
+    public static final String DB_EMPTY_PREF = "is_db_empty";
+
     public final static int INCREASE = 1;
     public final static int DECREASE = 2;
     public final static int TO_ZERO = 3;
 
-    private final static String USER_SET_NAME = "user_set";
+    private final static String USERS_SET_NAME = "user_set";
     //key of preference which stores id of default user dictionary
-    private final static String DEFAULT_DICTIONARY_ID = "def_dictionary";
+    public final static String DEFAULT_DICTIONARY_ID = "def_dictionary";
 
     private SQLiteDatabase mDb;
     private Context mContext;
@@ -37,7 +40,15 @@ public class WordsDbAdapter {
         WordsSqlHelper helper = new WordsSqlHelper(context);
         mDb = helper.getWritableDatabase();
         mContext = context;
-        //insertTestData();
+
+        if(isDbEmpty()){
+            insertDefaultDictionary();
+        }
+    }
+
+    private boolean isDbEmpty(){
+        Cursor cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Sets.TABLE_NAME + " LIMIT 1;", null);
+        return !cursor.moveToFirst();
     }
 
     public long insertWord(String word, String translation, long setId){
@@ -55,9 +66,11 @@ public class WordsDbAdapter {
         return  mDb.insert(DatabaseContract.Words.TABLE_NAME, null, values);
     }
 
-    public void insertTestData(){
+    public void insertDefaultDictionary(){
+        Log.d(TAG, "insertDefaultDictionary");
+
         ContentValues values = new ContentValues();
-        values.put(DatabaseContract.Sets.COLUMN_NAME, USER_SET_NAME);
+        values.put(DatabaseContract.Sets.COLUMN_NAME, USERS_SET_NAME);
         values.put(DatabaseContract.Sets.COLUMN_STATUS, DatabaseContract.Sets.IN_DICTIONARY);
         values.put(DatabaseContract.Sets.COLUMN_VISIBILITY, DatabaseContract.Sets.INVISIBLE);
 
@@ -96,6 +109,7 @@ public class WordsDbAdapter {
                 " AND b." + DatabaseContract.Sets.COLUMN_STATUS + " = " + DatabaseContract.Sets.IN_DICTIONARY;
 
         Cursor cursor = mDb.rawQuery(select, null);
+        Log.d(TAG, "fetchDictionaryWords: size" + cursor.getCount());
         return cursor;
     }
 
@@ -109,7 +123,10 @@ public class WordsDbAdapter {
                 " AND a." + trainedType + " <= " + trainedLimit +
                 " ORDER BY " + trainedType +
                 " LIMIT " + wordsLimit + ";";
-        return mDb.rawQuery(select, null);
+        Cursor cursor = mDb.rawQuery(select, null);
+        Log.d(TAG, "fetchWordsByTrained: count " + cursor.getCount());
+
+        return cursor;
     }
 
     public Cursor fetchSets(){
@@ -185,7 +202,6 @@ public class WordsDbAdapter {
     }
 
     static class WordsSqlHelper extends SQLiteOpenHelper {
-
 
         public WordsSqlHelper(Context context){
             super(context, DatabaseContract.DB_NAME, null, DatabaseContract.DB_VERSION);

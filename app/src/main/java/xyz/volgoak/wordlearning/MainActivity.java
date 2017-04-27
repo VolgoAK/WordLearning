@@ -1,5 +1,7 @@
 package xyz.volgoak.wordlearning;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -10,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.training_utils.Results;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
@@ -46,6 +49,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         startFragment(mMyFragment);
     }
+
+    //load default words at first launching
+    /*private void checkFirstLaunch(){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean firstLaunch = prefs.getBoolean(getString(R.string.first_launch), true);
+        if(firstLaunch){
+            WordsDbAdapter adapter = new WordsDbAdapter(this);
+            adapter.insertDefaultDictionary();
+            prefs.edit().putBoolean(getString(R.string.first_launch), false).apply();
+        }
+    }*/
 
     @Override
     protected void onStart(){

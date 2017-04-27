@@ -2,7 +2,6 @@ package xyz.volgoak.wordlearning.utils;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.provider.DocumentsContract;
 import android.util.Log;
 
 import org.w3c.dom.Document;
@@ -32,7 +31,9 @@ public final class SetsParser {
     public static final String NAME_ATTR = "name";
     public static final String WORD_NODE = "Word";
     public static final String WORD_ATTR = "word";
-    public static final String TRANSlATION_ATTR = "translation";
+    public static final String TRANSLATION_ATTR = "translation";
+    public static final String DESCRIPTION_ATTR = "description";
+    public static final String WORD_COUNT_ATTR = "words_count";
 
     private SetsParser(){
         throw new AssertionError();
@@ -56,7 +57,9 @@ public final class SetsParser {
     private static int insertSetsIntoDb(InputStream inputStream, Context context){
         int addedSetsCount = 0;
         int addedWordsCount = 0;
+
         WordsDbAdapter dbAdapter = new WordsDbAdapter(context);
+
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder builder = documentBuilderFactory.newDocumentBuilder();
@@ -73,9 +76,13 @@ public final class SetsParser {
                 Node setNode = setsList.item(a);
                 if(setNode.getNodeType() == Node.ELEMENT_NODE){
                     String setName = setNode.getAttributes().getNamedItem(NAME_ATTR).getNodeValue();
+                    String description = setNode.getAttributes().getNamedItem(DESCRIPTION_ATTR).getNodeValue();
+                    int wordsInSet = Integer.parseInt(setNode.getAttributes().getNamedItem(WORD_COUNT_ATTR).getNodeValue());
 
                     ContentValues setValues = new ContentValues();
                     setValues.put(DatabaseContract.Sets.COLUMN_NAME, setName);
+                    setValues.put(DatabaseContract.Sets.COLUMN_DESCRIPTION, description);
+                    setValues.put(DatabaseContract.Sets.COLUMN_NUM_OF_WORDS, wordsInSet);
 
                     long setId = dbAdapter.insertSet(setValues);
                     addedSetsCount++;
@@ -86,7 +93,7 @@ public final class SetsParser {
                         Node wordNode = wordsList.item(b);
                         if(wordNode.getNodeType() == Node.ELEMENT_NODE){
                             String word = wordNode.getAttributes().getNamedItem(WORD_ATTR).getNodeValue();
-                            String translation = wordNode.getAttributes().getNamedItem(TRANSlATION_ATTR).getNodeValue();
+                            String translation = wordNode.getAttributes().getNamedItem(TRANSLATION_ATTR).getNodeValue();
 
                             dbAdapter.insertWord(word, translation, setId);
                             addedWordsCount++;
@@ -99,8 +106,6 @@ public final class SetsParser {
             Log.d(TAG, "added words " + addedWordsCount);
         }catch(Exception ex){
             ex.printStackTrace();
-        }finally {
-            dbAdapter.close();
         }
         return addedWordsCount;
     }
