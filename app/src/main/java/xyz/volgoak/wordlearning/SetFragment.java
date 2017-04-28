@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
@@ -50,8 +51,18 @@ public class SetFragment extends Fragment {
         mDbAdapter = new WordsDbAdapter(getContext());
         Cursor cursor = mDbAdapter.fetchWordsBySetId(mSetId);
 
-        DictionaryCursorAdapter cursorAdapter = new DictionaryCursorAdapter(cursor, getContext());
+        final DictionaryCursorAdapter cursorAdapter = new DictionaryCursorAdapter(cursor, getContext());
         ListView listView = (ListView) getView().findViewById(R.id.lv_words_setfrag);
         listView.setAdapter(cursorAdapter);
+
+        Button resetButton = (Button) getView().findViewById(R.id.bt_reset_setfrag);
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDbAdapter.resetSetStatus(mSetId);
+                Cursor newCursor = mDbAdapter.fetchWordsBySetId(mSetId);
+                cursorAdapter.changeCursor(newCursor);
+            }
+        });
     }
 }
