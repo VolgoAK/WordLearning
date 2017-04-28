@@ -26,38 +26,56 @@
         android:textSize="@dimen/small_text_size"
         android:layout_marginStart="@dimen/views_horizontal_margin"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_word_adapter"
+        app:layout_constraintTop_toTopOf="@+id/tv_wt"
         android:layout_height="wrap_content"
         tools:text="Translation"
         />
 
-    <TextView
-        android:id="@+id/adapter_text_3"
+    <ImageView
+        android:id="@+id/iv_progress_wt_adapter"
         android:gravity="center_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintRight_toLeftOf="@+id/adapter_text_4"
-        android:layout_margin="@dimen/views_horizontal_margin"
+        android:layout_marginStart="@dimen/views_small_margin"
+        android:layout_marginEnd="@dimen/views_small_margin"
+        android:src="@drawable/ic_progress_0"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toTopOf="@+id/tv_wt"
+        app:layout_constraintLeft_toLeftOf="@id/tv_wt"
+        app:layout_constraintRight_toRightOf="@id/tv_wt"/>
 
     <TextView
-        android:id="@+id/adapter_text_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_wt"
+        android:layout_marginEnd="@dimen/views_horizontal_margin"
+        android:text="@string/wt"
+        android:textSize="@dimen/small_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tv_tw"/>
+
+    <ImageView
+        android:id="@+id/iv_progress_tw_adapter"
         android:gravity="center_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintRight_toLeftOf="@+id/adapter_text_5"
-        android:layout_margin="@dimen/views_horizontal_margin"
+        android:src="@drawable/ic_progress_0"
+        app:layout_constraintRight_toRightOf="@+id/tv_tw"
+        app:layout_constraintLeft_toLeftOf="@id/tv_tw"
+        android:layout_marginStart="@dimen/views_small_margin"
+        android:layout_marginEnd="@dimen/views_small_margin"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toTopOf="@+id/tv_wt"/>
+
+
     <TextView
-        android:id="@+id/adapter_text_5"
-        android:gravity="center_vertical"
+        android:id="@+id/tv_tw"
+        android:text="@string/tw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/views_horizontal_margin"
+        android:textSize="@dimen/small_text_size"
+        android:layout_marginStart="@dimen/views_horizontal_margin"
         app:layout_constraintRight_toLeftOf="@+id/adapter_button"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ImageButton android:id="@+id/adapter_button"

@@ -13,6 +13,10 @@
         android:orderInCategory="300"
         android:title="@string/start_redactor"/>
 
+    <item android:id="@+id/navigation_menu_sets"
+        android:orderInCategory="350"
+        android:title="@string/sets"/>
+
     <item android:id="@+id/navigation_menu_exit"
         android:orderInCategory="400"
         android:title="@string/exit"/>

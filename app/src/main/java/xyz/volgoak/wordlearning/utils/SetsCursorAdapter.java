@@ -46,7 +46,7 @@ public class SetsCursorAdapter extends SimpleCursorAdapter{
             holder.setNameTv = (TextView) view.findViewById(R.id.tv_name_setsadapter);
             holder.addButton = (ImageButton) view.findViewById(R.id.ibt_add_sets);
             holder.setDescriptionTv = (TextView) view.findViewById(R.id.tv_description_setsadapter);
-            holder.openButton = (Button) view.findViewById(R.id.bt_open_sets);
+            holder.openButton = (ImageButton) view.findViewById(R.id.bt_open_sets);
             view.setTag(holder);
         }
 
@@ -73,17 +73,13 @@ public class SetsCursorAdapter extends SimpleCursorAdapter{
         int drawableId = setStatus == DatabaseContract.Sets.IN_DICTIONARY ? R.drawable.ic_added : R.drawable.ic_add;
         holder.addButton.setImageDrawable(ContextCompat.getDrawable(mContext, drawableId));
 
-        String firstChar = setName.substring(0, 1);
-        holder.openButton.setText(firstChar);
-        holder.openButton.setTextColor(Color.BLUE);
-
     }
 
     private class ViewHolder{
         TextView setNameTv;
         TextView setDescriptionTv;
         ImageButton addButton;
-        Button openButton;
+        ImageButton openButton;
     }
 
     public interface SetStatusChanger{

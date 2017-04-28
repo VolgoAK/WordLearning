@@ -99,6 +99,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.navigation_menu_redactor :
                 startRedactorFragment();
                 break;
+            case R.id.navigation_menu_sets :
+                startSetsFragment();
+                break;
             case R.id.navigation_menu_exit :
                 System.exit(0);
                 break;
