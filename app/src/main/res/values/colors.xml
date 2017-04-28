@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#ffb109</color>
     <color name="blue">#4969f9</color>
     <color name="mid_blue">#448aff</color>
     <color name="light_blue">#4fc3f7</color>
@@ -12,4 +12,5 @@
     <color name="dark_orange">#d96a09</color>
     <color name="orange">#ff7e0e</color>
     <color name="light_orange">#ffb109</color>
+    <color name="semi_transparent_white">#ccffffff</color>
 </resources>
