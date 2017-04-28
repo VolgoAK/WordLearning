@@ -1,68 +1,71 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="xyz.volgoak.wordlearning.ResultsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:id="@+id/iv_result"
+        android:layout_width="0dp"
+        android:layout_height="180dp"
+        android:background="@drawable/gray_rectangle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="@dimen/views_horizontal_margin" />
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Result fragment" />
+        android:id="@+id/tv_train_finish_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/views_vertical_margin"
+        android:text="@string/training_finished"
+        android:textSize="@dimen/large_text_size"
+        app:layout_constraintTop_toTopOf="@+id/iv_result"
+        app:layout_constraintRight_toRightOf="@+id/iv_result"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_result"/>
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/correct_answers"
-        android:id="@+id/textView"
+        android:id="@+id/tv_result_resfrag"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="60dp" />
+        android:textSize="@dimen/large_text_size"
+        android:layout_marginTop="32dp"
+        app:layout_constraintLeft_toLeftOf="@id/iv_result"
+        app:layout_constraintRight_toRightOf="@id/iv_result"
+        app:layout_constraintTop_toBottomOf="@id/tv_train_finish_result"/>
 
     <TextView
+        android:id="@+id/tv_result_opinion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/wrong_answers"
-        android:id="@+id/textView2"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="40dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/result_text_correct"
-        android:layout_alignTop="@+id/textView"
-        android:layout_toEndOf="@+id/textView"
-        android:layout_marginStart="77dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/result_text_wrong"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_alignStart="@+id/result_text_correct" />
+        app:layout_constraintLeft_toLeftOf="@id/iv_result"
+        app:layout_constraintRight_toRightOf="@id/iv_result"
+        app:layout_constraintTop_toBottomOf="@id/tv_result_resfrag"/>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/MenuButton"
         android:text="@string/start_redactor"
         android:id="@+id/result_start_redactor"
         android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        app:layout_constraintTop_toBottomOf="@id/iv_result"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/MenuButton"
         android:text="@string/word_translation"
         android:id="@+id/result_start_wt"
         android:layout_below="@+id/result_start_redactor"
-        android:layout_alignParentStart="true" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/result_start_redactor"
+         />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

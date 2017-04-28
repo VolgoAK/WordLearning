@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.utils.DictionaryCursorAdapter;
@@ -62,6 +63,7 @@ public class SetFragment extends Fragment {
                 mDbAdapter.resetSetStatus(mSetId);
                 Cursor newCursor = mDbAdapter.fetchWordsBySetId(mSetId);
                 cursorAdapter.changeCursor(newCursor);
+                Toast.makeText(getContext(), getString(R.string.set_sent_to_training), Toast.LENGTH_LONG).show();
             }
         });
     }

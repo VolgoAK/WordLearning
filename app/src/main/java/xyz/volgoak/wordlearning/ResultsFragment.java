@@ -42,10 +42,22 @@ public class ResultsFragment extends Fragment {
 
         mListener.setActionBarTitle(getString(R.string.results));
 
-        TextView correctText = (TextView) getView().findViewById(R.id.result_text_correct);
-        correctText.setText(Integer.toString(mResults.correctAnswers));
-        TextView wrongText = (TextView) getView().findViewById(R.id.result_text_wrong);
-        wrongText.setText(Integer.toString(mResults.wordCount));
+        String results = getString(R.string.correct_answers) + "  " + mResults.correctAnswers + "/" + mResults.wordCount;
+        TextView resultTv = (TextView)getView().findViewById(R.id.tv_result_resfrag);
+        resultTv.setText(results);
+
+        String opinion;
+        double percentage = mResults.wordCount / mResults.correctAnswers;
+        if(percentage == 1){
+            opinion = getString(R.string.perfect_result);
+        }else if( percentage >= 0.8){
+            opinion = getString(R.string.good_result);
+        }else if(percentage >= 0.4){
+            opinion = getString(R.string.bad_result);
+        }else opinion = getString(R.string.disaster_result);
+
+        TextView opinionTv = (TextView) getView().findViewById(R.id.tv_result_opinion);
+        opinionTv.setText(opinion);
 
         Button redactorButton  = (Button)getView().findViewById(R.id.result_start_redactor);
         redactorButton.setOnClickListener(new View.OnClickListener() {
