@@ -16,8 +16,7 @@
 
         <Button
             android:id="@+id/bt_word_trans_startfrag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MenuButton"
             android:text="@string/word_translation"
             android:onClick="@{() -> listener.startTrainingWTFragment()}"
             app:layout_constraintTop_toTopOf="parent"
@@ -26,8 +25,7 @@
 
         <Button
             android:id="@+id/bt_trans_word_startfrag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MenuButton"
             android:text="@string/translation_word"
             android:onClick="@{() -> listener.startTrainingTWFragment()}"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -36,8 +34,7 @@
 
         <Button
             android:id="@+id/bt_redactor_startfrag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MenuButton"
             android:text="@string/start_redactor"
             android:onClick="@{() -> listener.startRedactorFragment()}"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -46,8 +43,7 @@
 
         <Button
             android:id="@+id/bt_sets_startfrag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MenuButton"
             android:text="Sets"
             android:onClick="@{() -> listener.startSetsFragment()}"
             app:layout_constraintLeft_toLeftOf="parent"

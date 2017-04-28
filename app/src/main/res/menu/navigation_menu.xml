@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item android:id="@+id/navigation_menu_to_home"
+        android:orderInCategory="50"
+        android:title="@string/to_home"/>
+
     <item android:id="@+id/navigation_menu_word_trans"
         android:orderInCategory="100"
         android:title="@string/word_translation"/>

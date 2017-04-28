@@ -90,6 +90,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item){
         int itemId = item.getItemId();
         switch (itemId){
+            case R.id.navigation_menu_to_home :
+                startHomeFragment();
+                break;
             case R.id.navigation_menu_trans_word :
                 startTrainingTWFragment();
                 break;
@@ -111,6 +114,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     // TODO: 31.03.2017 replace all of this with one method startFragment
+
+    public void startHomeFragment(){
+        StartFragment fragment = new StartFragment();
+        startFragment(fragment);
+    }
 
     public void startRedactorFragment(){
         RedactorFragment redactorFragment = new RedactorFragment();
