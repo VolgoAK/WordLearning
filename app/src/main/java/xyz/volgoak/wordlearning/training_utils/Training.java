@@ -85,16 +85,23 @@ public class Training implements Serializable{
 
     private void answerOperations(boolean correctness){
         if(!accessible) return;
+
+        tries++;
+
         if(correctness){
             //updater.updateWord(currentWord.getId(), trainingType);
             mIdsForUpdate.add(currentWord.getId());
             currentPosition++;
             Log.d("Training : ", "current position " + currentPosition);
-            if(tries <= playWords.size()) score++;
+            if(tries <= playWords.size()){
+                Log.d("Training", "answerOperations: score + ");
+                score++;
+            }
         }else{
             playWords.add(currentWord);
             playWords.remove(currentPosition);
         }
+
         accessible = false;
     }
 

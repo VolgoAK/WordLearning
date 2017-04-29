@@ -1,15 +1,21 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="xyz.volgoak.wordlearning.RedactorFragment"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/redactor_linear_layout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginTop="@dimen/views_small_margin"
+        android:orientation="horizontal"
+        android:background="@drawable/gray_rectangle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
 
         <EditText
             android:id="@+id/redactor_edit_word"
@@ -34,10 +40,22 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="4dp"
+        android:background="@drawable/shadow"
+        app:layout_constraintTop_toBottomOf="@+id/redactor_linear_layout"
+        app:layout_constraintLeft_toLeftOf="@+id/redactor_linear_layout"/>
+
     <ListView
         android:id="@+id/redactor_list_view"
         android:dividerHeight="3dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/views_small_margin"
+        app:layout_constraintTop_toBottomOf="@+id/redactor_linear_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

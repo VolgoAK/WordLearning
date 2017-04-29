@@ -23,9 +23,10 @@ public class WordsDbAdapter {
     public static final String TAG = "WordsDbAdapter";
     public static final String DB_EMPTY_PREF = "is_db_empty";
 
-    public final static int INCREASE = 1;
-    public final static int DECREASE = 2;
-    public final static int TO_ZERO = 3;
+    public static final int INCREASE = 1;
+    public static final int DECREASE = 2;
+    public static final int TO_ZERO = 3;
+    public static final int TRAINING_LIMIT = 4;
 
     private final static String USERS_SET_NAME = "user_set";
     //key of preference which stores id of default user dictionary
@@ -120,7 +121,7 @@ public class WordsDbAdapter {
                 DatabaseContract.Sets.TABLE_NAME + " b " +
                 " WHERE a." + DatabaseContract.Words.COLUMN_SET_ID + " = b." + DatabaseContract.Sets._ID +
                 " AND b." + DatabaseContract.Sets.COLUMN_STATUS + " = " + DatabaseContract.Sets.IN_DICTIONARY +
-                " AND a." + trainedType + " <= " + trainedLimit +
+                " AND a." + trainedType + " < " + trainedLimit +
                 " ORDER BY " + trainedType +
                 " LIMIT " + wordsLimit + ";";
         Cursor cursor = mDb.rawQuery(select, null);
@@ -171,7 +172,7 @@ public class WordsDbAdapter {
 
         cursor.close();
 
-        if(operation == INCREASE && currentStatus < 3){
+        if(operation == INCREASE && currentStatus < TRAINING_LIMIT){
             currentStatus++;
             studiedStatus++;
         }else if(operation == TO_ZERO){

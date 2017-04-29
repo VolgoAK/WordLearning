@@ -15,6 +15,7 @@ import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_TRAINE
 import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_TRAINED_WT;
 import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_TRANSLATION;
 import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_WORD;
+import static xyz.volgoak.wordlearning.data.WordsDbAdapter.TRAINING_LIMIT;
 
 
 /**
@@ -24,7 +25,6 @@ public class TrainingFabric {
 
     public final static int WORD_TRANSLATION = 0;
     public final static int TRANSLATION_WORD = 1;
-    public final static int TRAINING_LIMIT = 2;
 
     private WordsDbAdapter dbAdapter;
 

@@ -2,6 +2,7 @@ package xyz.volgoak.wordlearning;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import xyz.volgoak.wordlearning.training_utils.Results;
 
 
 public class ResultsFragment extends Fragment {
+
+    public static final String TAG = "ResultFragment";
 
     private Results mResults;
     private FragmentListener mListener;
@@ -47,7 +50,9 @@ public class ResultsFragment extends Fragment {
         resultTv.setText(results);
 
         String opinion;
-        double percentage = mResults.wordCount / mResults.correctAnswers;
+        double percentage = mResults.correctAnswers * 1.0/ mResults.wordCount;
+        Log.d(TAG, "onStart: percentage " + percentage);
+
         if(percentage == 1){
             opinion = getString(R.string.perfect_result);
         }else if( percentage >= 0.8){
