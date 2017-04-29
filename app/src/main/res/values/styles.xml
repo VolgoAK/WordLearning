@@ -18,7 +18,7 @@
     </style>
 
     <style name="MenuButton" parent="VarButton">
-        <item name="android:background">@drawable/green_button</item>
+        <item name="android:background">@drawable/blue_button</item>
         <item name="android:textColor">@color/dark_gray</item>
         <item name="android:layout_height">@dimen/menu_button_height</item>
         <item name="android:layout_width">@dimen/menu_button_width</item>
