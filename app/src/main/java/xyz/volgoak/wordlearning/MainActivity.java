@@ -44,11 +44,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if(savedInstanceState != null){
-            mMyFragment = getSupportFragmentManager().getFragment(savedInstanceState, SAVED_FRAGMENT_TAG);
-        }else mMyFragment = new StartFragment();
-
-        startFragment(mMyFragment);
+        if(savedInstanceState == null) {
+            startHomeFragment();
+        }
     }
 
     //load default words at first launching
@@ -160,7 +158,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        getSupportFragmentManager().putFragment(outState, SAVED_FRAGMENT_TAG, mMyFragment);
     }
 
     @Override

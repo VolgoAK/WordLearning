@@ -191,6 +191,15 @@ public class WordsDbAdapter {
         mDb.update(DatabaseContract.Words.TABLE_NAME, values, DatabaseContract.Words._ID + "=?", new String[]{Long.toString(id)});
     }
 
+    public void resetWordStatus(long id){
+        ContentValues values = new ContentValues();
+        values.put(DatabaseContract.Words.COLUMN_TRAINED_WT, 0);
+        values.put(DatabaseContract.Words.COLUMN_TRAINED_TW, 0);
+        values.put(DatabaseContract.Words.COLUMN_STUDIED, 0);
+
+        mDb.update(DatabaseContract.Words.TABLE_NAME, values, DatabaseContract.Words._ID + "=?", new String[]{Long.toString(id)});
+    }
+
     public void changeSetStatus(long id, int status){
         ContentValues values = new ContentValues();
         values.put(DatabaseContract.Sets.COLUMN_STATUS, status);

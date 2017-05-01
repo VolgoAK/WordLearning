@@ -14,34 +14,23 @@
         android:layout_height="match_parent"
         tools:context="xyz.volgoak.wordlearning.StartFragment">
 
-        <ImageView
-            android:id="@+id/iv_start_frag"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/views_horizontal_margin"
-            android:background="@drawable/gray_rectangle"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/space_startfrag"
-             />
 
         <Button
             android:id="@+id/bt_word_trans_startfrag"
             style="@style/MenuButton"
             android:text="@string/word_translation"
             android:onClick="@{() -> listener.startTrainingWTFragment()}"
-            app:layout_constraintTop_toTopOf="@id/iv_start_frag"
-            app:layout_constraintLeft_toLeftOf="@id/iv_start_frag"
-            app:layout_constraintRight_toRightOf="@id/iv_start_frag" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
         <Button
             android:id="@+id/bt_trans_word_startfrag"
             style="@style/MenuButton"
             android:text="@string/translation_word"
             android:onClick="@{() -> listener.startTrainingTWFragment()}"
-            app:layout_constraintLeft_toLeftOf="@id/iv_start_frag"
-            app:layout_constraintRight_toRightOf="@id/iv_start_frag"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bt_word_trans_startfrag"
              />
 
@@ -50,17 +39,17 @@
             style="@style/MenuButton"
             android:text="@string/start_redactor"
             android:onClick="@{() -> listener.startRedactorFragment()}"
-            app:layout_constraintLeft_toLeftOf="@id/iv_start_frag"
-            app:layout_constraintRight_toRightOf="@id/iv_start_frag"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bt_trans_word_startfrag" />
 
         <Button
             android:id="@+id/bt_sets_startfrag"
             style="@style/MenuButton"
-            android:text="Sets"
+            android:text="@string/sets"
             android:onClick="@{() -> listener.startSetsFragment()}"
-            app:layout_constraintLeft_toLeftOf="@id/iv_start_frag"
-            app:layout_constraintRight_toRightOf="@id/iv_start_frag"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/bt_redactor_startfrag"
             android:layout_marginBottom="@dimen/bottom_view_margin"
             />

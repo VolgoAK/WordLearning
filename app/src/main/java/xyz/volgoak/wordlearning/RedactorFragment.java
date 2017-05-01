@@ -19,10 +19,6 @@ import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.databinding.FragmentRedactorBinding;
 import xyz.volgoak.wordlearning.utils.DictionaryRecyclerAdapter;
 
-import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_TRAINED_TW;
-import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_TRAINED_WT;
-
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -99,8 +95,7 @@ public class RedactorFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 // TODO: 10.06.2016 add method for change all trained collumns to zero at once
-                mDbAdapter.changeTrainedStatus(id, WordsDbAdapter.TO_ZERO, COLUMN_TRAINED_WT );
-                mDbAdapter.changeTrainedStatus(id, WordsDbAdapter.TO_ZERO, COLUMN_TRAINED_TW);
+                mDbAdapter.resetWordStatus(id);
                 mCursorAdapter.changeCursor(mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE));
                 dialog.dismiss();
             }
