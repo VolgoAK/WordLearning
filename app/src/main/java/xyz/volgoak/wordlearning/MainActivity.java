@@ -143,12 +143,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void startSetFragment(long id) {
-        SetFragment fragment = SetFragment.newInstance(id);
-        startFragment(fragment);
-    }
-
-    @Override
     public void startResultsFragment(Results results){
         ResultsFragment resultsFragment = ResultsFragment.getResultFragment(results);
         startFragment(resultsFragment);

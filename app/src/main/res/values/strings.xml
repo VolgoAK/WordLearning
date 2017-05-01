@@ -46,6 +46,7 @@
     <string name="all_words_studied_message">All words studied. Please select new set or set old ones to training</string>
     <string name="training_finished">Training finished</string>
     <string name="set_sent_to_training">Set was sent to training</string>
+    <string name="fields_empty_message">Fields should not be empty</string>
 
     <string name="bogus_text">Definition of content of set, and something else just for make this stupid sentese little bit longer.
         But not too long</string>

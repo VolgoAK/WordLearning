@@ -10,7 +10,6 @@ public interface FragmentListener {
     void startTrainingTWFragment();
     void startRedactorFragment();
     void startSetsFragment();
-    void startSetFragment(long id);
     void startResultsFragment(Results results);
     void setActionBarTitle(String title);
 }

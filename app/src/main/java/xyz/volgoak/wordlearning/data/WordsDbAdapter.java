@@ -210,8 +210,8 @@ public class WordsDbAdapter {
         Log.d(TAG, "resetSetProgress: " + updated + " words resit");
     }
 
-    public void deleteWordById(int id){
-        mDb.delete(DatabaseContract.Words.TABLE_NAME,  DatabaseContract.Words._ID + "=?", new String[]{Integer.toString(id)});
+    public void deleteWordById(long id){
+        mDb.delete(DatabaseContract.Words.TABLE_NAME,  DatabaseContract.Words._ID + "=?", new String[]{Long.toString(id)});
     }
 
     public void close(){

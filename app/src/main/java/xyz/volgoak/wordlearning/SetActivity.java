@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
@@ -108,6 +109,7 @@ public class SetActivity extends AppCompatActivity {
 
         mRecyclerAdapter = new DictionaryRecyclerAdapter(cursor, this);
         mBinding.rvSetAc.setAdapter(mRecyclerAdapter);
+
     }
 
     @Override

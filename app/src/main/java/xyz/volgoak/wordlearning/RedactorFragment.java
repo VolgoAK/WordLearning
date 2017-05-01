@@ -3,25 +3,24 @@ package xyz.volgoak.wordlearning;
 
 import android.app.Dialog;
 import android.database.Cursor;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
-import xyz.volgoak.wordlearning.utils.DictionaryCursorAdapter;
+import xyz.volgoak.wordlearning.databinding.FragmentRedactorBinding;
+import xyz.volgoak.wordlearning.utils.DictionaryRecyclerAdapter;
 
 import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_TRAINED_TW;
 import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_TRAINED_WT;
-import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_TRANSLATION;
-import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_WORD;
 
 
 /**
@@ -29,9 +28,11 @@ import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_WORD;
  */
 public class RedactorFragment extends Fragment{
 
-    private WordsDbAdapter dbAdapter;
-    private SimpleCursorAdapter cursorAdapter;
+    private WordsDbAdapter mDbAdapter;
+    private DictionaryRecyclerAdapter mCursorAdapter;
     private FragmentListener mFragmentListener;
+
+    private FragmentRedactorBinding mBinding;
 
     public RedactorFragment() {
         // Required empty public constructor
@@ -43,7 +44,8 @@ public class RedactorFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mFragmentListener = (FragmentListener) getActivity();
-        return inflater.inflate(R.layout.fragment_redactor, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_redactor, container, false);
+        return mBinding.getRoot();
     }
 
     @Override
@@ -52,35 +54,43 @@ public class RedactorFragment extends Fragment{
 
         mFragmentListener.setActionBarTitle(getString(R.string.redactor));
 
-        dbAdapter = new WordsDbAdapter(getContext());
-        Cursor cursor = dbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE);
-        ListView listView = (ListView) getView().findViewById(R.id.redactor_list_view);
-        cursorAdapter = new DictionaryCursorAdapter(cursor, getContext());
-        listView.setAdapter(cursorAdapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mBinding.rvRedactor.setLayoutManager(layoutManager);
 
-        final EditText wordEdit = (EditText) getView().findViewById(R.id.redactor_edit_word);
-        final EditText translationEdit = (EditText) getView().findViewById(R.id.redactor_edit_translation);
-        Button addButton = (Button) getView().findViewById(R.id.redactor_button_add);
-        addButton.setOnClickListener(new View.OnClickListener() {
+        mDbAdapter = new WordsDbAdapter(getContext());
+        Cursor cursor = mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE);
+
+        mCursorAdapter = new DictionaryRecyclerAdapter(cursor, getContext());
+        mBinding.rvRedactor.setAdapter(mCursorAdapter);
+
+        mCursorAdapter.setOnWordLongClickListener(new DictionaryRecyclerAdapter.WordLongClickListener() {
             @Override
-            public void onClick(View v) {
-                dbAdapter.insertWord(wordEdit.getText().toString(), translationEdit.getText().toString(), -1);
-                wordEdit.setText("");
-                translationEdit.setText("");
-                cursorAdapter.changeCursor(dbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE));
+            public void onLongClick(long id) {
+                fireCustomDialog(id);
             }
         });
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+        mBinding.btAddRedactor.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                fireCustomDialog((int) id);
-                return true;
+            public void onClick(View v) {
+                String word = mBinding.etWordRedactor.getText().toString();
+                String translation = mBinding.etTranslationRedactor.getText().toString();
+
+                if(word.isEmpty() || translation.isEmpty()){
+                    Toast.makeText(getContext(), getString(R.string.fields_empty_message), Toast.LENGTH_LONG).show();
+                    return;
+                }
+                mDbAdapter.insertWord(word, translation, -1);
+                mBinding.etWordRedactor.setText("");
+                mBinding.etTranslationRedactor.setText("");
+                mCursorAdapter.changeCursor(mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE));
             }
         });
     }
 
-    public void fireCustomDialog(final int id){
+    public void fireCustomDialog(final long id){
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.redactor_dialog);
@@ -89,9 +99,9 @@ public class RedactorFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 // TODO: 10.06.2016 add method for change all trained collumns to zero at once
-                dbAdapter.changeTrainedStatus(id, WordsDbAdapter.TO_ZERO, COLUMN_TRAINED_WT );
-                dbAdapter.changeTrainedStatus(id, WordsDbAdapter.TO_ZERO, COLUMN_TRAINED_TW);
-                cursorAdapter.changeCursor(dbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE));
+                mDbAdapter.changeTrainedStatus(id, WordsDbAdapter.TO_ZERO, COLUMN_TRAINED_WT );
+                mDbAdapter.changeTrainedStatus(id, WordsDbAdapter.TO_ZERO, COLUMN_TRAINED_TW);
+                mCursorAdapter.changeCursor(mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE));
                 dialog.dismiss();
             }
         });
@@ -100,8 +110,8 @@ public class RedactorFragment extends Fragment{
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dbAdapter.deleteWordById(id);
-                cursorAdapter.changeCursor(dbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE));
+                mDbAdapter.deleteWordById(id);
+                mCursorAdapter.changeCursor(mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE));
                 dialog.dismiss();
             }
         });

@@ -9,8 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import xyz.volgoak.wordlearning.R;
@@ -27,6 +30,7 @@ public class DictionaryRecyclerAdapter extends CursorRecyclerAdapter<DictionaryR
     private Drawable[] mProgresIcons = new Drawable[5];
     private WordSpeaker mSpeaker;
     private Context mContext;
+    private WordLongClickListener mWordListener;
 
     public DictionaryRecyclerAdapter(Cursor cursor, Context context){
         super(cursor);
@@ -43,6 +47,7 @@ public class DictionaryRecyclerAdapter extends CursorRecyclerAdapter<DictionaryR
 
     @Override
     public void onBindViewHolderCursor(ViewHolder holder, Cursor cursor) {
+
         holder.wordText.setText(cursor.getString(cursor.getColumnIndex(DatabaseContract.Words.COLUMN_WORD)));
         holder.translationText.setText(cursor.getString(cursor.getColumnIndex(DatabaseContract.Words.COLUMN_TRANSLATION)));
 
@@ -67,6 +72,17 @@ public class DictionaryRecyclerAdapter extends CursorRecyclerAdapter<DictionaryR
                 mSpeaker.speakWord(word);
             }
         });
+
+        if(mWordListener != null){
+            final long wordId = cursor.getLong(cursor.getColumnIndex(DatabaseContract.Words._ID));
+            holder.rootView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    mWordListener.onLongClick(wordId);
+                    return true;
+                }
+            });
+        }
     }
 
     @Override
@@ -76,8 +92,13 @@ public class DictionaryRecyclerAdapter extends CursorRecyclerAdapter<DictionaryR
     }
 
 
+    public void setOnWordLongClickListener(WordLongClickListener listener){
+        mWordListener = listener;
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder{
+
+        View rootView;
 
          TextView wordText;
          TextView translationText;
@@ -92,7 +113,12 @@ public class DictionaryRecyclerAdapter extends CursorRecyclerAdapter<DictionaryR
              trainWTImage = (ImageView) view.findViewById(R.id.iv_progress_wt_adapter);
              trainTWImage = (ImageView) view.findViewById(R.id.iv_progress_tw_adapter);
              soundButton = (ImageButton) view.findViewById(R.id.adapter_button);
+             rootView = view;
          }
 
+    }
+
+    public interface WordLongClickListener{
+        void onLongClick(long id);
     }
 }
