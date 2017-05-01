@@ -1,6 +1,7 @@
 package xyz.volgoak.wordlearning;
 
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -61,7 +62,9 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 long setId = mCursorAdapter.getItemId(position);
-                mFragmentListener.startSetFragment(setId);
+                Intent intent = new Intent(getActivity(), SetActivity.class);
+                intent.putExtra(SetActivity.ID_EXTRA, setId);
+                startActivity(intent);
                 return true;
             }
         });

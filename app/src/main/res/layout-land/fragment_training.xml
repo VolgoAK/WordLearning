@@ -16,6 +16,17 @@
         tools:context="xyz.volgoak.wordlearning.TrainingFragment"
         >
 
+        <ImageView
+            android:id="@+id/iv_tf"
+            android:layout_width="@dimen/word_panel_width"
+            android:layout_height="@dimen/word_panel_height"
+            android:background="@drawable/gray_rectangle"
+            android:layout_marginTop="@dimen/views_vertical_margin"
+            android:elevation="3dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/tv_word_tf"
             android:layout_width="wrap_content"
@@ -23,9 +34,23 @@
             android:layout_margin="10dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@{fragment.mWord}"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintLeft_toLeftOf="@id/iv_tf"
+            app:layout_constraintTop_toTopOf="@id/iv_tf"
+            app:layout_constraintRight_toRightOf="@id/iv_tf"
+            app:layout_constraintBottom_toBottomOf="@id/iv_tf"
+            tools:text="Example"/>
+
+        <ImageButton
+            android:id="@+id/ibt_sound_tf"
+            android:src="@drawable/ic_sound"
+            android:background="@null"
+            app:layout_constraintLeft_toRightOf="@id/tv_word_tf"
+            app:layout_constraintTop_toTopOf="@id/tv_word_tf"
+            app:layout_constraintBottom_toBottomOf="@id/tv_word_tf"
+            android:onClick="@{() -> fragment.pronounceWord()}"
+            android:visibility="@{fragment.mTrainingType == TrainingFabric.WORD_TRANSLATION ? View.VISIBLE : View.GONE}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/bt_var1_tf"
@@ -36,7 +61,7 @@
             android:clickable="@{!fragment.mAnswered}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/bt_var2_tf"
-            app:layout_constraintTop_toBottomOf="@id/tv_word_tf"
+            app:layout_constraintTop_toBottomOf="@id/iv_tf"
             app:layout_constraintHorizontal_chainStyle="packed"
             android:layout_marginTop="0dp" />
 

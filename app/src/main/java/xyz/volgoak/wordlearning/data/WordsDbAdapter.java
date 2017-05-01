@@ -136,6 +136,11 @@ public class WordsDbAdapter {
         return mDb.rawQuery(query, null);
     }
 
+    public Cursor fetchSetById(long setId){
+        return mDb.rawQuery("SELECT * FROM " + DatabaseContract.Sets.TABLE_NAME +
+            " WHERE " + DatabaseContract.Sets._ID + "=?", new String[]{Long.toString(setId)});
+    }
+
     public Cursor fetchWordsBySetId(long id){
         String query = "SELECT * FROM " + DatabaseContract.Words.TABLE_NAME +
                 " WHERE " + DatabaseContract.Words.COLUMN_SET_ID + " = " + id;
@@ -193,7 +198,7 @@ public class WordsDbAdapter {
         mDb.update(DatabaseContract.Sets.TABLE_NAME, values, DatabaseContract.Sets._ID + "=?", new String[]{String.valueOf(id)});
     }
 
-    public void resetSetStatus(long setId){
+    public void resetSetProgress(long setId){
         ContentValues values = new ContentValues();
         values.put(DatabaseContract.Words.COLUMN_TRAINED_WT, 0);
         values.put(DatabaseContract.Words.COLUMN_TRAINED_TW, 0);
@@ -202,7 +207,7 @@ public class WordsDbAdapter {
         int updated = mDb.update(DatabaseContract.Words.TABLE_NAME, values, DatabaseContract.Words.COLUMN_SET_ID + "=?",
                 new String[]{Long.toString(setId)});
 
-        Log.d(TAG, "resetSetStatus: " + updated + " words resit");
+        Log.d(TAG, "resetSetProgress: " + updated + " words resit");
     }
 
     public void deleteWordById(int id){

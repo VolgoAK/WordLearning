@@ -60,7 +60,7 @@ public class SetFragment extends Fragment {
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDbAdapter.resetSetStatus(mSetId);
+                mDbAdapter.resetSetProgress(mSetId);
                 Cursor newCursor = mDbAdapter.fetchWordsBySetId(mSetId);
                 cursorAdapter.changeCursor(newCursor);
                 Toast.makeText(getContext(), getString(R.string.set_sent_to_training), Toast.LENGTH_LONG).show();

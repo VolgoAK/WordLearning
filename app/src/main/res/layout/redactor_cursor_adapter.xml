@@ -5,14 +5,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/views_horizontal_margin"
-    android:layout_marginEnd="@dimen/views_horizontal_margin"
+    android:layout_marginTop="@dimen/views_small_margin"
+    android:layout_marginStart="@dimen/views_small_margin"
+    android:layout_marginEnd="@dimen/views_small_margin"
     app:cardBackgroundColor="@color/semi_transparent_white"
     android:descendantFocusability="blocksDescendants">
 
 <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?selectableItemBackgroundBorderless"
     android:padding="@dimen/views_small_margin"
 
     >

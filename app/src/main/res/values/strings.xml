@@ -12,6 +12,15 @@
     <string name="exit">Exit</string>
     <string name="to_home">Home</string>
 
+    <string name="set_activity_title">Set %1$s</string>
+    <string name="words_in_set">Words in a set %1$d</string>
+    <string name="set_in_the_dictionary">Set in the dictionary</string>
+    <string name="set_out_of_dictionary">Set out of dictionary</string>
+    <string name="reset_progress">Reset progress</string>
+    <string name="add_set">Add</string>
+    <string name="remove">Remove</string>
+    <string name="reset">Reset</string>
+
     <string name="home">Home</string>
 
     <string name="add">Add</string>
@@ -30,6 +39,7 @@
     <string name="bad_result">You can do it better!</string>
     <string name="disaster_result">OMG..better try again</string>
 
+
     <!-- messages -->
     <string name="set_added_message">Set %1$s was added into dictionary</string>
     <string name="set_removed_message">Set %1$s was removed from dictionary</string>
@@ -45,6 +55,7 @@
 
     <string name="drawer_open">Drawer open</string>
     <string name="drawer_close">Drawer close</string>
+    <string name="title_activity_set">SetActivity</string>
 
 
 </resources>

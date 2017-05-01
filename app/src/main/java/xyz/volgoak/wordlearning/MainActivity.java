@@ -1,5 +1,6 @@
 package xyz.volgoak.wordlearning;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
