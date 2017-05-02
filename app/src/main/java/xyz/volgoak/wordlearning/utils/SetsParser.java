@@ -92,8 +92,8 @@ public final class SetsParser {
                     for(int b = 0; b < wordsList.getLength(); b++){
                         Node wordNode = wordsList.item(b);
                         if(wordNode.getNodeType() == Node.ELEMENT_NODE){
-                            String word = wordNode.getAttributes().getNamedItem(WORD_ATTR).getNodeValue();
-                            String translation = wordNode.getAttributes().getNamedItem(TRANSLATION_ATTR).getNodeValue();
+                            String word = capitalize(wordNode.getAttributes().getNamedItem(WORD_ATTR).getNodeValue());
+                            String translation = capitalize(wordNode.getAttributes().getNamedItem(TRANSLATION_ATTR).getNodeValue());
 
                             dbAdapter.insertWord(word, translation, setId);
                             addedWordsCount++;
@@ -108,5 +108,11 @@ public final class SetsParser {
             ex.printStackTrace();
         }
         return addedWordsCount;
+    }
+
+    private static String capitalize(String string){
+        String s = string.substring(0, 1).toUpperCase();
+        String s2 = s + string.substring(1);
+        return s2;
     }
 }

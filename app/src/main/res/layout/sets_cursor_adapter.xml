@@ -5,19 +5,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/semi_transparent_white"
     >
     <android.support.constraint.ConstraintLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
         android:background="?selectableItemBackgroundBorderless"
+
         android:descendantFocusability="blocksDescendants">
 
         <TextView
             android:id="@+id/tv_name_setsadapter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/large_text_size"
+            android:textSize="@dimen/medium_text_size"
             android:textColor="@android:color/black"
             android:layout_marginStart="@dimen/views_horizontal_margin"
             android:layout_marginTop="@dimen/views_small_margin"
@@ -37,17 +39,28 @@
             android:ellipsize="end"
             tools:text="@string/bogus_text" />
 
-        <ImageButton
-            android:id="@+id/bt_open_sets"
-            android:text="goto"
-            android:background="@drawable/blue_button"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:layout_marginEnd="@dimen/views_horizontal_margin"
-            android:layout_margin="@dimen/views_small_margin"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_sets"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/button_back"
+            android:layout_margin="@dimen/views_vertical_margin"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_first_letter_sets"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            tools:text="W"
+            style="@style/title_text"
+            android:textSize="30sp"
+            android:gravity="center"
+            app:layout_constraintLeft_toLeftOf="@id/civ_sets"
+            app:layout_constraintRight_toRightOf="@id/civ_sets"
+            app:layout_constraintTop_toTopOf="@id/civ_sets"
+            app:layout_constraintBottom_toBottomOf="@id/civ_sets"/>
 
         <ImageButton
             android:id="@+id/ibt_add_sets"
@@ -58,7 +71,7 @@
             android:layout_margin="@dimen/views_small_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/bt_open_sets"/>
+            app:layout_constraintRight_toLeftOf="@id/civ_sets"/>
 
 
 

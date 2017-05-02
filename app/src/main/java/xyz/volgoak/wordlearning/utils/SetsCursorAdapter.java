@@ -11,10 +11,12 @@ import android.widget.ImageButton;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 
 import static android.R.attr.button;
+import static android.R.attr.description;
 
 /**
  * Created by Volgoak on 18.04.2017.
@@ -46,13 +48,17 @@ public class SetsCursorAdapter extends SimpleCursorAdapter{
             holder.setNameTv = (TextView) view.findViewById(R.id.tv_name_setsadapter);
             holder.addButton = (ImageButton) view.findViewById(R.id.ibt_add_sets);
             holder.setDescriptionTv = (TextView) view.findViewById(R.id.tv_description_setsadapter);
-            holder.openButton = (ImageButton) view.findViewById(R.id.bt_open_sets);
+            holder.civ = (CircleImageView) view.findViewById(R.id.civ_sets);
+            holder.firstLetterTv = (TextView) view.findViewById(R.id.tv_first_letter_sets);
             view.setTag(holder);
         }
 
         //set text for name and description fields
         final String setName = cursor.getString(cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_NAME));
         holder.setNameTv.setText(setName);
+
+        String firstLetter = setName.substring(0,1).toUpperCase();
+        holder.firstLetterTv.setText(firstLetter);
 
         String description = cursor.getString(cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_DESCRIPTION));
         holder.setDescriptionTv.setText(description);
@@ -78,8 +84,9 @@ public class SetsCursorAdapter extends SimpleCursorAdapter{
     private class ViewHolder{
         TextView setNameTv;
         TextView setDescriptionTv;
+        TextView firstLetterTv;
         ImageButton addButton;
-        ImageButton openButton;
+        CircleImageView civ;
     }
 
     public interface SetStatusChanger{

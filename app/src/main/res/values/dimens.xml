@@ -18,6 +18,7 @@
     <dimen name="shadow_height">4dp</dimen>
     <dimen name="word_panel_height">60dp</dimen>
     <dimen name="word_panel_width">280dp</dimen>
+    <dimen name="add_button_text_size">10sp</dimen>
 
 
     <dimen name="title_text_size">20sp</dimen>

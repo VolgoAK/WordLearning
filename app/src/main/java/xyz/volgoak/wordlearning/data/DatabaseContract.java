@@ -8,7 +8,7 @@ import android.provider.BaseColumns;
 
 public final class DatabaseContract {
 
-    public final static int DB_VERSION = 21;
+    public final static int DB_VERSION = 23;
     public final static String DB_NAME = "WORDS_DATABASE";
 
 
