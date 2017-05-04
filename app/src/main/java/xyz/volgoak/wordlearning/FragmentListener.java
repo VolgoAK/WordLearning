@@ -6,8 +6,7 @@ import xyz.volgoak.wordlearning.training_utils.Results;
  * Created by 777 on 10.06.2016.
  */
 public interface FragmentListener {
-    void startTrainingWTFragment();
-    void startTrainingTWFragment();
+    void startTraining(int type);
     void startRedactorFragment();
     void startSetsFragment();
     void startResultsFragment(Results results);

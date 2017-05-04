@@ -29,7 +29,7 @@ public class WordSpeaker {
             }
         });
 
-        mTTS.setSpeechRate(0.2f);
+        mTTS.setSpeechRate(0.8f);
     }
 
     public void speakWord(String word){

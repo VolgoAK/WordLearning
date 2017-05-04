@@ -7,6 +7,9 @@
         <variable
             name="listener"
             type="xyz.volgoak.wordlearning.FragmentListener"/>
+
+        <import type="xyz.volgoak.wordlearning.training_utils.TrainingFabric"/>
+
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -19,7 +22,7 @@
             android:id="@+id/bt_word_trans_startfrag"
             style="@style/MenuButton"
             android:text="@string/word_translation"
-            android:onClick="@{() -> listener.startTrainingWTFragment()}"
+            android:onClick="@{() -> listener.startTraining(TrainingFabric.WORD_TRANSLATION)}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
@@ -28,7 +31,7 @@
             android:id="@+id/bt_trans_word_startfrag"
             style="@style/MenuButton"
             android:text="@string/translation_word"
-            android:onClick="@{() -> listener.startTrainingTWFragment()}"
+            android:onClick="@{() -> listener.startTraining(TrainingFabric.TRANSLATION_WORD)}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bt_word_trans_startfrag"

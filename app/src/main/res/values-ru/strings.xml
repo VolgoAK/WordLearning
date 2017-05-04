@@ -33,7 +33,7 @@
     <string name="to_home">Домой</string>
     <string name="training_finished">Тренировка закончена</string>
     <string name="what_to_do">Выберите действие</string>
-    <string name="words_in_set">Слов в наборе</string>
+    <string name="words_in_set">Слов в наборе %1$d</string>
     <string name="yes">Да</string>
     <string name="disaster_result">В следующий раз получится...</string>
     <string name="delete">Удалить</string>

@@ -76,7 +76,8 @@ public class ResultsFragment extends Fragment {
         startWTbutton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                mListener.startTrainingWTFragment();
+                // TODO: 04.05.2017 change listener and make two choices
+               // mListener.startTrainingWT();
             }
         });
 

@@ -34,9 +34,8 @@ public class TrainingFragment extends Fragment {
     public static final String SAVED_BACKGROUNDS = "saved_backgrounds";
 
     public int mTrainingType;
-    private boolean mAnswerSaved;
 
-    private FragmentListener mListener;
+    private ResultReceiver mResultReceiver;
 
     private Training mTraining;
     private TrainingWord mTrainingWord;
@@ -99,7 +98,8 @@ public class TrainingFragment extends Fragment {
                 mTrainingWord = mTraining.getFirstWord();
             }
         }
-        mListener = (FragmentListener)getActivity();
+
+        mResultReceiver = (ResultReceiver) getActivity();
 
         return mBinding.getRoot();
     }
@@ -113,7 +113,7 @@ public class TrainingFragment extends Fragment {
             return;
         }
         int titleId = mTrainingType == TrainingFabric.TRANSLATION_WORD ? R.string.translation_word : R.string.word_translation;
-        mListener.setActionBarTitle(getString(titleId));
+        getActivity().setTitle(getString(titleId));
         //load first word at start time
         showWord();
     }
@@ -137,7 +137,7 @@ public class TrainingFragment extends Fragment {
         mTrainingWord = mTraining.getNextWord();
         if(mTrainingWord == null){
             Results results = mTraining.getResults();
-            mListener.startResultsFragment(results);
+            mResultReceiver.showResults(results);
             return;
         }
         mAnswered.set(false);
@@ -174,12 +174,17 @@ public class TrainingFragment extends Fragment {
         outState.putBoolean(ANSWERED, answered);
     }
 
+    // TODO: 04.05.2017 implement go to dictionary function
     private void goToDictionary(){
         Toast.makeText(getContext(), getString(R.string.all_words_studied_message), Toast.LENGTH_LONG).show();
-        mListener.startSetsFragment();
+        //mListener.startSetsFragment();
     }
 
     public int getTrainingType(){
         return mTrainingType;
+    }
+
+    interface ResultReceiver{
+        void showResults(Results results);
     }
 }
