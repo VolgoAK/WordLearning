@@ -146,19 +146,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startFragment(redactorFragment);
     }
 
-    public void startTrainingWT(){
-        TrainingFragment trainingFragment = TrainingFragment.getWordTrainingFragment(TrainingFabric.WORD_TRANSLATION);
-        startFragment(trainingFragment);
-
-        Intent intent = new Intent(this, TrainingActivity.class);
-        intent.putExtra(TrainingActivity.EXTRA_TRAINING_TYPE, TrainingFabric.WORD_TRANSLATION);
-        startActivity(intent);
+    @Override
+    public void startTraining(int type){
+        startTraining(type, -1);
     }
 
     @Override
-    public void startTraining(int type){
+    public void startTraining(int type, long setId) {
         Intent intent = new Intent(this, TrainingActivity.class);
         intent.putExtra(TrainingActivity.EXTRA_TRAINING_TYPE, type);
+        intent.putExtra(TrainingActivity.EXTRA_SET_ID, setId);
         startActivityForResult(intent, TRAINING_REQUEST);
     }
 

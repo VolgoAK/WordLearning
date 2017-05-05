@@ -11,8 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
@@ -89,8 +89,13 @@ public class RedactorFragment extends Fragment{
     public void fireCustomDialog(final long id){
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.redactor_dialog);
-        Button toTrainingButton = (Button) dialog.findViewById(R.id.red_dialog_zero_button);
+        dialog.setContentView(R.layout.dialog);
+
+        TextView dialogTitle = (TextView) dialog.findViewById(R.id.dialog_title);
+        dialogTitle.setText(R.string.what_to_do);
+
+        Button toTrainingButton = (Button) dialog.findViewById(R.id.dialog_bt_one);
+        toTrainingButton.setText(getString(R.string.send_to_training));
         toTrainingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +106,8 @@ public class RedactorFragment extends Fragment{
             }
         });
 
-        Button deleteButton = (Button) dialog.findViewById(R.id.red_dialog_delete_button);
+        Button deleteButton = (Button) dialog.findViewById(R.id.dialog_bt_two);
+        deleteButton.setText(getString(R.string.delete));
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

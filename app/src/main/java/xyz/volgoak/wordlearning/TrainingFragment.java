@@ -34,6 +34,7 @@ public class TrainingFragment extends Fragment {
     public static final String SAVED_BACKGROUNDS = "saved_backgrounds";
 
     public int mTrainingType;
+    public long mSetId;
 
     private ResultReceiver mResultReceiver;
 
@@ -56,9 +57,10 @@ public class TrainingFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static TrainingFragment getWordTrainingFragment(int  trainingType){
+    public static TrainingFragment getWordTrainingFragment(int  trainingType, long setId){
         TrainingFragment fragment = new TrainingFragment();
         fragment.mTrainingType = trainingType;
+        fragment.mSetId = setId;
         return fragment;
     }
 
@@ -92,7 +94,7 @@ public class TrainingFragment extends Fragment {
         }else {
             TrainingFabric fabric = new TrainingFabric(getContext());
             mAnswered.set(false);
-            mTraining = fabric.getTraining(mTrainingType);
+            mTraining = fabric.getTraining(mTrainingType, mSetId);
             //if training is null, we have to go to the dictionary
             if(mTraining != null) {
                 mTrainingWord = mTraining.getFirstWord();

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
+    android:orientation="vertical" android:layout_width="@dimen/dialog_window_width"
     android:layout_height="wrap_content"
     android:layout_gravity="center">
 
     <TextView
+        android:id="@+id/dialog_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/what_to_do"
@@ -12,16 +13,27 @@
         android:gravity="center"/>
 
     <Button
+        android:id="@+id/dialog_bt_one"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/red_dialog_zero_button"
-        android:text="@string/send_to_training"
         />
 
     <Button
+        android:id="@+id/dialog_bt_two"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/red_dialog_delete_button"
-        android:text="@string/delete"/>
+        />
+
+    <Button
+        android:id="@+id/dialog_bt_three"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/dialog_bt_four"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
 
 </LinearLayout>

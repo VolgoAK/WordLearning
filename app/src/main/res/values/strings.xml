@@ -28,6 +28,8 @@
     <string name="translation">Translation</string>
     <string name="send_to_training">Send to training</string>
     <string name="what_to_do">What to do with this word?</string>
+    <string name="select_training">Select training</string>
+    <string name="open">Open</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="delete">Delete</string>
