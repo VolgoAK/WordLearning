@@ -148,6 +148,7 @@ public class TrainingFragment extends Fragment {
     }
 
     public void pronounceWord(){
+        Log.d(TAG, "pronounceWord: ");
         if(mSpeaker != null) mSpeaker.speakWord(mTrainingWord.getWord());
     }
 
@@ -175,6 +176,12 @@ public class TrainingFragment extends Fragment {
         outState.putSerializable(TRAINING_TAG, mTraining );
         boolean answered = mAnswered.get();
         outState.putBoolean(ANSWERED, answered);
+    }
+
+    @Override
+    public void onDestroy() {
+        mSpeaker.close();
+        super.onDestroy();
     }
 
     // TODO: 04.05.2017 implement go to dictionary function

@@ -55,7 +55,7 @@ public class RedactorFragment extends Fragment{
         mBinding.rvRedactor.setLayoutManager(layoutManager);
 
         mDbAdapter = new WordsDbAdapter(getContext());
-        Cursor cursor = mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE);
+        Cursor cursor = mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE, -1);
 
         mCursorAdapter = new DictionaryRecyclerAdapter(cursor, getContext());
         mBinding.rvRedactor.setAdapter(mCursorAdapter);
@@ -81,7 +81,7 @@ public class RedactorFragment extends Fragment{
                 mDbAdapter.insertWord(word, translation, -1);
                 mBinding.etWordRedactor.setText("");
                 mBinding.etTranslationRedactor.setText("");
-                mCursorAdapter.changeCursor(mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE));
+                mCursorAdapter.changeCursor(mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE, -1));
             }
         });
     }
@@ -101,7 +101,7 @@ public class RedactorFragment extends Fragment{
             public void onClick(View v) {
                 // TODO: 10.06.2016 add method for change all trained collumns to zero at once
                 mDbAdapter.resetWordStatus(id);
-                mCursorAdapter.changeCursor(mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE));
+                mCursorAdapter.changeCursor(mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE, -1));
                 dialog.dismiss();
             }
         });
@@ -112,7 +112,7 @@ public class RedactorFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 mDbAdapter.deleteWordById(id);
-                mCursorAdapter.changeCursor(mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE));
+                mCursorAdapter.changeCursor(mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE, -1));
                 dialog.dismiss();
             }
         });

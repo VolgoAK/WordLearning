@@ -114,30 +114,26 @@ public class WordsDbAdapter {
         return cursor;
     }
 
-    public Cursor fetchWordsByTrained(String trainedType, int wordsLimit, int trainedLimit){
-        if(trainedType == null) trainedType = DatabaseContract.Words.COLUMN_STUDIED;
-
-        String select = "SELECT a.* FROM " + DatabaseContract.Words.TABLE_NAME + " a," +
-                DatabaseContract.Sets.TABLE_NAME + " b " +
-                " WHERE a." + DatabaseContract.Words.COLUMN_SET_ID + " = b." + DatabaseContract.Sets._ID +
-                " AND b." + DatabaseContract.Sets.COLUMN_STATUS + " = " + DatabaseContract.Sets.IN_DICTIONARY +
-                " AND a." + trainedType + " < " + trainedLimit +
-                " ORDER BY " + trainedType +
-                " LIMIT " + wordsLimit + ";";
-        Cursor cursor = mDb.rawQuery(select, null);
-        Log.d(TAG, "fetchWordsByTrained: count " + cursor.getCount());
-
-        return cursor;
-    }
-
     public Cursor fetchWordsByTrained(String trainedType, int wordsLimit, int trainedLimit, long setId){
         if(trainedType == null) trainedType = DatabaseContract.Words.COLUMN_STUDIED;
 
-        String select = "SELECT * FROM " + DatabaseContract.Words.TABLE_NAME  +
-            " WHERE " + DatabaseContract.Words.COLUMN_SET_ID + " = " + setId +
-            " AND " + trainedType + " < " + trainedLimit +
-             " ORDER BY " + trainedType +
-             " LIMIT " + wordsLimit + ";";
+        String select;
+
+        if(setId == -1){
+            select = "SELECT a.* FROM " + DatabaseContract.Words.TABLE_NAME + " a," +
+                    DatabaseContract.Sets.TABLE_NAME + " b " +
+                    " WHERE a." + DatabaseContract.Words.COLUMN_SET_ID + " = b." + DatabaseContract.Sets._ID +
+                    " AND b." + DatabaseContract.Sets.COLUMN_STATUS + " = " + DatabaseContract.Sets.IN_DICTIONARY +
+                    " AND a." + trainedType + " < " + trainedLimit +
+                    " ORDER BY " + trainedType +
+                    " LIMIT " + wordsLimit + ";";
+        }else {
+            select = "SELECT * FROM " + DatabaseContract.Words.TABLE_NAME +
+                    " WHERE " + DatabaseContract.Words.COLUMN_SET_ID + " = " + setId +
+                    " AND " + trainedType + " < " + trainedLimit +
+                    " ORDER BY " + trainedType +
+                    " LIMIT " + wordsLimit + ";";
+        }
 
         Cursor cursor = mDb.rawQuery(select, null);
         Log.d(TAG, "fetchWordsByTrained: count " + cursor.getCount());
@@ -158,7 +154,8 @@ public class WordsDbAdapter {
 
     public Cursor fetchWordsBySetId(long id){
         String query = "SELECT * FROM " + DatabaseContract.Words.TABLE_NAME +
-                " WHERE " + DatabaseContract.Words.COLUMN_SET_ID + " = " + id;
+                " WHERE " + DatabaseContract.Words.COLUMN_SET_ID + " = " + id +
+                " ORDER BY " + DatabaseContract.Words.COLUMN_WORD + " COLLATE NOCASE";
         return mDb.rawQuery(query, null);
     }
 

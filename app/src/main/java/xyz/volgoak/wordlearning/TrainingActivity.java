@@ -10,6 +10,8 @@ import xyz.volgoak.wordlearning.training_utils.Results;
 import xyz.volgoak.wordlearning.training_utils.Training;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
+import static xyz.volgoak.wordlearning.R.string.results;
+
 public class TrainingActivity extends AppCompatActivity implements TrainingFragment.ResultReceiver{
 
     public static final String EXTRA_TRAINING_TYPE = "training_type";
@@ -28,11 +30,13 @@ public class TrainingActivity extends AppCompatActivity implements TrainingFragm
             bar.setHomeButtonEnabled(true);
         }
 
-        TrainingFragment fragment = TrainingFragment.getWordTrainingFragment(training_type, setId);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container_training, fragment);
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        transaction.commit();
+        if(savedInstanceState == null) {
+            TrainingFragment fragment = TrainingFragment.getWordTrainingFragment(training_type, setId);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.container_training, fragment);
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            transaction.commit();
+        }
     }
 
     @Override
