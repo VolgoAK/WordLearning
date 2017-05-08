@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class Results implements Serializable{
     public ArrayList<Long> idsForUpdate;
     public String trainedType;
+    public long setId = -1;
     public int wordCount;
     public int correctAnswers;
 }

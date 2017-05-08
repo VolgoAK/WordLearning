@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.training_utils.Results;
+import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
 
 public class ResultsFragment extends Fragment {
@@ -76,8 +77,15 @@ public class ResultsFragment extends Fragment {
         startWTbutton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                // TODO: 04.05.2017 change listener and make two choices
-               // mListener.startTrainingWT();
+               mListener.startTraining(TrainingFabric.WORD_TRANSLATION, mResults.setId);
+            }
+        });
+
+        Button startTWbutton = (Button) getView().findViewById(R.id.result_start_tw);
+        startTWbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.startTraining(TrainingFabric.TRANSLATION_WORD, mResults.setId);
             }
         });
 

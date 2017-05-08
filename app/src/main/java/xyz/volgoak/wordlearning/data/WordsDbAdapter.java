@@ -115,28 +115,30 @@ public class WordsDbAdapter {
     }
 
     public Cursor fetchWordsByTrained(String trainedType, int wordsLimit, int trainedLimit){
-        return fetchWordsByTrained(trainedType, wordsLimit, trainedLimit, -1);
+        if(trainedType == null) trainedType = DatabaseContract.Words.COLUMN_STUDIED;
+
+        String select = "SELECT a.* FROM " + DatabaseContract.Words.TABLE_NAME + " a," +
+                DatabaseContract.Sets.TABLE_NAME + " b " +
+                " WHERE a." + DatabaseContract.Words.COLUMN_SET_ID + " = b." + DatabaseContract.Sets._ID +
+                " AND b." + DatabaseContract.Sets.COLUMN_STATUS + " = " + DatabaseContract.Sets.IN_DICTIONARY +
+                " AND a." + trainedType + " < " + trainedLimit +
+                " ORDER BY " + trainedType +
+                " LIMIT " + wordsLimit + ";";
+        Cursor cursor = mDb.rawQuery(select, null);
+        Log.d(TAG, "fetchWordsByTrained: count " + cursor.getCount());
+
+        return cursor;
     }
 
     public Cursor fetchWordsByTrained(String trainedType, int wordsLimit, int trainedLimit, long setId){
         if(trainedType == null) trainedType = DatabaseContract.Words.COLUMN_STUDIED;
 
-        String select = "SELECT a.* FROM " + DatabaseContract.Words.TABLE_NAME + " a," +
-                DatabaseContract.Sets.TABLE_NAME + " b " ;
+        String select = "SELECT * FROM " + DatabaseContract.Words.TABLE_NAME  +
+            " WHERE " + DatabaseContract.Words.COLUMN_SET_ID + " = " + setId +
+            " AND " + trainedType + " < " + trainedLimit +
+             " ORDER BY " + trainedType +
+             " LIMIT " + wordsLimit + ";";
 
-         String whereSet ;
-        if(setId == -1){
-            whereSet = " WHERE a." + DatabaseContract.Words.COLUMN_SET_ID + " = b." + DatabaseContract.Sets._ID +
-                " AND b." + DatabaseContract.Sets.COLUMN_STATUS + " = " + DatabaseContract.Sets.IN_DICTIONARY ;}
-        else{
-            whereSet = " WHERE a." + DatabaseContract.Words.COLUMN_SET_ID + " = " + setId;
-            }
-
-        String paramsSelect =     " AND a." + trainedType + " < " + trainedLimit +
-                " ORDER BY " + trainedType +
-                " LIMIT " + wordsLimit + ";";
-
-        select = select + whereSet + paramsSelect;
         Cursor cursor = mDb.rawQuery(select, null);
         Log.d(TAG, "fetchWordsByTrained: count " + cursor.getCount());
 

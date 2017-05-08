@@ -10,8 +10,12 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
+import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
 import static org.junit.Assert.*;
 
@@ -60,6 +64,29 @@ public class DbAdapterTests {
             int studied = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Words.COLUMN_STUDIED));
             System.out.println("word " + word + " studied " + studied);
         }while (cursor.moveToNext());
+    }
+
+    @Test
+    public void wordsUniqueTest(){
+        Cursor setsCursor = dbAdapter.fetchSets();
+        setsCursor.moveToFirst();
+        do{
+            long setId = setsCursor.getLong(setsCursor.getColumnIndex(DatabaseContract.Sets._ID));
+            String setName = setsCursor.getString(setsCursor.getColumnIndex(DatabaseContract.Sets.COLUMN_NAME));
+            System.out.println(setName);
+            Cursor wordsCursor = dbAdapter.fetchWordsByTrained(DatabaseContract.Words.COLUMN_TRAINED_WT, 10, 4, setId);
+            checkUnique(wordsCursor);
+        }while(setsCursor.moveToNext());
+    }
+
+    public void checkUnique(Cursor cursor){
+        Set<String> wordSet = new HashSet<>();
+        cursor.moveToFirst();
+        do{
+            String word = cursor.getString(cursor.getColumnIndex(DatabaseContract.Words.COLUMN_WORD));
+            System.out.println(word);
+            assertTrue(wordSet.add(word));
+        }while(cursor.moveToNext());
     }
 
 }

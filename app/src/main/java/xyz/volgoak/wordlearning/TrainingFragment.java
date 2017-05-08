@@ -139,6 +139,7 @@ public class TrainingFragment extends Fragment {
         mTrainingWord = mTraining.getNextWord();
         if(mTrainingWord == null){
             Results results = mTraining.getResults();
+            results.setId = mSetId;
             mResultReceiver.showResults(results);
             return;
         }
