@@ -11,6 +11,11 @@ import android.widget.ImageButton;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
@@ -30,10 +35,12 @@ public class SetsCursorAdapter extends SimpleCursorAdapter{
 
     private Context mContext;
     private SetStatusChanger mSetStatusChanger;
+    private StorageReference mImageRefs;
 
     public SetsCursorAdapter(Context context, Cursor cursor){
         super(context, LAYOUT, cursor, FROM, TO, 0);
         mContext = context;
+        mImageRefs = FirebaseStorage.getInstance().getReference("images");
     }
 
     public void setStatusChanger(SetStatusChanger statusChanger){
@@ -58,7 +65,7 @@ public class SetsCursorAdapter extends SimpleCursorAdapter{
         holder.setNameTv.setText(setName);
 
         String firstLetter = setName.substring(0,1).toUpperCase();
-        holder.firstLetterTv.setText(firstLetter);
+        //holder.firstLetterTv.setText(firstLetter);
 
         String description = cursor.getString(cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_DESCRIPTION));
         holder.setDescriptionTv.setText(description);
@@ -78,6 +85,15 @@ public class SetsCursorAdapter extends SimpleCursorAdapter{
 
         int drawableId = setStatus == DatabaseContract.Sets.IN_DICTIONARY ? R.drawable.ic_added : R.drawable.ic_add;
         holder.addButton.setImageDrawable(ContextCompat.getDrawable(mContext, drawableId));
+
+        String imageUrl = cursor.getString(cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_IMAGE_URL));
+        StorageReference image = mImageRefs.child(imageUrl);
+        Glide.with(mContext)
+                .using(new FirebaseImageLoader())
+                .load(image)
+                .centerCrop()
+                .crossFade().error(R.drawable.button_back)
+                .into(holder.civ);
 
     }
 

@@ -12,6 +12,9 @@ import org.w3c.dom.NodeList;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -29,11 +32,10 @@ public final class SetsParser {
 
     public static final String SET_NODE = "Set";
     public static final String NAME_ATTR = "name";
-    public static final String WORD_NODE = "Word";
     public static final String WORD_ATTR = "word";
     public static final String TRANSLATION_ATTR = "translation";
     public static final String DESCRIPTION_ATTR = "description";
-    public static final String WORD_COUNT_ATTR = "words_count";
+    public static final String IMAGE_ATTR = "image";
 
     private SetsParser(){
         throw new AssertionError();
@@ -46,8 +48,12 @@ public final class SetsParser {
     public static int loadStartBase(Context context){
         int addedWords = 0;
         try {
-            InputStream inputStream = context.getAssets().open("start_base.xml");
-            addedWords = insertSetsIntoDb(inputStream, context);
+            InputStream inputStream = context.getAssets().open("nature.xml");
+            addedWords += insertSetsIntoDb(inputStream, context);
+            inputStream = context.getAssets().open("things.xml");
+            addedWords += insertSetsIntoDb(inputStream, context);
+            inputStream = context.getAssets().open("verbs.xml");
+            addedWords += insertSetsIntoDb(inputStream, context);
         }catch(IOException ex){
             ex.printStackTrace();
         }
@@ -75,19 +81,9 @@ public final class SetsParser {
             for(int a = 0; a < setsList.getLength(); a++){
                 Node setNode = setsList.item(a);
                 if(setNode.getNodeType() == Node.ELEMENT_NODE){
-                    String setName = setNode.getAttributes().getNamedItem(NAME_ATTR).getNodeValue();
-                    String description = setNode.getAttributes().getNamedItem(DESCRIPTION_ATTR).getNodeValue();
-                    int wordsInSet = Integer.parseInt(setNode.getAttributes().getNamedItem(WORD_COUNT_ATTR).getNodeValue());
 
-                    ContentValues setValues = new ContentValues();
-                    setValues.put(DatabaseContract.Sets.COLUMN_NAME, setName);
-                    setValues.put(DatabaseContract.Sets.COLUMN_DESCRIPTION, description);
-                    setValues.put(DatabaseContract.Sets.COLUMN_NUM_OF_WORDS, wordsInSet);
-
-                    long setId = dbAdapter.insertSet(setValues);
-                    addedSetsCount++;
-
-                    //parse and insert words
+                    Map<String, String> wordsMap = new HashMap<>();
+                    //parse words and save into map
                     NodeList wordsList = setNode.getChildNodes();
                     for(int b = 0; b < wordsList.getLength(); b++){
                         Node wordNode = wordsList.item(b);
@@ -95,9 +91,28 @@ public final class SetsParser {
                             String word = capitalize(wordNode.getAttributes().getNamedItem(WORD_ATTR).getNodeValue());
                             String translation = capitalize(wordNode.getAttributes().getNamedItem(TRANSLATION_ATTR).getNodeValue());
 
-                            dbAdapter.insertWord(word, translation, setId);
-                            addedWordsCount++;
+                            wordsMap.put(word, translation);
                         }
+                    }
+
+                    String setName = setNode.getAttributes().getNamedItem(NAME_ATTR).getNodeValue();
+                    String description = setNode.getAttributes().getNamedItem(DESCRIPTION_ATTR).getNodeValue();
+                    String image = setNode.getAttributes().getNamedItem(IMAGE_ATTR).getNodeValue();
+                    int wordsInSet = wordsMap.size();
+
+                    ContentValues setValues = new ContentValues();
+                    setValues.put(DatabaseContract.Sets.COLUMN_NAME, setName);
+                    setValues.put(DatabaseContract.Sets.COLUMN_DESCRIPTION, description);
+                    setValues.put(DatabaseContract.Sets.COLUMN_NUM_OF_WORDS, wordsInSet);
+                    setValues.put(DatabaseContract.Sets.COLUMN_IMAGE_URL, image);
+
+                    long setId = dbAdapter.insertSet(setValues);
+                    addedSetsCount++;
+
+                    Set<String> wordsSet = wordsMap.keySet();
+                    for(String word : wordsSet){
+                        dbAdapter.insertWord(word, wordsMap.get(word), setId);
+                        addedWordsCount++;
                     }
                 }
             }

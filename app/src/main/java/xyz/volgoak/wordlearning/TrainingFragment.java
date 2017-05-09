@@ -180,7 +180,7 @@ public class TrainingFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        mSpeaker.close();
+        if(mSpeaker != null)mSpeaker.close();
         super.onDestroy();
     }
 

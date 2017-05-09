@@ -8,7 +8,7 @@ import android.provider.BaseColumns;
 
 public final class DatabaseContract {
 
-    public final static int DB_VERSION = 23;
+    public final static int DB_VERSION = 32;
     public final static String DB_NAME = "WORDS_DATABASE";
 
 
@@ -51,12 +51,14 @@ public final class DatabaseContract {
         public static final String COLUMN_STATUS = "STATUS";
         public static final String COLUMN_VISIBILITY = "VISIBILITY";
         public static final String COLUMN_DESCRIPTION = "DESCRIPTION";
+        public static final String COLUMN_IMAGE_URL = "image_url";
 
         public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME +
                 "( " + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_NAME + " TEXT, " +
                 COLUMN_DESCRIPTION + " TEXT, " +
                 COLUMN_NUM_OF_WORDS + " INTEGER DEFAULT 0, " +
+                COLUMN_IMAGE_URL + " TEXT," +
                 COLUMN_VISIBILITY + " INTEGER DEFAULT " + VISIBLE + ", " +
                 COLUMN_STATUS + " INTEGER DEFAULT " + OUT_OF_DICTIONARY + ");";
 
