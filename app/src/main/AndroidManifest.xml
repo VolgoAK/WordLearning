@@ -21,7 +21,7 @@
         <activity
             android:name=".SetActivity"
             android:label="@string/title_activity_set"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme.SimpleCoordinatorTheme"
             android:parentActivityName=".MainActivity"/>
         <activity android:name=".TrainingActivity"
             android:parentActivityName=".MainActivity"

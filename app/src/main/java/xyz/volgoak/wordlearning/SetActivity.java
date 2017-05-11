@@ -32,7 +32,7 @@ public class SetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_set);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_set);
-        setSupportActionBar(mBinding.toolbar);
+        setSupportActionBar(mBinding.setToolbar);
 
         mSetId = getIntent().getLongExtra(ID_EXTRA, -1);
         mDbAdapter = new WordsDbAdapter(this);
@@ -57,7 +57,8 @@ public class SetActivity extends AppCompatActivity {
         setCursor.moveToFirst();
 
         String setName = setCursor.getString(setCursor.getColumnIndex(DatabaseContract.Sets.COLUMN_NAME));
-        mBinding.tvToolbarTitleSetact.setText(getString(R.string.set_activity_title, setName));
+
+        mBinding.setToolbar.setTitle(setName);
 
         int wordsInSet = setCursor.getInt(setCursor.getColumnIndex(DatabaseContract.Sets.COLUMN_NUM_OF_WORDS));
         mBinding.tvWordsCountSetact.setText(getString(R.string.words_in_set, wordsInSet));

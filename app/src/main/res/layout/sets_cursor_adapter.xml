@@ -41,8 +41,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/civ_sets"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="@dimen/circle_image_size"
+            android:layout_height="@dimen/circle_image_size"
             android:src="@drawable/button_back"
             android:layout_margin="@dimen/views_vertical_margin"
             app:layout_constraintRight_toRightOf="parent"
