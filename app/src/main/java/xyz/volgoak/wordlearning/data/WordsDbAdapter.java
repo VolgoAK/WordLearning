@@ -13,6 +13,7 @@ import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.utils.SetsParser;
 
 import static xyz.volgoak.wordlearning.utils.SetsParser.TAG;
+import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.IN_DICTIONARY;
 
 
 /**
@@ -52,7 +53,7 @@ public class WordsDbAdapter {
         return !cursor.moveToFirst();
     }
 
-    public long insertWord(String word, String translation, long setId){
+    public long insertWord(String word, String translation, long setId, int status){
         //if set id -1 save word in the default word set
         if(setId == -1){
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -63,6 +64,7 @@ public class WordsDbAdapter {
         values.put(DatabaseContract.Words.COLUMN_WORD, word);
         values.put(DatabaseContract.Words.COLUMN_TRANSLATION, translation);
         values.put(DatabaseContract.Words.COLUMN_SET_ID, setId);
+        values.put(DatabaseContract.Words.COLUMN_STATUS, status);
 
         return  mDb.insert(DatabaseContract.Words.TABLE_NAME, null, values);
     }
@@ -72,7 +74,6 @@ public class WordsDbAdapter {
 
         ContentValues values = new ContentValues();
         values.put(DatabaseContract.Sets.COLUMN_NAME, USERS_SET_NAME);
-        values.put(DatabaseContract.Sets.COLUMN_STATUS, DatabaseContract.Sets.IN_DICTIONARY);
         values.put(DatabaseContract.Sets.COLUMN_VISIBILITY, DatabaseContract.Sets.INVISIBLE);
 
         long setId = mDb.insert(DatabaseContract.Sets.TABLE_NAME, null, values);
@@ -82,18 +83,18 @@ public class WordsDbAdapter {
         editor.putLong(DEFAULT_DICTIONARY_ID, setId);
         editor.apply();
 
-        insertWord("Cat", "Кот", setId);
-        insertWord("Dog", "Собака", setId);
-        insertWord("Monkey", "Обезьяна", setId);
-        insertWord("Donkey", "Осел", setId);
-        insertWord("Pigeon", "Голубь", setId);
-        insertWord("Run", "Бежать", setId);
-        insertWord("Perfect", "Совершенный", setId);
-        insertWord("Stupid", "Тупой", setId);
-        insertWord("Asshole", "Придурок", setId);
-        insertWord("Beach", "Пляж", setId);
-        insertWord("Temple", "Храм", setId);
-        insertWord("Country", "Страна", setId);
+        insertWord("Cat", "Кот", setId, IN_DICTIONARY );
+        insertWord("Dog", "Собака", setId, IN_DICTIONARY);
+        insertWord("Monkey", "Обезьяна", setId, IN_DICTIONARY);
+        insertWord("Donkey", "Осел", setId, IN_DICTIONARY);
+        insertWord("Pigeon", "Голубь", setId, IN_DICTIONARY);
+        insertWord("Run", "Бежать", setId, IN_DICTIONARY);
+        insertWord("Perfect", "Совершенный", setId, IN_DICTIONARY);
+        insertWord("Stupid", "Тупой", setId, IN_DICTIONARY);
+        insertWord("Asshole", "Придурок", setId, IN_DICTIONARY);
+        insertWord("Beach", "Пляж", setId, IN_DICTIONARY);
+        insertWord("Temple", "Храм", setId, IN_DICTIONARY);
+        insertWord("Country", "Страна", setId, IN_DICTIONARY);
 
         SetsParser.loadStartBase(mContext);
     }
@@ -104,10 +105,13 @@ public class WordsDbAdapter {
     }
 
     public Cursor fetchDictionaryWords(){
-        String select = "SELECT a.* " +
+        /*String select = "SELECT a.* " +
                 " FROM " + DatabaseContract.Words.TABLE_NAME + " a, " + DatabaseContract.Sets.TABLE_NAME + " b " +
                 " WHERE a." + DatabaseContract.Words.COLUMN_SET_ID + " = b." + DatabaseContract.Sets._ID +
-                " AND b." + DatabaseContract.Sets.COLUMN_STATUS + " = " + DatabaseContract.Sets.IN_DICTIONARY;
+                " AND b." + DatabaseContract.Sets.COLUMN_STATUS + " = " + DatabaseContract.Sets.IN_DICTIONARY;*/
+
+        String select = "SELECT * FROM " + DatabaseContract.Words.TABLE_NAME +
+                " WHERE " + DatabaseContract.Words.COLUMN_STATUS + " = " + DatabaseContract.Words.IN_DICTIONARY ;
 
         Cursor cursor = mDb.rawQuery(select, null);
         Log.d(TAG, "fetchDictionaryWords: size" + cursor.getCount());
@@ -120,13 +124,20 @@ public class WordsDbAdapter {
         String select;
 
         if(setId == -1){
-            select = "SELECT a.* FROM " + DatabaseContract.Words.TABLE_NAME + " a," +
+            /*select = "SELECT a.* FROM " + DatabaseContract.Words.TABLE_NAME + " a," +
                     DatabaseContract.Sets.TABLE_NAME + " b " +
                     " WHERE a." + DatabaseContract.Words.COLUMN_SET_ID + " = b." + DatabaseContract.Sets._ID +
                     " AND b." + DatabaseContract.Sets.COLUMN_STATUS + " = " + DatabaseContract.Sets.IN_DICTIONARY +
                     " AND a." + trainedType + " < " + trainedLimit +
                     " ORDER BY " + trainedType +
+                    " LIMIT " + wordsLimit + ";";*/
+
+            select = "SELECT * FROM " + DatabaseContract.Words.TABLE_NAME +
+                    " WHERE " + DatabaseContract.Words.COLUMN_STATUS + " = " + DatabaseContract.Words.IN_DICTIONARY +
+                    " AND " + trainedType + " < " + trainedLimit +
+                    " ORDER BY " + trainedType +
                     " LIMIT " + wordsLimit + ";";
+
         }else {
             select = "SELECT * FROM " + DatabaseContract.Words.TABLE_NAME +
                     " WHERE " + DatabaseContract.Words.COLUMN_SET_ID + " = " + setId +
@@ -143,7 +154,7 @@ public class WordsDbAdapter {
 
     public Cursor fetchSets(){
         String query = "SELECT * FROM " + DatabaseContract.Sets.TABLE_NAME +
-                " WHERE " + DatabaseContract.Sets.COLUMN_VISIBILITY + " = " + DatabaseContract.Sets.IN_DICTIONARY;
+                " WHERE " + DatabaseContract.Sets.COLUMN_VISIBILITY + " = " + DatabaseContract.Sets.VISIBLE;
         return mDb.rawQuery(query, null);
     }
 
@@ -163,10 +174,18 @@ public class WordsDbAdapter {
         return mDb.rawQuery(query, null);
     }
 
-    public String[] getVariants(int id, String column){
-        Cursor cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME
-                + " WHERE " + DatabaseContract.Words._ID + " != " + id
-                + " ORDER BY RANDOM() LIMIT 3", null);
+    // TODO: 12.05.2017 add setid arg
+    public String[] getVariants(int id, String column, long setId){
+        String select = "SELECT * FROM " + DatabaseContract.Words.TABLE_NAME
+                + " WHERE " + DatabaseContract.Words._ID + " != " + id;
+
+        if(setId != -1){
+            select += " AND " + DatabaseContract.Words.COLUMN_SET_ID + " = " + setId;
+        }
+        select += " ORDER BY RANDOM() LIMIT 3";
+
+
+        Cursor cursor = mDb.rawQuery(select, null);
         cursor.moveToFirst();
 
         String[] variants = new String[cursor.getCount()];
@@ -174,6 +193,7 @@ public class WordsDbAdapter {
             variants[a] = cursor.getString(cursor.getColumnIndex(column));
             cursor.moveToNext();
         }
+        cursor.close();
         return variants;
     }
 
@@ -213,10 +233,17 @@ public class WordsDbAdapter {
     }
 
     public void changeSetStatus(long id, int status){
-        ContentValues values = new ContentValues();
-        values.put(DatabaseContract.Sets.COLUMN_STATUS, status);
+        ContentValues setValues = new ContentValues();
+        setValues.put(DatabaseContract.Sets.COLUMN_STATUS, status);
 
-        mDb.update(DatabaseContract.Sets.TABLE_NAME, values, DatabaseContract.Sets._ID + "=?", new String[]{String.valueOf(id)});
+        mDb.update(DatabaseContract.Sets.TABLE_NAME, setValues, DatabaseContract.Sets._ID + "=?",
+                new String[]{String.valueOf(id)});
+
+        ContentValues wordValues = new ContentValues();
+        wordValues.put(DatabaseContract.Words.COLUMN_STATUS, status);
+
+        mDb.update(DatabaseContract.Words.TABLE_NAME, wordValues, DatabaseContract.Words.COLUMN_SET_ID + "=?",
+                new String[]{String.valueOf(id)});
     }
 
     public void resetSetProgress(long setId){

@@ -58,7 +58,7 @@ public class TrainingFabric {
         for(int a = 0; a < cursorCount; a++){
             String word = cursor.getString(wordColumn);
             String translation = cursor.getString(variantsColumn);
-            String[] vars = mDbAdapter.getVariants(cursor.getInt(idColumn), variantsColumnString);
+            String[] vars = mDbAdapter.getVariants(cursor.getInt(idColumn), variantsColumnString, setId);
             PlayWord playWord = new PlayWord(word, translation, vars, cursor.getInt(idColumn));
             playWords.add(playWord);
             cursor.moveToNext();

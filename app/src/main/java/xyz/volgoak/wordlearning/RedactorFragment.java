@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.databinding.FragmentRedactorBinding;
 import xyz.volgoak.wordlearning.utils.DictionaryRecyclerAdapter;
@@ -78,7 +79,7 @@ public class RedactorFragment extends Fragment{
                     Toast.makeText(getContext(), getString(R.string.fields_empty_message), Toast.LENGTH_LONG).show();
                     return;
                 }
-                mDbAdapter.insertWord(word, translation, -1);
+                mDbAdapter.insertWord(word, translation, -1, DatabaseContract.Words.IN_DICTIONARY);
                 mBinding.etWordRedactor.setText("");
                 mBinding.etTranslationRedactor.setText("");
                 mCursorAdapter.changeCursor(mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE, -1));

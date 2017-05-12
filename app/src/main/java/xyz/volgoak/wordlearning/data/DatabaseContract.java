@@ -2,17 +2,22 @@ package xyz.volgoak.wordlearning.data;
 
 import android.provider.BaseColumns;
 
+import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.OUT_OF_DICTIONARY;
+
 /**
  * Created by Volgoak on 11.04.2017.
  */
 
 public final class DatabaseContract {
 
-    public final static int DB_VERSION = 32;
+    public final static int DB_VERSION = 33;
     public final static String DB_NAME = "WORDS_DATABASE";
 
 
     public static abstract class Words implements BaseColumns{
+
+        public static final int OUT_OF_DICTIONARY = 0;
+        public static final int IN_DICTIONARY = 1;
 
         public final static String TABLE_NAME = "WORDS_TABLE";
 
@@ -22,6 +27,7 @@ public final class DatabaseContract {
         public final static String COLUMN_TRAINED_TW = "TW_TRAINED";
         public final static String COLUMN_STUDIED = "STUDIED";
         public final static String COLUMN_SET_ID = "SET_ID";
+        public static final String COLUMN_STATUS = "STATUS";
 
         public final static String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME +
                 " ( " + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -30,6 +36,7 @@ public final class DatabaseContract {
                 COLUMN_TRAINED_WT + " INTEGER DEFAULT 0, " +
                 COLUMN_TRAINED_TW + " INTEGER DEFAULT 0, " +
                 COLUMN_STUDIED + " INTEGER DEFAULT 0, " +
+                COLUMN_STATUS + " INTEGER DEFAULT 0, " +
                 COLUMN_SET_ID + " INTEGER NOT NULL, " +
                 " FOREIGN KEY (" + COLUMN_SET_ID + ") REFERENCES " + Sets.TABLE_NAME + "(" +
                 Sets._ID + "));";

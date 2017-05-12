@@ -111,7 +111,7 @@ public final class SetsParser {
 
                     Set<String> wordsSet = wordsMap.keySet();
                     for(String word : wordsSet){
-                        dbAdapter.insertWord(word, wordsMap.get(word), setId);
+                        dbAdapter.insertWord(word, wordsMap.get(word), setId, DatabaseContract.Words.OUT_OF_DICTIONARY);
                         addedWordsCount++;
                     }
                 }
