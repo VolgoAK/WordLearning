@@ -87,10 +87,10 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        mDbAdapter.close();
+    public void onStop() {
+        super.onStop();
         mCursorAdapter.getCursor().close();
+        mDbAdapter.close();
     }
 
     /*@Override
@@ -170,6 +170,7 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
 
     @Override
     public void changeSetStatus(long setId, int newStatus, String setName) {
+        Log.d(TAG, "changeSetStatus: ");
         String message ;
         message = newStatus == DatabaseContract.Sets.IN_DICTIONARY ? getString(R.string.set_added_message, setName) :
                 getString(R.string.set_removed_message, setName);

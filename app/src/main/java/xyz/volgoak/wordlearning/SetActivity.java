@@ -3,13 +3,21 @@ package xyz.volgoak.wordlearning;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import xyz.volgoak.wordlearning.data.DatabaseContract;
+import xyz.volgoak.wordlearning.data.FirebaseContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.databinding.ActivitySetBinding;
 import xyz.volgoak.wordlearning.utils.DictionaryRecyclerAdapter;
@@ -25,6 +33,7 @@ public class SetActivity extends AppCompatActivity {
     private DictionaryRecyclerAdapter mRecyclerAdapter;
     private long mSetId;
     private boolean mSetInDictionary;
+    private String mSetName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,34 +52,41 @@ public class SetActivity extends AppCompatActivity {
 
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        prepareSetInformation();
+        loadSetInformation();
 
-        //inflate recyclerView
         recyclerOperations();
-
-
 
     }
 
-    private void prepareSetInformation(){
+    private void loadSetInformation(){
         Cursor setCursor = mDbAdapter.fetchSetById(mSetId);
         setCursor.moveToFirst();
 
-        String setName = setCursor.getString(setCursor.getColumnIndex(DatabaseContract.Sets.COLUMN_NAME));
+        //set title
+        mSetName = setCursor.getString(setCursor.getColumnIndex(DatabaseContract.Sets.COLUMN_NAME));
+        getSupportActionBar().setTitle(mSetName);
 
-        mBinding.setToolbar.setTitle(setName);
+        //load title image
+        String imageRes = setCursor.getString(setCursor.getColumnIndex(DatabaseContract.Sets.COLUMN_IMAGE_URL));
+        StorageReference imageRef = FirebaseStorage.getInstance()
+                .getReference(FirebaseContract.TITLE_IMAGES_FOLDER)
+                .child(imageRes);
 
-        int wordsInSet = setCursor.getInt(setCursor.getColumnIndex(DatabaseContract.Sets.COLUMN_NUM_OF_WORDS));
-        mBinding.tvWordsCountSetact.setText(getString(R.string.words_in_set, wordsInSet));
+        // TODO: 11.05.2017 add default dravable
+        Glide.with(this)
+                .using(new FirebaseImageLoader())
+                .load(imageRef)
+                .centerCrop()
+                .crossFade().error(R.drawable.button_back)
+                .into(mBinding.setIvTitle);
+
 
         int setStatus = setCursor.getInt(setCursor.getColumnIndex(DatabaseContract.Sets.COLUMN_STATUS));
         mSetInDictionary = setStatus == DatabaseContract.Sets.IN_DICTIONARY;
 
-        mBinding.tvSendToTrainSetact.setText(getString(R.string.reset_progress));
-
         manageTrainingStatus();
 
-        mBinding.btChangeStatusSetact.setOnClickListener(new View.OnClickListener() {
+        mBinding.setAddFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int newStatus = mSetInDictionary ? DatabaseContract.Sets.OUT_OF_DICTIONARY : DatabaseContract.Sets.IN_DICTIONARY;
@@ -78,26 +94,37 @@ public class SetActivity extends AppCompatActivity {
 
                 mDbAdapter.changeSetStatus(mSetId, newStatus);
                 manageTrainingStatus();
+
+                int messageId = mSetInDictionary ? R.string.set_added_message : R.string.set_removed_message;
+                String message = getString(messageId, mSetName);
+                Snackbar.make(v, message, BaseTransientBottomBar.LENGTH_LONG).show();
             }
         });
 
-        mBinding.btToTrainingSetact.setOnClickListener(new View.OnClickListener() {
+
+        mBinding.setResetFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDbAdapter.resetSetProgress(mSetId);
-                mRecyclerAdapter.changeCursor(mDbAdapter.fetchWordsBySetId(mSetId));
+
+                View.OnClickListener snackListener = new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        mDbAdapter.resetSetProgress(mSetId);
+                        mRecyclerAdapter.changeCursor(mDbAdapter.fetchWordsBySetId(mSetId));
+                    }
+                };
+
+                Snackbar.make(v, R.string.reset_progress_question, BaseTransientBottomBar.LENGTH_LONG)
+                        .setAction(R.string.reset, snackListener).show();
             }
         });
     }
 
     private void manageTrainingStatus(){
-        String setStatusString = mSetInDictionary ? getString(R.string.set_in_the_dictionary) : getString(R.string.set_out_of_dictionary);
-        mBinding.tvSetstatusSetact.setText(setStatusString);
-        String changeStatusButton = mSetInDictionary ? getString(R.string.remove) : getString(R.string.add_set);
-        mBinding.btChangeStatusSetact.setText(changeStatusButton);
 
-        mBinding.tvSendToTrainSetact.setVisibility(mSetInDictionary ? View.VISIBLE : View.GONE);
-        mBinding.btToTrainingSetact.setVisibility(mSetInDictionary ? View.VISIBLE : View.GONE);
+        mBinding.setResetFab.setVisibility(mSetInDictionary ? View.VISIBLE : View.GONE);
+        int addDrawableId = mSetInDictionary ? R.drawable.ic_remove_white_24dp : R.drawable.ic_add_white_24dp;
+        mBinding.setAddFab.setImageDrawable(ContextCompat.getDrawable(this, addDrawableId));
     }
 
     private void recyclerOperations(){

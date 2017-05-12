@@ -17,11 +17,12 @@
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay"
+
         >
         <android.support.design.widget.CollapsingToolbarLayout
             android:fitsSystemWindows="true"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:contentScrim="@color/colorPrimary"
             >
@@ -32,7 +33,7 @@
                 android:src="@mipmap/set_back"
                 android:scaleType="centerCrop"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/title_image_height"
                 app:layout_collapseMode="parallax"/>
 
 
@@ -47,75 +48,6 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
-
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center_horizontal">
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/constraint_set"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-
-                <TextView
-                    android:id="@+id/tv_words_count_setact"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/small_title_text"
-                    android:layout_marginStart="@dimen/views_horizontal_margin"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Words in set - 100"/>
-
-                <TextView
-                    android:id="@+id/tv_setstatus_setact"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/views_horizontal_margin"
-                    style="@style/small_title_text"
-                    android:gravity="bottom"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/bt_change_status_setact"
-                    app:layout_constraintBottom_toBottomOf="@id/bt_change_status_setact"
-                    tools:text="Set in dictionary"/>
-
-                <Button
-                    android:id="@+id/bt_change_status_setact"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_words_count_setact"
-                    />
-
-                <TextView
-                    android:id="@+id/tv_send_to_train_setact"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/views_horizontal_margin"
-                    style="@style/small_title_text"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/bt_to_training_setact"
-                    app:layout_constraintBottom_toBottomOf="@id/bt_to_training_setact"
-                    tools:text="Send to training"/>
-
-                <Button
-                    android:id="@+id/bt_to_training_setact"
-                    android:text="@string/reset"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/bt_change_status_setact"
-                    app:layout_constraintRight_toRightOf="parent"/>
-
-            </android.support.constraint.ConstraintLayout>
-            </FrameLayout>
-
-
-
-
-
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -125,7 +57,25 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/set_add_fab"
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
+        android:layout_marginEnd="@dimen/views_horizontal_margin"
+        android:elevation="8dp"
+        android:src="@drawable/ic_add_white_24dp"
+        app:layout_anchor="@id/appbar_setact"
+        app:layout_anchorGravity="bottom|right|end" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/set_reset_fab"
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
+        android:layout_marginEnd="@dimen/reset_fab_margin"
+        android:elevation="8dp"
+        android:src="@drawable/ic_reset_white_24dp"
+        app:layout_anchor="@id/appbar_setact"
+        app:layout_anchorGravity="bottom|right|end" />
 
 </android.support.design.widget.CoordinatorLayout>
 </layout>

@@ -17,6 +17,7 @@
     <string name="set_in_the_dictionary">Set in the dictionary</string>
     <string name="set_out_of_dictionary">Set out of dictionary</string>
     <string name="reset_progress">Reset progress</string>
+    <string name="reset_progress_question">Reset progress?</string>
     <string name="add_set">Add</string>
     <string name="remove">Remove</string>
     <string name="reset">Reset</string>
