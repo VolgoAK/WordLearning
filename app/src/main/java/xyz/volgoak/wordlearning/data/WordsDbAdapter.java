@@ -262,6 +262,8 @@ public class WordsDbAdapter {
         mDb.delete(DatabaseContract.Words.TABLE_NAME,  DatabaseContract.Words._ID + "=?", new String[]{Long.toString(id)});
     }
 
+    // TODO: 13.05.2017 add method deleteOrHideWordById
+
     public void close(){
         mContext = null;
         mDb.close();
