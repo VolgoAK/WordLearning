@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="@dimen/dialog_window_width"
+    android:orientation="vertical" android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center">
 
@@ -8,32 +8,29 @@
         android:id="@+id/dialog_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/black_title_text"
         android:text="@string/what_to_do"
         android:layout_margin="10dp"
         android:gravity="center"/>
 
     <Button
         android:id="@+id/dialog_bt_one"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/dialog_button"
         />
 
     <Button
         android:id="@+id/dialog_bt_two"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/dialog_button"
         />
 
     <Button
         android:id="@+id/dialog_bt_three"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/dialog_button"
         android:visibility="gone"/>
 
     <Button
         android:id="@+id/dialog_bt_four"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/dialog_button"
         android:visibility="gone"/>
 
 </LinearLayout>

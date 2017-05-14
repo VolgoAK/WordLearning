@@ -45,11 +45,7 @@
                     android:text="@string/word_translation" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    app:civ_fill_color="@color/orange"
-                    android:layout_width="@dimen/menu_image_size"
-                    android:layout_height="@dimen/menu_image_size"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="@dimen/menu_image_margin"
+                    style="@style/Cyv_menu"
                     android:src="@drawable/ic_wt"/>
             </LinearLayout>
 
@@ -80,11 +76,7 @@
                     android:text="@string/translation_word" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    app:civ_fill_color="@color/orange"
-                    android:layout_width="@dimen/menu_image_size"
-                    android:layout_height="@dimen/menu_image_size"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="@dimen/menu_image_margin"
+                   style="@style/Cyv_menu"
                     android:src="@drawable/ic_tw"/>
             </LinearLayout>
 
@@ -116,11 +108,7 @@
                     android:text="@string/start_redactor" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    app:civ_fill_color="@color/orange"
-                    android:layout_width="@dimen/menu_image_size"
-                    android:layout_height="@dimen/menu_image_size"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="@dimen/menu_image_margin"
+                    style="@style/Cyv_menu"
                     android:src="@drawable/ic_dictionary"/>
             </LinearLayout>
 
@@ -151,11 +139,7 @@
                     android:text="@string/sets" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    app:civ_fill_color="@color/orange"
-                    android:layout_width="@dimen/menu_image_size"
-                    android:layout_height="@dimen/menu_image_size"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="@dimen/menu_image_margin"
+                    style="@style/Cyv_menu"
                     android:src="@drawable/ic_sets"/>
             </LinearLayout>
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/dictionary_card_height"
     android:layout_marginTop="@dimen/views_small_margin"
     android:layout_marginStart="@dimen/views_small_margin"
     android:layout_marginEnd="@dimen/views_small_margin"
@@ -13,9 +13,9 @@
 
 <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="?selectableItemBackgroundBorderless"
-    android:padding="@dimen/views_small_margin"
+    android:padding="@dimen/views_small_padding"
 
     >
 
@@ -47,8 +47,8 @@
     <ImageView
         android:id="@+id/iv_progress_wt_adapter"
         android:gravity="center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/state_image_size"
+        android:layout_height="@dimen/state_image_size"
         android:layout_marginStart="@dimen/views_small_margin"
         android:layout_marginEnd="@dimen/views_small_margin"
         android:src="@drawable/ic_progress_0"
@@ -70,8 +70,8 @@
     <ImageView
         android:id="@+id/iv_progress_tw_adapter"
         android:gravity="center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/state_image_size"
+        android:layout_height="@dimen/state_image_size"
         android:src="@drawable/ic_progress_0"
         app:layout_constraintRight_toRightOf="@+id/tv_tw"
         app:layout_constraintLeft_toLeftOf="@id/tv_tw"

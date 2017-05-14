@@ -12,7 +12,8 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@mipmap/background"/>
+        android:background="@mipmap/background"
+        />
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"
@@ -20,6 +21,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/navigation_header"
+        app:itemTextAppearance="@style/navigation_text"
         app:menu="@menu/navigation_menu" />
 
 

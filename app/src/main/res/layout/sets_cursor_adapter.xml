@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/sets_card_height"
     app:cardBackgroundColor="@color/semi_transparent_white"
     >
     <android.support.constraint.ConstraintLayout
@@ -32,6 +32,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:maxLines="2"
+            android:textSize="@dimen/small_text_size"
             android:layout_marginStart="@dimen/views_horizontal_margin"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_name_setsadapter"

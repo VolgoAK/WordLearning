@@ -11,7 +11,7 @@
     <LinearLayout
         android:id="@+id/linear_layout_redactor"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dictionary_card_height"
         android:layout_marginTop="@dimen/views_small_margin"
         android:orientation="horizontal"
         android:background="@drawable/gray_rectangle"
@@ -21,6 +21,7 @@
 
         <EditText
             android:id="@+id/et_word_redactor"
+            android:textSize="@dimen/medium_text_size"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
@@ -28,6 +29,7 @@
 
         <EditText
             android:id="@+id/et_translation_redactor"
+            android:textSize="@dimen/medium_text_size"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
@@ -37,7 +39,7 @@
             android:id="@+id/bt_add_redactor"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:textSize="@dimen/add_button_text_size"
+            android:textSize="@dimen/small_text_size"
             android:layout_weight="2"
             android:text="@string/add"/>
 

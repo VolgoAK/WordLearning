@@ -12,6 +12,7 @@
 
     <style name="VarButton">
         <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:textStyle">italic</item>
         <item name="android:layout_width">@dimen/var_buttons_width</item>
         <item name="android:layout_height">@dimen/var_button_height</item>
@@ -43,15 +44,43 @@
 
     </style>
 
+    <style name="Cyv_menu">
+        <item name="civ_fill_color">@color/colorAccent</item>
+        <item name="android:layout_width">@dimen/menu_image_size</item>
+        <item name="android:layout_height">@dimen/menu_image_size</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_margin">@dimen/menu_image_margin</item>
+    </style>
+
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="word_text">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">@dimen/medium_text_size</item>
+    </style>
+
+    <style name="navigation_text">
+        <item name="android:textSize">@dimen/small_text_size</item>
+        <item name="android:textColor">@color/dark_gray</item>
+    </style>
+
+    <style name="dialog_button">
+        <item name="android:textSize">@dimen/small_text_size</item>
+        <item name="android:layout_width">@dimen/dialog_button_width</item>
+        <item name="android:layout_height">@dimen/dialog_button_height</item>
     </style>
 
     <style name="title_text">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">20sp</item>
         <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="black_title_text" parent="title_text">
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
     <style name="small_title_text" parent="title_text">

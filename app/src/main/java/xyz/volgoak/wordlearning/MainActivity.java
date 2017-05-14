@@ -11,14 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.storage.FirebaseStorage;
 
 import xyz.volgoak.wordlearning.training_utils.Results;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
-
-import static android.speech.RecognizerIntent.EXTRA_RESULTS;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentListener{
 
@@ -30,10 +26,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private boolean mReturningWithResult;
     private Results mTrainingResult;
 
-    private ActionBarDrawerToggle drawerToggle;
-    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private DrawerLayout mDrawerLayout;
 
-    FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +37,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //test
         mAuth = FirebaseAuth.getInstance();
+
+        /*final FrameLayout layout = (FrameLayout) findViewById(R.id.fragment_container);
+        Glide.with(this).load(R.mipmap.background).asBitmap().format(DecodeFormat.PREFER_ARGB_8888).atMost()
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        Drawable drawable = new BitmapDrawable(MainActivity.this.getResources(), resource);
+                        layout.setBackground(drawable);
+                    }
+                });*/
 
 
         if (getSupportActionBar() != null) {
@@ -50,28 +55,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportActionBar().setHomeButtonEnabled(true);
         }
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close);
-        drawerLayout.addDrawerListener(drawerToggle);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close);
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
 
-        drawerToggle.syncState();
+
+
+        mDrawerToggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        if(savedInstanceState == null)
         startHomeFragment();
     }
-
-    //load default words at first launching
-    /*private void checkFirstLaunch(){
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean firstLaunch = prefs.getBoolean(getString(R.string.first_launch), true);
-        if(firstLaunch){
-            WordsDbAdapter adapter = new WordsDbAdapter(this);
-            adapter.insertDefaultDictionary();
-            prefs.edit().putBoolean(getString(R.string.first_launch), false).apply();
-        }
-    }*/
 
     @Override
     protected void onStart(){
@@ -87,8 +84,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed(){
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -96,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
+        return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -136,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startSetsFragment();
                 break;
         }
-        drawerLayout.closeDrawer(GravityCompat.START);
+        mDrawerLayout.closeDrawer(GravityCompat.START);
         return false;
     }
 

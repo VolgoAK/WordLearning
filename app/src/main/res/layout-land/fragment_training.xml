@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            style="@style/word_text"
             android:text="@{fragment.mWord}"
             app:layout_constraintLeft_toLeftOf="@id/iv_tf"
             app:layout_constraintTop_toTopOf="@id/iv_tf"

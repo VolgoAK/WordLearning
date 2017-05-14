@@ -44,6 +44,7 @@
         android:id="@+id/tv_result_opinion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/small_text_size"
         app:layout_constraintLeft_toLeftOf="@id/iv_result"
         app:layout_constraintRight_toRightOf="@id/iv_result"
         app:layout_constraintTop_toBottomOf="@id/tv_result_resfrag"/>
