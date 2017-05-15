@@ -30,6 +30,8 @@
     <string name="send_to_training">Send to training</string>
     <string name="what_to_do">What to do with this word?</string>
     <string name="select_training">Select training</string>
+    <string name="add_to_dictionary">Add to dictionary</string>
+    <string name="remove_from_dictionary">Remove from dictionary</string>
     <string name="open">Open</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -37,6 +39,7 @@
     <string name="next_word">Next word</string>
     <string name="wt">wt</string>
     <string name="tw">tw</string>
+
     <string name="perfect_result">Perfect!</string>
     <string name="good_result">Very good!</string>
     <string name="bad_result">You can do it better!</string>

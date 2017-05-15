@@ -23,9 +23,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static final String START_DICTIONARY = "dictionary";
     public static final String START_SETS = "sets";
 
-    private boolean mReturningWithResult;
-    private Results mTrainingResult;
-
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
 
@@ -127,9 +124,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return false;
     }
 
-    // TODO: 31.03.2017 replace all of this with one method startFragment
-    // TODO: 05.05.2017 don't add start frag to the backstack
-
     public void startHomeFragment(){
         StartFragment fragment = new StartFragment();
         startFragment(fragment, false);
@@ -172,6 +166,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(getSupportActionBar() != null)
         getSupportActionBar().setTitle(title);
     }
-
-
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/add_to_dictionary"
+        android:id="@+id/item_add_setact"
+        android:orderInCategory="100"/>
+
+    <item android:title="@string/reset_progress"
+        android:id="@+id/item_reset_setact"
+        android:orderInCategory="200"/>
+
+    <item android:title="@string/word_translation"
+        android:id="@+id/item_wt_setact"
+        android:orderInCategory="300"/>
+
+    <item android:title="@string/translation_word"
+        android:id="@+id/item_tw_setact"
+        android:orderInCategory="400"/>
+
+
+</menu>
