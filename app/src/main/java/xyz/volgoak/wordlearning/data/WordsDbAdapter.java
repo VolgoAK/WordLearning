@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.utils.SetsParser;
 
 import static xyz.volgoak.wordlearning.utils.SetsParser.TAG;
@@ -39,10 +40,10 @@ public class WordsDbAdapter {
     //for test
     static int wordCount = 0;
 
-    public WordsDbAdapter(Context context){
-        mHelper = new WordsSqlHelper(context);
+    public WordsDbAdapter(){
+
+        mHelper = new WordsSqlHelper(WordsApp.getContext());
         mDb = mHelper.getWritableDatabase();
-        mContext = context;
 
         if(isDbEmpty()){
             insertDefaultDictionary();

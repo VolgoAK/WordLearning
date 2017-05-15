@@ -44,7 +44,7 @@ public class SetActivity extends AppCompatActivity {
         setSupportActionBar(mBinding.setToolbar);
 
         mSetId = getIntent().getLongExtra(ID_EXTRA, -1);
-        mDbAdapter = new WordsDbAdapter(this);
+        mDbAdapter = new WordsDbAdapter();
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

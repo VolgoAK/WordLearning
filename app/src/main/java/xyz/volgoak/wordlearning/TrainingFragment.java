@@ -92,9 +92,8 @@ public class TrainingFragment extends Fragment {
             boolean answered = savedInstanceState.getBoolean(ANSWERED, false);
             mAnswered.set(answered);
         }else {
-            TrainingFabric fabric = new TrainingFabric(getContext());
             mAnswered.set(false);
-            mTraining = fabric.getTraining(mTrainingType, mSetId);
+            mTraining = TrainingFabric.getTraining(mTrainingType, mSetId);
             //if training is null, we have to go to the dictionary
             if(mTraining != null) {
                 mTrainingWord = mTraining.getFirstWord();

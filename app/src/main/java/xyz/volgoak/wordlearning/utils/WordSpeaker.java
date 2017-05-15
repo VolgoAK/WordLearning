@@ -15,16 +15,14 @@ public class WordSpeaker {
 
     public static final String TAG = "WordSpeaker";
 
-    private Context mContext;
     private TextToSpeech mTTS;
     private boolean mInitilized;
 
     //save first word and speak it when initialized
-    //probably in's bad idea, but it's best what I can think out for now
+    //probably it's bad idea, but it's best what I can think out for now
     String mSavedWord;
 
     public WordSpeaker(Context context){
-        mContext = context;
         mTTS = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {

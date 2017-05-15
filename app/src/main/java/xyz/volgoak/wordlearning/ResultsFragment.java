@@ -93,7 +93,7 @@ public class ResultsFragment extends Fragment {
     }
 
     private void updateWordsStatus(){
-        WordsDbAdapter adapter = new WordsDbAdapter(getContext());
+        WordsDbAdapter adapter = new WordsDbAdapter();
         for(Long id : mResults.idsForUpdate){
             adapter.changeTrainedStatus(id, WordsDbAdapter.INCREASE, mResults.trainedType);
         }

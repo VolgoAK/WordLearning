@@ -42,7 +42,7 @@ public class PlayWord implements Serializable{
         }
 
         public boolean checkAnswer(String answer){
-            return translation.equals(answer);
+            return translation.toLowerCase().equals(answer.toLowerCase());
         }
 
         public long getId() {

@@ -49,22 +49,22 @@ public final class SetsParser {
         int addedWords = 0;
         try {
             InputStream inputStream = context.getAssets().open("nature.xml");
-            addedWords += insertSetsIntoDb(inputStream, context);
+            addedWords += insertSetsIntoDb(inputStream);
             inputStream = context.getAssets().open("things.xml");
-            addedWords += insertSetsIntoDb(inputStream, context);
+            addedWords += insertSetsIntoDb(inputStream);
             inputStream = context.getAssets().open("verbs.xml");
-            addedWords += insertSetsIntoDb(inputStream, context);
+            addedWords += insertSetsIntoDb(inputStream);
         }catch(IOException ex){
             ex.printStackTrace();
         }
         return addedWords;
     }
 
-    private static int insertSetsIntoDb(InputStream inputStream, Context context){
+    private static int insertSetsIntoDb(InputStream inputStream){
         int addedSetsCount = 0;
         int addedWordsCount = 0;
 
-        WordsDbAdapter dbAdapter = new WordsDbAdapter(context);
+        WordsDbAdapter dbAdapter = new WordsDbAdapter();
 
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         try {

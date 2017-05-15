@@ -56,7 +56,7 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
 
         int[] to = new int[]{android.R.id.text1};
         String[] from = new String[]{DatabaseContract.Sets.COLUMN_NAME};
-        mDbAdapter = new WordsDbAdapter(getContext());
+        mDbAdapter = new WordsDbAdapter();
         Cursor setsCursor = mDbAdapter.fetchSets();
 
         mCursorAdapter = new SetsCursorAdapter(getContext(), setsCursor);

@@ -55,7 +55,7 @@ public class RedactorFragment extends Fragment{
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mBinding.rvRedactor.setLayoutManager(layoutManager);
 
-        mDbAdapter = new WordsDbAdapter(getContext());
+        mDbAdapter = new WordsDbAdapter();
         Cursor cursor = mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE, -1);
 
         mCursorAdapter = new DictionaryRecyclerAdapter(cursor, getContext());
