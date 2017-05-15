@@ -90,7 +90,6 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
     public void onStop() {
         super.onStop();
         mCursorAdapter.getCursor().close();
-        mDbAdapter.close();
     }
 
     /*@Override

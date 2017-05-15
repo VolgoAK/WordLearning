@@ -97,7 +97,6 @@ public class ResultsFragment extends Fragment {
         for(Long id : mResults.idsForUpdate){
             adapter.changeTrainedStatus(id, WordsDbAdapter.INCREASE, mResults.trainedType);
         }
-        adapter.close();
     }
 
 }

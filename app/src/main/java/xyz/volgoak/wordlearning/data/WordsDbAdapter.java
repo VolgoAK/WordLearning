@@ -35,12 +35,13 @@ public class WordsDbAdapter {
 
     private SQLiteDatabase mDb;
     private Context mContext;
+    private WordsSqlHelper mHelper;
     //for test
     static int wordCount = 0;
 
     public WordsDbAdapter(Context context){
-        WordsSqlHelper helper = new WordsSqlHelper(context);
-        mDb = helper.getWritableDatabase();
+        mHelper = new WordsSqlHelper(context);
+        mDb = mHelper.getWritableDatabase();
         mContext = context;
 
         if(isDbEmpty()){
@@ -174,7 +175,6 @@ public class WordsDbAdapter {
         return mDb.rawQuery(query, null);
     }
 
-    // TODO: 12.05.2017 add setid arg
     public String[] getVariants(int id, String column, long setId){
         String select = "SELECT * FROM " + DatabaseContract.Words.TABLE_NAME
                 + " WHERE " + DatabaseContract.Words._ID + " != " + id;
@@ -263,11 +263,7 @@ public class WordsDbAdapter {
     }
 
     // TODO: 13.05.2017 add method deleteOrHideWordById
-
-    public void close(){
-        mContext = null;
-        mDb.close();
-    }
+    
 
     static class WordsSqlHelper extends SQLiteOpenHelper {
 
