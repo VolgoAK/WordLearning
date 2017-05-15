@@ -19,7 +19,7 @@ public class ResultsFragment extends Fragment {
     public static final String TAG = "ResultFragment";
 
     private Results mResults;
-    private FragmentListener mListener;
+    private ResultFragmentLister mListener;
 
     public ResultsFragment() {
         // Required empty public constructor
@@ -36,7 +36,7 @@ public class ResultsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mListener = (FragmentListener) getActivity();
+        mListener = (ResultFragmentLister) getActivity();
         return inflater.inflate(R.layout.fragment_results, container, false);
     }
 
@@ -44,7 +44,7 @@ public class ResultsFragment extends Fragment {
     public void onStart(){
         super.onStart();
 
-        mListener.setActionBarTitle(getString(R.string.results));
+        //mListener.setActionBarTitle(getString(R.string.results));
 
         String results = getString(R.string.correct_answers) + "  " + mResults.correctAnswers + "/" + mResults.wordCount;
         TextView resultTv = (TextView)getView().findViewById(R.id.tv_result_resfrag);
@@ -69,7 +69,7 @@ public class ResultsFragment extends Fragment {
         redactorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.startRedactorFragment();
+                mListener.toDictionary();
             }
         });
 
@@ -97,6 +97,11 @@ public class ResultsFragment extends Fragment {
         for(Long id : mResults.idsForUpdate){
             adapter.changeTrainedStatus(id, WordsDbAdapter.INCREASE, mResults.trainedType);
         }
+    }
+
+    interface ResultFragmentLister{
+        void startTraining(int trainingType, long setId);
+        void toDictionary();
     }
 
 }

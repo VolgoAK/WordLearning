@@ -10,6 +10,5 @@ public interface FragmentListener {
     void startTraining(int type, long setId);
     void startRedactorFragment();
     void startSetsFragment();
-    void startResultsFragment(Results results);
     void setActionBarTitle(String title);
 }

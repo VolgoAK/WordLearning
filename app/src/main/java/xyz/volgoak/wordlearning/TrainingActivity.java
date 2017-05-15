@@ -41,9 +41,9 @@ public class TrainingActivity extends AppCompatActivity implements TrainingFragm
 
     @Override
     public void showResults(Results results) {
-        Intent intent = new Intent();
-        intent.putExtra(MainActivity.EXTRA_RESULTS, results);
-        setResult(RESULT_OK, intent);
+        Intent intent = new Intent(this, ResultActivity.class);
+        intent.putExtra(ResultActivity.EXTRA_TRAINING_RESULTS, results);
+        startActivity(intent);
         finish();
     }
 }

@@ -18,10 +18,10 @@ import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentListener{
 
-    public static final int TRAINING_REQUEST = 123;
-    public static final int TRAINING_FINISHED = 234;
-    public static final String EXTRA_RESULTS = "extra_results";
     public static final String TAG = "MainActivity";
+    public static final String EXTRA_MODE = "extra_mode";
+    public static final String START_DICTIONARY = "dictionary";
+    public static final String START_SETS = "sets";
 
     private boolean mReturningWithResult;
     private Results mTrainingResult;
@@ -66,8 +66,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if(savedInstanceState == null)
-        startHomeFragment();
+        String extraTask = getIntent().getStringExtra(EXTRA_MODE);
+        if(extraTask != null){
+            if(extraTask.equals(START_DICTIONARY)){
+                startRedactorFragment();
+            }else if(extraTask.equals(START_SETS)){
+                startSetsFragment();
+            }
+        }else if(savedInstanceState == null)
+            startHomeFragment();
     }
 
     @Override
@@ -94,23 +101,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
-        if(mReturningWithResult){
-            startResultsFragment(mTrainingResult);
-        }
-        mReturningWithResult = false;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if( resultCode == RESULT_OK && requestCode == TRAINING_REQUEST ){
-            mTrainingResult =(Results) data.getSerializableExtra(EXTRA_RESULTS);
-            mReturningWithResult = true;
-        }
     }
 
     @Override
@@ -142,12 +132,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void startHomeFragment(){
         StartFragment fragment = new StartFragment();
-        startFragment(fragment);
+        startFragment(fragment, false);
     }
 
     public void startRedactorFragment(){
         RedactorFragment redactorFragment = new RedactorFragment();
-        startFragment(redactorFragment);
+        startFragment(redactorFragment,true);
     }
 
     @Override
@@ -160,32 +150,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = new Intent(this, TrainingActivity.class);
         intent.putExtra(TrainingActivity.EXTRA_TRAINING_TYPE, type);
         intent.putExtra(TrainingActivity.EXTRA_SET_ID, setId);
-        startActivityForResult(intent, TRAINING_REQUEST);
+        startActivity(intent);
     }
 
     @Override
     public void startSetsFragment() {
         WordSetsFragment wordSetsFragment = new WordSetsFragment();
-        startFragment(wordSetsFragment);
+        startFragment(wordSetsFragment, true);
     }
 
-    @Override
-    public void startResultsFragment(Results results){
-        ResultsFragment resultsFragment = ResultsFragment.getResultFragment(results);
-        startFragment(resultsFragment);
-    }
-
-    public void startFragment(Fragment fragment){
+    public void startFragment(Fragment fragment, boolean addToBackStack){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_container, fragment);
-        ft.addToBackStack(null);
+        if(addToBackStack)ft.addToBackStack(null);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
     }
 
     @Override
