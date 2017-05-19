@@ -51,6 +51,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+        <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+            android:id="@+id/progress_tf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/progress_height"
+            android:layout_marginTop="@dimen/views_small_margin"
+            app:rcProgressColor="@color/light_blue"
+            app:rcBackgroundColor="@color/semi_transparent_white"
+            app:rcBackgroundPadding="2dp"
+            app:layout_constraintLeft_toLeftOf="@id/iv_tf"
+            app:layout_constraintRight_toRightOf="@id/iv_tf"
+            app:layout_constraintTop_toBottomOf="@id/iv_tf"/>
+
         <Button
             android:id="@+id/bt_var1_tf"
             style="@style/VarButton"
@@ -60,7 +72,7 @@
             android:clickable="@{!fragment.mAnswered}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/bt_var2_tf"
-            app:layout_constraintTop_toBottomOf="@id/iv_tf"
+            app:layout_constraintTop_toBottomOf="@id/progress_tf"
             app:layout_constraintHorizontal_chainStyle="packed"
             android:layout_marginTop="0dp" />
 

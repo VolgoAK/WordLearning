@@ -41,8 +41,8 @@ public class WordsDbAdapter {
     static int wordCount = 0;
 
     public WordsDbAdapter(){
-
-        mHelper = new WordsSqlHelper(WordsApp.getContext());
+        mContext = WordsApp.getContext();
+        mHelper = new WordsSqlHelper(mContext);
         mDb = mHelper.getWritableDatabase();
 
         if(isDbEmpty()){
@@ -51,7 +51,7 @@ public class WordsDbAdapter {
     }
 
     private boolean isDbEmpty(){
-        Cursor cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Sets.TABLE_NAME + " LIMIT 1;", null);
+        Cursor cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME + " LIMIT 1;", null);
         return !cursor.moveToFirst();
     }
 

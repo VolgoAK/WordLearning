@@ -11,6 +11,8 @@
     <dimen name="var_buttons_width">130dp</dimen>
     <dimen name="var_button_height">80dp</dimen>
     <dimen name="var_guideline">114dp</dimen>
+    <dimen name="progress_height">20dp</dimen>
+    <dimen name="progress_corners">6dp</dimen>
     <dimen name="menu_button_width">220dp</dimen>
 
     <dimen name="dictionary_card_height">52dp</dimen>

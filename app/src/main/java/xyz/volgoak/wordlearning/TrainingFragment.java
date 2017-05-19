@@ -3,6 +3,7 @@ package xyz.volgoak.wordlearning;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableField;
+import android.databinding.ObservableFloat;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 
 import xyz.volgoak.wordlearning.databinding.FragmentTrainingBinding;
 import xyz.volgoak.wordlearning.training_utils.Results;
@@ -115,6 +118,9 @@ public class TrainingFragment extends Fragment {
         }
         int titleId = mTrainingType == TrainingFabric.TRANSLATION_WORD ? R.string.translation_word : R.string.word_translation;
         getActivity().setTitle(getString(titleId));
+
+        //max progress 100 percent
+        mBinding.progressTf.setMax(100);
         //load first word at start time
         showWord();
     }
@@ -129,6 +135,7 @@ public class TrainingFragment extends Fragment {
         mBinding.btVar3Tf.setBackground(mDefaultBackground);
         mBinding.btVar4Tf.setBackground(mDefaultBackground);
 
+        mBinding.progressTf.setProgress(mTraining.getProgressInPercents());
         mBinding.notifyPropertyChanged(BR.fragment);
 
         pronounceWord();
@@ -143,6 +150,7 @@ public class TrainingFragment extends Fragment {
             return;
         }
         mAnswered.set(false);
+
         showWord();
     }
 

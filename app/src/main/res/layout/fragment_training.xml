@@ -40,6 +40,18 @@
             app:layout_constraintBottom_toBottomOf="@id/iv_tf"
             tools:text="Example"/>
 
+        <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+            android:id="@+id/progress_tf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/progress_height"
+            android:layout_marginTop="@dimen/views_small_margin"
+            app:rcProgressColor="@color/light_blue"
+            app:rcBackgroundColor="@color/semi_transparent_white"
+            app:rcBackgroundPadding="2dp"
+            app:layout_constraintLeft_toLeftOf="@id/iv_tf"
+            app:layout_constraintRight_toRightOf="@id/iv_tf"
+            app:layout_constraintTop_toBottomOf="@id/iv_tf"/>
+
         <ImageButton
             android:id="@+id/ibt_sound_tf"
             android:src="@drawable/ic_sound"

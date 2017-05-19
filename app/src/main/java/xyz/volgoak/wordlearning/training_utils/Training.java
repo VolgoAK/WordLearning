@@ -13,6 +13,8 @@ import xyz.volgoak.wordlearning.data.DatabaseContract;
 
 public class Training implements Serializable{
 
+    public static final String TAG = "Training";
+
     private ArrayList<PlayWord> playWords;
     private int currentPosition = 0;
     private int tries = 0;
@@ -109,5 +111,9 @@ public class Training implements Serializable{
         return trainingType;
     }
 
-
+    public float getProgressInPercents(){
+        float progress = (float)((currentPosition + 0.0)/playWords.size()) * 100;
+        Log.d(TAG, "getProgressInPercents: progress" + progress);
+        return progress;
+    }
 }
