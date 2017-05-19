@@ -68,7 +68,11 @@ public class WordsDbAdapter {
         values.put(DatabaseContract.Words.COLUMN_SET_ID, setId);
         values.put(DatabaseContract.Words.COLUMN_STATUS, status);
 
-        return  mDb.insert(DatabaseContract.Words.TABLE_NAME, null, values);
+        return  insertWord(values);
+    }
+
+    public long insertWord(ContentValues wordValues){
+        return mDb.insert(DatabaseContract.Words.TABLE_NAME, null, wordValues);
     }
 
     public void insertDefaultDictionary(){

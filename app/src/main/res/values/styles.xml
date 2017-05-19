@@ -100,4 +100,8 @@
             name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
+    <style name="SplashTheme" parent="AppTheme.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
+
 </resources>

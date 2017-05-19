@@ -12,7 +12,10 @@ import org.w3c.dom.NodeList;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -21,6 +24,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
+
+import static xyz.volgoak.wordlearning.R.string.word;
 
 /**
  * Created by Volgoak on 18.04.2017.
@@ -35,6 +40,7 @@ public final class SetsParser {
     public static final String WORD_ATTR = "word";
     public static final String TRANSLATION_ATTR = "translation";
     public static final String DESCRIPTION_ATTR = "description";
+    public static final String TRANSCRIPTION_ATTR = "transcription";
     public static final String IMAGE_ATTR = "image";
 
     private SetsParser(){
@@ -45,6 +51,13 @@ public final class SetsParser {
 
     }
 
+    /**
+     * Loads words from xml files. File names hardcoded for now,
+     * later I gonna add checking which sets already downloaded,
+     * and possibility to load new sets from my server.
+     * @param context Context for operations.
+     * @return int num of added words.
+     * */
     public static int loadStartBase(Context context){
         int addedWords = 0;
         try {
@@ -82,23 +95,37 @@ public final class SetsParser {
                 Node setNode = setsList.item(a);
                 if(setNode.getNodeType() == Node.ELEMENT_NODE){
 
-                    Map<String, String> wordsMap = new HashMap<>();
+                    List<ContentValues> valuesList = new LinkedList<>();
                     //parse words and save into map
                     NodeList wordsList = setNode.getChildNodes();
                     for(int b = 0; b < wordsList.getLength(); b++){
                         Node wordNode = wordsList.item(b);
                         if(wordNode.getNodeType() == Node.ELEMENT_NODE){
-                            String word = capitalize(wordNode.getAttributes().getNamedItem(WORD_ATTR).getNodeValue());
-                            String translation = capitalize(wordNode.getAttributes().getNamedItem(TRANSLATION_ATTR).getNodeValue());
+                            String word = capitalize(wordNode.getAttributes()
+                                    .getNamedItem(WORD_ATTR).getNodeValue().trim());
+                            String translation = capitalize(wordNode.getAttributes()
+                                    .getNamedItem(TRANSLATION_ATTR).getNodeValue().trim());
 
-                            wordsMap.put(word, translation);
+                            //transcription could be empty for some words
+                            String transcription = "";
+                            Node node = setNode.getAttributes().getNamedItem(TRANSCRIPTION_ATTR);
+                            if(node != null)
+                            transcription = setNode.getAttributes()
+                                    .getNamedItem(TRANSCRIPTION_ATTR).getNodeValue().trim();
+
+                            ContentValues values = new ContentValues();
+                            values.put(DatabaseContract.Words.COLUMN_WORD, word);
+                            values.put(DatabaseContract.Words.COLUMN_TRANSLATION, translation);
+                            values.put(DatabaseContract.Words.COLUMN_TRANSCRIPTION, transcription);
+
+                            valuesList.add(values);
                         }
                     }
 
                     String setName = setNode.getAttributes().getNamedItem(NAME_ATTR).getNodeValue();
                     String description = setNode.getAttributes().getNamedItem(DESCRIPTION_ATTR).getNodeValue();
                     String image = setNode.getAttributes().getNamedItem(IMAGE_ATTR).getNodeValue();
-                    int wordsInSet = wordsMap.size();
+                    int wordsInSet = valuesList.size();
 
                     ContentValues setValues = new ContentValues();
                     setValues.put(DatabaseContract.Sets.COLUMN_NAME, setName);
@@ -109,9 +136,10 @@ public final class SetsParser {
                     long setId = dbAdapter.insertSet(setValues);
                     addedSetsCount++;
 
-                    Set<String> wordsSet = wordsMap.keySet();
-                    for(String word : wordsSet){
-                        dbAdapter.insertWord(word, wordsMap.get(word), setId, DatabaseContract.Words.OUT_OF_DICTIONARY);
+
+                    for(ContentValues values : valuesList){
+                        values.put(DatabaseContract.Words.COLUMN_SET_ID, setId);
+                        dbAdapter.insertWord(values);
                         addedWordsCount++;
                     }
                 }

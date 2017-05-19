@@ -10,7 +10,7 @@ import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.OUT_OF_DICTIO
 
 public final class DatabaseContract {
 
-    public final static int DB_VERSION = 35;
+    public final static int DB_VERSION = 46;
     public final static String DB_NAME = "WORDS_DATABASE";
 
 
@@ -23,6 +23,7 @@ public final class DatabaseContract {
 
         public final static String COLUMN_WORD = "WORD";
         public final static String COLUMN_TRANSLATION = "TRANSLATION";
+        public static final String COLUMN_TRANSCRIPTION = "TRANSCRIPTION";
         public final static String COLUMN_TRAINED_WT = "WT_TRAINED";
         public final static String COLUMN_TRAINED_TW = "TW_TRAINED";
         public final static String COLUMN_STUDIED = "STUDIED";
@@ -33,6 +34,7 @@ public final class DatabaseContract {
                 " ( " + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_WORD + " TEXT, " +
                 COLUMN_TRANSLATION + " TEXT, " +
+                COLUMN_TRANSCRIPTION + " TEXT ," +
                 COLUMN_TRAINED_WT + " INTEGER DEFAULT 0, " +
                 COLUMN_TRAINED_TW + " INTEGER DEFAULT 0, " +
                 COLUMN_STUDIED + " INTEGER DEFAULT 0, " +
