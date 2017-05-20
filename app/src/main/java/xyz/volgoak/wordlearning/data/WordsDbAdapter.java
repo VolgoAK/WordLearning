@@ -9,11 +9,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
-import xyz.volgoak.wordlearning.utils.SetsParser;
+import xyz.volgoak.wordlearning.utils.SetsLoader;
 
-import static xyz.volgoak.wordlearning.utils.SetsParser.TAG;
 import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.IN_DICTIONARY;
 
 
@@ -102,7 +100,7 @@ public class WordsDbAdapter {
         insertWord("Temple", "Храм", setId, IN_DICTIONARY);
         insertWord("Country", "Страна", setId, IN_DICTIONARY);
 
-        SetsParser.loadStartBase(mContext);
+        SetsLoader.loadStartBase(mContext);
     }
 
     public long insertSet(ContentValues set){

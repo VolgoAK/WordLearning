@@ -13,8 +13,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import com.google.firebase.auth.FirebaseAuth;
 
-import xyz.volgoak.wordlearning.training_utils.Results;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
+import xyz.volgoak.wordlearning.utils.SetsLoader;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentListener{
 
@@ -78,6 +78,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onStart(){
         super.onStart();
         mAuth.signInAnonymously();
+        // TODO: 21.05.2017 check for update only once per day
+        SetsLoader.checkForDbUpdate(this);
         /*StartFragment startFragment = new StartFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_container, startFragment);
