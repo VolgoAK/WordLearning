@@ -11,6 +11,7 @@
     <string name="set">Set</string>
     <string name="exit">Exit</string>
     <string name="to_home">Home</string>
+    <string name="open_source_licenses">Open source licenses</string>
 
     <string name="set_activity_title">Set %1$s</string>
     <string name="words_in_set">Words in a set %1$d</string>
