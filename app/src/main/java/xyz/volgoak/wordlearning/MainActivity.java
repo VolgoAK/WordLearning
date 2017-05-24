@@ -37,17 +37,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mAuth = FirebaseAuth.getInstance();
 
-        /*final FrameLayout layout = (FrameLayout) findViewById(R.id.fragment_container);
-        Glide.with(this).load(R.mipmap.background).asBitmap().format(DecodeFormat.PREFER_ARGB_8888).atMost()
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        Drawable drawable = new BitmapDrawable(MainActivity.this.getResources(), resource);
-                        layout.setBackground(drawable);
-                    }
-                });*/
-
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
@@ -56,8 +45,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
-
-
 
         mDrawerToggle.syncState();
 

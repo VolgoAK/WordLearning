@@ -42,7 +42,6 @@
     <dimen name="large_text_size">32sp</dimen>
     <dimen name="medium_text_size">26sp</dimen>
     <dimen name="small_text_size">21sp</dimen>
-    <dimen name="fab_size">72dp</dimen>
     <dimen name="reset_fab_margin">86dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 </resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FloatButtonBehavior">
+        <attr name="behavior_order_in_row" format="integer"/>
+        <attr name="behavior_min_size" format="dimension"/>
+        <attr name="behavior_max_size" format="dimension"/>
+        <attr name="behavior_margin" format="dimension"/>
+    </declare-styleable>
+</resources>

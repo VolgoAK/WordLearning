@@ -62,21 +62,24 @@
         android:id="@+id/set_add_fab"
         android:layout_width="@dimen/fab_size"
         android:layout_height="@dimen/fab_size"
-        android:layout_marginEnd="@dimen/views_horizontal_margin"
         android:elevation="8dp"
         android:src="@drawable/ic_add_white_24dp"
-        app:layout_anchor="@id/appbar_setact"
-        app:layout_anchorGravity="bottom|right|end" />
+        android:scaleType="centerCrop"
+        app:layout_behavior=".CustomFloatingButtonBehavior"
+        app:behavior_order_in_row="1"
+        app:behavior_max_size="@dimen/fab_size"
+        app:behavior_min_size="@dimen/fab_min_size"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/set_reset_fab"
         android:layout_width="@dimen/fab_size"
         android:layout_height="@dimen/fab_size"
-        android:layout_marginEnd="@dimen/reset_fab_margin"
         android:elevation="8dp"
         android:src="@drawable/ic_reset_white_24dp"
-        app:layout_anchor="@id/appbar_setact"
-        app:layout_anchorGravity="bottom|right|end" />
+        app:layout_behavior=".CustomFloatingButtonBehavior"
+        app:behavior_max_size="@dimen/fab_size"
+        app:behavior_min_size="@dimen/fab_min_size"
+        app:behavior_order_in_row="2"/>
 
 </android.support.design.widget.CoordinatorLayout>
 </layout>
