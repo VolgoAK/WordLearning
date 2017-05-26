@@ -34,6 +34,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 
@@ -69,24 +70,28 @@ public final class SetsLoader {
 
     }
 
-    public static void checkForDbUpdate(final Context context){
-        // TODO: 21.05.2017 store reference in resources
-        StorageReference indexRef = FirebaseStorage.getInstance().getReference("sets_index.xml");
+    public static SetsUpdatingInfo checkForDbUpdate(final Context context){
+        final SetsUpdatingInfo info = new SetsUpdatingInfo();
+        String indexFile = context.getString(R.string.sets_index_file_ru_en);
+        StorageReference indexRef = FirebaseStorage.getInstance().getReference(indexFile);
             indexRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                 @Override
                 public void onSuccess(byte[] bytes) {
                     try {
-                        check(bytes, context);
+                        info.infoSum(check(bytes, context));
                     }catch (Exception ex){
                         ex.printStackTrace();
                     }
                 }
             });
 
+        return info;
     }
 
     // TODO: 21.05.2017 add check and question to load new data
-    private static void check(byte[] bytes, Context context) throws Exception{
+    private static SetsUpdatingInfo check(byte[] bytes, Context context) throws Exception{
+        SetsUpdatingInfo info = new SetsUpdatingInfo();
+
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         Set<String> loadedData = preferences.getStringSet(LOADED_SETS_PREF, new HashSet<String>());
 
@@ -104,12 +109,15 @@ public final class SetsLoader {
 
             if(!loadedData.contains(dataId)){
                 Log.d(TAG, "check: load data set " + dataId);
-                loadDataByFileName(setSource, dataId, context);
+                info.infoSum(loadDataByFileName(setSource, dataId, context));
             }
         }
+
+        return info;
     }
 
-    private static void loadDataByFileName(String fileName, final String fileId, final Context context){
+    private static SetsUpdatingInfo loadDataByFileName(String fileName, final String fileId, final Context context){
+        final SetsUpdatingInfo info = new SetsUpdatingInfo();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference(fileName);
 
         storageReference.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -117,13 +125,19 @@ public final class SetsLoader {
             public void onSuccess(byte[] bytes) {
                 try {
                     Document doc = prepareDocument(bytes);
-                    if(insertSetsIntoDb(doc) > 0)
+                    SetsUpdatingInfo setInfo = insertSetsIntoDb(doc);
+                    if(setInfo.getWordsAdded() > 0){
                         addSuccessPreference(fileId, context);
+                        info.infoSum(setInfo);
+                    }
+
                 }catch (Exception ex){
                     ex.printStackTrace();
                 }
             }
         });
+
+        return info;
     }
 
     /**
@@ -140,29 +154,29 @@ public final class SetsLoader {
     }
 
     /**
-     * Loads words from xml files. File names hardcoded for now,
+     * Loads words from local xml files. File names hardcoded for now,
      * later I gonna add checking which sets already downloaded,
      * and possibility to load new sets from my server.
      * @param context Context for operations.
      * @return int num of added words.
      * */
-    public static int loadStartBase(Context context){
-        int addedWords = 0;
+    public static SetsUpdatingInfo loadStartBase(Context context){
+        SetsUpdatingInfo info = new SetsUpdatingInfo();
         try {
             InputStream inputStream = context.getAssets().open("nature.xml");
-            addedWords += insertSetsIntoDb(prepareDocument(inputStream));
+            info.infoSum( insertSetsIntoDb(prepareDocument(inputStream)));
             inputStream = context.getAssets().open("things.xml");
-            addedWords += insertSetsIntoDb(prepareDocument(inputStream));
+            info.infoSum(insertSetsIntoDb(prepareDocument(inputStream)));
             inputStream = context.getAssets().open("verbs.xml");
-            addedWords += insertSetsIntoDb(prepareDocument(inputStream));
+            info.infoSum( insertSetsIntoDb(prepareDocument(inputStream)));
             inputStream = context.getAssets().open("new_base.xml");
-            addedWords += insertSetsIntoDb(prepareDocument(inputStream));
+            info.infoSum( insertSetsIntoDb(prepareDocument(inputStream)));
         }catch(IOException ex){
             ex.printStackTrace();
         }catch(Exception ex){
             ex.printStackTrace();
         }
-        return addedWords;
+        return info;
     }
 
     private static Document prepareDocument(byte[] bytes)
@@ -179,9 +193,8 @@ public final class SetsLoader {
         return doc;
     }
 
-    private static int insertSetsIntoDb(Document document){
-        int addedSetsCount = 0;
-        int addedWordsCount = 0;
+    private static SetsUpdatingInfo insertSetsIntoDb(Document document){
+        SetsUpdatingInfo info = new SetsUpdatingInfo();
 
         WordsDbAdapter dbAdapter = new WordsDbAdapter();
 
@@ -235,20 +248,20 @@ public final class SetsLoader {
                     setValues.put(DatabaseContract.Sets.COLUMN_IMAGE_URL, image);
 
                     long setId = dbAdapter.insertSet(setValues);
-                    addedSetsCount++;
+                    info.incrementSetsAdded();
 
 
                     for(ContentValues values : valuesList){
                         values.put(DatabaseContract.Words.COLUMN_SET_ID, setId);
                         dbAdapter.insertWord(values);
-                        addedWordsCount++;
+                        info.incrementWordsAdded();
                     }
                 }
             }
 
-            Log.d(TAG, "added sets " + addedSetsCount);
-            Log.d(TAG, "added words " + addedWordsCount);
-            return addedWordsCount;
+            Log.d(TAG, "added sets " + info.getSetsAdded());
+            Log.d(TAG, "added words " + info.getWordsAdded());
+            return info;
     }
 
     private static String capitalize(String string){

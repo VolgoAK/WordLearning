@@ -65,5 +65,5 @@
     <string name="drawer_close">Drawer close</string>
     <string name="title_activity_set">SetActivity</string>
 
-
+    <string name="sets_index_file_ru_en">sets_index.xml</string>
 </resources>
