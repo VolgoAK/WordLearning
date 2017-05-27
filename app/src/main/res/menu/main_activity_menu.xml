@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="@string/open_source_licenses"
-        android:id="@+id/item_open_source_main"/>
+    <item android:title="@string/about"
+        android:id="@+id/item_about_main"/>
 </menu>

@@ -1,5 +1,6 @@
 package xyz.volgoak.wordlearning;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -19,7 +20,7 @@ public class ResultsFragment extends Fragment {
     public static final String TAG = "ResultFragment";
 
     private Results mResults;
-    private ResultFragmentLister mListener;
+    private FragmentListener mListener;
 
     public ResultsFragment() {
         // Required empty public constructor
@@ -36,8 +37,21 @@ public class ResultsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mListener = (ResultFragmentLister) getActivity();
         return inflater.inflate(R.layout.fragment_results, container, false);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(context instanceof FragmentListener){
+            mListener = (FragmentListener) context;
+        }else throw new RuntimeException(context.toString() + " must implement FragmentListener");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
     @Override
@@ -69,7 +83,7 @@ public class ResultsFragment extends Fragment {
         redactorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.toDictionary();
+                mListener.startDictionary();
             }
         });
 
@@ -97,11 +111,6 @@ public class ResultsFragment extends Fragment {
         for(Long id : mResults.idsForUpdate){
             adapter.changeTrainedStatus(id, WordsDbAdapter.INCREASE, mResults.trainedType);
         }
-    }
-
-    interface ResultFragmentLister{
-        void startTraining(int trainingType, long setId);
-        void toDictionary();
     }
 
 }

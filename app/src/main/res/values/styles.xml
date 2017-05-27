@@ -10,6 +10,28 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTheme.SimpleCoordinatorTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item tools:targetApi="21"
+            name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item tools:targetApi="21"
+            name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="SplashTheme" parent="AppTheme.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
+
     <style name="VarButton">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textSize">@dimen/small_text_size</item>
@@ -52,10 +74,7 @@
         <item name="android:layout_margin">@dimen/menu_image_margin</item>
     </style>
 
-    <style name="AppTheme.NoActionBar" parent="AppTheme">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
+
 
     <style name="word_text">
         <item name="android:textColor">@android:color/black</item>
@@ -87,21 +106,6 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="AppTheme.SimpleCoordinatorTheme">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item tools:targetApi="21"
-            name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item tools:targetApi="21"
-            name="android:statusBarColor">@android:color/transparent</item>
-    </style>
-
-    <style name="SplashTheme" parent="AppTheme.NoActionBar">
-        <item name="android:windowBackground">@drawable/background_splash</item>
-    </style>
 
 </resources>

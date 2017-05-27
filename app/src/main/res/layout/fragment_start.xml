@@ -85,7 +85,7 @@
         <android.support.v7.widget.CardView
             android:id="@+id/cv_redactor_main"
             style="@style/MenuCards"
-            android:onClick="@{() -> listener.startRedactorFragment()}"
+            android:onClick="@{() -> listener.startDictionary()}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cv_trans_word_main"
@@ -119,7 +119,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cv_redactor_main"
-            android:onClick="@{() -> listener.startSetsFragment()}"
+            android:onClick="@{() -> listener.startSets()}"
             style="@style/MenuCards"
             >
 

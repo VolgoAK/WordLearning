@@ -194,7 +194,9 @@ public class TrainingFragment extends Fragment {
     // TODO: 04.05.2017 implement go to dictionary function
     private void goToDictionary(){
         Toast.makeText(getContext(), getString(R.string.all_words_studied_message), Toast.LENGTH_LONG).show();
-        //mListener.startSetsFragment();
+        //mListener.startSets();
+        Results results = new Results(Results.ResultType.NO_WORDS);
+        mResultReceiver.showResults(results);
     }
 
     public int getTrainingType(){

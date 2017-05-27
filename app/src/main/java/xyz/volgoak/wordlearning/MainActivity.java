@@ -12,10 +12,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import com.google.firebase.auth.FirebaseAuth;
 
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
-import xyz.volgoak.wordlearning.utils.SetsLoader;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentListener{
 
@@ -51,9 +51,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String extraTask = getIntent().getStringExtra(EXTRA_MODE);
         if(extraTask != null){
             if(extraTask.equals(START_DICTIONARY)){
-                startRedactorFragment();
+                startDictionary();
             }else if(extraTask.equals(START_SETS)){
-                startSetsFragment();
+                startSets();
             }
         }else if(savedInstanceState == null)
             startHomeFragment();
@@ -61,6 +61,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onStart(){
+        FirebaseAuth.getInstance().signInAnonymously();
+        FirebaseAuth.getInstance().signInAnonymously();
+        FirebaseAuth.getInstance().signInAnonymously();
         super.onStart();
     }
 
@@ -81,6 +84,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.item_about_main :
+                Intent intent = new Intent(this, AboutActivity.class);
+                startActivity(intent);
+                return true;
+        }
         return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
@@ -98,10 +107,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startTraining(TrainingFabric.WORD_TRANSLATION);
                 break;
             case R.id.navigation_menu_redactor :
-                startRedactorFragment();
+                startDictionary();
                 break;
             case R.id.navigation_menu_sets :
-                startSetsFragment();
+                startSets();
                 break;
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
@@ -113,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startFragment(fragment, false);
     }
 
-    public void startRedactorFragment(){
+    public void startDictionary(){
         RedactorFragment redactorFragment = new RedactorFragment();
         startFragment(redactorFragment,true);
     }
@@ -132,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void startSetsFragment() {
+    public void startSets() {
         WordSetsFragment wordSetsFragment = new WordSetsFragment();
         startFragment(wordSetsFragment, true);
     }

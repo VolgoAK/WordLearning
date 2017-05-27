@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -40,6 +41,7 @@ public class SetsCursorAdapter extends SimpleCursorAdapter{
     public SetsCursorAdapter(Context context, Cursor cursor){
         super(context, LAYOUT, cursor, FROM, TO, 0);
         mContext = context;
+
         mImageRefs = FirebaseStorage.getInstance().getReference("images");
     }
 

@@ -1,0 +1,98 @@
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <data>
+        <variable
+            name="listener"
+            type="xyz.volgoak.wordlearning.FragmentListener"/>
+    </data>
+
+<android.support.constraint.ConstraintLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="xyz.volgoak.wordlearning.NoWordsFragment">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_message_nowordfrag"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:cardBackgroundColor="@color/semi_transparent_white"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/iv_result_height">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:textSize="@dimen/medium_text_size"
+            android:text="@string/all_words_studied_message"/>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_redactor_nowordfrag"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cv_message_nowordfrag"
+        android:onClick="@{() -> listener.startDictionary()}"
+        style="@style/MenuCards"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:descendantFocusability="blocksDescendants"
+            android:background="?selectableItemBackgroundBorderless">
+
+            <TextView
+                style="@style/CardsText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/redactor" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                style="@style/Cyv_menu"
+                android:src="@drawable/ic_dictionary"/>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_sets_nowordfrag"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cv_redactor_nowordfrag"
+        android:onClick="@{() -> listener.startSets()}"
+        style="@style/MenuCards"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:descendantFocusability="blocksDescendants"
+            android:background="?selectableItemBackgroundBorderless">
+
+            <TextView
+                style="@style/CardsText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="@string/sets" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                style="@style/Cyv_menu"
+                android:src="@drawable/ic_sets"/>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</android.support.constraint.ConstraintLayout>
+</layout>

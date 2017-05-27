@@ -64,7 +64,7 @@ public class Training implements Serializable{
                 break;
         }
 
-        Results results = new Results();
+        Results results = new Results(Results.ResultType.SUCCESS);
         results.correctAnswers = score;
         results.wordCount = playWords.size();
         results.idsForUpdate = mIdsForUpdate;

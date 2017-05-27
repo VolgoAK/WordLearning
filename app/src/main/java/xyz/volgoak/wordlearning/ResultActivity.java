@@ -1,17 +1,14 @@
 package xyz.volgoak.wordlearning;
 
 import android.content.Intent;
-import android.support.v4.app.ActivityManagerCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import xyz.volgoak.wordlearning.training_utils.Results;
-import xyz.volgoak.wordlearning.training_utils.Training;
 
-public class ResultActivity extends AppCompatActivity implements ResultsFragment.ResultFragmentLister{
+public class ResultActivity extends AppCompatActivity implements FragmentListener{
 
     public static final String EXTRA_TRAINING_RESULTS = "results";
 
@@ -21,7 +18,16 @@ public class ResultActivity extends AppCompatActivity implements ResultsFragment
         setContentView(R.layout.activity_result);
 
         Results results = (Results) getIntent().getSerializableExtra(EXTRA_TRAINING_RESULTS);
-        ResultsFragment fragment = ResultsFragment.getResultFragment(results);
+        Fragment fragment;
+        switch (results.resultType){
+            case NO_WORDS :
+                fragment = new NoWordsFragment();
+                break;
+            default :
+                fragment = ResultsFragment.getResultFragment(results);
+                break;
+        }
+        //ResultsFragment fragment = ResultsFragment.getResultFragment(results);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.result_container, fragment);
         transaction.setTransition(FragmentTransaction.TRANSIT_NONE);
@@ -38,11 +44,30 @@ public class ResultActivity extends AppCompatActivity implements ResultsFragment
     }
 
     @Override
-    public void toDictionary() {
+    public void startDictionary() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(MainActivity.EXTRA_MODE, MainActivity.START_DICTIONARY);
         startActivity(intent);
 
         finish();
+    }
+
+    @Override
+    public void startTraining(int type) {
+        startTraining(type, -1);
+    }
+
+    @Override
+    public void startSets() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(MainActivity.EXTRA_MODE, MainActivity.START_SETS);
+        startActivity(intent);
+
+        finish();
+    }
+
+    @Override
+    public void setActionBarTitle(String title) {
+
     }
 }

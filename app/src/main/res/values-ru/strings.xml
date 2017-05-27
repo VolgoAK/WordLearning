@@ -42,4 +42,5 @@
     <string name="all_words_studied_message">Все слова изучены. Выберите новый набор или отправьте старые на тренировку.</string>
     <string name="add_set">Добавить</string>
     <string name="add">Добавить</string>
+    <string name="about">О программе</string>
 </resources>
