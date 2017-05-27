@@ -265,8 +265,34 @@ public class WordsDbAdapter {
         mDb.delete(DatabaseContract.Words.TABLE_NAME,  DatabaseContract.Words._ID + "=?", new String[]{Long.toString(id)});
     }
 
-    // TODO: 13.05.2017 add method deleteOrHideWordById
-    
+    /**
+     * Deletes word if it's from custom dictionary
+     * or hide it if from sets
+     * @param id id of word for delete
+     */
+    public void deleteOrHideWordById(long id){
+        Log.d(TAG, "deleteOrHideWordById: id " + id);
+        Cursor cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME  +
+                " WHERE " + DatabaseContract.Words._ID + " = ?", new String[]{String.valueOf(id)});
+        if(!cursor.moveToFirst()){
+            Log.d(TAG, "deleteOrHideWordById: incorrect id");
+            return;
+        }
+        long wordSetId = cursor.getLong(cursor.getColumnIndex(DatabaseContract.Words.COLUMN_SET_ID));
+        cursor.close();
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        long userSetId =  prefs.getLong(DEFAULT_DICTIONARY_ID, 0);
+
+        if(wordSetId == userSetId){
+            deleteWordById(id);
+        }else{
+            ContentValues values = new ContentValues();
+            values.put(DatabaseContract.Words.COLUMN_STATUS, DatabaseContract.Words.OUT_OF_DICTIONARY);
+            mDb.update(DatabaseContract.Words.TABLE_NAME, values, DatabaseContract.Words._ID + "=?",
+                    new String[]{String.valueOf(id)});
+        }
+    }
 
     static class WordsSqlHelper extends SQLiteOpenHelper {
 

@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 import xyz.volgoak.wordlearning.utils.SetsCursorAdapter;
 
 import static android.R.attr.dialogTitle;
+import static android.R.id.message;
 
 
 /**
@@ -114,6 +116,7 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
         Cursor cursor = mDbAdapter.fetchSetById(setId);
         cursor.moveToFirst();
         String name = cursor.getString(cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_NAME));
+        final int currentSetStatus = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_STATUS));
         cursor.close();
 
         TextView dialogTitle = (TextView) dialog.findViewById(R.id.dialog_title);
@@ -132,11 +135,14 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
         });
 
         Button addButton = (Button) dialog.findViewById(R.id.dialog_bt_two);
-        addButton.setText(R.string.add_set);
+        int actionStringId = currentSetStatus == DatabaseContract.Sets.IN_DICTIONARY ?
+                R.string.remove_from_dictionary :  R.string.add_to_dictionary;
+
+        addButton.setText(actionStringId);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 05.05.2017 finish this method
+                changeSetStatus(setId);
                 dialog.dismiss();
             }
         });
@@ -168,8 +174,19 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
     }
 
     @Override
-    public void changeSetStatus(long setId, int newStatus, String setName) {
+    public void changeSetStatus(long setId) {
         Log.d(TAG, "changeSetStatus: ");
+        Cursor cursor = mDbAdapter.fetchSetById(setId);
+        if(!cursor.moveToFirst()){
+            Log.d(TAG, "changeSetStatus: incorrect id");
+        }
+
+        int currentStatus = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_STATUS));
+        int newStatus = currentStatus == DatabaseContract.Sets.IN_DICTIONARY ?
+            DatabaseContract.Sets.OUT_OF_DICTIONARY : DatabaseContract.Sets.IN_DICTIONARY;
+        String setName = cursor.getString(cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_NAME));
+        cursor.close();
+
         String message ;
         message = newStatus == DatabaseContract.Sets.IN_DICTIONARY ? getString(R.string.set_added_message, setName) :
                 getString(R.string.set_removed_message, setName);

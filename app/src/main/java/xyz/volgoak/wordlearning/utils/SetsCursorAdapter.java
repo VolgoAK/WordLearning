@@ -77,9 +77,7 @@ public class SetsCursorAdapter extends SimpleCursorAdapter{
         holder.addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int newStatus = setStatus == DatabaseContract.Sets.IN_DICTIONARY ? DatabaseContract.Sets.OUT_OF_DICTIONARY :
-                        DatabaseContract.Sets.IN_DICTIONARY;
-                mSetStatusChanger.changeSetStatus(setId, newStatus, setName);
+                mSetStatusChanger.changeSetStatus(setId);
             }
         });
 
@@ -106,6 +104,6 @@ public class SetsCursorAdapter extends SimpleCursorAdapter{
     }
 
     public interface SetStatusChanger{
-        void changeSetStatus(long setId, int newStatus, String setName);
+        void changeSetStatus(long setId);
     }
 }

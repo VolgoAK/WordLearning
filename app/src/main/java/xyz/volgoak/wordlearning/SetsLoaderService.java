@@ -38,7 +38,7 @@ public class SetsLoaderService extends GcmTaskService{
         SetsUpdatingInfo info = SetsLoader.checkForDbUpdate(this);
         Log.d(TAG, " sets loaded " + info.getSetsAdded() + "words loaded " + info.getWordsAdded());
         // TODO: 26.05.2017 create notification which launch activity
-        //createUpdateNotification(info);
+        createUpdateNotification(info);
     }
 
     private void createUpdateNotification(SetsUpdatingInfo info){
