@@ -61,7 +61,7 @@ public class AboutActivity extends AppCompatActivity {
             licenses.add(new License(this, "Support ConstraintLayout", LicenseType.APACHE_LICENSE_20, "2015", "Android Open Source Project"));
             licenses.add(new License(this, "Support CardView", LicenseType.APACHE_LICENSE_20, "2015", "Android Open Source Project"));
             licenses.add(new License(this, "CursorRecyclerAdapter", LicenseType.MIT_LICENSE, "2014", "Matthieu Harlé"));
-            licenses.add(new License(this, "FirebaseStorege", LicenseType.APACHE_LICENSE_20, "2016", "Google Inc"));
+            licenses.add(new License(this, "FirebaseStorage", LicenseType.APACHE_LICENSE_20, "2016", "Google Inc"));
             licenses.add(new License(this, "FirebaseAuth", LicenseType.APACHE_LICENSE_20, "2016", "Google Inc"));
             licenses.add(new License(this, "Firebase UI Storage", LicenseType.APACHE_LICENSE_20, "2016", "Google Inc"));
             licenses.add(new License(this, "Google PlayServices GCM", LicenseType.APACHE_LICENSE_20, "2015", "Google Inc"));
@@ -108,7 +108,13 @@ public class AboutActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return "Some title " + position;
+            switch (position){
+                case 0 :
+                    return getString(R.string.about);
+                case 1 :
+                    return getString(R.string.open_source);
+                default: throw new IndexOutOfBoundsException("fragment position out of range");
+            }
         }
 
 

@@ -41,6 +41,7 @@
     <string name="wt">wt</string>
     <string name="tw">tw</string>
     <string name="about">About</string>
+    <string name="open_source">Open Sours Licenses</string>
 
     <string name="perfect_result">Perfect!</string>
     <string name="good_result">Very good!</string>
@@ -73,4 +74,14 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="about_html"> <![CDATA[
+Программа "WordLearning" помогает учить иностранные слова. Вы можете учить готовые наборы слов, которые собраны по темам или добавлять собственные слова. <p/>Сейчас доступно два варианта тренировки: "Слово - перевод" и "Перевод - слово". В первом нужно выбирать правильный перевод для английского слова. Во втором наоборот : из четырех слов на английском, нужно выбрать то, которое соответствует переводу.<p/>
+
+Для озвучивания слов используется  "Text-to-speach" - встроенный в систему синтезатор речи, поэтому произношение может быть не идеальным.<br/>
+
+<h4>Автор программы Александр Карачев.</h4>
+ ]]></string>
+
+
 </resources>

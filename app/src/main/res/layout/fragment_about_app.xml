@@ -4,10 +4,13 @@
     android:layout_height="match_parent"
     tools:context="xyz.volgoak.wordlearning.AboutAppFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_about_aboutfrag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
 
 </FrameLayout>
