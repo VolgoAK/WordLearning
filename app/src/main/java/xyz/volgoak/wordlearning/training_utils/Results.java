@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Created by Volgoak on 23.04.2017.
+ * Created by Alexander Karachev on 07.05.2017.
  */
 
 public class Results implements Serializable{

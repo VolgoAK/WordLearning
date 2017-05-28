@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,9 +22,9 @@ import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 import xyz.volgoak.wordlearning.utils.SetsCursorAdapter;
 
-import static android.R.attr.dialogTitle;
-import static android.R.id.message;
-
+/**
+ * Created by Alexander Karachev on 07.05.2017.
+ */
 
 /**
  * A simple {@link Fragment} subclass.

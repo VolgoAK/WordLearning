@@ -5,7 +5,7 @@ import android.provider.BaseColumns;
 import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.OUT_OF_DICTIONARY;
 
 /**
- * Created by Volgoak on 11.04.2017.
+ * Created by Alexander Karachev on 11.04.2017.
  */
 
 public final class DatabaseContract {

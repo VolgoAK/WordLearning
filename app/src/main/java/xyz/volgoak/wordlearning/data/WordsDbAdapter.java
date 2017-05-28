@@ -16,7 +16,7 @@ import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.IN_DICTIONARY
 
 
 /**
- * Created by 777 on 07.06.2016.
+ * Created by Alexander Karachev on 07.06.2016.
  */
 public class WordsDbAdapter {
 

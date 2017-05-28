@@ -1,9 +1,8 @@
 package xyz.volgoak.wordlearning;
 
 import android.app.NotificationManager;
-import android.app.PendingIntent;
+
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GcmNetworkManager;

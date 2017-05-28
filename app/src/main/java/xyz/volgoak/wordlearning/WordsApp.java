@@ -21,8 +21,9 @@ import com.google.firebase.auth.FirebaseAuth;
 public class WordsApp extends Application{
     private static WordsApp sInstance;
 
-    // TODO: 26.05.2017 set run to once at two days
+
     private static long SEC_IN_TWO_DAYS = 60 * 60 * 24 * 2;
+    private static long ONE_HOUR_WINDOW = 60 * 60;
     private static long MILLIS_IN_ONE_MINUT = 60;
 
     public WordsApp(){
@@ -44,8 +45,8 @@ public class WordsApp extends Application{
         Task task = new  PeriodicTask.Builder()
                 .setService(SetsLoaderService.class)
                 .setTag(SetsLoaderService.TASK_CHECK_UPDATE)
-                .setPeriod(MILLIS_IN_ONE_MINUT)
-                .setFlex(10)
+                .setPeriod(SEC_IN_TWO_DAYS)
+                .setFlex(ONE_HOUR_WINDOW)
                 .setUpdateCurrent(false)
                 .setRequiredNetwork(Task.NETWORK_STATE_CONNECTED)
                 .build();

@@ -2,18 +2,14 @@ package xyz.volgoak.wordlearning.utils;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -21,8 +17,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 
-import static android.R.attr.button;
-import static android.R.attr.description;
 
 /**
  * Created by Volgoak on 18.04.2017.

@@ -6,9 +6,8 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 
 import java.util.Locale;
-
 /**
- * Created by Volgoak on 14.04.2017.
+ * Created by Alexander Karachev on 07.05.2017.
  */
 
 public class WordSpeaker {

@@ -3,7 +3,6 @@ package xyz.volgoak.wordlearning;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableField;
-import android.databinding.ObservableFloat;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 
 import xyz.volgoak.wordlearning.databinding.FragmentTrainingBinding;
 import xyz.volgoak.wordlearning.training_utils.Results;
@@ -25,6 +23,9 @@ import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 import xyz.volgoak.wordlearning.training_utils.TrainingWord;
 import xyz.volgoak.wordlearning.utils.WordSpeaker;
 
+/**
+ * Created by Alexander Karachev on 07.05.2017.
+ */
 
 /**
  * A simple {@link Fragment} subclass.

@@ -25,6 +25,10 @@ import xyz.volgoak.wordlearning.databinding.ActivitySetBinding;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 import xyz.volgoak.wordlearning.utils.DictionaryRecyclerAdapter;
 
+/**
+ * Created by Alexander Karachev on 07.05.2017.
+ */
+
 public class SetActivity extends AppCompatActivity {
 
     public static final String TAG = "SetActivity";

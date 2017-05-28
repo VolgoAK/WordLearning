@@ -6,6 +6,10 @@ import android.os.Bundle;
 
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 
+/**
+ * Created by Alexander Karachev on 07.05.2017.
+ */
+
 public class SplashActivity extends AppCompatActivity {
 
     @Override

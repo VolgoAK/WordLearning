@@ -14,6 +14,9 @@ import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.training_utils.Results;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
+/**
+ * Created by Alexander Karachev on 07.05.2017.
+ */
 
 public class ResultsFragment extends Fragment {
 

@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * Created by Volgoak on 24.05.2017.
+ * Created by Alexander Karachev on 07.05.2017.
  */
 
 public class CustomFloatingButtonBehavior extends CoordinatorLayout.Behavior<FloatingActionButton>{

@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+/**
+ * Created by Alexander Karachev on 07.05.2017.
+ */
 
 /**
  * A simple {@link Fragment} subclass.

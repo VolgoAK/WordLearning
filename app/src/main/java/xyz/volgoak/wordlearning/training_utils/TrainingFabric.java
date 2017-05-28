@@ -1,11 +1,9 @@
 package xyz.volgoak.wordlearning.training_utils;
 
-import android.content.Context;
+
 import android.database.Cursor;
 
 import java.util.ArrayList;
-
-import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 
@@ -17,7 +15,7 @@ import static xyz.volgoak.wordlearning.data.WordsDbAdapter.TRAINING_LIMIT;
 
 
 /**
- * Created by 777 on 08.06.2016.
+ * Created by Alexander Karachev on 07.05.2017.
  */
 public abstract class TrainingFabric {
 

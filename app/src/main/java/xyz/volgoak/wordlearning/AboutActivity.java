@@ -8,18 +8,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-
 import com.artitk.licensefragment.model.License;
-import com.artitk.licensefragment.model.LicenseID;
-import com.artitk.licensefragment.model.LicenseManager;
 import com.artitk.licensefragment.model.LicenseType;
-import com.artitk.licensefragment.support.v4.LicenseFragmentBase;
 import com.artitk.licensefragment.support.v4.RecyclerViewLicenseFragment;
-
-
 import java.util.ArrayList;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
+/**
+ * Created by Alexander Karachev on 07.05.2017.
+ */
 
 public class AboutActivity extends AppCompatActivity {
 

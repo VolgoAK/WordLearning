@@ -1,7 +1,7 @@
 package xyz.volgoak.wordlearning.data;
 
 /**
- * Created by Volgoak on 12.05.2017.
+ * Created by Alexander Karachev on 12.05.2017.
  */
 
 public class FirebaseContract {

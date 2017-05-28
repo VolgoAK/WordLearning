@@ -8,6 +8,10 @@ import android.os.Bundle;
 
 import xyz.volgoak.wordlearning.training_utils.Results;
 
+/**
+ * Created by Alexander Karachev on 07.05.2017.
+ */
+
 public class ResultActivity extends AppCompatActivity implements FragmentListener{
 
     public static final String EXTRA_TRAINING_RESULTS = "results";

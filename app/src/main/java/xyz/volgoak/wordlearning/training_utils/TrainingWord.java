@@ -1,8 +1,9 @@
 package xyz.volgoak.wordlearning.training_utils;
 
 /**
- * Created by 777 on 09.06.2016.
+ * Created by Alexander Karachev on 07.05.2017.
  */
+
 public class TrainingWord {
     private String word;
     private String[] vars;

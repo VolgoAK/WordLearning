@@ -9,18 +9,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 
 /**
- * Created by Volgoak on 29.04.2017.
+ * Created by Alexander Karachev on 29.04.2017.
  */
 
 public class DictionaryRecyclerAdapter extends CursorRecyclerAdapter<DictionaryRecyclerAdapter.ViewHolder>{

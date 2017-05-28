@@ -21,6 +21,10 @@ import xyz.volgoak.wordlearning.databinding.FragmentRedactorBinding;
 import xyz.volgoak.wordlearning.utils.DictionaryRecyclerAdapter;
 
 /**
+ * Created by Alexander Karachev on 07.05.2017.
+ */
+
+/**
  * A simple {@link Fragment} subclass.
  */
 public class RedactorFragment extends Fragment{

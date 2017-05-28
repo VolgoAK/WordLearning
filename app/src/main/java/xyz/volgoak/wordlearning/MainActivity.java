@@ -17,6 +17,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
+/**
+ * Created by Alexander Karachev on 07.05.2017.
+ */
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentListener{
 
     public static final String TAG = "MainActivity";
@@ -27,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
 
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        mAuth = FirebaseAuth.getInstance();
+
         String extraTask = getIntent().getStringExtra(EXTRA_MODE);
         if(extraTask != null){
             if(extraTask.equals(START_DICTIONARY)){
@@ -61,9 +68,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onStart(){
-        FirebaseAuth.getInstance().signInAnonymously();
-        FirebaseAuth.getInstance().signInAnonymously();
-        FirebaseAuth.getInstance().signInAnonymously();
+        mAuth.signInAnonymously();
+
         super.onStart();
     }
 

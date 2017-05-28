@@ -7,10 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import xyz.volgoak.wordlearning.training_utils.Results;
-import xyz.volgoak.wordlearning.training_utils.Training;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
-import static xyz.volgoak.wordlearning.R.string.results;
 
 public class TrainingActivity extends AppCompatActivity implements TrainingFragment.ResultReceiver{
 

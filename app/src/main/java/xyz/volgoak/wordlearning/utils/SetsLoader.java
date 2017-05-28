@@ -14,20 +14,15 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -38,12 +33,9 @@ import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 
-import static android.R.attr.name;
-import static xyz.volgoak.wordlearning.R.string.sets;
-import static xyz.volgoak.wordlearning.R.string.word;
 
 /**
- * Created by Volgoak on 18.04.2017.
+ * Created by Alexander Karachev on 07.05.2017.
  */
 
 public final class SetsLoader {

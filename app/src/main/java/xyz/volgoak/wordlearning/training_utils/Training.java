@@ -1,14 +1,12 @@
 package xyz.volgoak.wordlearning.training_utils;
 
 import android.util.Log;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 
 /**
- * Created by 777 on 08.06.2016.
+ * Created by Alexander Karachev on 07.05.2017.
  */
 
 public class Training implements Serializable{

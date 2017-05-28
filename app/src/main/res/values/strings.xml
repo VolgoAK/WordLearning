@@ -8,34 +8,20 @@
     <string name="results">Results</string>
     <string name="redactor">Redactor</string>
     <string name="sets">Sets</string>
-    <string name="set">Set</string>
-    <string name="exit">Exit</string>
     <string name="to_home">Home</string>
-    <string name="open_source_licenses">Open source licenses</string>
 
-    <string name="set_activity_title">Set %1$s</string>
-    <string name="words_in_set">Words in a set %1$d</string>
-    <string name="set_in_the_dictionary">Set in the dictionary</string>
-    <string name="set_out_of_dictionary">Set out of dictionary</string>
     <string name="reset_progress">Reset progress</string>
     <string name="reset_progress_question">Reset progress?</string>
-    <string name="add_set">Add</string>
-    <string name="remove">Remove</string>
     <string name="reset">Reset</string>
-
-    <string name="home">Home</string>
 
     <string name="add">Add</string>
     <string name="word">Word</string>
     <string name="translation">Translation</string>
     <string name="send_to_training">Send to training</string>
     <string name="what_to_do">What to do with this word?</string>
-    <string name="select_training">Select training</string>
     <string name="add_to_dictionary">Add to dictionary</string>
     <string name="remove_from_dictionary">Remove from dictionary</string>
     <string name="open">Open</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
     <string name="delete">Delete</string>
     <string name="next_word">Next word</string>
     <string name="wt">wt</string>
@@ -54,7 +40,6 @@
     <string name="set_removed_message">Set %1$s was removed from dictionary</string>
     <string name="all_words_studied_message">All words studied. Please select new set or send old ones to training</string>
     <string name="training_finished">Training finished</string>
-    <string name="set_sent_to_training">Set was sent to training</string>
     <string name="fields_empty_message">Fields should not be empty</string>
 
     <string name="bogus_text">Definition of content of set, and something else just for make this stupid sentese little bit longer.
@@ -64,7 +49,6 @@
     <string name="no_words" />
 
     <string name="correct_answers">Correct answers</string>
-    <string name="wrong_answers">Wrong answers</string>
 
     <string name="drawer_open">Drawer open</string>
     <string name="drawer_close">Drawer close</string>
@@ -73,7 +57,6 @@
     <string name="sets_index_file_ru_en">sets_index.xml</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="about_html"> <![CDATA[
 Программа "WordLearning" помогает учить иностранные слова. Вы можете учить готовые наборы слов, которые собраны по темам или добавлять собственные слова. <p/>Сейчас доступно два варианта тренировки: "Слово - перевод" и "Перевод - слово". В первом нужно выбирать правильный перевод для английского слова. Во втором наоборот : из четырех слов на английском, нужно выбрать то, которое соответствует переводу.<p/>

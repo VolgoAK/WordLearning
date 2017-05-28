@@ -9,8 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.databinding.FragmentNoWordsBinding;
+
+/**
+ * Created by Alexander Karachev on 07.05.2017.
+ */
 
 /**
  * A simple {@link Fragment} subclass.

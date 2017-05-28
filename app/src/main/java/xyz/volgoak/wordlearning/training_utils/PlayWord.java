@@ -4,8 +4,11 @@ import android.util.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
+
+/**
+ * Created by Alexander Karachev on 07.05.2017.
+ */
 
 /**
  * Keep information about word and provides variants

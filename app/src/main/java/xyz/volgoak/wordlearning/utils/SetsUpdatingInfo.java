@@ -1,7 +1,7 @@
 package xyz.volgoak.wordlearning.utils;
 
 /**
- * Created by Volgoak on 26.05.2017.
+ * Created by Alexander Karachev on 07.05.2017.
  */
 
 /**
