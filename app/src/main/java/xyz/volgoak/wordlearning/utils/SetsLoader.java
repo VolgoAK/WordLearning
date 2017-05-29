@@ -51,6 +51,7 @@ public final class SetsLoader {
     public static final String DESCRIPTION_ATTR = "description";
     public static final String TRANSCRIPTION_ATTR = "transcription";
     public static final String IMAGE_ATTR = "image";
+    public static final String THEME_ATTR = "theme";
 
     public static final String LOADED_SETS_PREF = "loaded_sets";
 
@@ -80,7 +81,7 @@ public final class SetsLoader {
         return info;
     }
 
-    // TODO: 21.05.2017 add check and question to load new data
+
     private static SetsUpdatingInfo check(byte[] bytes, Context context) throws Exception{
         SetsUpdatingInfo info = new SetsUpdatingInfo();
 
@@ -155,13 +156,7 @@ public final class SetsLoader {
     public static SetsUpdatingInfo loadStartBase(Context context){
         SetsUpdatingInfo info = new SetsUpdatingInfo();
         try {
-            InputStream inputStream = context.getAssets().open("nature.xml");
-            info.infoSum( insertSetsIntoDb(prepareDocument(inputStream)));
-            inputStream = context.getAssets().open("things.xml");
-            info.infoSum(insertSetsIntoDb(prepareDocument(inputStream)));
-            inputStream = context.getAssets().open("verbs.xml");
-            info.infoSum( insertSetsIntoDb(prepareDocument(inputStream)));
-            inputStream = context.getAssets().open("new_base.xml");
+            InputStream inputStream = context.getAssets().open("start_base.xml");
             info.infoSum( insertSetsIntoDb(prepareDocument(inputStream)));
         }catch(IOException ex){
             ex.printStackTrace();
@@ -214,10 +209,10 @@ public final class SetsLoader {
 
                             //transcription could be empty for some words
                             String transcription = "";
-                            Node node = setNode.getAttributes().getNamedItem(TRANSCRIPTION_ATTR);
+                            Node node = wordNode.getAttributes().getNamedItem(TRANSCRIPTION_ATTR);
                             if(node != null)
-                            transcription = setNode.getAttributes()
-                                    .getNamedItem(TRANSCRIPTION_ATTR).getNodeValue().trim();
+                            transcription = node.getNodeValue();
+
 
                             ContentValues values = new ContentValues();
                             values.put(DatabaseContract.Words.COLUMN_WORD, word);
@@ -228,21 +223,28 @@ public final class SetsLoader {
                         }
                     }
 
+                    //parse set fields
                     String setName = setNode.getAttributes().getNamedItem(NAME_ATTR).getNodeValue();
                     String description = setNode.getAttributes().getNamedItem(DESCRIPTION_ATTR).getNodeValue();
                     String image = setNode.getAttributes().getNamedItem(IMAGE_ATTR).getNodeValue();
                     int wordsInSet = valuesList.size();
+
+                    String theme = null;
+                    Node themeNode = setNode.getAttributes().getNamedItem(THEME_ATTR);
+                    if(themeNode != null)
+                        theme = themeNode.getNodeValue();
 
                     ContentValues setValues = new ContentValues();
                     setValues.put(DatabaseContract.Sets.COLUMN_NAME, setName);
                     setValues.put(DatabaseContract.Sets.COLUMN_DESCRIPTION, description);
                     setValues.put(DatabaseContract.Sets.COLUMN_NUM_OF_WORDS, wordsInSet);
                     setValues.put(DatabaseContract.Sets.COLUMN_IMAGE_URL, image);
+                    if(theme != null) setValues.put(DatabaseContract.Sets.COLUMN_THEME, theme);
 
                     long setId = dbAdapter.insertSet(setValues);
                     info.incrementSetsAdded();
 
-
+                    //insert words from values list
                     for(ContentValues values : valuesList){
                         values.put(DatabaseContract.Words.COLUMN_SET_ID, setId);
                         dbAdapter.insertWord(values);

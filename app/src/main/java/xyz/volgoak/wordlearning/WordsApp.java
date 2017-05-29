@@ -38,9 +38,6 @@ public class WordsApp extends Application{
     public void onCreate() {
         super.onCreate();
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        auth.signInAnonymously();
-
         GcmNetworkManager networkManager = GcmNetworkManager.getInstance(this);
         Task task = new  PeriodicTask.Builder()
                 .setService(SetsLoaderService.class)

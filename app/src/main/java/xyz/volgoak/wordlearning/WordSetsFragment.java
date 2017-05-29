@@ -58,7 +58,7 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
         int[] to = new int[]{android.R.id.text1};
         String[] from = new String[]{DatabaseContract.Sets.COLUMN_NAME};
         mDbAdapter = new WordsDbAdapter();
-        Cursor setsCursor = mDbAdapter.fetchSets();
+        Cursor setsCursor = mDbAdapter.fetchAllSets();
 
         mCursorAdapter = new SetsCursorAdapter(getContext(), setsCursor);
         mCursorAdapter.setStatusChanger(this);
@@ -92,18 +92,6 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
         super.onStop();
         mCursorAdapter.getCursor().close();
     }
-
-    /*@Override
-    public void changeSetStatus(long setId, int newStatus, String setName) {
-        String message ;
-        message = newStatus == DatabaseContract.Sets.IN_DICTIONARY ? getString(R.string.set_added_message, setName) :
-                getString(R.string.set_removed_message, setName);
-        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-        mDbAdapter.changeSetStatus(setId, newStatus);
-
-        mCursorAdapter.swapCursor(mDbAdapter.fetchSets());
-    }*/
-
 
     public void invokeSetMenu(final long setId) {
 
@@ -192,6 +180,6 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
         mDbAdapter.changeSetStatus(setId, newStatus);
 
-        mCursorAdapter.swapCursor(mDbAdapter.fetchSets());
+        mCursorAdapter.swapCursor(mDbAdapter.fetchAllSets());
     }
 }

@@ -156,7 +156,7 @@ public class WordsDbAdapter {
         return cursor;
     }
 
-    public Cursor fetchSets(){
+    public Cursor fetchAllSets(){
         String query = "SELECT * FROM " + DatabaseContract.Sets.TABLE_NAME +
                 " WHERE " + DatabaseContract.Sets.COLUMN_VISIBILITY + " = " + DatabaseContract.Sets.VISIBLE;
         return mDb.rawQuery(query, null);

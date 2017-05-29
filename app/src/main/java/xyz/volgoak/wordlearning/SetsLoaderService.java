@@ -8,6 +8,7 @@ import android.util.Log;
 import com.google.android.gms.gcm.GcmNetworkManager;
 import com.google.android.gms.gcm.GcmTaskService;
 import com.google.android.gms.gcm.TaskParams;
+import com.google.firebase.auth.FirebaseAuth;
 
 import xyz.volgoak.wordlearning.utils.SetsLoader;
 import xyz.volgoak.wordlearning.utils.SetsUpdatingInfo;
@@ -34,6 +35,9 @@ public class SetsLoaderService extends GcmTaskService{
     }
 
     private void checkUpdate(){
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth.signInAnonymously();
+
         SetsUpdatingInfo info = SetsLoader.checkForDbUpdate(this);
         Log.d(TAG, " sets loaded " + info.getSetsAdded() + "words loaded " + info.getWordsAdded());
         // TODO: 26.05.2017 create notification which launch activity

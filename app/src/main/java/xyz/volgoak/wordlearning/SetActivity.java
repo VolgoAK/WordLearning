@@ -15,6 +15,7 @@ import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -42,10 +43,14 @@ public class SetActivity extends AppCompatActivity {
     private boolean mSetInDictionary;
     private String mSetName;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set);
+
+        FirebaseAuth.getInstance().signInAnonymously();
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_set);
         setSupportActionBar(mBinding.setToolbar);
@@ -56,13 +61,16 @@ public class SetActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         getSupportActionBar().setHomeButtonEnabled(true);
 
         loadSetInformation();
+        prepareRecycler();
+    }
 
-        recyclerOperations();
-
+    @Override
+    protected void onStart() {
+        manageTrainingStatusMenu();
+        super.onStart();
     }
 
     private void loadSetInformation(){
@@ -79,19 +87,18 @@ public class SetActivity extends AppCompatActivity {
                 .getReference(FirebaseContract.TITLE_IMAGES_FOLDER)
                 .child(imageRes);
 
-        // TODO: 11.05.2017 add default dravable
         Glide.with(this)
                 .using(new FirebaseImageLoader())
                 .load(imageRef)
                 .centerCrop()
-                .crossFade().error(R.drawable.button_back)
+                .crossFade().error(R.drawable.def_title)
                 .into(mBinding.setIvTitle);
 
 
         int setStatus = setCursor.getInt(setCursor.getColumnIndex(DatabaseContract.Sets.COLUMN_STATUS));
         mSetInDictionary = setStatus == DatabaseContract.Sets.IN_DICTIONARY;
 
-        manageTrainingStatusFab();
+        prepareSetStatusFabs();
 
         mBinding.setAddFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +118,7 @@ public class SetActivity extends AppCompatActivity {
 
 
 
-    private void manageTrainingStatusFab(){
+    private void prepareSetStatusFabs(){
         mBinding.setResetFab.setVisibility(mSetInDictionary ? View.VISIBLE : View.GONE);
         int addDrawableId = mSetInDictionary ? R.drawable.ic_remove_white_24dp : R.drawable.ic_add_white_24dp;
         mBinding.setAddFab.setImageDrawable(ContextCompat.getDrawable(this, addDrawableId));
@@ -132,7 +139,7 @@ public class SetActivity extends AppCompatActivity {
         return super.onPrepareOptionsMenu(menu);
     }
 
-    private void recyclerOperations(){
+    private void prepareRecycler(){
         Cursor cursor = mDbAdapter.fetchWordsBySetId(mSetId);
 
         mBinding.rvSetAc.setHasFixedSize(true);
@@ -153,11 +160,17 @@ public class SetActivity extends AppCompatActivity {
     }
 
     public void addOrRemoveSetFromDictionary(){
+        View.OnClickListener snackListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        };
         int newStatus = mSetInDictionary ? DatabaseContract.Sets.OUT_OF_DICTIONARY : DatabaseContract.Sets.IN_DICTIONARY;
         mSetInDictionary = !mSetInDictionary;
 
         mDbAdapter.changeSetStatus(mSetId, newStatus);
-        manageTrainingStatusFab();
+        prepareSetStatusFabs();
         manageTrainingStatusMenu();
 
         int messageId = mSetInDictionary ? R.string.set_added_message : R.string.set_removed_message;
@@ -187,11 +200,7 @@ public class SetActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    protected void onStart() {
-        manageTrainingStatusMenu();
-        super.onStart();
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
