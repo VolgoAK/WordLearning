@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.preference.PreferenceManager;
+import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
 import xyz.volgoak.wordlearning.WordsApp;
@@ -87,17 +88,17 @@ public class WordsDbAdapter {
         editor.putLong(DEFAULT_DICTIONARY_ID, setId);
         editor.apply();
 
-        insertWord("Cat", "Кот", setId, IN_DICTIONARY );
-        insertWord("Dog", "Собака", setId, IN_DICTIONARY);
-        insertWord("Monkey", "Обезьяна", setId, IN_DICTIONARY);
-        insertWord("Donkey", "Осел", setId, IN_DICTIONARY);
-        insertWord("Pigeon", "Голубь", setId, IN_DICTIONARY);
-        insertWord("Run", "Бежать", setId, IN_DICTIONARY);
-        insertWord("Perfect", "Совершенный", setId, IN_DICTIONARY);
-        insertWord("Stupid", "Тупой", setId, IN_DICTIONARY);
-        insertWord("Asshole", "Придурок", setId, IN_DICTIONARY);
-        insertWord("Beach", "Пляж", setId, IN_DICTIONARY);
-        insertWord("Temple", "Храм", setId, IN_DICTIONARY);
+        insertWord("Hello", "Привет", setId, IN_DICTIONARY );
+        insertWord("Name", "Имя", setId, IN_DICTIONARY);
+        insertWord("Human", "Человек", setId, IN_DICTIONARY);
+        insertWord("He", "Он", setId, IN_DICTIONARY);
+        insertWord("She", "Она", setId, IN_DICTIONARY);
+        insertWord("Where", "Где", setId, IN_DICTIONARY);
+        insertWord("When", "Когда", setId, IN_DICTIONARY);
+        insertWord("Why", "Почему", setId, IN_DICTIONARY);
+        insertWord("Who", "Кто", setId, IN_DICTIONARY);
+        insertWord("What", "Что", setId, IN_DICTIONARY);
+        insertWord("Time", "Время", setId, IN_DICTIONARY);
         insertWord("Country", "Страна", setId, IN_DICTIONARY);
 
         SetsLoader.loadStartBase(mContext);
@@ -106,6 +107,10 @@ public class WordsDbAdapter {
     public long insertSet(ContentValues set){
         Log.d(TAG, "insertSet: ");
         return mDb.insert(DatabaseContract.Sets.TABLE_NAME, null, set);
+    }
+
+    public long insertTheme(ContentValues theme){
+       return mDb.insert(DatabaseContract.Themes.TABLE_NAME, null, theme);
     }
 
     public Cursor fetchDictionaryWords(){
@@ -167,14 +172,15 @@ public class WordsDbAdapter {
             " WHERE " + DatabaseContract.Sets._ID + "=?", new String[]{Long.toString(setId)});
     }
 
+    public Cursor fetchSetByParam(String column, String value){
+        return mDb.query(DatabaseContract.Sets.TABLE_NAME, null, column + "=?", new String[]{value},
+                null, null, null);
+    }
+
     public Cursor fetchWordsBySetId(long id){
         String query = "SELECT * FROM " + DatabaseContract.Words.TABLE_NAME +
                 " WHERE " + DatabaseContract.Words.COLUMN_SET_ID + " = " + id +
                 " ORDER BY " + DatabaseContract.Words.COLUMN_WORD + " COLLATE NOCASE";
-        return mDb.rawQuery(query, null);
-    }
-
-    public Cursor rawQuery(String query){
         return mDb.rawQuery(query, null);
     }
 
@@ -294,6 +300,11 @@ public class WordsDbAdapter {
         }
     }
 
+    @VisibleForTesting
+    public Cursor rawQuery(String query){
+        return mDb.rawQuery(query, null);
+    }
+
     static class WordsSqlHelper extends SQLiteOpenHelper {
 
         public WordsSqlHelper(Context context){
@@ -302,6 +313,7 @@ public class WordsDbAdapter {
 
         @Override
         public void onCreate(SQLiteDatabase db){
+            db.execSQL(DatabaseContract.Themes.CREATE_TABLE);
             db.execSQL(DatabaseContract.Sets.CREATE_TABLE);
             db.execSQL(DatabaseContract.Words.CREATE_TABLE);
         }
@@ -310,6 +322,7 @@ public class WordsDbAdapter {
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
             db.execSQL(DatabaseContract.Words.DELETE_TABLE);
             db.execSQL(DatabaseContract.Sets.DELETE_TABLE);
+            db.execSQL(DatabaseContract.Themes.DELETE_TABLE);
             onCreate(db);
         }
     }

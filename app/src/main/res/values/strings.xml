@@ -41,6 +41,8 @@
     <string name="all_words_studied_message">All words studied. Please select new set or send old ones to training</string>
     <string name="training_finished">Training finished</string>
     <string name="fields_empty_message">Fields should not be empty</string>
+    <string name="new_sets_loaded">New sets was loaded</string>
+    <string name="num_of_words_loaded">Loaded %1$d words</string>
 
     <string name="bogus_text">Definition of content of set, and something else just for make this stupid sentese little bit longer.
         But not too long</string>
@@ -61,7 +63,7 @@
     <string name="about_html"> <![CDATA[
 Программа "WordLearning" помогает учить иностранные слова. Вы можете учить готовые наборы слов, которые собраны по темам или добавлять собственные слова. <p/>Сейчас доступно два варианта тренировки: "Слово - перевод" и "Перевод - слово". В первом нужно выбирать правильный перевод для английского слова. Во втором наоборот : из четырех слов на английском, нужно выбрать то, которое соответствует переводу.<p/>
 
-Для озвучивания слов используется  "Text-to-speach" - встроенный в систему синтезатор речи, поэтому произношение может быть не идеальным.<br/>
+Для озвучивания слов используется  "Text-to-speech" - встроенный в систему синтезатор речи, поэтому произношение может быть не идеальным.<br/>
 
 <h4>Автор программы Александр Карачев.</h4>
  ]]></string>

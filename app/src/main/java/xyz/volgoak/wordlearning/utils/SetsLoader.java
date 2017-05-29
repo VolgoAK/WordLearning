@@ -46,12 +46,17 @@ public final class SetsLoader {
     public static final String DATA_SOURCE_ATTR = "source";
     public static final String SET_NODE = "Set";
     public static final String NAME_ATTR = "name";
+    public static final String IMAGE_ATTR = "image";
+    public static final String THEME_ATTR = "theme";
+
     public static final String WORD_ATTR = "word";
     public static final String TRANSLATION_ATTR = "translation";
     public static final String DESCRIPTION_ATTR = "description";
     public static final String TRANSCRIPTION_ATTR = "transcription";
-    public static final String IMAGE_ATTR = "image";
-    public static final String THEME_ATTR = "theme";
+
+    public static final String THEME_NODE = "Theme";
+    public static final String THEME_NAME_ATTR = "name";
+    public static final String THEME_CODE_ATTR = "code";
 
     public static final String LOADED_SETS_PREF = "loaded_sets";
 
@@ -188,6 +193,20 @@ public final class SetsLoader {
             Element rootElement = document.getDocumentElement();
             rootElement.normalize();
 
+            //parse themes
+            NodeList themeList = rootElement.getElementsByTagName(THEME_NODE);
+            for(int a = 0; a < themeList.getLength(); a++){
+                Node themeNode = themeList.item(a);
+                String name = themeNode.getAttributes().getNamedItem(THEME_NAME_ATTR).getNodeValue();
+                String codeString = themeNode.getAttributes().getNamedItem(THEME_CODE_ATTR).getNodeValue();
+                int code = Integer.parseInt(codeString);
+
+                ContentValues themeValues = new ContentValues();
+                themeValues.put(DatabaseContract.Themes.COLUMN_NAME, name);
+                themeValues.put(DatabaseContract.Themes.COLUMN_CODE, code);
+                dbAdapter.insertTheme(themeValues);
+            }
+
             NodeList setsList = rootElement.getElementsByTagName(SET_NODE);
             Log.d(TAG, "insertSetsIntoDb: sets in doc" + setsList.getLength());
 
@@ -239,7 +258,7 @@ public final class SetsLoader {
                     setValues.put(DatabaseContract.Sets.COLUMN_DESCRIPTION, description);
                     setValues.put(DatabaseContract.Sets.COLUMN_NUM_OF_WORDS, wordsInSet);
                     setValues.put(DatabaseContract.Sets.COLUMN_IMAGE_URL, image);
-                    if(theme != null) setValues.put(DatabaseContract.Sets.COLUMN_THEME, theme);
+                    if(theme != null) setValues.put(DatabaseContract.Sets.COLUMN_THEME_CODE, Integer.parseInt(theme));
 
                     long setId = dbAdapter.insertSet(setValues);
                     info.incrementSetsAdded();

@@ -2,6 +2,11 @@ package xyz.volgoak.wordlearning;
 
 import android.app.NotificationManager;
 
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -40,19 +45,31 @@ public class SetsLoaderService extends GcmTaskService{
 
         SetsUpdatingInfo info = SetsLoader.checkForDbUpdate(this);
         Log.d(TAG, " sets loaded " + info.getSetsAdded() + "words loaded " + info.getWordsAdded());
-        // TODO: 26.05.2017 create notification which launch activity
         createUpdateNotification(info);
     }
 
     private void createUpdateNotification(SetsUpdatingInfo info){
-
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setContentTitle("Db updated")
-                .setContentText("Loaded " + info.getSetsAdded() + " sets added")
+        builder.setContentTitle(getString(R.string.new_sets_loaded))
+                .setContentText(getString(R.string.num_of_words_loaded, info.getWordsAdded()))
                 .setAutoCancel(true)
+                .setLargeIcon(getBitmapForNotification())
+                .setContentIntent(createPendingIntent())
                 .setSmallIcon(R.mipmap.ic_launcher);
 
         NotificationManager manager =(NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         manager.notify(NOTIFICATION_ID, builder.build());
+    }
+
+    private PendingIntent createPendingIntent(){
+        Intent intent = new Intent(this, SplashActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return pendingIntent;
+    }
+
+    private Bitmap getBitmapForNotification(){
+        Resources res = this.getResources();
+        Bitmap bitmap = BitmapFactory.decodeResource(res, R.mipmap.ic_launcher);
+        return bitmap;
     }
 }

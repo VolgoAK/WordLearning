@@ -10,7 +10,7 @@ import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.OUT_OF_DICTIO
 
 public final class DatabaseContract {
 
-    public final static int DB_VERSION = 52;
+    public final static int DB_VERSION = 54;
     public final static String DB_NAME = "WORDS_DATABASE";
 
 
@@ -62,7 +62,7 @@ public final class DatabaseContract {
         public static final String COLUMN_DESCRIPTION = "DESCRIPTION";
         public static final String COLUMN_IMAGE_URL = "image_url";
         public static final String COLUMN_LANG = "LANG";
-        public static final String COLUMN_THEME = "THEME";
+        public static final String COLUMN_THEME_CODE = "THEME_CODE";
 
         public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME +
                 "( " + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -72,8 +72,22 @@ public final class DatabaseContract {
                 COLUMN_IMAGE_URL + " TEXT," +
                 COLUMN_VISIBILITY + " INTEGER DEFAULT " + VISIBLE + ", " +
                 COLUMN_LANG + " TEXT ," +
-                COLUMN_THEME + " TEXT ," +
+                COLUMN_THEME_CODE + " INTEGER ," +
                 COLUMN_STATUS + " INTEGER DEFAULT " + OUT_OF_DICTIONARY + ");";
+
+        public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
+    }
+
+    public static abstract class Themes implements BaseColumns{
+        public static final String TABLE_NAME = "THEMES_TABLE";
+        public static final String COLUMN_NAME = "THEME_NAME";
+        public static final String COLUMN_CODE = "THEME_COD";
+
+        public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME +
+                "( " + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_NAME + " TEXT, " +
+                COLUMN_CODE + " INTEGER " +
+                ");";
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
