@@ -21,11 +21,14 @@
 
         >
         <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar_set_act"
             android:fitsSystemWindows="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:contentScrim="@color/colorPrimary"
+            app:expandedTitleMarginBottom="40dp"
+            app:expandedTitleTextAppearance="@style/expanded_title_text"
             >
 
             <ImageView

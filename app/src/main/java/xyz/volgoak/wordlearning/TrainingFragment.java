@@ -138,7 +138,6 @@ public class TrainingFragment extends Fragment {
         mBinding.btVar4Tf.setBackground(mDefaultBackground);
 
         mBinding.progressTf.setProgress(mTraining.getProgressInPercents());
-        mBinding.notifyPropertyChanged(BR.fragment);
 
         pronounceWord();
     }
@@ -176,7 +175,6 @@ public class TrainingFragment extends Fragment {
         button.setBackground(background);
 
         mAnswered.set(true);
-        mBinding.notifyPropertyChanged(BR.fragment);
     }
 
     @Override

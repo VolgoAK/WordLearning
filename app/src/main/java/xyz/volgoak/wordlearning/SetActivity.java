@@ -63,13 +63,14 @@ public class SetActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        loadSetInformation();
-        prepareRecycler();
+//        mBinding.collapsingToolbarSetAct.
     }
 
     @Override
     protected void onStart() {
         manageTrainingStatusMenu();
+        loadSetInformation();
+        prepareRecycler();
         super.onStart();
     }
 
@@ -114,6 +115,7 @@ public class SetActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+        mRecyclerAdapter.getCursor().close();
         super.onStop();
     }
 
@@ -141,6 +143,7 @@ public class SetActivity extends AppCompatActivity {
 
         int setStatus = setCursor.getInt(setCursor.getColumnIndex(DatabaseContract.Sets.COLUMN_STATUS));
         mSetInDictionary = setStatus == DatabaseContract.Sets.IN_DICTIONARY;
+        setCursor.close();
 
         prepareSetStatusFabs();
 

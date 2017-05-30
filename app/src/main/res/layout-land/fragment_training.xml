@@ -73,8 +73,10 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/bt_var2_tf"
             app:layout_constraintTop_toBottomOf="@id/progress_tf"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_chainStyle="packed"
-            android:layout_marginTop="0dp" />
+            android:layout_marginTop="0dp"
+            app:layout_constraintVertical_bias="0.23000002" />
 
         <Button
             android:id="@+id/bt_var2_tf"
