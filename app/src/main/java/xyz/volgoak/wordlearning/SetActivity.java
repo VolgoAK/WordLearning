@@ -73,6 +73,50 @@ public class SetActivity extends AppCompatActivity {
         super.onStart();
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem addItem = menu.findItem(R.id.item_add_setact);
+        addItem.setTitle(mSetInDictionary ? R.string.remove_from_dictionary : R.string.add_to_dictionary);
+
+        MenuItem resetItem = menu.findItem(R.id.item_reset_setact);
+        resetItem.setVisible(mSetInDictionary);
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.set_activity_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home :
+                finish();
+                return true;
+            case R.id.item_add_setact:
+                addOrRemoveSetFromDictionary();
+                return true;
+            case R.id.item_reset_setact:
+                resetSetProgress();
+                return true;
+            case R.id.item_wt_setact :
+                startTraining(TrainingFabric.WORD_TRANSLATION);
+                return true;
+            case R.id.item_tw_setact :
+                startTraining(TrainingFabric.TRANSLATION_WORD);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
     private void loadSetInformation(){
         Cursor setCursor = mDbAdapter.fetchSetById(mSetId);
         setCursor.moveToFirst();
@@ -111,12 +155,10 @@ public class SetActivity extends AppCompatActivity {
         mBinding.setResetFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               resetSetProgress();
+                resetSetProgress();
             }
         });
     }
-
-
 
     private void prepareSetStatusFabs(){
         mBinding.setResetFab.setVisibility(mSetInDictionary ? View.VISIBLE : View.GONE);
@@ -126,17 +168,6 @@ public class SetActivity extends AppCompatActivity {
 
     private void manageTrainingStatusMenu(){
 
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem addItem = menu.findItem(R.id.item_add_setact);
-        addItem.setTitle(mSetInDictionary ? R.string.remove_from_dictionary : R.string.add_to_dictionary);
-
-        MenuItem resetItem = menu.findItem(R.id.item_reset_setact);
-        resetItem.setVisible(mSetInDictionary);
-
-        return super.onPrepareOptionsMenu(menu);
     }
 
     private void prepareRecycler(){
@@ -178,6 +209,8 @@ public class SetActivity extends AppCompatActivity {
         Snackbar.make(findViewById(R.id.coordinator_setact), message, BaseTransientBottomBar.LENGTH_LONG).show();
     }
 
+
+
     public void resetSetProgress(){
 
         View.OnClickListener snackListener = new View.OnClickListener(){
@@ -190,37 +223,5 @@ public class SetActivity extends AppCompatActivity {
 
         Snackbar.make(findViewById(R.id.coordinator_setact), R.string.reset_progress_question, BaseTransientBottomBar.LENGTH_LONG)
                 .setAction(R.string.reset, snackListener).show();
-    }
-
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.set_activity_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home :
-                finish();
-                return true;
-            case R.id.item_add_setact:
-                addOrRemoveSetFromDictionary();
-                return true;
-            case R.id.item_reset_setact:
-                resetSetProgress();
-                return true;
-            case R.id.item_wt_setact :
-                startTraining(TrainingFabric.WORD_TRANSLATION);
-                return true;
-            case R.id.item_tw_setact :
-                startTraining(TrainingFabric.TRANSLATION_WORD);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

@@ -208,7 +208,7 @@ public final class SetsLoader {
             }
 
             NodeList setsList = rootElement.getElementsByTagName(SET_NODE);
-            Log.d(TAG, "insertSetsIntoDb: sets in doc" + setsList.getLength());
+            //Log.d(TAG, "insertSetsIntoDb: sets in doc" + setsList.getLength());
 
             //parse sets and insert them into database
             for(int a = 0; a < setsList.getLength(); a++){

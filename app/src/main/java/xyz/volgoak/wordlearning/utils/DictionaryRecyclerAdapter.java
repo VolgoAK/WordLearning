@@ -57,11 +57,8 @@ public class DictionaryRecyclerAdapter extends CursorRecyclerAdapter<DictionaryR
         }catch(IndexOutOfBoundsException ex){
             holder.trainWTImage.setImageDrawable(mProgresIcons[0]);
             holder.trainWTImage.setImageDrawable(mProgresIcons[0]);
-            Log.e(TAG, "bindView: trained status too big", ex);
         }
-        Log.d(TAG, "onBindViewHolderCursor: ");
-
-        //set listener for speak word
+        //set listener for tts
         final String word = cursor.getString(cursor.getColumnIndex(DatabaseContract.Words.COLUMN_WORD));
         holder.soundButton.setOnClickListener(new View.OnClickListener() {
             @Override

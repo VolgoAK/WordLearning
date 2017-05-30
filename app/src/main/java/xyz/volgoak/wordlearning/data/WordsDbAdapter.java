@@ -36,8 +36,6 @@ public class WordsDbAdapter {
     private SQLiteDatabase mDb;
     private Context mContext;
     private WordsSqlHelper mHelper;
-    //for test
-    static int wordCount = 0;
 
     public WordsDbAdapter(){
         mContext = WordsApp.getContext();
@@ -74,7 +72,7 @@ public class WordsDbAdapter {
         return mDb.insert(DatabaseContract.Words.TABLE_NAME, null, wordValues);
     }
 
-    public void insertDefaultDictionary(){
+    private void insertDefaultDictionary(){
         Log.d(TAG, "insertDefaultDictionary");
 
         ContentValues values = new ContentValues();
@@ -102,6 +100,7 @@ public class WordsDbAdapter {
         insertWord("Country", "Страна", setId, IN_DICTIONARY);
 
         SetsLoader.loadStartBase(mContext);
+        SetsLoader.checkForDbUpdate(mContext);
     }
 
     public long insertSet(ContentValues set){
@@ -114,10 +113,6 @@ public class WordsDbAdapter {
     }
 
     public Cursor fetchDictionaryWords(){
-        /*String select = "SELECT a.* " +
-                " FROM " + DatabaseContract.Words.TABLE_NAME + " a, " + DatabaseContract.Sets.TABLE_NAME + " b " +
-                " WHERE a." + DatabaseContract.Words.COLUMN_SET_ID + " = b." + DatabaseContract.Sets._ID +
-                " AND b." + DatabaseContract.Sets.COLUMN_STATUS + " = " + DatabaseContract.Sets.IN_DICTIONARY;*/
 
         String select = "SELECT * FROM " + DatabaseContract.Words.TABLE_NAME +
                 " WHERE " + DatabaseContract.Words.COLUMN_STATUS + " = " + DatabaseContract.Words.IN_DICTIONARY ;

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 
 /**
@@ -16,6 +18,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //create dbAdapter for load database if it's empty
+        FirebaseAuth.getInstance().signInAnonymously();
         new WordsDbAdapter();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

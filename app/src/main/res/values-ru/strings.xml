@@ -45,6 +45,8 @@
     <string name="tw">пс</string>
     <string name="about">О приложении</string>
     <string name="open_source">Сторонние бибилиотеки</string>
+    <string name="new_sets_loaded">Были загружены новые наборы слов</string>
+    <string name="num_of_words_loaded">Загружено %1$d слов</string>
 
 
     <!-- messages -->

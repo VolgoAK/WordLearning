@@ -55,8 +55,6 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
 
         mFragmentListener.setActionBarTitle(getString(R.string.sets));
 
-        int[] to = new int[]{android.R.id.text1};
-        String[] from = new String[]{DatabaseContract.Sets.COLUMN_NAME};
         mDbAdapter = new WordsDbAdapter();
         Cursor setsCursor = mDbAdapter.fetchAllSets();
 

@@ -15,3 +15,18 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-dontwarn com.akexorcist.roundcornerprogressbar.**
+
+-keepattributes *Annotation*
+-keep public class com.google.vending.licensing.ILicensingService
+-keep public class com.android.vending.licensing.ILicensingService
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.PreferenceActivity
+-keep public class * extends android.view.View
+-keep public class * extends android.widget.BaseAdapter
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * implements android.view.View.OnTouchListener
+-keep public class * implements android.view.View.OnClickListener

@@ -2,6 +2,7 @@ package xyz.volgoak.wordlearning;
 
 
 import android.databinding.DataBindingUtil;
+import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -49,7 +50,7 @@ public class TrainingFragment extends Fragment {
 
     public final ObservableField<String[]> mVarArray = new ObservableField<>();
     public final ObservableField<String> mWord = new ObservableField<>();
-    public final ObservableField<Boolean> mAnswered = new ObservableField<>();
+    public final ObservableBoolean mAnswered = new ObservableBoolean();
 
     private Drawable mDefaultBackground;
     private Drawable mWrongAnswerBackground;
@@ -192,7 +193,6 @@ public class TrainingFragment extends Fragment {
         super.onDestroy();
     }
 
-    // TODO: 04.05.2017 implement go to dictionary function
     private void goToDictionary(){
         Toast.makeText(getContext(), getString(R.string.all_words_studied_message), Toast.LENGTH_LONG).show();
         //mListener.startSets();
