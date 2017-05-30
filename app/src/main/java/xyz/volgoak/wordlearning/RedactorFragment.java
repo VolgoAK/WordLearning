@@ -91,6 +91,12 @@ public class RedactorFragment extends Fragment{
         });
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        mCursorAdapter.getCursor().close();
+    }
+
     public void fireCustomDialog(final long id){
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

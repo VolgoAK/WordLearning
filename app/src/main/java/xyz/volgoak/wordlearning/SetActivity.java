@@ -43,8 +43,6 @@ public class SetActivity extends AppCompatActivity {
     private boolean mSetInDictionary;
     private String mSetName;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,12 +56,9 @@ public class SetActivity extends AppCompatActivity {
         mSetId = getIntent().getLongExtra(ID_EXTRA, -1);
         mDbAdapter = new WordsDbAdapter();
 
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
-//        mBinding.collapsingToolbarSetAct.
     }
 
     @Override
