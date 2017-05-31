@@ -36,7 +36,7 @@ public class SetsCursorAdapter extends SimpleCursorAdapter{
         super(context, LAYOUT, cursor, FROM, TO, 0);
         mContext = context;
 
-        mImageRefs = FirebaseStorage.getInstance().getReference("images");
+        mImageRefs = FirebaseStorage.getInstance().getReference("images/icons_200");
     }
 
     public void setStatusChanger(SetStatusChanger statusChanger){

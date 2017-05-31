@@ -69,7 +69,7 @@ public class ResultsFragment extends Fragment {
 
         String opinion;
         double percentage = mResults.correctAnswers * 1.0/ mResults.wordCount;
-        Log.d(TAG, "onStart: percentage " + percentage);
+//        Log.d(TAG, "onStart: percentage " + percentage);
 
         if(percentage == 1){
             opinion = getString(R.string.perfect_result);

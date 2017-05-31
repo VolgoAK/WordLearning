@@ -156,14 +156,14 @@ public class TrainingFragment extends Fragment {
     }
 
     public void pronounceWord(){
-        Log.d(TAG, "pronounceWord: ");
+//        Log.d(TAG, "pronounceWord: ");
         if(mSpeaker != null) mSpeaker.speakWord(mTrainingWord.getWord());
     }
 
     //checks is answer correct and sets background for button
     //depends on correctness
     public void checkAnswer(View view){
-        Log.d(TAG, "checkAnswer: ");
+//        Log.d(TAG, "checkAnswer: ");
         Button button = (Button) view;
         String tag = (String) button.getTag();
         int number = Integer.parseInt(tag);

@@ -40,7 +40,7 @@ public class PlayWord implements Serializable{
         }
 
         public boolean checkAnswer(int answerNum){
-            Log.d(TAG, "checkAnswer: answerNum" + answerNum + " word at position " + vars[answerNum]);
+//            Log.d(TAG, "checkAnswer: answerNum" + answerNum + " word at position " + vars[answerNum]);
             return vars[answerNum].equals(translation);
         }
 

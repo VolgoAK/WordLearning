@@ -178,7 +178,6 @@ public class SetActivity extends AppCompatActivity {
 
         mRecyclerAdapter = new DictionaryRecyclerAdapter(cursor, this);
         mBinding.rvSetAc.setAdapter(mRecyclerAdapter);
-
     }
 
     public void startTraining(int trainingType){

@@ -30,7 +30,7 @@ public class SetsLoaderService extends GcmTaskService{
 
     @Override
     public int onRunTask(TaskParams taskParams) {
-        Log.d(TAG, "onRunTask");
+//        Log.d(TAG, "onRunTask");
         switch(taskParams.getTag()){
             case TASK_CHECK_UPDATE :
                 checkUpdate();
@@ -44,7 +44,7 @@ public class SetsLoaderService extends GcmTaskService{
         auth.signInAnonymously();
 
         SetsUpdatingInfo info = SetsLoader.checkForDbUpdate(this);
-        Log.d(TAG, " sets loaded " + info.getSetsAdded() + "words loaded " + info.getWordsAdded());
+//        Log.d(TAG, " sets loaded " + info.getSetsAdded() + "words loaded " + info.getWordsAdded());
         createUpdateNotification(info);
     }
 

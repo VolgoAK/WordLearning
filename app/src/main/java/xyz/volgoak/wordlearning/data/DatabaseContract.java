@@ -10,7 +10,7 @@ import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.OUT_OF_DICTIO
 
 public final class DatabaseContract {
 
-    public final static int DB_VERSION = 54;
+    public final static int DB_VERSION = 1;
     public final static String DB_NAME = "WORDS_DATABASE";
 
 

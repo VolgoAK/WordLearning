@@ -94,7 +94,7 @@ public final class SetsLoader {
         Set<String> loadedData = preferences.getStringSet(LOADED_SETS_PREF, new HashSet<String>());
 
         for(String added : loadedData){
-            Log.d(TAG, "check: already loaded " + added);
+//            Log.d(TAG, "check: already loaded " + added);
         }
 
         Document doc = prepareDocument(bytes);
@@ -106,7 +106,7 @@ public final class SetsLoader {
             String setSource = n.getAttributes().getNamedItem(DATA_SOURCE_ATTR).getNodeValue();
 
             if(!loadedData.contains(dataId)){
-                Log.d(TAG, "check: load data set " + dataId);
+//                Log.d(TAG, "check: load data set " + dataId);
                 info.infoSum(loadDataByFileName(setSource, dataId, context));
             }
         }
@@ -272,8 +272,8 @@ public final class SetsLoader {
                 }
             }
 
-            Log.d(TAG, "added sets " + info.getSetsAdded());
-            Log.d(TAG, "added words " + info.getWordsAdded());
+//            Log.d(TAG, "added sets " + info.getSetsAdded());
+//            Log.d(TAG, "added words " + info.getWordsAdded());
             return info;
     }
 

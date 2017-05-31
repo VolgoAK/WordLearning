@@ -43,7 +43,7 @@ public class WordSpeaker {
     }
 
     public void speakWord(String word){
-        Log.d(TAG, "speakWord: " + word);
+//        Log.d(TAG, "speakWord: " + word);
 
         if(mInitilized) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

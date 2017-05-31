@@ -73,7 +73,7 @@ public class WordsDbAdapter {
     }
 
     private void insertDefaultDictionary(){
-        Log.d(TAG, "insertDefaultDictionary");
+//        Log.d(TAG, "insertDefaultDictionary");
 
         ContentValues values = new ContentValues();
         values.put(DatabaseContract.Sets.COLUMN_NAME, USERS_SET_NAME);
@@ -104,7 +104,7 @@ public class WordsDbAdapter {
     }
 
     public long insertSet(ContentValues set){
-        Log.d(TAG, "insertSet: ");
+//        Log.d(TAG, "insertSet: ");
         return mDb.insert(DatabaseContract.Sets.TABLE_NAME, null, set);
     }
 
@@ -118,7 +118,7 @@ public class WordsDbAdapter {
                 " WHERE " + DatabaseContract.Words.COLUMN_STATUS + " = " + DatabaseContract.Words.IN_DICTIONARY ;
 
         Cursor cursor = mDb.rawQuery(select, null);
-        Log.d(TAG, "fetchDictionaryWords: size" + cursor.getCount());
+//        Log.d(TAG, "fetchDictionaryWords: size" + cursor.getCount());
         return cursor;
     }
 
@@ -151,7 +151,7 @@ public class WordsDbAdapter {
         }
 
         Cursor cursor = mDb.rawQuery(select, null);
-        Log.d(TAG, "fetchWordsByTrained: count " + cursor.getCount());
+//        Log.d(TAG, "fetchWordsByTrained: count " + cursor.getCount());
 
         return cursor;
     }
@@ -259,7 +259,7 @@ public class WordsDbAdapter {
         int updated = mDb.update(DatabaseContract.Words.TABLE_NAME, values, DatabaseContract.Words.COLUMN_SET_ID + "=?",
                 new String[]{Long.toString(setId)});
 
-        Log.d(TAG, "resetSetProgress: " + updated + " words resit");
+//        Log.d(TAG, "resetSetProgress: " + updated + " words resit");
     }
 
     public void deleteWordById(long id){
@@ -272,11 +272,11 @@ public class WordsDbAdapter {
      * @param id id of word for delete
      */
     public void deleteOrHideWordById(long id){
-        Log.d(TAG, "deleteOrHideWordById: id " + id);
+//        Log.d(TAG, "deleteOrHideWordById: id " + id);
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME  +
                 " WHERE " + DatabaseContract.Words._ID + " = ?", new String[]{String.valueOf(id)});
         if(!cursor.moveToFirst()){
-            Log.d(TAG, "deleteOrHideWordById: incorrect id");
+//            Log.d(TAG, "deleteOrHideWordById: incorrect id");
             return;
         }
         long wordSetId = cursor.getLong(cursor.getColumnIndex(DatabaseContract.Words.COLUMN_SET_ID));

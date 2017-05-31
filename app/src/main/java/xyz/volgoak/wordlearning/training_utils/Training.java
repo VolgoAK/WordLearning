@@ -92,9 +92,9 @@ public class Training implements Serializable{
             //updater.updateWord(currentWord.getId(), trainingType);
             mIdsForUpdate.add(currentWord.getId());
             currentPosition++;
-            Log.d("Training : ", "current position " + currentPosition);
+//            Log.d("Training : ", "current position " + currentPosition);
             if(tries <= playWords.size()){
-                Log.d("Training", "answerOperations: score + ");
+//                Log.d("Training", "answerOperations: score + ");
                 score++;
             }
         }else{
@@ -111,7 +111,7 @@ public class Training implements Serializable{
 
     public float getProgressInPercents(){
         float progress = (float)((currentPosition + 0.0)/playWords.size()) * 100;
-        Log.d(TAG, "getProgressInPercents: progress" + progress);
+//        Log.d(TAG, "getProgressInPercents: progress" + progress);
         return progress;
     }
 }
