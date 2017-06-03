@@ -50,16 +50,16 @@ public abstract class TrainingFabric {
         int idColumn = cursor.getColumnIndex(DatabaseContract.Words._ID);
 
         ArrayList<PlayWord> playWords = new ArrayList<>();
-        int cursorCount = cursor.getCount();
-        // TODO: 04.06.2017 change to do-while loop
-        for(int a = 0; a < cursorCount; a++){
+        cursor.moveToFirst();
+
+        do{
             String word = cursor.getString(wordColumn);
             String translation = cursor.getString(variantsColumn);
             String[] vars = dbAdapter.getVariants(cursor.getInt(idColumn), variantsColumnString, setId);
             PlayWord playWord = new PlayWord(word, translation, vars, cursor.getInt(idColumn));
             playWords.add(playWord);
-            cursor.moveToNext();
-        }
+        }while (cursor.moveToNext());
+
         cursor.close();
         return new Training(playWords, trainingType);
     }

@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,6 +54,7 @@ public class TrainingFragment extends Fragment {
     public final ObservableBoolean mAnswered = new ObservableBoolean();
 
     private Drawable mDefaultBackground;
+    private Drawable mUnavailableBackground;
     private Drawable mWrongAnswerBackground;
     private Drawable mCorrectAnswerBackground;
 
@@ -80,16 +82,10 @@ public class TrainingFragment extends Fragment {
         //we need word speaker only if we train word-translation
         if(mTrainingType == TrainingFabric.WORD_TRANSLATION) mSpeaker = new WordSpeaker(getContext());
 
-        //load backgrounds for buttons
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            mDefaultBackground = getResources().getDrawable(R.drawable.blue_button, getContext().getTheme());
-            mWrongAnswerBackground = getResources().getDrawable(R.drawable.orange_button, getContext().getTheme());
-            mCorrectAnswerBackground = getResources().getDrawable(R.drawable.green_button, getContext().getTheme());
-        }else{
-            mDefaultBackground = ResourcesCompat.getDrawable(getResources(), R.drawable.blue_button, null);
-            mWrongAnswerBackground = ResourcesCompat.getDrawable(getResources(), R.drawable.orange_button, null);
-            mCorrectAnswerBackground = ResourcesCompat.getDrawable(getResources(), R.drawable.green_button, null);
-        }
+        mDefaultBackground = ContextCompat.getDrawable(getContext(), R.drawable.blue_button);
+        mCorrectAnswerBackground = ContextCompat.getDrawable(getContext(), R.drawable.green_button);
+        mWrongAnswerBackground = ContextCompat.getDrawable(getContext(), R.drawable.orange_button);
+        mUnavailableBackground = ContextCompat.getDrawable(getContext(), R.drawable.blue_button_unavailable);
 
         if(savedInstanceState != null){
             mTraining =(Training) savedInstanceState.getSerializable(TRAINING_TAG);
@@ -163,6 +159,10 @@ public class TrainingFragment extends Fragment {
     //checks is answer correct and sets background for button
     //depends on correctness
     public void checkAnswer(View view){
+        mBinding.btVar1Tf.setBackground(mUnavailableBackground);
+        mBinding.btVar2Tf.setBackground(mUnavailableBackground);
+        mBinding.btVar3Tf.setBackground(mUnavailableBackground);
+        mBinding.btVar4Tf.setBackground(mUnavailableBackground);
 //        Log.d(TAG, "checkAnswer: ");
         Button button = (Button) view;
         String tag = (String) button.getTag();
