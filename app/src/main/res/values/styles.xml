@@ -90,6 +90,7 @@
         <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:layout_width">@dimen/dialog_button_width</item>
         <item name="android:layout_height">@dimen/dialog_button_height</item>
+        <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
     <style name="title_text">

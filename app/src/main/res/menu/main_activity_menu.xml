@@ -2,4 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="@string/about"
         android:id="@+id/item_about_main"/>
+
+    <!-- for test delete before release -->
+    <!--<item android:title="Update"
+        android:id="@+id/item_update_main"/>-->
 </menu>
