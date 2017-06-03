@@ -295,6 +295,17 @@ public class WordsDbAdapter {
         }
     }
 
+    public void beginTransaction(){
+        mDb.beginTransactionNonExclusive();
+    }
+
+    public void endTransaction(boolean success){
+        if(mDb.inTransaction()) {
+            if (success) mDb.setTransactionSuccessful();
+            mDb.endTransaction();
+        }
+    }
+
     @VisibleForTesting
     public Cursor rawQuery(String query){
         return mDb.rawQuery(query, null);

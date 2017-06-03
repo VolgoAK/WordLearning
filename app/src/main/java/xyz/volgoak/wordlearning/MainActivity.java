@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import com.google.firebase.auth.FirebaseAuth;
 
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
+import xyz.volgoak.wordlearning.utils.SetsLoader;
 
 /**
  * Created by Alexander Karachev on 07.05.2017.
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        Log.d(TAG, "onCreate: ");
+        Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -96,6 +97,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent(this, AboutActivity.class);
                 startActivity(intent);
                 return true;
+            /*case R.id.item_update_main :
+                SetsLoader.checkForDbUpdate(this);
+                return true;*/
         }
         return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }

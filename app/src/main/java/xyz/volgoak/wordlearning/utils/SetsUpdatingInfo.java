@@ -28,7 +28,7 @@ public class SetsUpdatingInfo{
         wordsAdded++;
     }
 
-    public void infoSum(SetsUpdatingInfo info){
+    public void addInfo(SetsUpdatingInfo info){
         setsAdded += info.getSetsAdded();
         wordsAdded += info.getWordsAdded();
     }

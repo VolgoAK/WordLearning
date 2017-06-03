@@ -68,6 +68,11 @@ public final class SetsLoader {
 
     }
 
+    /**
+     * Loads new sets from firebase storage.
+     * @param context
+     * @return information about loaded sets
+     */
     public static SetsUpdatingInfo checkForDbUpdate(final Context context){
         final SetsUpdatingInfo info = new SetsUpdatingInfo();
         String indexFile = context.getString(R.string.sets_index_file_ru_en);
@@ -76,7 +81,7 @@ public final class SetsLoader {
                 @Override
                 public void onSuccess(byte[] bytes) {
                     try {
-                        info.infoSum(check(bytes, context));
+                        info.addInfo(check(bytes, context));
                     }catch (Exception ex){
                         ex.printStackTrace();
                     }
@@ -94,7 +99,7 @@ public final class SetsLoader {
         Set<String> loadedData = preferences.getStringSet(LOADED_SETS_PREF, new HashSet<String>());
 
         for(String added : loadedData){
-//            Log.d(TAG, "check: already loaded " + added);
+            Log.d(TAG, "check: already loaded " + added);
         }
 
         Document doc = prepareDocument(bytes);
@@ -106,8 +111,8 @@ public final class SetsLoader {
             String setSource = n.getAttributes().getNamedItem(DATA_SOURCE_ATTR).getNodeValue();
 
             if(!loadedData.contains(dataId)){
-//                Log.d(TAG, "check: load data set " + dataId);
-                info.infoSum(loadDataByFileName(setSource, dataId, context));
+                Log.d(TAG, "check: load data set " + dataId);
+                info.addInfo(loadDataByFileName(setSource, dataId, context));
             }
         }
 
@@ -117,20 +122,23 @@ public final class SetsLoader {
     private static SetsUpdatingInfo loadDataByFileName(String fileName, final String fileId, final Context context){
         final SetsUpdatingInfo info = new SetsUpdatingInfo();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference(fileName);
-
+        final WordsDbAdapter adapter = new WordsDbAdapter();
         storageReference.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
                 try {
+                    adapter.beginTransaction();
                     Document doc = prepareDocument(bytes);
-                    SetsUpdatingInfo setInfo = insertSetsIntoDb(doc);
+                    SetsUpdatingInfo setInfo = insertSetsIntoDb(doc, adapter);
                     if(setInfo.getWordsAdded() > 0){
                         addSuccessPreference(fileId, context);
-                        info.infoSum(setInfo);
+                        info.addInfo(setInfo);
+                        adapter.endTransaction(true);
                     }
-
                 }catch (Exception ex){
                     ex.printStackTrace();
+                }finally {
+                    adapter.endTransaction(false);
                 }
             }
         });
@@ -152,21 +160,24 @@ public final class SetsLoader {
     }
 
     /**
-     * Loads words from local xml files. File names hardcoded for now,
-     * later I gonna add checking which sets already downloaded,
-     * and possibility to load new sets from my server.
+     * Loads words from local xml files.
      * @param context Context for operations.
      * @return int num of added words.
      * */
     public static SetsUpdatingInfo loadStartBase(Context context){
         SetsUpdatingInfo info = new SetsUpdatingInfo();
+        WordsDbAdapter dbAdapter = new WordsDbAdapter();
         try {
+            dbAdapter.beginTransaction();
             InputStream inputStream = context.getAssets().open("start_base.xml");
-            info.infoSum( insertSetsIntoDb(prepareDocument(inputStream)));
+            info.addInfo( insertSetsIntoDb(prepareDocument(inputStream), dbAdapter));
+            dbAdapter.endTransaction(true);
         }catch(IOException ex){
             ex.printStackTrace();
         }catch(Exception ex){
             ex.printStackTrace();
+        }finally {
+            dbAdapter.endTransaction(false);
         }
         return info;
     }
@@ -185,10 +196,8 @@ public final class SetsLoader {
         return doc;
     }
 
-    private static SetsUpdatingInfo insertSetsIntoDb(Document document){
+    private static SetsUpdatingInfo insertSetsIntoDb(Document document, WordsDbAdapter dbAdapter){
         SetsUpdatingInfo info = new SetsUpdatingInfo();
-
-        WordsDbAdapter dbAdapter = new WordsDbAdapter();
 
             Element rootElement = document.getDocumentElement();
             rootElement.normalize();
@@ -208,7 +217,7 @@ public final class SetsLoader {
             }
 
             NodeList setsList = rootElement.getElementsByTagName(SET_NODE);
-            //Log.d(TAG, "insertSetsIntoDb: sets in doc" + setsList.getLength());
+            Log.d(TAG, "insertSetsIntoDb: sets in doc" + setsList.getLength());
 
             //parse sets and insert them into database
             for(int a = 0; a < setsList.getLength(); a++){
@@ -272,8 +281,8 @@ public final class SetsLoader {
                 }
             }
 
-//            Log.d(TAG, "added sets " + info.getSetsAdded());
-//            Log.d(TAG, "added words " + info.getWordsAdded());
+            Log.d(TAG, "added sets " + info.getSetsAdded());
+            Log.d(TAG, "added words " + info.getWordsAdded());
             return info;
     }
 
