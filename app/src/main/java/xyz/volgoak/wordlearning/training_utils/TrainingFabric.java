@@ -40,16 +40,18 @@ public abstract class TrainingFabric {
             wordColumn = cursor.getColumnIndex(COLUMN_TRANSLATION);
             variantsColumn = cursor.getColumnIndex(COLUMN_WORD);
             variantsColumnString = COLUMN_WORD;
-        }
+        }else throw new IllegalArgumentException("incorrect training type");
+
         if(!cursor.moveToFirst()){
             //no untrained words in a dictionary
+            cursor.close();
             return null;
         }
         int idColumn = cursor.getColumnIndex(DatabaseContract.Words._ID);
 
         ArrayList<PlayWord> playWords = new ArrayList<>();
         int cursorCount = cursor.getCount();
-
+        // TODO: 04.06.2017 change to do-while loop
         for(int a = 0; a < cursorCount; a++){
             String word = cursor.getString(wordColumn);
             String translation = cursor.getString(variantsColumn);
@@ -58,6 +60,7 @@ public abstract class TrainingFabric {
             playWords.add(playWord);
             cursor.moveToNext();
         }
+        cursor.close();
         return new Training(playWords, trainingType);
     }
 }

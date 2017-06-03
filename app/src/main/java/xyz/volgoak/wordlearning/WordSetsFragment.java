@@ -164,6 +164,8 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
         Cursor cursor = mDbAdapter.fetchSetById(setId);
         if(!cursor.moveToFirst()){
             Log.d(TAG, "changeSetStatus: incorrect id");
+            cursor.close();
+            return;
         }
 
         int currentStatus = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_STATUS));
@@ -178,6 +180,6 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
         mDbAdapter.changeSetStatus(setId, newStatus);
 
-        mCursorAdapter.swapCursor(mDbAdapter.fetchAllSets());
+        mCursorAdapter.changeCursor(mDbAdapter.fetchAllSets());
     }
 }

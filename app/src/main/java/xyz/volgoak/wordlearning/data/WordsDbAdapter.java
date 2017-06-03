@@ -49,7 +49,9 @@ public class WordsDbAdapter {
 
     private boolean isDbEmpty(){
         Cursor cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME + " LIMIT 1;", null);
-        return !cursor.moveToFirst();
+        boolean isEmpty = !cursor.moveToFirst();
+        cursor.close();
+        return isEmpty;
     }
 
     public long insertWord(String word, String translation, long setId, int status){
@@ -277,6 +279,7 @@ public class WordsDbAdapter {
                 " WHERE " + DatabaseContract.Words._ID + " = ?", new String[]{String.valueOf(id)});
         if(!cursor.moveToFirst()){
 //            Log.d(TAG, "deleteOrHideWordById: incorrect id");
+            cursor.close();
             return;
         }
         long wordSetId = cursor.getLong(cursor.getColumnIndex(DatabaseContract.Words.COLUMN_SET_ID));

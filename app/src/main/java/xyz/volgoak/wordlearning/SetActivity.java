@@ -63,10 +63,10 @@ public class SetActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+        super.onStart();
         manageTrainingStatusMenu();
         loadSetInformation();
         prepareRecycler();
-        super.onStart();
     }
 
     @Override
