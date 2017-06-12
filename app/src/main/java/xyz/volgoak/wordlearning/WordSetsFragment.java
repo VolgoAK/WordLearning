@@ -160,10 +160,10 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
 
     @Override
     public void changeSetStatus(long setId) {
-        Log.d(TAG, "changeSetStatus: ");
+//        Log.d(TAG, "changeSetStatus: ");
         Cursor cursor = mDbAdapter.fetchSetById(setId);
         if(!cursor.moveToFirst()){
-            Log.d(TAG, "changeSetStatus: incorrect id");
+//            Log.d(TAG, "changeSetStatus: incorrect id");
             cursor.close();
             return;
         }
