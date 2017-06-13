@@ -2,15 +2,14 @@ package xyz.volgoak.wordlearning.data;
 
 import android.provider.BaseColumns;
 
-import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.OUT_OF_DICTIONARY;
 
 /**
  * Created by Alexander Karachev on 11.04.2017.
  */
 
 public final class DatabaseContract {
-
-    public final static int DB_VERSION = 1;
+    //db version at first release was 1
+    public final static int DB_VERSION = 12;
     public final static String DB_NAME = "WORDS_DATABASE";
 
 
@@ -27,7 +26,6 @@ public final class DatabaseContract {
         public final static String COLUMN_TRAINED_WT = "WT_TRAINED";
         public final static String COLUMN_TRAINED_TW = "TW_TRAINED";
         public final static String COLUMN_STUDIED = "STUDIED";
-        public final static String COLUMN_SET_ID = "SET_ID";
         public static final String COLUMN_STATUS = "STATUS";
 
         public final static String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME +
@@ -38,10 +36,8 @@ public final class DatabaseContract {
                 COLUMN_TRAINED_WT + " INTEGER DEFAULT 0, " +
                 COLUMN_TRAINED_TW + " INTEGER DEFAULT 0, " +
                 COLUMN_STUDIED + " INTEGER DEFAULT 0, " +
-                COLUMN_STATUS + " INTEGER DEFAULT 0, " +
-                COLUMN_SET_ID + " INTEGER NOT NULL, " +
-                " FOREIGN KEY (" + COLUMN_SET_ID + ") REFERENCES " + Sets.TABLE_NAME + "(" +
-                Sets._ID + "));";
+                COLUMN_STATUS + " INTEGER DEFAULT 0 " +
+                ");";
 
         public final static String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
@@ -87,6 +83,22 @@ public final class DatabaseContract {
                 "( " + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_NAME + " TEXT, " +
                 COLUMN_CODE + " INTEGER " +
+                ");";
+
+        public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
+    }
+
+    public static abstract class WordLinks implements BaseColumns{
+        public static final String TABLE_NAME = "WORD_IDS_TABLE";
+        public static final String COLUMN_SET_ID = "SET_ID";
+        public static final String COLUMN_WORD_ID = "WORD_ID";
+
+        public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME +
+                "( " + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_SET_ID + " INTEGER, " +
+                COLUMN_WORD_ID + " INTEGER, " +
+                "FOREIGN KEY ("+COLUMN_WORD_ID+") REFERENCES "+Words.TABLE_NAME+"("+Words._ID+"), " +
+                "FOREIGN KEY ("+COLUMN_SET_ID+") REFERENCES "+Sets.TABLE_NAME+"("+Sets._ID+")" +
                 ");";
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;

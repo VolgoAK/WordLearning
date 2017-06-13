@@ -7,12 +7,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.utils.SetsLoader;
 
+import static android.R.attr.id;
 import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.IN_DICTIONARY;
 
 
@@ -28,10 +30,6 @@ public class WordsDbAdapter {
     public static final int DECREASE = 2;
     public static final int TO_ZERO = 3;
     public static final int TRAINING_LIMIT = 4;
-
-    private final static String USERS_SET_NAME = "user_set";
-    //key of preference which stores id of default user dictionary
-    public final static String DEFAULT_DICTIONARY_ID = "def_dictionary";
 
     private SQLiteDatabase mDb;
     private Context mContext;
@@ -54,55 +52,74 @@ public class WordsDbAdapter {
         return isEmpty;
     }
 
-    public long insertWord(String word, String translation, long setId, int status){
-        //if set id -1 save word in the default word set
-        if(setId == -1){
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-            setId = preferences.getLong(DEFAULT_DICTIONARY_ID, 0);
-        }
-
-        ContentValues values = new ContentValues();
-        values.put(DatabaseContract.Words.COLUMN_WORD, word);
-        values.put(DatabaseContract.Words.COLUMN_TRANSLATION, translation);
-        values.put(DatabaseContract.Words.COLUMN_SET_ID, setId);
-        values.put(DatabaseContract.Words.COLUMN_STATUS, status);
-
-        return  insertWord(values);
+    public long getWordId(String word){
+        Cursor cursor = mDb.rawQuery("SELECT "+DatabaseContract.Words._ID+" FROM "+DatabaseContract.Words.TABLE_NAME +
+                " WHERE "+DatabaseContract.Words.COLUMN_WORD+"='"+word+"' COLLATE NOCASE", null);
+        long id;
+        if(cursor.moveToFirst())id=cursor.getLong(cursor.getColumnIndex(DatabaseContract.Words._ID));
+        else id = -1;
+        cursor.close();
+        return id;
     }
 
-    public long insertWord(ContentValues wordValues){
+    public long insertLink(ContentValues wordValues, long setId){
+        //insert word or just get id if already exists
+        String word = wordValues.getAsString(DatabaseContract.Words.COLUMN_WORD);
+        long wordId = getWordId(word);
+        if(wordId == -1){
+            wordId = insertWord(wordValues);
+        }
+
+        //create ContentValues for link
+        ContentValues linkValues = new ContentValues();
+        linkValues.put(DatabaseContract.WordLinks.COLUMN_SET_ID, setId);
+        linkValues.put(DatabaseContract.WordLinks.COLUMN_WORD_ID, wordId);
+        return mDb.insert(DatabaseContract.WordLinks.TABLE_NAME, null, linkValues);
+    }
+
+    // TODO: 13.06.2017 change this method to add word only if not exists
+    //for adding words via dictionary
+    public long insertWord(String word, String translation){
+        long id = getWordId(word);
+        Log.d(TAG, "insertWord: " + word + " id " + id);
+        ContentValues values = new ContentValues();
+        values.put(DatabaseContract.Words.COLUMN_STATUS, IN_DICTIONARY);
+
+        if(id == -1){
+            Log.d(TAG, "insertWord: insert new word");
+            values.put(DatabaseContract.Words.COLUMN_WORD, word);
+            values.put(DatabaseContract.Words.COLUMN_TRANSLATION, translation);
+            return  insertWord(values);
+        }else {
+            Log.d(TAG, "insertWord: update word");
+            mDb.update(DatabaseContract.Words.TABLE_NAME, values,
+                    DatabaseContract.Words._ID+"=?", new String[]{String.valueOf(id)});
+            return id;
+        }
+    }
+
+    private long insertWord(ContentValues wordValues){
         return mDb.insert(DatabaseContract.Words.TABLE_NAME, null, wordValues);
     }
 
     private void insertDefaultDictionary(){
 //        Log.d(TAG, "insertDefaultDictionary");
 
-        ContentValues values = new ContentValues();
-        values.put(DatabaseContract.Sets.COLUMN_NAME, USERS_SET_NAME);
-        values.put(DatabaseContract.Sets.COLUMN_VISIBILITY, DatabaseContract.Sets.INVISIBLE);
-
-        long setId = mDb.insert(DatabaseContract.Sets.TABLE_NAME, null, values);
-        //save id of default set for storage users words
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putLong(DEFAULT_DICTIONARY_ID, setId);
-        editor.apply();
-
-        insertWord("Hello", "Привет", setId, IN_DICTIONARY );
-        insertWord("Name", "Имя", setId, IN_DICTIONARY);
-        insertWord("Human", "Человек", setId, IN_DICTIONARY);
-        insertWord("He", "Он", setId, IN_DICTIONARY);
-        insertWord("She", "Она", setId, IN_DICTIONARY);
-        insertWord("Where", "Где", setId, IN_DICTIONARY);
-        insertWord("When", "Когда", setId, IN_DICTIONARY);
-        insertWord("Why", "Почему", setId, IN_DICTIONARY);
-        insertWord("Who", "Кто", setId, IN_DICTIONARY);
-        insertWord("What", "Что", setId, IN_DICTIONARY);
-        insertWord("Time", "Время", setId, IN_DICTIONARY);
-        insertWord("Country", "Страна", setId, IN_DICTIONARY);
+        insertWord("Hello", "Привет");
+        insertWord("Name", "Имя");
+        insertWord("Human", "Человек");
+        insertWord("He", "Он");
+        insertWord("She", "Она");
+        insertWord("Where", "Где");
+        insertWord("When", "Когда");
+        insertWord("Why", "Почему");
+        insertWord("Who", "Кто");
+        insertWord("What", "Что");
+        insertWord("Time", "Время");
+        insertWord("Country", "Страна");
 
         SetsLoader.loadStartBase(mContext);
-        SetsLoader.checkForDbUpdate(mContext);
+//        SetsLoader.checkForDbUpdate(mContext);
     }
 
     public long insertSet(ContentValues set){
@@ -127,26 +144,23 @@ public class WordsDbAdapter {
     public Cursor fetchWordsByTrained(String trainedType, int wordsLimit, int trainedLimit, long setId){
         if(trainedType == null) trainedType = DatabaseContract.Words.COLUMN_STUDIED;
 
-        String select;
+        String select = "";
 
-        if(setId == -1){
-            /*select = "SELECT a.* FROM " + DatabaseContract.Words.TABLE_NAME + " a," +
-                    DatabaseContract.Sets.TABLE_NAME + " b " +
-                    " WHERE a." + DatabaseContract.Words.COLUMN_SET_ID + " = b." + DatabaseContract.Sets._ID +
-                    " AND b." + DatabaseContract.Sets.COLUMN_STATUS + " = " + DatabaseContract.Sets.IN_DICTIONARY +
-                    " AND a." + trainedType + " < " + trainedLimit +
-                    " ORDER BY " + trainedType +
-                    " LIMIT " + wordsLimit + ";";*/
+        if(setId == -1 ){
 
             select = "SELECT * FROM " + DatabaseContract.Words.TABLE_NAME +
                     " WHERE " + DatabaseContract.Words.COLUMN_STATUS + " = " + DatabaseContract.Words.IN_DICTIONARY +
                     " AND " + trainedType + " < " + trainedLimit +
                     " ORDER BY " + trainedType +
                     " LIMIT " + wordsLimit + ";";
-
         }else {
-            select = "SELECT * FROM " + DatabaseContract.Words.TABLE_NAME +
-                    " WHERE " + DatabaseContract.Words.COLUMN_SET_ID + " = " + setId +
+            select = "SELECT * FROM "+DatabaseContract.Words.TABLE_NAME +
+                    " WHERE "+DatabaseContract.Words._ID+" IN " +
+
+                    "( SELECT "+DatabaseContract.WordLinks.COLUMN_WORD_ID+
+                    " FROM "+DatabaseContract.WordLinks.TABLE_NAME +
+                    " WHERE "+ DatabaseContract.WordLinks.COLUMN_SET_ID+"="+setId + ")" +
+
                     " AND " + trainedType + " < " + trainedLimit +
                     " ORDER BY " + trainedType +
                     " LIMIT " + wordsLimit + ";";
@@ -175,8 +189,11 @@ public class WordsDbAdapter {
     }
 
     public Cursor fetchWordsBySetId(long id){
-        String query = "SELECT * FROM " + DatabaseContract.Words.TABLE_NAME +
-                " WHERE " + DatabaseContract.Words.COLUMN_SET_ID + " = " + id +
+        String query = "SELECT * FROM "+DatabaseContract.Words.TABLE_NAME +
+                " WHERE "+DatabaseContract.Words._ID+" IN " +
+                "(SELECT "+DatabaseContract.WordLinks.COLUMN_WORD_ID+" FROM " +
+                DatabaseContract.WordLinks.TABLE_NAME+
+                " WHERE "+DatabaseContract.WordLinks.COLUMN_SET_ID+"="+id+")" +
                 " ORDER BY " + DatabaseContract.Words.COLUMN_WORD + " COLLATE NOCASE";
         return mDb.rawQuery(query, null);
     }
@@ -186,7 +203,10 @@ public class WordsDbAdapter {
                 + " WHERE " + DatabaseContract.Words._ID + " != " + id;
 
         if(setId != -1){
-            select += " AND " + DatabaseContract.Words.COLUMN_SET_ID + " = " + setId;
+            select += " AND " +DatabaseContract.Words._ID+" IN " +
+                    "( SELECT "+DatabaseContract.WordLinks.COLUMN_WORD_ID +
+                    " FROM "+DatabaseContract.WordLinks.TABLE_NAME +
+                    " WHERE "+DatabaseContract.WordLinks.COLUMN_SET_ID+"="+setId + ")";
         }
         select += " ORDER BY RANDOM() LIMIT 3";
 
@@ -248,8 +268,15 @@ public class WordsDbAdapter {
         ContentValues wordValues = new ContentValues();
         wordValues.put(DatabaseContract.Words.COLUMN_STATUS, status);
 
-        mDb.update(DatabaseContract.Words.TABLE_NAME, wordValues, DatabaseContract.Words.COLUMN_SET_ID + "=?",
-                new String[]{String.valueOf(id)});
+        mDb.execSQL("UPDATE "+DatabaseContract.Words.TABLE_NAME +
+            " SET "+DatabaseContract.Words.COLUMN_STATUS+"="+status +
+            " WHERE "+DatabaseContract.Words._ID+" IN " +
+            "( SELECT "+DatabaseContract.WordLinks.COLUMN_WORD_ID+" FROM "+DatabaseContract.WordLinks.TABLE_NAME +
+            " WHERE "+DatabaseContract.WordLinks.COLUMN_SET_ID+"="+id +
+            ");");
+
+//        mDb.update(DatabaseContract.Words.TABLE_NAME, wordValues, DatabaseContract.Words.COLUMN_SET_ID + "=?",
+//                new String[]{String.valueOf(id)});
     }
 
     public void resetSetProgress(long setId){
@@ -258,8 +285,9 @@ public class WordsDbAdapter {
         values.put(DatabaseContract.Words.COLUMN_TRAINED_TW, 0);
         values.put(DatabaseContract.Words.COLUMN_STUDIED, 0);
 
-        int updated = mDb.update(DatabaseContract.Words.TABLE_NAME, values, DatabaseContract.Words.COLUMN_SET_ID + "=?",
-                new String[]{Long.toString(setId)});
+        // TODO: 13.06.2017 impliment rest progress
+//        int updated = mDb.update(DatabaseContract.Words.TABLE_NAME, values, DatabaseContract.Words.COLUMN_SET_ID + "=?",
+//                new String[]{Long.toString(setId)});
 
 //        Log.d(TAG, "resetSetProgress: " + updated + " words resit");
     }
@@ -274,28 +302,30 @@ public class WordsDbAdapter {
      * @param id id of word for delete
      */
     public void deleteOrHideWordById(long id){
+        // TODO: 13.06.2017 implement delete or hide word by id
 //        Log.d(TAG, "deleteOrHideWordById: id " + id);
-        Cursor cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME  +
-                " WHERE " + DatabaseContract.Words._ID + " = ?", new String[]{String.valueOf(id)});
-        if(!cursor.moveToFirst()){
+//        Cursor cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Words.TABLE_NAME  +
+//                " WHERE " + DatabaseContract.Words._ID + " = ?", new String[]{String.valueOf(id)});
+//        if(!cursor.moveToFirst()){
 //            Log.d(TAG, "deleteOrHideWordById: incorrect id");
-            cursor.close();
-            return;
-        }
-        long wordSetId = cursor.getLong(cursor.getColumnIndex(DatabaseContract.Words.COLUMN_SET_ID));
-        cursor.close();
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-        long userSetId =  prefs.getLong(DEFAULT_DICTIONARY_ID, 0);
-
-        if(wordSetId == userSetId){
-            deleteWordById(id);
-        }else{
-            ContentValues values = new ContentValues();
-            values.put(DatabaseContract.Words.COLUMN_STATUS, DatabaseContract.Words.OUT_OF_DICTIONARY);
-            mDb.update(DatabaseContract.Words.TABLE_NAME, values, DatabaseContract.Words._ID + "=?",
-                    new String[]{String.valueOf(id)});
-        }
+//            Log.d(TAG, "deleteOrHideWordById: incorrect id");
+//            cursor.close();
+//            return;
+//        }
+//        long wordSetId = cursor.getLong(cursor.getColumnIndex(DatabaseContract.Words.COLUMN_SET_ID));
+//        cursor.close();
+//
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+//        long userSetId =  prefs.getLong(DEFAULT_DICTIONARY_ID, 0);
+//
+//        if(wordSetId == userSetId){
+//            deleteWordById(id);
+//        }else{
+//            ContentValues values = new ContentValues();
+//            values.put(DatabaseContract.Words.COLUMN_STATUS, DatabaseContract.Words.OUT_OF_DICTIONARY);
+//            mDb.update(DatabaseContract.Words.TABLE_NAME, values, DatabaseContract.Words._ID + "=?",
+//                    new String[]{String.valueOf(id)});
+//        }
     }
 
     public void beginTransaction(){
@@ -322,6 +352,7 @@ public class WordsDbAdapter {
 
         @Override
         public void onCreate(SQLiteDatabase db){
+            db.execSQL(DatabaseContract.WordLinks.CREATE_TABLE);
             db.execSQL(DatabaseContract.Themes.CREATE_TABLE);
             db.execSQL(DatabaseContract.Sets.CREATE_TABLE);
             db.execSQL(DatabaseContract.Words.CREATE_TABLE);
@@ -329,6 +360,7 @@ public class WordsDbAdapter {
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
+            db.execSQL(DatabaseContract.WordLinks.DELETE_TABLE);
             db.execSQL(DatabaseContract.Words.DELETE_TABLE);
             db.execSQL(DatabaseContract.Sets.DELETE_TABLE);
             db.execSQL(DatabaseContract.Themes.DELETE_TABLE);

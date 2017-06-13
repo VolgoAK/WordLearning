@@ -111,7 +111,7 @@ public final class SetsLoader {
             String setSource = n.getAttributes().getNamedItem(DATA_SOURCE_ATTR).getNodeValue();
 
             if(!loadedData.contains(dataId)){
-//                Log.d(TAG, "check: load data set " + dataId);
+                Log.d(TAG, "check: load data set " + dataId);
                 info.addInfo(loadDataByFileName(setSource, dataId, context));
             }
         }
@@ -217,7 +217,7 @@ public final class SetsLoader {
             }
 
             NodeList setsList = rootElement.getElementsByTagName(SET_NODE);
-//            Log.d(TAG, "insertSetsIntoDb: sets in doc" + setsList.getLength());
+            Log.d(TAG, "insertSetsIntoDb: sets in doc" + setsList.getLength());
 
             //parse sets and insert them into database
             for(int a = 0; a < setsList.getLength(); a++){
@@ -274,15 +274,15 @@ public final class SetsLoader {
 
                     //insert words from values list
                     for(ContentValues values : valuesList){
-                        values.put(DatabaseContract.Words.COLUMN_SET_ID, setId);
-                        dbAdapter.insertWord(values);
+
+                        dbAdapter.insertLink(values, setId);
                         info.incrementWordsAdded();
                     }
                 }
             }
 
-//            Log.d(TAG, "added sets " + info.getSetsAdded());
-//            Log.d(TAG, "added words " + info.getWordsAdded());
+            Log.d(TAG, "added sets " + info.getSetsAdded());
+            Log.d(TAG, "added words " + info.getWordsAdded());
             return info;
     }
 

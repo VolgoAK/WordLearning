@@ -83,7 +83,7 @@ public class RedactorFragment extends Fragment{
                     Toast.makeText(getContext(), getString(R.string.fields_empty_message), Toast.LENGTH_LONG).show();
                     return;
                 }
-                mDbAdapter.insertWord(word, translation, -1, DatabaseContract.Words.IN_DICTIONARY);
+                mDbAdapter.insertWord(word, translation);
                 mBinding.etWordRedactor.setText("");
                 mBinding.etTranslationRedactor.setText("");
                 mCursorAdapter.changeCursor(mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE, -1));
