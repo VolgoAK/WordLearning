@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package xyz.volgoak.wordlearning.utils;
+package xyz.volgoak.wordlearning.recycler;
 
 import android.database.ContentObserver;
 import android.database.Cursor;

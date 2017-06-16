@@ -20,7 +20,7 @@ import android.widget.Toast;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
-import xyz.volgoak.wordlearning.utils.SetsCursorAdapter;
+import xyz.volgoak.wordlearning.recycler.SetsCursorAdapter;
 
 /**
  * Created by Alexander Karachev on 07.05.2017.

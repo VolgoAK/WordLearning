@@ -24,7 +24,7 @@ import xyz.volgoak.wordlearning.data.FirebaseContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.databinding.ActivitySetBinding;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
-import xyz.volgoak.wordlearning.utils.DictionaryRecyclerAdapter;
+import xyz.volgoak.wordlearning.recycler.DictionaryRecyclerAdapter;
 
 /**
  * Created by Alexander Karachev on 07.05.2017.

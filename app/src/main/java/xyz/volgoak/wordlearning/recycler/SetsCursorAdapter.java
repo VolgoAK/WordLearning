@@ -1,4 +1,4 @@
-package xyz.volgoak.wordlearning.utils;
+package xyz.volgoak.wordlearning.recycler;
 
 import android.content.Context;
 import android.database.Cursor;

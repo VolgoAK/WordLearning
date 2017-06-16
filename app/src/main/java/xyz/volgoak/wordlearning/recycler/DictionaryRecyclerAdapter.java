@@ -1,11 +1,10 @@
-package xyz.volgoak.wordlearning.utils;
+package xyz.volgoak.wordlearning.recycler;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +14,13 @@ import android.widget.TextView;
 
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
+import xyz.volgoak.wordlearning.utils.WordSpeaker;
 
 /**
  * Created by Alexander Karachev on 29.04.2017.
  */
 
-public class DictionaryRecyclerAdapter extends CursorRecyclerAdapter<DictionaryRecyclerAdapter.ViewHolder>{
+public class DictionaryRecyclerAdapter extends CursorRecyclerAdapter<DictionaryRecyclerAdapter.ViewHolder> {
 
     public static final String TAG = "DicRecyclerAdapter";
 

@@ -23,15 +23,15 @@ import xyz.volgoak.wordlearning.utils.SetsLoader;
  * Created by Alexander Karachev on 07.05.2017.
  */
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentListener{
+public class MainActivity extends NavigationActivity implements FragmentListener{
 
     public static final String TAG = "MainActivity";
     public static final String EXTRA_MODE = "extra_mode";
     public static final String START_DICTIONARY = "dictionary";
     public static final String START_SETS = "sets";
 
-    private ActionBarDrawerToggle mDrawerToggle;
-    private DrawerLayout mDrawerLayout;
+    /*private ActionBarDrawerToggle mDrawerToggle;
+    private DrawerLayout mDrawerLayout;*/
 
     private FirebaseAuth mAuth;
 
@@ -40,20 +40,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        if (getSupportActionBar() != null) {
+        super.onCreateNavigationDrawer();
+        /*if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
-        }
+        }*/
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        /*mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 
         mDrawerToggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(this);*/
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -81,14 +81,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
+    /*@Override
     public void onBackPressed(){
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
@@ -100,6 +100,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             /*case R.id.item_update_main :
                 SetsLoader.checkForDbUpdate(this);
                 return true;*/
+            case R.id.item_start_set :
+                Intent intent1 = new Intent(this, SetsActivity.class);
+                startActivity(intent1);
+                return true;
         }
         return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }

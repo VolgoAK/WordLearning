@@ -34,9 +34,10 @@
         <activity
             android:name=".ResultActivity"
             android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".AboutActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".AboutActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
         <service
             android:name=".SetsLoaderService"
             android:exported="true"
@@ -46,6 +47,7 @@
             </intent-filter>
         </service>
 
+        <activity android:name=".SetsActivity"></activity>
     </application>
 
 </manifest>
