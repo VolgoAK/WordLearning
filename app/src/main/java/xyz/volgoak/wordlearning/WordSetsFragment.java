@@ -2,6 +2,7 @@ package xyz.volgoak.wordlearning;
 
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -34,8 +35,11 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
     public static final String TAG = "WordSetsFragment";
 
     private FragmentListener mFragmentListener;
+    private SetsFragmentListener mSetsFragmentListener;
     private WordsDbAdapter mDbAdapter;
     private SetsCursorAdapter mCursorAdapter;
+
+
 
     public WordSetsFragment() {
         // Required empty public constructor
@@ -69,9 +73,7 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 long setId = mCursorAdapter.getItemId(position);
-                Intent intent = new Intent(getActivity(), SetActivity.class);
-                intent.putExtra(SetActivity.ID_EXTRA, setId);
-                startActivity(intent);
+                mSetsFragmentListener.startSet(setId);
                 return true;
             }
         });
@@ -89,6 +91,22 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
     public void onStop() {
         super.onStop();
         mCursorAdapter.getCursor().close();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(context instanceof SetsFragmentListener){
+            mSetsFragmentListener = (SetsFragmentListener) context;
+        }else{
+            throw new RuntimeException("Activity must implement WordsFragmentListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mSetsFragmentListener = null;
     }
 
     public void invokeSetMenu(final long setId) {
@@ -112,8 +130,8 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
         openButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SetActivity.class);
-                intent.putExtra(SetActivity.ID_EXTRA, setId);
+                Intent intent = new Intent(getActivity(), SingleSetActivity.class);
+                intent.putExtra(SingleSetActivity.ID_EXTRA, setId);
                 startActivity(intent);
                 dialog.dismiss();
             }
@@ -181,5 +199,9 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
         mDbAdapter.changeSetStatus(setId, newStatus);
 
         mCursorAdapter.changeCursor(mDbAdapter.fetchAllSets());
+    }
+
+    interface SetsFragmentListener{
+        void startSet(long setId);
     }
 }

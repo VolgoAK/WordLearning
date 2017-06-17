@@ -7,7 +7,4 @@
     <!--<item android:title="Update"
         android:id="@+id/item_update_main"/>-->
 
-    <!-- TODO delete before release, only for test purpose -->
-    <item android:title="start set"
-        android:id="@+id/item_start_set"/>
 </menu>

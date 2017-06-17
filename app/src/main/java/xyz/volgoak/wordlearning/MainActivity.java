@@ -28,7 +28,6 @@ public class MainActivity extends NavigationActivity implements FragmentListener
     public static final String TAG = "MainActivity";
     public static final String EXTRA_MODE = "extra_mode";
     public static final String START_DICTIONARY = "dictionary";
-    public static final String START_SETS = "sets";
 
     /*private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;*/
@@ -61,8 +60,6 @@ public class MainActivity extends NavigationActivity implements FragmentListener
         if(extraTask != null){
             if(extraTask.equals(START_DICTIONARY)){
                 startDictionary();
-            }else if(extraTask.equals(START_SETS)){
-                startSets();
             }
         }else if(savedInstanceState == null)
             startHomeFragment();
@@ -100,10 +97,6 @@ public class MainActivity extends NavigationActivity implements FragmentListener
             /*case R.id.item_update_main :
                 SetsLoader.checkForDbUpdate(this);
                 return true;*/
-            case R.id.item_start_set :
-                Intent intent1 = new Intent(this, SetsActivity.class);
-                startActivity(intent1);
-                return true;
         }
         return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
@@ -157,8 +150,8 @@ public class MainActivity extends NavigationActivity implements FragmentListener
 
     @Override
     public void startSets() {
-        WordSetsFragment wordSetsFragment = new WordSetsFragment();
-        startFragment(wordSetsFragment, true);
+        Intent intent = new Intent(this, SetsActivity.class);
+        startActivity(intent);
     }
 
     public void startFragment(Fragment fragment, boolean addToBackStack){

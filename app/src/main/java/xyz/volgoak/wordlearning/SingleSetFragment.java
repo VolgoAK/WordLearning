@@ -1,115 +1,105 @@
 package xyz.volgoak.wordlearning;
 
-import android.content.Intent;
+
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.FirebaseContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
-import xyz.volgoak.wordlearning.databinding.ActivitySetBinding;
-import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
+import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding;
 import xyz.volgoak.wordlearning.recycler.DictionaryRecyclerAdapter;
 
+
 /**
- * Created by Alexander Karachev on 07.05.2017.
+ * A simple {@link Fragment} subclass.
  */
+public class SingleSetFragment extends Fragment {
 
-public class SetActivity extends AppCompatActivity {
+    public static final String EXTRA_SET_ID = "set_id";
+    public static final String EXTRA_SINGLE_MODE = "single_mode";
 
-    public static final String TAG = "SetActivity";
-    public static final String ID_EXTRA = "id_extra";
+    private FragmentSingleSetBinding mBinding;
 
-    private ActivitySetBinding mBinding;
+    private long mSetId;
+    private boolean mSingleFragMode;
 
     private WordsDbAdapter mDbAdapter;
     private DictionaryRecyclerAdapter mRecyclerAdapter;
-    private long mSetId;
     private boolean mSetInDictionary;
     private String mSetName;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_set);
+    public static SingleSetFragment newInstance(long setId, boolean singleFragmentMode){
+        SingleSetFragment fragment = new SingleSetFragment();
+        Bundle args = new Bundle();
+        args.putLong(EXTRA_SET_ID, setId);
+        args.putBoolean(EXTRA_SINGLE_MODE, singleFragmentMode);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
-        FirebaseAuth.getInstance().signInAnonymously();
-
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_set);
-        setSupportActionBar(mBinding.setToolbar);
-
-        mSetId = getIntent().getLongExtra(ID_EXTRA, -1);
-        mDbAdapter = new WordsDbAdapter();
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+    public SingleSetFragment() {
+        // Required empty public constructor
     }
 
     @Override
-    protected void onStart() {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(getArguments() != null){
+            mSetId = getArguments().getLong(EXTRA_SET_ID);
+            mSingleFragMode = getArguments().getBoolean(EXTRA_SINGLE_MODE);
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_single_set, container, false);
+        mDbAdapter = new WordsDbAdapter();
+        return mBinding.getRoot();
+    }
+
+    @Override
+    public void onStart() {
         super.onStart();
+        if(mSingleFragMode){
+            mBinding.setToolbar.setNavigationIcon(R.drawable.ic_back_toolbar);
+            mBinding.setToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().finish();
+                }
+            });
+        }else{
+            AppBarLayout.LayoutParams layoutParams =(AppBarLayout.LayoutParams) mBinding.collapsingToolbarSetAct.getLayoutParams();
+            layoutParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP | AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL);
+            mBinding.collapsingToolbarSetAct.setLayoutParams(layoutParams);
+        }
+
         manageTrainingStatusMenu();
         loadSetInformation();
         prepareRecycler();
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem addItem = menu.findItem(R.id.item_add_setact);
-        addItem.setTitle(mSetInDictionary ? R.string.remove_from_dictionary : R.string.add_to_dictionary);
-
-        MenuItem resetItem = menu.findItem(R.id.item_reset_setact);
-        resetItem.setVisible(mSetInDictionary);
-
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.set_activity_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home :
-                finish();
-                return true;
-            case R.id.item_add_setact:
-                addOrRemoveSetFromDictionary();
-                return true;
-            case R.id.item_reset_setact:
-                resetSetProgress();
-                return true;
-            case R.id.item_wt_setact :
-                startTraining(TrainingFabric.WORD_TRANSLATION);
-                return true;
-            case R.id.item_tw_setact :
-                startTraining(TrainingFabric.TRANSLATION_WORD);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onStop() {
+    public void onStop() {
         mRecyclerAdapter.getCursor().close();
         super.onStop();
     }
@@ -120,7 +110,9 @@ public class SetActivity extends AppCompatActivity {
 
         //set title
         mSetName = setCursor.getString(setCursor.getColumnIndex(DatabaseContract.Sets.COLUMN_NAME));
-        getSupportActionBar().setTitle(mSetName);
+        mBinding.collapsingToolbarSetAct.setTitle(mSetName);
+
+
 
         //load title image
         String imageRes = setCursor.getString(setCursor.getColumnIndex(DatabaseContract.Sets.COLUMN_IMAGE_URL));
@@ -161,7 +153,7 @@ public class SetActivity extends AppCompatActivity {
     private void prepareSetStatusFabs(){
         mBinding.setResetFab.setVisibility(mSetInDictionary ? View.VISIBLE : View.GONE);
         int addDrawableId = mSetInDictionary ? R.drawable.ic_remove_white_24dp : R.drawable.ic_add_white_24dp;
-        mBinding.setAddFab.setImageDrawable(ContextCompat.getDrawable(this, addDrawableId));
+        mBinding.setAddFab.setImageDrawable(ContextCompat.getDrawable(getContext(), addDrawableId));
     }
 
     private void manageTrainingStatusMenu(){
@@ -172,19 +164,12 @@ public class SetActivity extends AppCompatActivity {
         Cursor cursor = mDbAdapter.fetchWordsBySetId(mSetId);
 
         mBinding.rvSetAc.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mBinding.rvSetAc.setLayoutManager(llm);
 
-        mRecyclerAdapter = new DictionaryRecyclerAdapter(cursor, this);
+        mRecyclerAdapter = new DictionaryRecyclerAdapter(cursor, getContext());
         mBinding.rvSetAc.setAdapter(mRecyclerAdapter);
-    }
-
-    public void startTraining(int trainingType){
-        Intent intent = new Intent(this, TrainingActivity.class);
-        intent.putExtra(TrainingActivity.EXTRA_TRAINING_TYPE, trainingType);
-        intent.putExtra(TrainingActivity.EXTRA_SET_ID, mSetId);
-        startActivity(intent);
     }
 
     public void addOrRemoveSetFromDictionary(){
@@ -203,10 +188,8 @@ public class SetActivity extends AppCompatActivity {
 
         int messageId = mSetInDictionary ? R.string.set_added_message : R.string.set_removed_message;
         String message = getString(messageId, mSetName);
-        Snackbar.make(findViewById(R.id.coordinator_setact), message, BaseTransientBottomBar.LENGTH_LONG).show();
+        Snackbar.make(getView().findViewById(R.id.coordinator_setact), message, BaseTransientBottomBar.LENGTH_LONG).show();
     }
-
-
 
     public void resetSetProgress(){
 
@@ -218,7 +201,7 @@ public class SetActivity extends AppCompatActivity {
             }
         };
 
-        Snackbar.make(findViewById(R.id.coordinator_setact), R.string.reset_progress_question, BaseTransientBottomBar.LENGTH_LONG)
+        Snackbar.make(getView().findViewById(R.id.coordinator_setact), R.string.reset_progress_question, BaseTransientBottomBar.LENGTH_LONG)
                 .setAction(R.string.reset, snackListener).show();
     }
 }

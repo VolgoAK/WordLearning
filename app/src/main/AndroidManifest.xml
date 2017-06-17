@@ -24,7 +24,7 @@
             android:name=".MainActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".SetActivity"
+            android:name=".SingleSetActivity"
             android:label="@string/title_activity_set"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.SimpleCoordinatorTheme" />

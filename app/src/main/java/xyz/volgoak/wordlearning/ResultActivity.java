@@ -63,8 +63,7 @@ public class ResultActivity extends AppCompatActivity implements FragmentListene
 
     @Override
     public void startSets() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra(MainActivity.EXTRA_MODE, MainActivity.START_SETS);
+        Intent intent = new Intent(this, SetsActivity.class);
         startActivity(intent);
 
         finish();
