@@ -32,7 +32,7 @@ import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
  * A simple {@link Fragment} subclass.
  */
 public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.SetStatusChanger,
-        CursorRecyclerAdapter.ControllerClickListener{
+        CursorRecyclerAdapter.AdapterClickListener{
 
     public static final String TAG = "WordSetsFragment";
 
@@ -73,7 +73,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
 
         Cursor setsCursor = mDbAdapter.fetchAllSets();
         mCursorAdapter = new SetsRecyclerAdapter(getContext(), setsCursor);
-        mCursorAdapter.setControllerClickListener(this);
+        mCursorAdapter.setAdapterClickListener(this);
         mCursorAdapter.setSetStatusChanger(this);
         rv.setAdapter(mCursorAdapter);
 
@@ -215,6 +215,11 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     public void onClick(View root, int position, long id) {
         Log.d(TAG, "onClick: " + id);
         mSetsFragmentListener.startSet(id);
+    }
+
+    @Override
+    public boolean onLongClick(View root, int position, long id) {
+        return false;
     }
 
     interface SetsFragmentListener{

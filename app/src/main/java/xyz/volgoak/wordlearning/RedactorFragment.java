@@ -63,13 +63,17 @@ public class RedactorFragment extends Fragment{
         mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), cursor);
         mBinding.rvRedactor.setAdapter(mRecyclerAdapter);
 
-        mRecyclerAdapter.setControllerLongClickListener(new CursorRecyclerAdapter.ControllerLongClickListener() {
+        mRecyclerAdapter.setAdapterClickListener(new CursorRecyclerAdapter.AdapterClickListener() {
             @Override
             public void onClick(View root, int position, long id) {
                 fireCustomDialog(id);
             }
-        });
 
+            @Override
+            public boolean onLongClick(View root, int position, long id) {
+                return false;
+            }
+        });
 
         mBinding.btAddRedactor.setOnClickListener(new View.OnClickListener() {
             @Override

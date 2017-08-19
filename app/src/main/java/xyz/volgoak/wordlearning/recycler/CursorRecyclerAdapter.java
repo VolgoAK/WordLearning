@@ -17,8 +17,7 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
 
     protected Context mContext;
     protected Cursor mCursor;
-    private ControllerClickListener mControllerClickListener;
-    private ControllerLongClickListener mControllerLongClickListener;
+    private AdapterClickListener mAdapterClickListener;
 
     public CursorRecyclerAdapter(Context context, Cursor cursor){
         mContext = context;
@@ -29,8 +28,6 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
     public void onBindViewHolder(RowController controller, int position) {
         mCursor.moveToPosition(position);
         controller.bindController(mCursor);
-        controller.setClickListener(mControllerClickListener);
-        controller.setLongClickListener(mControllerLongClickListener);
     }
 
     @Override
@@ -66,19 +63,25 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
         }
     }
 
-    public void setControllerClickListener(ControllerClickListener listener){
-        mControllerClickListener = listener;
+    public void setAdapterClickListener(AdapterClickListener listener){
+        mAdapterClickListener = listener;
     }
 
-    public void setControllerLongClickListener(ControllerLongClickListener listener){
-        mControllerLongClickListener = listener;
+    public void onControllerClick(View root, int position){
+        if(mAdapterClickListener != null){
+            mAdapterClickListener.onClick(root, position, getItemId(position));
+        }
     }
 
-    public interface ControllerClickListener{
+    public boolean onControllerLongClick(View root, int position){
+        if(mAdapterClickListener != null){
+            return mAdapterClickListener.onLongClick(root, position, getItemId(position));
+        }
+        return false;
+    }
+
+    public interface AdapterClickListener{
         void onClick(View root, int position, long id);
-    }
-
-    public interface ControllerLongClickListener{
-        void onClick(View root, int position, long id);
+        boolean onLongClick(View root, int position, long id);
     }
 }

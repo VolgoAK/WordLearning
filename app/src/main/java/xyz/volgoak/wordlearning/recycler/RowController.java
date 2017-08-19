@@ -12,27 +12,14 @@ import android.view.View;
 public abstract class RowController extends RecyclerView.ViewHolder{
 
     protected Context mContext;
-    protected CursorRecyclerAdapter.ControllerClickListener mClickListener;
-    protected CursorRecyclerAdapter.ControllerLongClickListener mLongClickListener;
+    protected CursorRecyclerAdapter mAdapter;
 
-    public RowController(View view, Context context){
+    public RowController(View view, Context context, final CursorRecyclerAdapter adapter){
         super(view);
         mContext = context;
+        mAdapter = adapter;
     }
 
     public abstract void bindController(Cursor cursor);
 
-    public void setClickListener(CursorRecyclerAdapter.ControllerClickListener listener){
-        mClickListener = listener;
-    }
-
-    public void setLongClickListener(CursorRecyclerAdapter.ControllerLongClickListener listener){
-        mLongClickListener = listener;
-    }
-
-    /*public void setOnClickListener(View.OnClickListener listener){
-        mClickListener = listener;
-    }
-
-    public void setOnLongClickListener(View.OnLongClickListener)*/
 }

@@ -21,7 +21,7 @@ public class WordsRecyclerAdapter extends CursorRecyclerAdapter {
     @Override
     public WordsRowController onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.redactor_cursor_adapter, parent, false);
-        return new WordsRowController(view, mContext);
+        return new WordsRowController(view, mContext, this);
     }
 
 }

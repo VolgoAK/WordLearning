@@ -34,8 +34,8 @@ public class SetsRowController extends RowController{
 
     private SetsRecyclerAdapter.SetStatusChanger mStatusChanger;
 
-    public SetsRowController(View view, Context context){
-        super(view, context);
+    public SetsRowController(View view, Context context, CursorRecyclerAdapter adapter){
+        super(view, context, adapter);
 
         mRoot = view;
         setNameTv = (TextView) view.findViewById(R.id.tv_name_setsadapter);
@@ -69,9 +69,7 @@ public class SetsRowController extends RowController{
             @Override
             public void onClick(View v) {
                 Log.d("SetsRowController", "onClick: clicked " + getAdapterPosition());
-                if(mClickListener != null){
-                    mClickListener.onClick(v, getAdapterPosition(), id);
-                }
+                mAdapter.onControllerClick(v, getAdapterPosition());
             }
         });
     }

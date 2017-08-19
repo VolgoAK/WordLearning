@@ -23,7 +23,7 @@ public class SetsRecyclerAdapter extends CursorRecyclerAdapter {
     @Override
     public SetsRowController onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sets_cursor_adapter, parent, false);
-        SetsRowController controller = new SetsRowController(view, mContext);
+        SetsRowController controller = new SetsRowController(view, mContext, this);
         controller.setmStatusChanger(mSetStatusChanger);
         return controller;
     }
