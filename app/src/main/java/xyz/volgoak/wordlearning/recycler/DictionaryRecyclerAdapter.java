@@ -20,9 +20,9 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
  * Created by Alexander Karachev on 29.04.2017.
  */
 
-public class DictionaryRecyclerAdapter extends CursorRecyclerAdapter<DictionaryRecyclerAdapter.ViewHolder> {
+ class DictionaryRecyclerAdapter  {
 
-    public static final String TAG = "DicRecyclerAdapter";
+    /*public static final String TAG = "DicRecyclerAdapter";
 
     private Drawable[] mProgresIcons = new Drawable[5];
     private WordSpeaker mSpeaker;
@@ -114,5 +114,5 @@ public class DictionaryRecyclerAdapter extends CursorRecyclerAdapter<DictionaryR
 
     public interface WordLongClickListener{
         void onLongClick(long id);
-    }
+    }*/
 }

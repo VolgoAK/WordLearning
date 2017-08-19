@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -24,7 +23,7 @@ import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.FirebaseContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding;
-import xyz.volgoak.wordlearning.recycler.DictionaryRecyclerAdapter;
+import xyz.volgoak.wordlearning.recycler.WordsRecyclerAdapter;
 
 
 /**
@@ -41,7 +40,7 @@ public class SingleSetFragment extends Fragment {
     private boolean mSingleFragMode;
 
     private WordsDbAdapter mDbAdapter;
-    private DictionaryRecyclerAdapter mRecyclerAdapter;
+    private WordsRecyclerAdapter mRecyclerAdapter;
     private boolean mSetInDictionary;
     private String mSetName;
 
@@ -88,9 +87,9 @@ public class SingleSetFragment extends Fragment {
                 }
             });
         }else{
-            AppBarLayout.LayoutParams layoutParams =(AppBarLayout.LayoutParams) mBinding.collapsingToolbarSetAct.getLayoutParams();
-            layoutParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP | AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL);
-            mBinding.collapsingToolbarSetAct.setLayoutParams(layoutParams);
+//            AppBarLayout.LayoutParams layoutParams =(AppBarLayout.LayoutParams) mBinding.collapsingToolbarSetAct.getLayoutParams();
+//            layoutParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP | AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL);
+//            mBinding.collapsingToolbarSetAct.setLayoutParams(layoutParams);
         }
 
         manageTrainingStatusMenu();
@@ -100,7 +99,7 @@ public class SingleSetFragment extends Fragment {
 
     @Override
     public void onStop() {
-        mRecyclerAdapter.getCursor().close();
+        mRecyclerAdapter.closeCursor();
         super.onStop();
     }
 
@@ -168,7 +167,7 @@ public class SingleSetFragment extends Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mBinding.rvSetAc.setLayoutManager(llm);
 
-        mRecyclerAdapter = new DictionaryRecyclerAdapter(cursor, getContext());
+        mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), cursor);
         mBinding.rvSetAc.setAdapter(mRecyclerAdapter);
     }
 

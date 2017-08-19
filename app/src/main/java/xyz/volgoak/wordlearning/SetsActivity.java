@@ -3,7 +3,9 @@ package xyz.volgoak.wordlearning;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import xyz.volgoak.wordlearning.training_utils.Training;
 
@@ -22,7 +24,7 @@ public class SetsActivity extends NavigationActivity implements FragmentListener
         if(mSetsFragment == null){
             mSetsFragment = new WordSetsFragment();
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container_master_sets_activity, mSetsFragment)
+                    .add(R.id.container_master_sets_activity, mSetsFragment)
                     .commit();
         }
 
@@ -31,7 +33,7 @@ public class SetsActivity extends NavigationActivity implements FragmentListener
             // TODO: 17.06.2017 change test id to real
             mSingleSetFragment = SingleSetFragment.newInstance(1, false);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container_detail_sets_activity, mSingleSetFragment)
+                    .replace(R.id.container_detail_sets_activity, mSingleSetFragment)
                     .commit();
         }
     }
@@ -51,7 +53,7 @@ public class SetsActivity extends NavigationActivity implements FragmentListener
         if(findViewById(R.id.container_detail_sets_activity ) != null){
             mSingleSetFragment = SingleSetFragment.newInstance(setId, false);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container_detail_sets_activity, mSingleSetFragment)
+                    .replace(R.id.container_detail_sets_activity, mSingleSetFragment)
                     .commit();
         }else {
             Intent intent = new Intent(this, SingleSetActivity.class);

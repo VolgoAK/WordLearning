@@ -9,7 +9,7 @@ import android.provider.BaseColumns;
 
 public final class DatabaseContract {
     //db version at first release was 1
-    public final static int DB_VERSION = 12;
+    public final static int DB_VERSION = 14;
     public final static String DB_NAME = "WORDS_DATABASE";
 
 

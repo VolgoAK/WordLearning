@@ -7,21 +7,22 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
+import xyz.volgoak.wordlearning.recycler.CursorRecyclerAdapter;
+import xyz.volgoak.wordlearning.recycler.SetsRecyclerAdapter;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
-import xyz.volgoak.wordlearning.recycler.SetsCursorAdapter;
 
 /**
  * Created by Alexander Karachev on 07.05.2017.
@@ -30,14 +31,15 @@ import xyz.volgoak.wordlearning.recycler.SetsCursorAdapter;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetStatusChanger {
+public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.SetStatusChanger,
+        CursorRecyclerAdapter.ControllerClickListener{
 
     public static final String TAG = "WordSetsFragment";
 
     private FragmentListener mFragmentListener;
     private SetsFragmentListener mSetsFragmentListener;
     private WordsDbAdapter mDbAdapter;
-    private SetsCursorAdapter mCursorAdapter;
+    private SetsRecyclerAdapter mCursorAdapter;
 
 
 
@@ -49,7 +51,7 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mFragmentListener = (FragmentListener) getActivity();
+//        mFragmentListener = (FragmentListener) getActivity();
         return inflater.inflate(R.layout.fragment_word_sets, container, false);
     }
 
@@ -57,40 +59,48 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
     public void onStart() {
         super.onStart();
 
-        mFragmentListener.setActionBarTitle(getString(R.string.sets));
+//        mFragmentListener.setActionBarTitle(getString(R.string.sets));
 
         mDbAdapter = new WordsDbAdapter();
+//        ListView list = (ListView) getView().findViewById(R.id.lv_setsfrag);
+//        list.setAdapter(mCursorAdapter);
+
+        RecyclerView rv = (RecyclerView) getView().findViewById(R.id.rv_setsfrag);
+        rv.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        rv.setLayoutManager(llm);
+
         Cursor setsCursor = mDbAdapter.fetchAllSets();
+        mCursorAdapter = new SetsRecyclerAdapter(getContext(), setsCursor);
+        mCursorAdapter.setControllerClickListener(this);
+        mCursorAdapter.setSetStatusChanger(this);
+        rv.setAdapter(mCursorAdapter);
 
-        mCursorAdapter = new SetsCursorAdapter(getContext(), setsCursor);
-        mCursorAdapter.setStatusChanger(this);
-
-        ListView list = (ListView) getView().findViewById(R.id.lv_setsfrag);
-        list.setAdapter(mCursorAdapter);
-
-        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                long setId = mCursorAdapter.getItemId(position);
-                mSetsFragmentListener.startSet(setId);
-                return true;
-            }
-        });
-
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                invokeSetMenu(id);
-            }
-        });
+//
+//        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                long setId = mCursorAdapter.getItemId(position);
+//                mSetsFragmentListener.startSet(setId);
+//                return true;
+//            }
+//        });
+//
+//        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                invokeSetMenu(id);
+//            }
+//        });
 
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mCursorAdapter.getCursor().close();
+        mCursorAdapter.closeCursor();
     }
 
     @Override
@@ -199,6 +209,12 @@ public class WordSetsFragment extends Fragment implements SetsCursorAdapter.SetS
         mDbAdapter.changeSetStatus(setId, newStatus);
 
         mCursorAdapter.changeCursor(mDbAdapter.fetchAllSets());
+    }
+
+    @Override
+    public void onClick(View root, int position, long id) {
+        Log.d(TAG, "onClick: " + id);
+        mSetsFragmentListener.startSet(id);
     }
 
     interface SetsFragmentListener{
