@@ -17,7 +17,7 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
  * Created by Volgoak on 18.08.2017.
  */
 
-public class WordsRowController extends RowController{
+ class WordsRowController extends RowController{
 
     static boolean isColumnBound = false;
 

@@ -9,7 +9,7 @@ import android.view.View;
  * Created by Volgoak on 17.08.2017.
  */
 
-public abstract class RowController extends RecyclerView.ViewHolder{
+abstract class RowController extends RecyclerView.ViewHolder{
 
     protected Context mContext;
     protected CursorRecyclerAdapter mAdapter;

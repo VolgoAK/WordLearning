@@ -107,21 +107,26 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     public void onAttach(Context context) {
         super.onAttach(context);
         if(context instanceof SetsFragmentListener){
+            Log.d(TAG, "onAttach: FragmentListener set");
             mSetsFragmentListener = (SetsFragmentListener) context;
         }else{
             throw new RuntimeException("Activity must implement WordsFragmentListener");
+        }
+
+        if(context instanceof FragmentListener){
+            mFragmentListener = (FragmentListener) context;
         }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        Log.d(TAG, "onDetach: ");
         mSetsFragmentListener = null;
+        mFragmentListener = null;
     }
 
     public void invokeSetMenu(final long setId) {
-
-        Log.d(TAG, "invokeSetMenu id: " + setId);
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog);
@@ -219,7 +224,9 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
 
     @Override
     public boolean onLongClick(View root, int position, long id) {
-        return false;
+        Log.d(TAG, "on item long click");
+        invokeSetMenu(id);
+        return true;
     }
 
     interface SetsFragmentListener{

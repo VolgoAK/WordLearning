@@ -16,7 +16,7 @@ import xyz.volgoak.wordlearning.data.DatabaseContract;
  * Created by Volgoak on 16.08.2017.
  */
 
-public class SetsRowController extends RowController{
+ class SetsRowController extends RowController{
     private View mRoot;
 
     private static boolean isColumnsBound = false;
@@ -70,6 +70,13 @@ public class SetsRowController extends RowController{
             public void onClick(View v) {
                 Log.d("SetsRowController", "onClick: clicked " + getAdapterPosition());
                 mAdapter.onControllerClick(v, getAdapterPosition());
+            }
+        });
+
+        mRoot.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return mAdapter.onControllerLongClick(v, getAdapterPosition());
             }
         });
     }
