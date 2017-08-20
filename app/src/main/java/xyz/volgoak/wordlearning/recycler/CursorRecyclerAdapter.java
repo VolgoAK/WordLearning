@@ -18,6 +18,7 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
     protected Context mContext;
     protected Cursor mCursor;
     private AdapterClickListener mAdapterClickListener;
+     ChoiceMode mChoiceMode;
 
     public CursorRecyclerAdapter(Context context, Cursor cursor){
         mContext = context;
@@ -28,6 +29,9 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
     public void onBindViewHolder(RowController controller, int position) {
         mCursor.moveToPosition(position);
         controller.bindController(mCursor);
+        if(mChoiceMode != null){
+            controller.setChecked(mChoiceMode.isChecked(position));
+        }
     }
 
     @Override
@@ -43,6 +47,10 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
             id = mCursor.getLong(mCursor.getColumnIndex("_id"));
         }
         return id;
+    }
+
+    public void setChoiceMode(ChoiceMode choiceMode){
+        mChoiceMode = choiceMode;
     }
 
     public void changeCursor(Cursor cursor){
@@ -67,17 +75,21 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
         mAdapterClickListener = listener;
     }
 
-    public void onControllerClick(View root, int position){
+    public void onControllerClick(RowController controller, View root, int position){
         if(mAdapterClickListener != null){
             mAdapterClickListener.onClick(root, position, getItemId(position));
         }
     }
 
-    public boolean onControllerLongClick(View root, int position){
+    public boolean onControllerLongClick(RowController controller, View root, int position){
         if(mAdapterClickListener != null){
             return mAdapterClickListener.onLongClick(root, position, getItemId(position));
         }
         return false;
+    }
+
+    public Context getContext(){
+        return mContext;
     }
 
     public interface AdapterClickListener{

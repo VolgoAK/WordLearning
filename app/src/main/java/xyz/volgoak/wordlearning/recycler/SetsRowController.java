@@ -3,6 +3,7 @@ package xyz.volgoak.wordlearning.recycler;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -17,7 +18,11 @@ import xyz.volgoak.wordlearning.data.DatabaseContract;
  */
 
  class SetsRowController extends RowController{
+
+    public static final String TAG = "SetsRowController";
+
     private View mRoot;
+    private CardView mCardRoot;
 
     private static boolean isColumnsBound = false;
     private static int columnIdIndex = -1;
@@ -38,6 +43,7 @@ import xyz.volgoak.wordlearning.data.DatabaseContract;
         super(view, context, adapter);
 
         mRoot = view;
+        mCardRoot = (CardView)mRoot;
         setNameTv = (TextView) view.findViewById(R.id.tv_name_setsadapter);
         addButton = (ImageButton) view.findViewById(R.id.ibt_add_sets);
         setDescriptionTv = (TextView) view.findViewById(R.id.tv_description_setsadapter);
@@ -69,16 +75,25 @@ import xyz.volgoak.wordlearning.data.DatabaseContract;
             @Override
             public void onClick(View v) {
                 Log.d("SetsRowController", "onClick: clicked " + getAdapterPosition());
-                mAdapter.onControllerClick(v, getAdapterPosition());
+                mAdapter.onControllerClick(SetsRowController.this, v, getAdapterPosition());
             }
         });
 
         mRoot.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                return mAdapter.onControllerLongClick(v, getAdapterPosition());
+                return mAdapter.onControllerLongClick(SetsRowController.this, v, getAdapterPosition());
             }
         });
+    }
+
+    @Override
+    public void setChecked(boolean checked) {
+        Log.d(TAG, "setChecked: " + checked);
+        int backGroundColor = checked ? R.color.colorAccent : R.color.semi_transparent_white;
+        int ss = mAdapter.getContext().getResources()
+                .getColor(backGroundColor);
+        mCardRoot.setCardBackgroundColor(ss);
     }
 
     public void bindCollumns(Cursor cursor){

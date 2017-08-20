@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.recycler.CursorRecyclerAdapter;
 import xyz.volgoak.wordlearning.recycler.SetsRecyclerAdapter;
+import xyz.volgoak.wordlearning.recycler.SingleChoiceMode;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
 /**
@@ -35,13 +37,14 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         CursorRecyclerAdapter.AdapterClickListener{
 
     public static final String TAG = "WordSetsFragment";
+    public static final String EXTRA_PARTSCREEN_MODE = "extra_screen_mode";
 
     private FragmentListener mFragmentListener;
     private SetsFragmentListener mSetsFragmentListener;
     private WordsDbAdapter mDbAdapter;
     private SetsRecyclerAdapter mCursorAdapter;
 
-
+    private boolean mPartScreenMode = true;
 
     public WordSetsFragment() {
         // Required empty public constructor
@@ -56,14 +59,18 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+//        mPartScreenMode = getArguments().getBoolean(EXTRA_PARTSCREEN_MODE, false);
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
 
 //        mFragmentListener.setActionBarTitle(getString(R.string.sets));
 
         mDbAdapter = new WordsDbAdapter();
-//        ListView list = (ListView) getView().findViewById(R.id.lv_setsfrag);
-//        list.setAdapter(mCursorAdapter);
 
         RecyclerView rv = (RecyclerView) getView().findViewById(R.id.rv_setsfrag);
         rv.setHasFixedSize(true);
@@ -72,9 +79,13 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         rv.setLayoutManager(llm);
 
         Cursor setsCursor = mDbAdapter.fetchAllSets();
-        mCursorAdapter = new SetsRecyclerAdapter(getContext(), setsCursor);
+        mCursorAdapter = new SetsRecyclerAdapter(getContext(), setsCursor, rv);
         mCursorAdapter.setAdapterClickListener(this);
         mCursorAdapter.setSetStatusChanger(this);
+
+        //test is correct in single mode
+         mCursorAdapter.setChoiceMode(new SingleChoiceMode());
+
         rv.setAdapter(mCursorAdapter);
 
 //

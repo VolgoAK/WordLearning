@@ -22,4 +22,6 @@ abstract class RowController extends RecyclerView.ViewHolder{
 
     public abstract void bindController(Cursor cursor);
 
+    public abstract void setChecked(boolean checked);
+
 }

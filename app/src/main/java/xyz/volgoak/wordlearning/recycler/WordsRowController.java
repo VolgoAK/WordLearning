@@ -71,7 +71,7 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
         rootView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                    return mAdapter.onControllerLongClick(v, getAdapterPosition());
+                    return mAdapter.onControllerLongClick(WordsRowController.this, v, getAdapterPosition());
                 }
         });
 
@@ -84,6 +84,10 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
         });
     }
 
+    @Override
+    public void setChecked(boolean checked) {
+        rootView.setActivated(checked);
+    }
 
     public static void bindColumns(Cursor cursor){
         columnIdIndex = cursor.getColumnIndex(DatabaseContract.Words._ID);
