@@ -60,7 +60,7 @@ public class RedactorFragment extends Fragment{
         mDbAdapter = new WordsDbAdapter();
         Cursor cursor = mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE, -1);
 
-        mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), cursor);
+        mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), cursor, mBinding.rvRedactor);
         mBinding.rvRedactor.setAdapter(mRecyclerAdapter);
 
         mRecyclerAdapter.setAdapterClickListener(new CursorRecyclerAdapter.AdapterClickListener() {

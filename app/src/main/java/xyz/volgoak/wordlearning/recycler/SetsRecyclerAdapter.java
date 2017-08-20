@@ -17,11 +17,10 @@ import xyz.volgoak.wordlearning.R;
 public class SetsRecyclerAdapter extends CursorRecyclerAdapter {
 
     private SetStatusChanger mSetStatusChanger;
-    private RecyclerView mRecyclerView;
 
     public SetsRecyclerAdapter(Context context, Cursor cursor, RecyclerView recyclerView){
-        super(context, cursor);
-        mRecyclerView = recyclerView;
+        super(context, cursor, recyclerView);
+
     }
 
     @Override
@@ -35,19 +34,7 @@ public class SetsRecyclerAdapter extends CursorRecyclerAdapter {
     @Override
     public void onControllerClick(RowController controller, View root, int position) {
         super.onControllerClick(controller, root, position);
-        if(mChoiceMode != null){
-            if(mChoiceMode.getCheckedCount() > 0){
-                int checkedPosition = mChoiceMode.getCheckedPosition();
-                SetsRowController rc = (SetsRowController)
-                        mRecyclerView.findViewHolderForAdapterPosition(checkedPosition);
-                if(rc != null)rc.setChecked(false);
-            }
 
-            controller.setChecked(true);
-
-            mChoiceMode.setChecked(position, true);
-            Log.d("SetsRecyclerAdapter", "onControllerClick: set activated");
-        }
     }
 
     public void setSetStatusChanger(SetStatusChanger SetStatusChanger) {

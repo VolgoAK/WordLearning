@@ -167,7 +167,7 @@ public class SingleSetFragment extends Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mBinding.rvSetAc.setLayoutManager(llm);
 
-        mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), cursor);
+        mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), cursor, mBinding.rvSetAc);
         mBinding.rvSetAc.setAdapter(mRecyclerAdapter);
     }
 

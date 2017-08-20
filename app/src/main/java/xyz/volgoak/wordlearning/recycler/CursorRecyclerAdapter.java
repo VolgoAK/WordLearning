@@ -3,6 +3,7 @@ package xyz.volgoak.wordlearning.recycler;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +19,13 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
     protected Context mContext;
     protected Cursor mCursor;
     private AdapterClickListener mAdapterClickListener;
-     ChoiceMode mChoiceMode;
+    private RecyclerView mRecyclerView;
+    ChoiceMode mChoiceMode;
 
-    public CursorRecyclerAdapter(Context context, Cursor cursor){
+    public CursorRecyclerAdapter(Context context, Cursor cursor, RecyclerView rv){
         mContext = context;
         mCursor = cursor;
+        mRecyclerView = rv;
     }
 
     @Override
@@ -78,6 +81,19 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
     public void onControllerClick(RowController controller, View root, int position){
         if(mAdapterClickListener != null){
             mAdapterClickListener.onClick(root, position, getItemId(position));
+        }
+        if(mChoiceMode != null){
+            if(mChoiceMode.getCheckedCount() > 0){
+                int checkedPosition = mChoiceMode.getCheckedPosition();
+                SetsRowController rc = (SetsRowController)
+                        mRecyclerView.findViewHolderForAdapterPosition(checkedPosition);
+                if(rc != null)rc.setChecked(false);
+            }
+
+            controller.setChecked(true);
+
+            mChoiceMode.setChecked(position, true);
+            Log.d("SetsRecyclerAdapter", "onControllerClick: set activated");
         }
     }
 
