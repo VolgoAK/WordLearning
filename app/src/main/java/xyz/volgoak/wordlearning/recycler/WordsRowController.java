@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
     private static Drawable[] sProgresIcons = new Drawable[5];
 
     private WordSpeaker mSpeaker;
+    private boolean isSelectable;
 
     View rootView;
     TextView wordText;
@@ -38,6 +40,7 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
     ImageView trainWTImage;
     ImageView trainTWImage;
     ImageButton soundButton;
+    CheckBox checkBox;
 
     public WordsRowController(View view, Context context, CursorRecyclerAdapter adapter) {
         super(view, context, adapter);
@@ -47,6 +50,7 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
         trainWTImage = (ImageView) view.findViewById(R.id.iv_progress_wt_adapter);
         trainTWImage = (ImageView) view.findViewById(R.id.iv_progress_tw_adapter);
         soundButton = (ImageButton) view.findViewById(R.id.adapter_button);
+        checkBox = (CheckBox) view.findViewById(R.id.cb_selected_dict_adapter);
 
         mSpeaker = new WordSpeaker(mContext);
 
@@ -86,7 +90,13 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
 
     @Override
     public void setChecked(boolean checked) {
-        rootView.setActivated(checked);
+        if(isSelectable) checkBox.setChecked(checked);
+    }
+
+    @Override
+    public void setSelectable(boolean selectable) {
+        isSelectable = selectable;
+        checkBox.setVisibility(selectable ? View.VISIBLE : View.GONE);
     }
 
     public static void bindColumns(Cursor cursor){

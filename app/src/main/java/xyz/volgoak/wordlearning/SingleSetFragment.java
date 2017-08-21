@@ -1,6 +1,7 @@
 package xyz.volgoak.wordlearning;
 
 
+import android.app.Activity;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -9,8 +10,12 @@ import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -23,6 +28,9 @@ import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.FirebaseContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding;
+import xyz.volgoak.wordlearning.recycler.CursorRecyclerAdapter;
+import xyz.volgoak.wordlearning.recycler.MultiChoiceMode;
+import xyz.volgoak.wordlearning.recycler.SingleChoiceMode;
 import xyz.volgoak.wordlearning.recycler.WordsRecyclerAdapter;
 
 
@@ -147,6 +155,7 @@ public class SingleSetFragment extends Fragment {
                 resetSetProgress();
             }
         });
+
     }
 
     private void prepareSetStatusFabs(){
@@ -168,6 +177,20 @@ public class SingleSetFragment extends Fragment {
         mBinding.rvSetAc.setLayoutManager(llm);
 
         mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), cursor, mBinding.rvSetAc);
+        mRecyclerAdapter.setAdapterClickListener(new CursorRecyclerAdapter.AdapterClickListener() {
+            @Override
+            public void onClick(View root, int position, long id) {
+                //do noting
+            }
+
+            @Override
+            public boolean onLongClick(View root, int position, long id) {
+                ActionMode.Callback callback = new WordsActionMode();
+                mBinding.appbarSetact.startActionMode(callback);
+
+                return true;
+            }
+        });
         mBinding.rvSetAc.setAdapter(mRecyclerAdapter);
     }
 
@@ -202,5 +225,37 @@ public class SingleSetFragment extends Fragment {
 
         Snackbar.make(getView().findViewById(R.id.coordinator_setact), R.string.reset_progress_question, BaseTransientBottomBar.LENGTH_LONG)
                 .setAction(R.string.reset, snackListener).show();
+    }
+
+    class WordsActionMode implements ActionMode.Callback{
+
+        MultiChoiceMode choiceMode = new MultiChoiceMode();
+        ActionMode mActionMode;
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            mode.getMenuInflater().inflate(R.menu.menu_set_frag_action_mode, menu);
+            mRecyclerAdapter.setChoiceMode(choiceMode);
+            mActionMode = mode;
+
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            mActionMode.finish();
+            return false;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            choiceMode.clearChecks();
+            mRecyclerAdapter.setChoiceMode(null);
+        }
     }
 }

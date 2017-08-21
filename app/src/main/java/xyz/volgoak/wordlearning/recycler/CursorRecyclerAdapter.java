@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 import xyz.volgoak.wordlearning.R;
 
 /**
@@ -16,11 +18,21 @@ import xyz.volgoak.wordlearning.R;
 
 public abstract class CursorRecyclerAdapter<RC extends RowController> extends RecyclerView.Adapter<RC>{
 
+    public static final String TAG = "CursorRecyclerAdapter";
+
     protected Context mContext;
     protected Cursor mCursor;
     private AdapterClickListener mAdapterClickListener;
     private RecyclerView mRecyclerView;
+    private boolean mSelectable;
     ChoiceMode mChoiceMode;
+
+    //dirty ugly thing
+    //I can't get hidden ViewHolder though it's bound
+    //but I need to change it without recreating all
+    //rows. For do this I hold position of last bound
+    //holder and invalidate by position
+    private int mLastCreated = 0;
 
     public CursorRecyclerAdapter(Context context, Cursor cursor, RecyclerView rv){
         mContext = context;
@@ -31,10 +43,14 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
     @Override
     public void onBindViewHolder(RowController controller, int position) {
         mCursor.moveToPosition(position);
-        controller.bindController(mCursor);
+        Log.d(TAG, "onBind position " + position + " selectable " + mSelectable);
         if(mChoiceMode != null){
+            controller.setSelectable(mSelectable);
             controller.setChecked(mChoiceMode.isChecked(position));
         }
+        controller.bindController(mCursor);
+        //dirty ugly thing
+        mLastCreated = position;
     }
 
     @Override
@@ -52,8 +68,28 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
         return id;
     }
 
+    private void setSelectable(boolean selectable){
+        if(mSelectable != selectable) {
+
+            for (int a = 0; a < getItemCount(); a++) {
+                RowController controller = (RowController) mRecyclerView.findViewHolderForAdapterPosition(a);
+
+                if (controller != null) {
+                    controller.setSelectable(selectable);
+                    Log.d(TAG, "setSelectable: "+ selectable + " for " + a);
+                }else Log.d(TAG, "setSelectable: null at position " + a);
+            }
+            mSelectable = selectable;
+            //dirty trick
+            notifyItemChanged(mLastCreated);
+        }
+    }
+
     public void setChoiceMode(ChoiceMode choiceMode){
         mChoiceMode = choiceMode;
+        if(choiceMode instanceof MultiChoiceMode){
+            setSelectable(true);
+        }else setSelectable(false);
     }
 
     public void changeCursor(Cursor cursor){
@@ -72,6 +108,10 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
         if(mCursor != null && !mCursor.isClosed()){
             mCursor.close();
         }
+    }
+
+    public Context getContext(){
+        return mContext;
     }
 
     public void setAdapterClickListener(AdapterClickListener listener){
@@ -102,10 +142,6 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
             return mAdapterClickListener.onLongClick(root, position, getItemId(position));
         }
         return false;
-    }
-
-    public Context getContext(){
-        return mContext;
     }
 
     public interface AdapterClickListener{

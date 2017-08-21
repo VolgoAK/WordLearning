@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="@string/reset_progress"
+        android:id="@+id/menu_reset_setfrag_action"/>
+    <item android:title="@string/add_to_dictionary"
+        android:id="@+id/menu_add_setfrag_action"/>
+</menu>

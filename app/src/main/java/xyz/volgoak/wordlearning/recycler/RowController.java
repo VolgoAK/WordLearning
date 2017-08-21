@@ -24,4 +24,7 @@ abstract class RowController extends RecyclerView.ViewHolder{
 
     public abstract void setChecked(boolean checked);
 
+    public void setSelectable(boolean selectable){
+        //do nothing
+    }
 }
