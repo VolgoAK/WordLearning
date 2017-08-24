@@ -69,10 +69,6 @@ public class RedactorFragment extends Fragment{
                 fireCustomDialog(id);
             }
 
-            @Override
-            public boolean onLongClick(View root, int position, long id) {
-                return false;
-            }
         });
 
         mBinding.btAddRedactor.setOnClickListener(new View.OnClickListener() {

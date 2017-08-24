@@ -2,15 +2,10 @@ package xyz.volgoak.wordlearning.recycler;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-
-import java.util.ArrayList;
-
-import xyz.volgoak.wordlearning.R;
 
 /**
  * Created by Volgoak on 16.08.2017.
@@ -23,16 +18,10 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
     protected Context mContext;
     protected Cursor mCursor;
     private AdapterClickListener mAdapterClickListener;
+    private AdapterLongClickListener mAdapterLongClickListener;
     private RecyclerView mRecyclerView;
     private boolean mSelectable;
-    ChoiceMode mChoiceMode;
-
-    //dirty ugly thing
-    //I can't get hidden ViewHolder though it's bound
-    //but I need to change it without recreating all
-    //rows. For do this I hold position of last bound
-    //holder and invalidate by position
-    private int mLastCreated = 0;
+    private ChoiceMode mChoiceMode;
 
     public CursorRecyclerAdapter(Context context, Cursor cursor, RecyclerView rv){
         mContext = context;
@@ -44,13 +33,11 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
     public void onBindViewHolder(RowController controller, int position) {
         mCursor.moveToPosition(position);
         Log.d(TAG, "onBind position " + position + " selectable " + mSelectable);
+        controller.setSelectable(mSelectable);
         if(mChoiceMode != null){
-            controller.setSelectable(mSelectable);
             controller.setChecked(mChoiceMode.isChecked(position));
         }
         controller.bindController(mCursor);
-        //dirty ugly thing
-        mLastCreated = position;
     }
 
     @Override
@@ -70,18 +57,26 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
 
     private void setSelectable(boolean selectable){
         if(mSelectable != selectable) {
-
+            mSelectable = selectable;
             for (int a = 0; a < getItemCount(); a++) {
                 RowController controller = (RowController) mRecyclerView.findViewHolderForAdapterPosition(a);
 
                 if (controller != null) {
                     controller.setSelectable(selectable);
-                    Log.d(TAG, "setSelectable: "+ selectable + " for " + a);
-                }else Log.d(TAG, "setSelectable: null at position " + a);
+//                    Log.d(TAG, "setSelectable: "+ selectable + " for " + a);
+                }
             }
-            mSelectable = selectable;
+
             //dirty trick
-            notifyItemChanged(mLastCreated);
+            LinearLayoutManager llm =(LinearLayoutManager) mRecyclerView.getLayoutManager();
+            int firstVisible = llm.findFirstVisibleItemPosition();
+            int lastVisible = llm.findLastVisibleItemPosition();
+
+            for(int a = 1; a < 4 ; a++){
+                notifyItemChanged(firstVisible - a);
+                notifyItemChanged(lastVisible + a);
+            }
+
         }
     }
 
@@ -118,6 +113,10 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
         mAdapterClickListener = listener;
     }
 
+    public void setAdapterLongClickListener(AdapterLongClickListener adapterLongClickListener) {
+        mAdapterLongClickListener = adapterLongClickListener;
+    }
+
     public void onControllerClick(RowController controller, View root, int position){
         if(mAdapterClickListener != null){
             mAdapterClickListener.onClick(root, position, getItemId(position));
@@ -138,14 +137,17 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
     }
 
     public boolean onControllerLongClick(RowController controller, View root, int position){
-        if(mAdapterClickListener != null){
-            return mAdapterClickListener.onLongClick(root, position, getItemId(position));
+        if(mAdapterLongClickListener != null){
+            return  mAdapterLongClickListener.onLongClick(root, position, getItemId(position));
         }
         return false;
     }
 
     public interface AdapterClickListener{
         void onClick(View root, int position, long id);
+    }
+
+    public interface AdapterLongClickListener {
         boolean onLongClick(View root, int position, long id);
     }
 }

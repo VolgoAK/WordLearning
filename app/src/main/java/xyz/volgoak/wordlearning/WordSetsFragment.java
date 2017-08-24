@@ -34,7 +34,7 @@ import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
  * A simple {@link Fragment} subclass.
  */
 public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.SetStatusChanger,
-        CursorRecyclerAdapter.AdapterClickListener{
+        CursorRecyclerAdapter.AdapterClickListener, CursorRecyclerAdapter.AdapterLongClickListener{
 
     public static final String TAG = "WordSetsFragment";
     public static final String EXTRA_PARTSCREEN_MODE = "extra_screen_mode";

@@ -10,7 +10,7 @@ import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.view.ActionMode;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,7 +23,7 @@ import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
+import android.support.v7.view.ActionMode;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.FirebaseContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
@@ -49,6 +49,7 @@ public class SingleSetFragment extends Fragment {
 
     private WordsDbAdapter mDbAdapter;
     private WordsRecyclerAdapter mRecyclerAdapter;
+    private ActionMode mActionMode;
     private boolean mSetInDictionary;
     private String mSetName;
 
@@ -182,18 +183,27 @@ public class SingleSetFragment extends Fragment {
             public void onClick(View root, int position, long id) {
                 //do noting
             }
+        });
 
+        mRecyclerAdapter.setAdapterLongClickListener(new CursorRecyclerAdapter.AdapterLongClickListener() {
             @Override
             public boolean onLongClick(View root, int position, long id) {
-                ActionMode.Callback callback = new WordsActionMode();
-                mBinding.appbarSetact.startActionMode(callback);
+                if(mActionMode == null) {
+                    AppCompatActivity activity = (AppCompatActivity) getActivity();
+                    //set action mode to fragment toolbar only in single mode
+                    if (mSingleFragMode) activity.setSupportActionBar(mBinding.setToolbar);
 
-                return true;
+                    ActionMode.Callback callback = new WordsActionMode();
+                    activity.startSupportActionMode(callback);
+
+                    return true;
+                }else return false;
             }
         });
         mBinding.rvSetAc.setAdapter(mRecyclerAdapter);
     }
 
+    // TODO: 25.08.2017 manage this method/ I don't remember why I broke it
     public void addOrRemoveSetFromDictionary(){
         View.OnClickListener snackListener = new View.OnClickListener() {
             @Override
