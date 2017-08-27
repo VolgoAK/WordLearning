@@ -259,7 +259,7 @@ public class WordsDbAdapter {
     }
 
     // TODO: 16.06.2017 add varargs for update many words at once
-    public void resetWordProgress(long id){
+    public void resetWordProgress2(long id){
         ContentValues values = new ContentValues();
         values.put(DatabaseContract.Words.COLUMN_TRAINED_WT, 0);
         values.put(DatabaseContract.Words.COLUMN_TRAINED_TW, 0);
@@ -297,6 +297,26 @@ public class WordsDbAdapter {
                 "( SELECT "+DatabaseContract.WordLinks.COLUMN_WORD_ID+" FROM "+DatabaseContract.WordLinks.TABLE_NAME +
                 " WHERE "+DatabaseContract.WordLinks.COLUMN_SET_ID+"="+setId+");");
 
+    }
+
+    public int resetWordProgress(Long...ids){
+        String[] stringIds = new String[ids.length];
+        for(int a = 0; a < ids.length; a++){
+            stringIds[a] = String.valueOf(ids[a]);
+        }
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(DatabaseContract.Words._ID + "=?");
+        for(int a = 1; a < ids.length; a++){
+            builder.append(" OR " + DatabaseContract.Words._ID + "=?");
+        }
+
+        ContentValues values = new ContentValues();
+        values.put(DatabaseContract.Words.COLUMN_TRAINED_WT, 0);
+        values.put(DatabaseContract.Words.COLUMN_TRAINED_TW, 0);
+        values.put(DatabaseContract.Words.COLUMN_STUDIED, 0);
+
+        return mDb.update(DatabaseContract.Words.TABLE_NAME, values, builder.toString(), stringIds);
     }
 
     public int changeWordStatus(int newStatus, Long... ids){
