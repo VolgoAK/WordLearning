@@ -1,6 +1,7 @@
 package xyz.volgoak.wordlearning.recycler;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class MultiChoiceMode implements ChoiceMode {
     @Override
     public void setChecked(int position, boolean checked) {
         if (checked){
+            Log.d("Callback", "setChecked: " + position);
             mSparceBooleanArray.put(position, checked);
         }else mSparceBooleanArray.delete(position);
     }

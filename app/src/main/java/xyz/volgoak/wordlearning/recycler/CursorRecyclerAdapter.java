@@ -32,7 +32,6 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
     @Override
     public void onBindViewHolder(RowController controller, int position) {
         mCursor.moveToPosition(position);
-        Log.d(TAG, "onBind position " + position + " selectable " + mSelectable);
         controller.setSelectable(mSelectable);
         if(mChoiceMode != null){
             controller.setChecked(mChoiceMode.isChecked(position));
@@ -63,6 +62,9 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
 
                 if (controller != null) {
                     controller.setSelectable(selectable);
+                    if(selectable && mChoiceMode != null){
+                        controller.setChecked(mChoiceMode.isChecked(controller.getAdapterPosition()));
+                    }
 //                    Log.d(TAG, "setSelectable: "+ selectable + " for " + a);
                 }
             }
@@ -122,17 +124,20 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
             mAdapterClickListener.onClick(root, position, getItemId(position));
         }
         if(mChoiceMode != null){
-            if(mChoiceMode.getCheckedCount() > 0){
-                int checkedPosition = mChoiceMode.getCheckedPosition();
-                SetsRowController rc = (SetsRowController)
-                        mRecyclerView.findViewHolderForAdapterPosition(checkedPosition);
-                if(rc != null)rc.setChecked(false);
+            if(mChoiceMode instanceof SingleChoiceMode) {
+                if (mChoiceMode.getCheckedCount() > 0) {
+                    int checkedPosition = mChoiceMode.getCheckedPosition();
+                    RowController rc = (RowController)
+                            mRecyclerView.findViewHolderForAdapterPosition(checkedPosition);
+                    if (rc != null) rc.setChecked(false);
+                }
+                controller.setChecked(true);
+            }else if(mChoiceMode instanceof MultiChoiceMode) {
+                //change checked state
+                boolean checked = !mChoiceMode.isChecked(position);
+                controller.setChecked(checked);
+                mChoiceMode.setChecked(position, checked);
             }
-
-            controller.setChecked(true);
-
-            mChoiceMode.setChecked(position, true);
-            Log.d("SetsRecyclerAdapter", "onControllerClick: set activated");
         }
     }
 

@@ -1,7 +1,6 @@
 package xyz.volgoak.wordlearning;
 
 
-import android.app.Activity;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -12,7 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,7 +29,6 @@ import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding;
 import xyz.volgoak.wordlearning.recycler.CursorRecyclerAdapter;
 import xyz.volgoak.wordlearning.recycler.MultiChoiceMode;
-import xyz.volgoak.wordlearning.recycler.SingleChoiceMode;
 import xyz.volgoak.wordlearning.recycler.WordsRecyclerAdapter;
 
 
@@ -41,6 +39,8 @@ public class SingleSetFragment extends Fragment {
 
     public static final String EXTRA_SET_ID = "set_id";
     public static final String EXTRA_SINGLE_MODE = "single_mode";
+    public static final String SAVED_IS_MULTI_CHOICE = "is_multi_choice";
+    public static final String SAVED_CHOICE_MODE = "saved_choice_mode";
 
     private FragmentSingleSetBinding mBinding;
 
@@ -50,6 +50,7 @@ public class SingleSetFragment extends Fragment {
     private WordsDbAdapter mDbAdapter;
     private WordsRecyclerAdapter mRecyclerAdapter;
     private ActionMode mActionMode;
+    private WordsActionModeCallback mWordsCallBack;
     private boolean mSetInDictionary;
     private String mSetName;
 
@@ -69,9 +70,19 @@ public class SingleSetFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("Callback", "onCreate: frag");
         if(getArguments() != null){
             mSetId = getArguments().getLong(EXTRA_SET_ID);
             mSingleFragMode = getArguments().getBoolean(EXTRA_SINGLE_MODE);
+        }
+
+        if(savedInstanceState != null){
+            Log.d("Callback", "onCreate: restore frag");
+            boolean inMultiChoice = savedInstanceState.getBoolean(SAVED_IS_MULTI_CHOICE, false);
+            if(inMultiChoice){
+                mWordsCallBack = new WordsActionModeCallback();
+                mWordsCallBack.onRestoreInstanceState(savedInstanceState);
+            }
         }
     }
 
@@ -79,14 +90,25 @@ public class SingleSetFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.d("Callback", "onCreateView: frag");
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_single_set, container, false);
         mDbAdapter = new WordsDbAdapter();
+
+        manageTrainingStatusMenu();
+        loadSetInformation();
+        prepareRecycler();
+
+        if(mWordsCallBack != null){
+            ((AppCompatActivity)getActivity()).startSupportActionMode(mWordsCallBack);
+        }
+
         return mBinding.getRoot();
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        Log.d("Callback", "onStart: callback is " + mWordsCallBack);
         if(mSingleFragMode){
             mBinding.setToolbar.setNavigationIcon(R.drawable.ic_back_toolbar);
             mBinding.setToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -95,21 +117,28 @@ public class SingleSetFragment extends Fragment {
                     getActivity().finish();
                 }
             });
+            mBinding.coordinatorSetact.setFitsSystemWindows(true);
         }else{
 //            AppBarLayout.LayoutParams layoutParams =(AppBarLayout.LayoutParams) mBinding.collapsingToolbarSetAct.getLayoutParams();
 //            layoutParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP | AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL);
 //            mBinding.collapsingToolbarSetAct.setLayoutParams(layoutParams);
         }
-
-        manageTrainingStatusMenu();
-        loadSetInformation();
-        prepareRecycler();
     }
 
     @Override
     public void onStop() {
         mRecyclerAdapter.closeCursor();
         super.onStop();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d("Callback", "onSaveInstanceState: frag");
+        if(mWordsCallBack != null){
+            outState.putBoolean(SAVED_IS_MULTI_CHOICE, true);
+            mWordsCallBack.onSaveInstanceState(outState);
+        }
     }
 
     private void loadSetInformation(){
@@ -178,6 +207,11 @@ public class SingleSetFragment extends Fragment {
         mBinding.rvSetAc.setLayoutManager(llm);
 
         mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), cursor, mBinding.rvSetAc);
+
+        if(mWordsCallBack != null){
+            mRecyclerAdapter.setChoiceMode(mWordsCallBack.choiceMode);
+        }
+
         mRecyclerAdapter.setAdapterClickListener(new CursorRecyclerAdapter.AdapterClickListener() {
             @Override
             public void onClick(View root, int position, long id) {
@@ -189,12 +223,14 @@ public class SingleSetFragment extends Fragment {
             @Override
             public boolean onLongClick(View root, int position, long id) {
                 if(mActionMode == null) {
+                    Log.d("Callback", "onLongClick: action mode is null");
                     AppCompatActivity activity = (AppCompatActivity) getActivity();
                     //set action mode to fragment toolbar only in single mode
                     if (mSingleFragMode) activity.setSupportActionBar(mBinding.setToolbar);
 
-                    ActionMode.Callback callback = new WordsActionMode();
-                    activity.startSupportActionMode(callback);
+                    mWordsCallBack = new WordsActionModeCallback();
+                    mWordsCallBack.choiceMode.setChecked(position, true);
+                    activity.startSupportActionMode(mWordsCallBack);
 
                     return true;
                 }else return false;
@@ -237,13 +273,29 @@ public class SingleSetFragment extends Fragment {
                 .setAction(R.string.reset, snackListener).show();
     }
 
-    class WordsActionMode implements ActionMode.Callback{
+    class WordsActionModeCallback implements ActionMode.Callback{
 
-        MultiChoiceMode choiceMode = new MultiChoiceMode();
-        ActionMode mActionMode;
+        MultiChoiceMode choiceMode;
+
+        WordsActionModeCallback(){
+            choiceMode = new MultiChoiceMode();
+        }
+
+        public void onSaveInstanceState(Bundle instanceState){
+            if(choiceMode != null){
+                choiceMode.onSaveInstanceState(instanceState);
+                Log.d("Callback", "onSaveInstanceState: size " + choiceMode.getCheckedCount());
+            }
+        }
+
+        public void onRestoreInstanceState(Bundle savedInstanceState){
+            choiceMode.restoreInstanceState(savedInstanceState);
+            Log.d("Callback", "onRestoreInstanceState: size " + choiceMode.getCheckedCount());
+        }
 
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            Log.d("Callback", "onCreateActionMode: ");
             mode.getMenuInflater().inflate(R.menu.menu_set_frag_action_mode, menu);
             mRecyclerAdapter.setChoiceMode(choiceMode);
             mActionMode = mode;
@@ -264,8 +316,11 @@ public class SingleSetFragment extends Fragment {
 
         @Override
         public void onDestroyActionMode(ActionMode mode) {
+            Log.d("Callback", "onDestroyActionMode: ");
             choiceMode.clearChecks();
             mRecyclerAdapter.setChoiceMode(null);
+            mActionMode = null;
+            mWordsCallBack = null;
         }
     }
 }

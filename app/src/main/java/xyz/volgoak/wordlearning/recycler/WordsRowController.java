@@ -79,6 +79,13 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
                 }
         });
 
+        rootView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAdapter.onControllerClick(WordsRowController.this, v, getAdapterPosition());
+            }
+        });
+
         final String word = cursor.getString(columnWordIndex);
         // TODO: 25.08.2017 many speakers is cause of memory leaks. Fix it 
         soundButton.setOnClickListener(new View.OnClickListener() {
