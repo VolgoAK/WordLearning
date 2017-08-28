@@ -65,7 +65,6 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
                     if(selectable && mChoiceMode != null){
                         controller.setChecked(mChoiceMode.isChecked(controller.getAdapterPosition()));
                     }
-//                    Log.d(TAG, "setSelectable: "+ selectable + " for " + a);
                 }
             }
 
@@ -78,7 +77,6 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
                 notifyItemChanged(firstVisible - a);
                 notifyItemChanged(lastVisible + a);
             }
-
         }
     }
 
@@ -120,24 +118,24 @@ public abstract class CursorRecyclerAdapter<RC extends RowController> extends Re
     }
 
     public void onControllerClick(RowController controller, View root, int position){
-        if(mAdapterClickListener != null){
-            mAdapterClickListener.onClick(root, position, getItemId(position));
-        }
         if(mChoiceMode != null){
             if(mChoiceMode instanceof SingleChoiceMode) {
-                if (mChoiceMode.getCheckedCount() > 0) {
-                    int checkedPosition = mChoiceMode.getCheckedPosition();
+                if(mChoiceMode.getCheckedPosition() != -1){
                     RowController rc = (RowController)
-                            mRecyclerView.findViewHolderForAdapterPosition(checkedPosition);
-                    if (rc != null) rc.setChecked(false);
+                            mRecyclerView.findViewHolderForAdapterPosition(mChoiceMode.getCheckedPosition());
+                    if(rc != null) rc.setChecked(false);
                 }
                 controller.setChecked(true);
+                mChoiceMode.setChecked(position, true);
             }else if(mChoiceMode instanceof MultiChoiceMode) {
                 //change checked state
                 boolean checked = !mChoiceMode.isChecked(position);
                 controller.setChecked(checked);
                 mChoiceMode.setChecked(position, checked);
             }
+        }
+        if(mAdapterClickListener != null){
+            mAdapterClickListener.onClick(root, position, getItemId(position));
         }
     }
 

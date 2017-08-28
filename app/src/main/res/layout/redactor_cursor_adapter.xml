@@ -16,7 +16,7 @@
     android:layout_height="match_parent"
     android:background="?selectableItemBackgroundBorderless"
     android:padding="@dimen/views_small_padding"
-
+    android:animateLayoutChanges="true"
     >
 
     <android.support.v7.widget.AppCompatCheckBox

@@ -74,7 +74,6 @@ import xyz.volgoak.wordlearning.data.DatabaseContract;
         mRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("SetsRowController", "onClick: clicked " + getAdapterPosition());
                 mAdapter.onControllerClick(SetsRowController.this, v, getAdapterPosition());
             }
         });
@@ -89,7 +88,7 @@ import xyz.volgoak.wordlearning.data.DatabaseContract;
 
     @Override
     public void setChecked(boolean checked) {
-        Log.d(TAG, "setChecked: " + checked);
+
         int backGroundColor = checked ? R.color.colorAccent : R.color.semi_transparent_white;
         int ss = mAdapter.getContext().getResources()
                 .getColor(backGroundColor);

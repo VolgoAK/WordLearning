@@ -2,8 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="@string/reset_progress"
         android:orderInCategory="10"
+        android:icon="@drawable/ic_reset_white_24dp"
         android:id="@+id/menu_reset_setfrag_action"/>
     <item android:title="@string/add_to_dictionary"
         android:orderInCategory="20"
+        android:icon="@drawable/ic_add_white_24dp"
         android:id="@+id/menu_add_setfrag_action"/>
 </menu>
