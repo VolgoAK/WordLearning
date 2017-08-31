@@ -46,6 +46,15 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
 
     private boolean mPartScreenMode = true;
 
+     public static WordSetsFragment newInstance(boolean part_mode) {
+        Bundle args = new Bundle();
+        args.putBoolean(EXTRA_PARTSCREEN_MODE, part_mode);
+
+        WordSetsFragment fragment = new WordSetsFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     public WordSetsFragment() {
         // Required empty public constructor
     }
@@ -61,7 +70,9 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        mPartScreenMode = getArguments().getBoolean(EXTRA_PARTSCREEN_MODE, false);
+        if(getArguments() != null) {
+            mPartScreenMode = getArguments().getBoolean(EXTRA_PARTSCREEN_MODE, false);
+        }
     }
 
     @Override
@@ -83,8 +94,9 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         mCursorAdapter.setAdapterClickListener(this);
         mCursorAdapter.setSetStatusChanger(this);
 
-        //test is correct in single mode
-         mCursorAdapter.setChoiceMode(new SingleChoiceMode());
+        if(mPartScreenMode) {
+            mCursorAdapter.setChoiceMode(new SingleChoiceMode());
+        }
 
         rv.setAdapter(mCursorAdapter);
 

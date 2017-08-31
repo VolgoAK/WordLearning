@@ -4,8 +4,17 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.util.SparseBooleanArray;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import xyz.volgoak.wordlearning.recycler.MultiChoiceMode;
 import xyz.volgoak.wordlearning.recycler.ParcelableSparseBooleanArray;
 
 import static org.junit.Assert.*;
@@ -14,37 +23,40 @@ import static org.junit.Assert.*;
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
  */
 public class ExampleUnitTest {
+
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+
+    @Before
+    public void setUpStreams() {
+        System.setOut(new PrintStream(outContent));
+        System.setErr(new PrintStream(errContent));
+    }
+
+    @After
+    public void cleanUpStreams() {
+        System.setOut(null);
+        System.setErr(null);
+    }
     @Test
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
     }
 
     @Test
-    public void sparseArrayTest(){
-        ParcelableSparseBooleanArray array = new ParcelableSparseBooleanArray();
-        for(int a = 0; a < 20; a++){
-            array.put(a, a % 2 == 0);
+    public void MultiChoiceGetListTest(){
+        MultiChoiceMode mode = new MultiChoiceMode();
+        List<Integer> testList = new ArrayList<>();
+        Collections.addAll(testList, 1, 4, 5, 7, 8, 12, 14, 18);
+        for(Integer i : testList){
+            mode.setChecked(i, true);
         }
-
-        String key = "key_key";
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(key, array);
-
-        ParcelableSparseBooleanArray restoredArray = bundle.getParcelable(key);
-
-        int size = restoredArray.size();
-        System.out.println("size of restored array = " + size);
-
-        assertTrue(array.equals(restoredArray));
+        List<Integer> listFromMode = mode.getCheckedList();
+        for(Integer i : listFromMode){
+            System.out.println(i);
+        }
+        assertTrue(testList.equals(listFromMode));
     }
 
-    @Test
-    public void bundleTest(){
-        Bundle bundle = new Bundle();
-        String key = "key";
-        bundle.putString(key, key);
-        System.out.println("bundle content " + bundle.describeContents());
-        String newKey = bundle.getString(key);
-        assertTrue(bundle.containsKey(key));
-    }
+
 }

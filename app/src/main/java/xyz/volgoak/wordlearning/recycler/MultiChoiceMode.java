@@ -3,6 +3,7 @@ package xyz.volgoak.wordlearning.recycler;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,7 +51,14 @@ public class MultiChoiceMode implements ChoiceMode {
 
     @Override
     public List<Integer> getCheckedList() {
-        return null;
+        ArrayList<Integer> checked = new ArrayList<>();
+        for(int a = 0; a < mSparceBooleanArray.size(); a++){
+            int x = mSparceBooleanArray.keyAt(a);
+            if(mSparceBooleanArray.get(x)){
+                checked.add(x);
+            }
+        }
+        return checked;
     }
 
     @Override

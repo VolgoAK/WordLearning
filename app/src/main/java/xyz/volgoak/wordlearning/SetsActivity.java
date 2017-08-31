@@ -3,16 +3,14 @@ package xyz.volgoak.wordlearning;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
-import android.widget.Toast;
-
-import xyz.volgoak.wordlearning.training_utils.Training;
 
 public class SetsActivity extends NavigationActivity implements FragmentListener, WordSetsFragment.SetsFragmentListener{
 
     private WordSetsFragment mSetsFragment;
     private SingleSetFragment mSingleSetFragment;
+
+    private boolean isMultiFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,16 +18,18 @@ public class SetsActivity extends NavigationActivity implements FragmentListener
         setContentView(R.layout.activity_sets);
         super.onCreateNavigationDrawer();
 
+        isMultiFrag = findViewById(R.id.container_detail_sets_activity) != null;
+
         mSetsFragment =(WordSetsFragment) getSupportFragmentManager().findFragmentById(R.id.container_master_sets_activity);
         if(mSetsFragment == null){
-            mSetsFragment = new WordSetsFragment();
+            mSetsFragment = WordSetsFragment.newInstance(isMultiFrag);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container_master_sets_activity, mSetsFragment)
                     .commit();
         }
 
         mSingleSetFragment = (SingleSetFragment)getSupportFragmentManager().findFragmentById(R.id.container_detail_sets_activity);
-        if(mSingleSetFragment == null && findViewById(R.id.container_detail_sets_activity) != null){
+        if(mSingleSetFragment == null && isMultiFrag){
             // TODO: 17.06.2017 change test id to real
             mSingleSetFragment = SingleSetFragment.newInstance(1, false);
             getSupportFragmentManager().beginTransaction()

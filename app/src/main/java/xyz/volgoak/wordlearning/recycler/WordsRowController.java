@@ -27,6 +27,7 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
     private static int columnTrainWtIndex = -1;
     private static int columnTrainTwIndex = -1;
     private static int columnIdIndex = -1;
+    private static int columnInDictionaryIndes = -1;
 
     private static boolean isDrawableInit = false;
     private static Drawable[] sProgresIcons = new Drawable[5];
@@ -39,6 +40,7 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
     TextView translationText;
     ImageView trainWTImage;
     ImageView trainTWImage;
+    ImageView inDictionaryImage;
     ImageButton soundButton;
     CheckBox checkBox;
 
@@ -49,6 +51,7 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
         translationText = (TextView) view.findViewById(R.id.tv_translation_adapter);
         trainWTImage = (ImageView) view.findViewById(R.id.iv_progress_wt_adapter);
         trainTWImage = (ImageView) view.findViewById(R.id.iv_progress_tw_adapter);
+        inDictionaryImage = (ImageView) view.findViewById(R.id.iv_status_word_controller);
         soundButton = (ImageButton) view.findViewById(R.id.adapter_button);
         checkBox = (CheckBox) view.findViewById(R.id.cb_selected_dict_adapter);
 
@@ -71,6 +74,10 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
             trainWTImage.setImageResource(R.drawable.ic_progress_4);
             trainTWImage.setImageResource(R.drawable.ic_progress_4);
         }
+
+        int status = cursor.getInt(columnInDictionaryIndes);
+        inDictionaryImage.setVisibility(status == DatabaseContract.Words.IN_DICTIONARY
+                ? View.VISIBLE : View.INVISIBLE);
 
         rootView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -113,6 +120,7 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
         columnTranslationIndex = cursor.getColumnIndex(DatabaseContract.Words.COLUMN_TRANSLATION);
         columnTrainTwIndex = cursor.getColumnIndex(DatabaseContract.Words.COLUMN_TRAINED_TW);
         columnTrainWtIndex = cursor.getColumnIndex(DatabaseContract.Words.COLUMN_TRAINED_WT);
+        columnInDictionaryIndes = cursor.getColumnIndex(DatabaseContract.Words.COLUMN_STATUS);
         isColumnBound = true;
     }
 

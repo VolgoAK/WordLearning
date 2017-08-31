@@ -92,6 +92,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/tv_wt"/>
 
+    <ImageView
+        android:id="@+id/iv_status_word_controller"
+        android:layout_width="@dimen/state_image_size"
+        android:layout_height="@dimen/state_image_size"
+        android:src="@drawable/ic_added"
+        app:layout_constraintTop_toTopOf="@id/iv_progress_wt_adapter"
+        app:layout_constraintBottom_toBottomOf="@id/iv_progress_wt_adapter"
+        app:layout_constraintRight_toLeftOf="@id/iv_progress_wt_adapter"/>
+
 
     <TextView
         android:id="@+id/tv_tw"

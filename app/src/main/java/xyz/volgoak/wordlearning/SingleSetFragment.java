@@ -24,6 +24,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import android.support.v7.view.ActionMode;
 
+import java.util.List;
+
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.FirebaseContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
@@ -31,6 +33,8 @@ import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding;
 import xyz.volgoak.wordlearning.recycler.CursorRecyclerAdapter;
 import xyz.volgoak.wordlearning.recycler.MultiChoiceMode;
 import xyz.volgoak.wordlearning.recycler.WordsRecyclerAdapter;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 
 /**
@@ -250,6 +254,8 @@ public class SingleSetFragment extends Fragment {
         int messageId = mSetInDictionary ? R.string.set_added_message : R.string.set_removed_message;
         String message = getString(messageId, mSetName);
         Snackbar.make(getView().findViewById(R.id.coordinator_setact), message, BaseTransientBottomBar.LENGTH_LONG).show();
+
+        mRecyclerAdapter.changeCursor(mDbAdapter.fetchWordsBySetId(mSetId));
     }
 
     public void resetSetProgress(){
@@ -264,6 +270,30 @@ public class SingleSetFragment extends Fragment {
 
         Snackbar.make(getView().findViewById(R.id.coordinator_setact), R.string.reset_progress_question, BaseTransientBottomBar.LENGTH_LONG)
                 .setAction(R.string.reset, snackListener).show();
+    }
+
+    public void changeWordsStatus(List<Integer> positions, int newStatus){
+        if(positions.size() == 0) return;
+        Long[] idsArray = new Long[positions.size()];
+        for(int a = 0; a < positions.size(); a++){
+            idsArray[a] = mRecyclerAdapter.getItemId(positions.get(a));
+        }
+        mDbAdapter.changeWordStatus(newStatus, idsArray);
+        updateAdapterCursor();
+    }
+
+    public void resetWordsProgress(List<Integer> positions){
+        if(positions.size() == 0) return;
+        Long[] idsArray = new Long[positions.size()];
+        for(int a = 0; a < positions.size(); a++){
+            idsArray[a] = mRecyclerAdapter.getItemId(positions.get(a));
+        }
+        mDbAdapter.resetWordProgress(idsArray);
+    }
+
+    public void updateAdapterCursor(){
+        Cursor cursor = mDbAdapter.fetchWordsBySetId(mSetId);
+        mRecyclerAdapter.changeCursor(cursor);
     }
 
     class WordsActionModeCallback implements ActionMode.Callback{
@@ -306,6 +336,22 @@ public class SingleSetFragment extends Fragment {
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            int itemId = item.getItemId();
+            switch(itemId){
+                case R.id.menu_add_setfrag_action :
+                    changeWordsStatus(choiceMode.getCheckedList(), DatabaseContract.Words.IN_DICTIONARY);
+                    mActionMode.finish();
+                    return true;
+                case R.id.menu_remove_setfrag_action :
+                    changeWordsStatus(choiceMode.getCheckedList(), DatabaseContract.Words.OUT_OF_DICTIONARY);
+                    mActionMode.finish();
+                    return true;
+                case R.id.menu_reset_setfrag_action :
+                    resetWordsProgress(choiceMode.getCheckedList());
+                    mActionMode.finish();
+                    return true;
+
+            }
             mActionMode.finish();
             return false;
         }
