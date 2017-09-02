@@ -103,4 +103,10 @@ public final class DatabaseContract {
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
+
+    public static abstract class Info {
+        public static final String ALL_WORDS_COUNT = "all_words";
+        public static final String DICTIONARY_WORDS_COUNT = "dictionary_words";
+        public static final String STUDIED_WORDS_COUNT = "studied_words";
+    }
 }
