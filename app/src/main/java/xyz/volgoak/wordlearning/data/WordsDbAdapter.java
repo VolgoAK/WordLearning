@@ -2,20 +2,15 @@ package xyz.volgoak.wordlearning.data;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.preference.PreferenceManager;
-import android.provider.ContactsContract;
 import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.utils.SetsLoader;
 
-import static android.R.attr.id;
-import static android.R.attr.value;
 import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.IN_DICTIONARY;
 
 
@@ -335,6 +330,21 @@ public class WordsDbAdapter {
         values.put(DatabaseContract.Words.COLUMN_STATUS, newStatus);
 
         return mDb.update(DatabaseContract.Words.TABLE_NAME, values, builder.toString(), stringIds);
+    }
+
+    public Cursor getDictionaryInfo(){
+        String select = "SELECT COUNT("+DatabaseContract.Words._ID+") AS "+DatabaseContract.Info.ALL_WORDS_COUNT + ", "
+
+                + " COUNT( CASE WHEN "+DatabaseContract.Words.COLUMN_TRAINED_WT+">="+TRAINING_LIMIT
+                + " AND "+DatabaseContract.Words.COLUMN_TRAINED_TW+">="+TRAINING_LIMIT
+                + " THEN 1 ELSE NULL END) AS "+DatabaseContract.Info.STUDIED_WORDS_COUNT + ","
+
+                + " COUNT( CASE WHEN "+DatabaseContract.Words.COLUMN_STATUS+"="+DatabaseContract.Words.IN_DICTIONARY
+                + " THEN 1 ELSE NULL END) AS "+DatabaseContract.Info.DICTIONARY_WORDS_COUNT
+
+                + " FROM "+DatabaseContract.Words.TABLE_NAME;
+
+        return mDb.rawQuery(select, null);
     }
 
     /**
