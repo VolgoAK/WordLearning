@@ -33,6 +33,9 @@
     <dimen name="menu_image_size">60dp</dimen>
     <dimen name="menu_image_margin">10dp</dimen>
 
+    <dimen name="stats_card_height">150dp</dimen>
+    <dimen name="stats_card_width">400dp</dimen>
+
     <dimen name="large_text_size">32sp</dimen>
     <dimen name="medium_text_size">26sp</dimen>
     <dimen name="small_text_size">21sp</dimen>

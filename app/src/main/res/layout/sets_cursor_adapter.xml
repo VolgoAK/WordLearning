@@ -5,6 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/sets_card_height"
+    android:layout_marginTop="@dimen/views_small_margin"
+    android:layout_marginStart="@dimen/views_small_margin"
+    android:layout_marginEnd="@dimen/views_small_margin"
     app:cardBackgroundColor="@color/semi_transparent_white"
     >
     <android.support.constraint.ConstraintLayout

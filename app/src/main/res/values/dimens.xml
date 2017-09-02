@@ -42,5 +42,8 @@
     <dimen name="fab_size">56dp</dimen>
     <dimen name="fab_min_size">30dp</dimen>
 
+    <dimen name="stats_card_height">150dp</dimen>
+    <dimen name="stats_card_width">280dp</dimen>
+
     <dimen name="design_fab_image_size" tools:override="true">40dp</dimen>
 </resources>

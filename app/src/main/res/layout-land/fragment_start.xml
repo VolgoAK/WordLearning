@@ -12,6 +12,10 @@
 
     </data>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -108,7 +112,7 @@
                     android:text="@string/translation_word" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                   style="@style/Cyv_menu"
+                    style="@style/Cyv_menu"
                     android:src="@drawable/ic_tw"/>
             </LinearLayout>
 
@@ -179,4 +183,6 @@
 
 
     </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
 </layout>

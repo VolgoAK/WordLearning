@@ -47,7 +47,8 @@
     <string name="open_source">Сторонние бибилиотеки</string>
     <string name="new_sets_loaded">Были загружены новые наборы слов</string>
     <string name="num_of_words_loaded">Загружено %1$d слов</string>
-
+    <string name="words_learned">Выучено слов %1$d из %2$d</string>
+    <string name="words_in_dictionary">Добавлено в словарь %1$d </string>
 
     <!-- messages -->
     <string name="sets_index_file_ru_en">sets_index.xml</string>

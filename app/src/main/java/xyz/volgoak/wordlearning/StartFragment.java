@@ -2,6 +2,7 @@ package xyz.volgoak.wordlearning;
 
 
 import android.content.Context;
+import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import xyz.volgoak.wordlearning.data.DictionaryInfo;
+import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.databinding.FragmentStartBinding;
 
 /**
@@ -41,6 +44,12 @@ public class StartFragment extends Fragment {
         mBinding.setListener(mListener);
         mBinding.notifyPropertyChanged(BR._all);
         mListener.setActionBarTitle(getString(R.string.app_name));
+
+        //load dictionary info
+        WordsDbAdapter adapter = new WordsDbAdapter();
+        DictionaryInfo info = adapter.getDictionaryInfo();
+        mBinding.tvWordsDicStartF.setText(getString(R.string.words_in_dictionary, info.getWordsInDictionary()));
+        mBinding.tvWordsLearnedStartF.setText(getString(R.string.words_learned, info.getLearnedWords(), info.getAllWords()));
     }
 
     @Override

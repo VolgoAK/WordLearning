@@ -332,7 +332,7 @@ public class WordsDbAdapter {
         return mDb.update(DatabaseContract.Words.TABLE_NAME, values, builder.toString(), stringIds);
     }
 
-    public Cursor getDictionaryInfo(){
+    public DictionaryInfo getDictionaryInfo(){
         String select = "SELECT COUNT("+DatabaseContract.Words._ID+") AS "+DatabaseContract.Info.ALL_WORDS_COUNT + ", "
 
                 + " COUNT( CASE WHEN "+DatabaseContract.Words.COLUMN_TRAINED_WT+">="+TRAINING_LIMIT
@@ -344,7 +344,7 @@ public class WordsDbAdapter {
 
                 + " FROM "+DatabaseContract.Words.TABLE_NAME;
 
-        return mDb.rawQuery(select, null);
+        return new DictionaryInfo(mDb.rawQuery(select, null));
     }
 
     /**

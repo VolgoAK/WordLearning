@@ -66,9 +66,10 @@
 <h4>Автор программы Александр Карачев.</h4>
  ]]></string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="in_dictionary">In dictionary</string>
+    <string name="words_learned">Words learned %1$d of %2$d</string>
+    <string name="words_in_dictionary">Words in a dictionary %1$d </string>
 
 
 </resources>
