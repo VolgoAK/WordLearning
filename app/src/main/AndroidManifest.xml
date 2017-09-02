@@ -47,7 +47,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".SetsActivity"></activity>
+        <activity android:name=".SetsActivity"
+            android:label="@string/sets"/>
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@ package xyz.volgoak.wordlearning;
 import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -35,6 +36,8 @@ public class SingleSetActivity extends AppCompatActivity {
         mSetId = getIntent().getLongExtra(ID_EXTRA, -1);
 
         mSetFragment =(SingleSetFragment) getSupportFragmentManager().findFragmentById(android.R.id.content);
+
+        findViewById(android.R.id.content).setBackgroundResource(R.drawable.background);
 
         if(mSetFragment == null){
             mSetFragment = SingleSetFragment.newInstance(mSetId, true);
