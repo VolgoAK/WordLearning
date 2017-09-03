@@ -82,7 +82,7 @@
 
     <style name="word_text">
         <item name="android:textColor">@android:color/black</item>
-        <item name="android:textSize">@dimen/medium_text_size</item>
+        <item name="android:textSize">@dimen/word_training_text_size</item>
     </style>
 
     <style name="navigation_text">

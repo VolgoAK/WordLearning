@@ -44,6 +44,7 @@
                 android:id="@+id/tv_result_resfrag"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:textSize="@dimen/large_text_size"
                 android:layout_marginTop="@dimen/views_vertical_margin"
                 app:layout_constraintLeft_toLeftOf="@id/iv_result"
@@ -57,7 +58,9 @@
                 android:textSize="@dimen/medium_text_size"
                 app:layout_constraintLeft_toLeftOf="@id/iv_result"
                 app:layout_constraintRight_toRightOf="@id/iv_result"
-                app:layout_constraintTop_toBottomOf="@id/tv_result_resfrag"/>
+                app:layout_constraintTop_toBottomOf="@id/tv_result_resfrag"
+                app:layout_constraintBottom_toBottomOf="@id/iv_result"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
             <Button
                 style="@style/MenuButton"

@@ -30,3 +30,8 @@
 -keep public class * extends android.content.BroadcastReceiver
 -keep public class * implements android.view.View.OnTouchListener
 -keep public class * implements android.view.View.OnClickListener
+
+-assumenosideeffects class android.util.Log {
+    public static *** d(...);
+    public static *** v(...);
+}
