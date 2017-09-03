@@ -4,6 +4,7 @@ package xyz.volgoak.wordlearning.training_utils;
 import android.database.Cursor;
 
 import java.util.ArrayList;
+
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 

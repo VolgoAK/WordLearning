@@ -1,7 +1,5 @@
 package xyz.volgoak.wordlearning;
 
-import xyz.volgoak.wordlearning.training_utils.Results;
-
 /**
  * Created by Alexander Karachev on 07.05.2017.
  */

@@ -1,8 +1,5 @@
 package xyz.volgoak.wordlearning.training_utils;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 

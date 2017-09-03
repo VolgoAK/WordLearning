@@ -2,7 +2,6 @@ package xyz.volgoak.wordlearning;
 
 
 import android.content.Context;
-import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

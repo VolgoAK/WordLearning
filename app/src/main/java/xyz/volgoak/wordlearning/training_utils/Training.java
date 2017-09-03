@@ -1,8 +1,8 @@
 package xyz.volgoak.wordlearning.training_utils;
 
-import android.util.Log;
 import java.io.Serializable;
 import java.util.ArrayList;
+
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 
 /**

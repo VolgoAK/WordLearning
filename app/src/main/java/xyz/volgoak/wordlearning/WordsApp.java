@@ -6,7 +6,6 @@ import android.content.Context;
 import com.google.android.gms.gcm.GcmNetworkManager;
 import com.google.android.gms.gcm.PeriodicTask;
 import com.google.android.gms.gcm.Task;
-import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * Created by Volgoak on 15.05.2017.
