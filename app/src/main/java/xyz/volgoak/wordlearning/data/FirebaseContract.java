@@ -6,4 +6,5 @@ package xyz.volgoak.wordlearning.data;
 
 public class FirebaseContract {
     public static final String TITLE_IMAGES_FOLDER = "images/title_images";
+    public static final String IMAGES_FOLDER = "images";
 }

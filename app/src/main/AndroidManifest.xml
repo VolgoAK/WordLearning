@@ -3,7 +3,7 @@
     package="xyz.volgoak.wordlearning">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".WordsApp"
@@ -48,8 +48,19 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".SetsActivity"
-            android:label="@string/sets"/>
+        <service
+            android:name=".services.ImageLoaderService"
+            android:exported="true"
+            android:permission="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE">
+            <intent-filter>
+                <action android:name="com.google.android.gms.gcm.ACTION_TASK_READY" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".SetsActivity"
+            android:label="@string/sets" />
+        <activity android:name=".FilesTestActivity"></activity>
     </application>
 
 </manifest>
