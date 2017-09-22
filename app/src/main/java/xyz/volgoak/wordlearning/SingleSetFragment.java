@@ -24,10 +24,12 @@ import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
 import java.util.List;
 
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.FirebaseContract;
+import xyz.volgoak.wordlearning.data.StorageContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding;
 import xyz.volgoak.wordlearning.recycler.CursorRecyclerAdapter;
@@ -149,13 +151,12 @@ public class SingleSetFragment extends Fragment {
 
         //load title image
         String imageRes = setCursor.getString(setCursor.getColumnIndex(DatabaseContract.Sets.COLUMN_IMAGE_URL));
-        StorageReference imageRef = FirebaseStorage.getInstance()
-                .getReference(FirebaseContract.TITLE_IMAGES_FOLDER)
-                .child(imageRes);
+
+        File imageDir = new File(getActivity().getFilesDir(), StorageContract.IMAGES_W_400_FOLDER);
+        File imageFile = new File(imageDir, imageRes);
 
         Glide.with(this)
-                .using(new FirebaseImageLoader())
-                .load(imageRef)
+                .load(imageFile)
                 .centerCrop()
                 .crossFade().error(R.drawable.def_title)
                 .into(mBinding.setIvTitle);
