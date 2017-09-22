@@ -7,6 +7,8 @@ import com.google.android.gms.gcm.GcmNetworkManager;
 import com.google.android.gms.gcm.PeriodicTask;
 import com.google.android.gms.gcm.Task;
 
+import xyz.volgoak.wordlearning.services.SetsLoaderService;
+
 /**
  * Created by Volgoak on 15.05.2017.
  */

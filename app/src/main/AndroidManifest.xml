@@ -3,6 +3,7 @@
     package="xyz.volgoak.wordlearning">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".WordsApp"
@@ -39,7 +40,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
-            android:name=".SetsLoaderService"
+            android:name=".services.SetsLoaderService"
             android:exported="true"
             android:permission="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE">
             <intent-filter>

@@ -1,4 +1,4 @@
-package xyz.volgoak.wordlearning;
+package xyz.volgoak.wordlearning.services;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -13,6 +13,8 @@ import com.google.android.gms.gcm.GcmTaskService;
 import com.google.android.gms.gcm.TaskParams;
 import com.google.firebase.auth.FirebaseAuth;
 
+import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.SplashActivity;
 import xyz.volgoak.wordlearning.utils.SetsLoader;
 import xyz.volgoak.wordlearning.utils.SetsUpdatingInfo;
 
