@@ -47,7 +47,6 @@
                 <action android:name="com.google.android.gms.gcm.ACTION_TASK_READY" />
             </intent-filter>
         </service>
-
         <service
             android:name=".services.ImageLoaderService"
             android:exported="true"
@@ -60,7 +59,8 @@
         <activity
             android:name=".SetsActivity"
             android:label="@string/sets" />
-        <activity android:name=".FilesTestActivity"></activity>
+        <activity android:name=".FilesTestActivity" />
+        <activity android:name=".TestActivity"></activity>
     </application>
 
 </manifest>

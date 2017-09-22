@@ -169,15 +169,30 @@ public final class SetsLoader {
         WordsDbAdapter dbAdapter = new WordsDbAdapter();
         try {
             dbAdapter.beginTransaction();
+            // TODO: 22.09.2017 move this to other method, or load from xml file
+            dbAdapter.insertWord("Hello", "Привет");
+            dbAdapter.insertWord("Name", "Имя");
+            dbAdapter.insertWord("Human", "Человек");
+            dbAdapter.insertWord("He", "Он");
+            dbAdapter.insertWord("She", "Она");
+            dbAdapter.insertWord("Where", "Где");
+            dbAdapter.insertWord("When", "Когда");
+            dbAdapter.insertWord("Why", "Почему");
+            dbAdapter.insertWord("Who", "Кто");
+            dbAdapter.insertWord("What", "Что");
+            dbAdapter.insertWord("Time", "Время");
+            dbAdapter.insertWord("Country", "Страна");
             InputStream inputStream = context.getAssets().open("start_base.xml");
             info.addInfo( insertSetsIntoDb(prepareDocument(inputStream), dbAdapter));
             dbAdapter.endTransaction(true);
+            info.setUpdatingSuccess(true);
         }catch(IOException ex){
             ex.printStackTrace();
         }catch(Exception ex){
             ex.printStackTrace();
         }finally {
             dbAdapter.endTransaction(false);
+            info.setUpdatingSuccess(false);
         }
         return info;
     }

@@ -11,6 +11,7 @@ package xyz.volgoak.wordlearning.utils;
 public class SetsUpdatingInfo{
     private int setsAdded;
     private int wordsAdded;
+    private boolean isUpdatingSuccess;
 
     public int getSetsAdded() {
         return setsAdded;
@@ -31,5 +32,13 @@ public class SetsUpdatingInfo{
     public void addInfo(SetsUpdatingInfo info){
         setsAdded += info.getSetsAdded();
         wordsAdded += info.getWordsAdded();
+    }
+
+    public boolean isUpdatingSuccess() {
+        return isUpdatingSuccess;
+    }
+
+    public void setUpdatingSuccess(boolean updatingSuccess) {
+        isUpdatingSuccess = updatingSuccess;
     }
 }

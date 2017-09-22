@@ -35,10 +35,6 @@ public class WordsDbAdapter {
         mContext = WordsApp.getContext();
         mHelper = new WordsSqlHelper(mContext);
         mDb = mHelper.getWritableDatabase();
-
-        if(isDbEmpty()){
-            insertDefaultDictionary();
-        }
     }
 
     private boolean isDbEmpty(){
@@ -97,7 +93,7 @@ public class WordsDbAdapter {
         return mDb.insert(DatabaseContract.Words.TABLE_NAME, null, wordValues);
     }
 
-    private void insertDefaultDictionary(){
+    /*private void insertDefaultDictionary(){
 //        Log.d(TAG, "insertDefaultDictionary");
 
         insertWord("Hello", "Привет");
@@ -116,7 +112,7 @@ public class WordsDbAdapter {
         SetsLoader.loadStartBase(mContext);
 //        SetsLoader.checkForDbUpdate(mContext);
     }
-
+*/
     public long insertSet(ContentValues set){
 //        Log.d(TAG, "insertSet: ");
         return mDb.insert(DatabaseContract.Sets.TABLE_NAME, null, set);

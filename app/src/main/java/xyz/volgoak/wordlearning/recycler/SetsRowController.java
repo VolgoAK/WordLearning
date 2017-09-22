@@ -2,15 +2,22 @@ package xyz.volgoak.wordlearning.recycler;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
+import java.io.File;
+import java.net.URI;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
+import xyz.volgoak.wordlearning.data.StorageContract;
 
 /**
  * Created by Volgoak on 16.08.2017.
@@ -83,6 +90,15 @@ import xyz.volgoak.wordlearning.data.DatabaseContract;
                 return mAdapter.onControllerLongClick(SetsRowController.this, v, getAdapterPosition());
             }
         });
+
+        String imageName = cursor.getString(columnImageUrlIndex);
+        File imagesDir = new File(mContext.getFilesDir(), StorageContract.IMAGES_W_50_FOLDER);
+        File imageFile = new File(imagesDir, imageName);
+        Uri imageUri = Uri.fromFile(imageFile);
+
+        Glide.with(mContext).load(imageUri)
+                .error(R.drawable.button_back)
+                .into(civ);
     }
 
     @Override

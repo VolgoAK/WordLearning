@@ -2,6 +2,7 @@ package xyz.volgoak.wordlearning.services;
 
 import android.database.Cursor;
 import android.os.Environment;
+import android.util.Log;
 
 import com.google.android.gms.common.api.Result;
 import com.google.android.gms.gcm.GcmNetworkManager;
@@ -26,6 +27,9 @@ import xyz.volgoak.wordlearning.data.WordsDbAdapter;
  */
 
 public class ImageLoaderService extends GcmTaskService {
+
+    public static final String TAG = ImageLoaderService.class.getSimpleName();
+
     public static final String TASK_LOAD_ALL_IMAGES = "load_all_images";
 
     private File mSmallImagesDir;
@@ -45,6 +49,7 @@ public class ImageLoaderService extends GcmTaskService {
     }
 
     private void checkImages(){
+        Log.d(TAG, "checkImages()");
         checkOrCreateDirs();
         mSmallImagesReference = FirebaseStorage.getInstance().getReference(FirebaseContract.IMAGES_FOLDER);
         mTitleImagesReference = FirebaseStorage.getInstance().getReference(FirebaseContract.TITLE_IMAGES_FOLDER);
@@ -66,24 +71,26 @@ public class ImageLoaderService extends GcmTaskService {
     }
 
     private boolean isSmallImageExists(String imageName){
-        File directory = new File(Environment.getExternalStorageDirectory(), StorageContract.IMAGES_W_50_FOLDER);
+        File directory = new File(getFilesDir(), StorageContract.IMAGES_W_50_FOLDER);
         File image = new File(directory, imageName);
         return image.exists();
     }
 
     private boolean isBigImageExists(String imageName){
-        File directory = new File(Environment.getExternalStorageDirectory(), StorageContract.IMAGES_W_400_FOLDER);
+        File directory = new File(getFilesDir(), StorageContract.IMAGES_W_400_FOLDER);
         File image = new File(directory, imageName);
         return image.exists();
     }
 
     private void loadSmallImage(final String imageName){
+        Log.d(TAG, "loadSmallImage: ");
         StorageReference imageRef = mSmallImagesReference.child(imageName);
         imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
                 File imageFile = new File(mSmallImagesDir, imageName);
                 try {
+                    Log.d(TAG, "onSuccess: image " + imageName);
                     FileOutputStream fous = new FileOutputStream(imageFile);
                     fous.write(bytes);
                     fous.close();
@@ -116,10 +123,10 @@ public class ImageLoaderService extends GcmTaskService {
     }
 
     private void checkOrCreateDirs(){
-        mSmallImagesDir = new File(Environment.getExternalStorageDirectory(), StorageContract.IMAGES_W_50_FOLDER);
+        mSmallImagesDir = new File(getFilesDir(), StorageContract.IMAGES_W_50_FOLDER);
         if(!mSmallImagesDir.exists()) mSmallImagesDir.mkdirs();
 
-        mTitleImagesDir = new File(Environment.getExternalStorageDirectory(), StorageContract.IMAGES_W_400_FOLDER);
+        mTitleImagesDir = new File(getFilesDir(), StorageContract.IMAGES_W_400_FOLDER);
         if(!mTitleImagesDir.exists()) mTitleImagesDir.mkdirs();
     }
 }
