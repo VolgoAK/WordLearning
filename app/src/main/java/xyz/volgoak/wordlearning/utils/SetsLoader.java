@@ -143,6 +143,8 @@ public final class SetsLoader {
             }
         });
 
+        // TODO: 19.10.2017 load image when new set loaded
+
         return info;
     }
 
@@ -188,11 +190,11 @@ public final class SetsLoader {
             info.setUpdatingSuccess(true);
         }catch(IOException ex){
             ex.printStackTrace();
+            info.setUpdatingSuccess(false);
         }catch(Exception ex){
             ex.printStackTrace();
         }finally {
             dbAdapter.endTransaction(false);
-            info.setUpdatingSuccess(false);
         }
         return info;
     }

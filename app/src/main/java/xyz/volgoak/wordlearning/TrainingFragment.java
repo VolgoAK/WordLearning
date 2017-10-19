@@ -1,16 +1,31 @@
 package xyz.volgoak.wordlearning;
 
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPropertyAnimatorCompat;
+import android.support.v4.view.WindowCompat;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -19,6 +34,7 @@ import xyz.volgoak.wordlearning.training_utils.Results;
 import xyz.volgoak.wordlearning.training_utils.Training;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 import xyz.volgoak.wordlearning.training_utils.TrainingWord;
+import xyz.volgoak.wordlearning.utils.MetallBounceInterpoltor;
 import xyz.volgoak.wordlearning.utils.WordSpeaker;
 
 /**
@@ -30,7 +46,7 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
  */
 public class TrainingFragment extends Fragment {
 
-    public static final String TAG = "TrainingFragment";
+    public static final String TAG = TrainingFragment.class.getSimpleName();
     public static final String TRAINING_TAG = "train_tag";
     public static final String ANSWERED = "answered";
     public static final String SAVED_BACKGROUNDS = "saved_backgrounds";
@@ -55,6 +71,10 @@ public class TrainingFragment extends Fragment {
     private Drawable mCorrectAnswerBackground;
 
     private WordSpeaker mSpeaker;
+
+    //animations fields
+    private boolean mIsAnimated = false;
+    private float mNextButtonPath = 0f;
 
     public TrainingFragment() {
         // Required empty public constructor
@@ -88,6 +108,9 @@ public class TrainingFragment extends Fragment {
             mTrainingWord = mTraining.getCurrentWord();
             boolean answered = savedInstanceState.getBoolean(ANSWERED, false);
             mAnswered.set(answered);
+            if(answered){
+                hideShowNextButton(true);
+            }
         }else {
             mAnswered.set(false);
             mTraining = TrainingFabric.getTraining(mTrainingType, mSetId);
@@ -117,6 +140,58 @@ public class TrainingFragment extends Fragment {
         mBinding.progressTf.setMax(100);
         //load first word at start time
         showWord();
+
+        //createAnimator buttons appearance
+        mIsAnimated = false;
+        ViewTreeObserver vto = mBinding.getRoot().getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if(!mIsAnimated){
+                    mIsAnimated = true;
+                    startAppearenceAnim();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+    private void startAppearenceAnim(){
+        Log.d(TAG, "startAppearenceAnim: ");
+        float path = mBinding.btVar1Tf.getWidth() + mBinding.btVar1Tf.getX();
+        ValueAnimator animator  = ValueAnimator.ofFloat(path, 0);
+        animator.setInterpolator(new MetallBounceInterpoltor());
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float f = (float) animation.getAnimatedValue();
+                mBinding.btVar1Tf.setTranslationX(-f);
+                mBinding.btVar2Tf.setTranslationX(f);
+                mBinding.btVar3Tf.setTranslationX(-f);
+                mBinding.btVar4Tf.setTranslationX(f);
+            }
+        });
+
+        ValueAnimator visibilityAnimator = ValueAnimator.ofFloat(0, 1);
+        visibilityAnimator.setInterpolator(new LinearInterpolator());
+        visibilityAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float f = (float) animation.getAnimatedValue();
+                mBinding.progressTf.setAlpha(f);
+                mBinding.ibtSoundTf.setAlpha(f);
+                mBinding.ivTf.setAlpha(f);
+                mBinding.tvWordTf.setAlpha(f);
+            }
+        });
+
+        AnimatorSet set = new AnimatorSet();
+        set.setDuration(1200);
+        set.play(animator).with(visibilityAnimator);
+        set.start();
     }
 
     public void showWord(){
@@ -129,7 +204,16 @@ public class TrainingFragment extends Fragment {
         mBinding.btVar3Tf.setBackground(mDefaultBackground);
         mBinding.btVar4Tf.setBackground(mDefaultBackground);
 
-        mBinding.progressTf.setProgress(mTraining.getProgressInPercents());
+//        mBinding.progressTf.setProgress(mTraining.getProgressInPercents());
+        float newProgress = mTraining.getProgressInPercents();
+        if(newProgress > mBinding.progressTf.getProgress()){
+            ObjectAnimator animator = ObjectAnimator.ofFloat(mBinding.progressTf, "progress",
+                    mBinding.progressTf.getProgress(), newProgress);
+            animator.start();
+        }
+
+        //hide the next button
+        hideShowNextButton(false);
 
         pronounceWord();
     }
@@ -167,10 +251,32 @@ public class TrainingFragment extends Fragment {
         boolean correct = mTraining.checkAnswer(number);
 
         Drawable background = correct ? mCorrectAnswerBackground : mWrongAnswerBackground;
+        TransitionDrawable td = new TransitionDrawable(new Drawable[]{mDefaultBackground, background});
 
-        button.setBackground(background);
+        button.setBackground(td);
+        td.startTransition(500);
 
         mAnswered.set(true);
+
+        hideShowNextButton(true);
+    }
+
+    private void hideShowNextButton(boolean show){
+        //show a next button
+        if(mNextButtonPath == 0f) {
+            DisplayMetrics metrics = new DisplayMetrics();
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+            mNextButtonPath = metrics.widthPixels - mBinding.btNextTf.getY();
+            mBinding.btNextTf.setVisibility(View.VISIBLE);
+        }
+        ObjectAnimator animator;
+        if(show){
+            animator = ObjectAnimator.ofFloat(mBinding.btNextTf, "TranslationX", mNextButtonPath, 0);
+        }else animator = ObjectAnimator.ofFloat(mBinding.btNextTf, "TranslationX", 0, mNextButtonPath);
+
+        animator.setInterpolator(new MetallBounceInterpoltor());
+        animator.setDuration(800);
+        animator.start();
     }
 
     @Override
@@ -180,6 +286,8 @@ public class TrainingFragment extends Fragment {
         boolean answered = mAnswered.get();
         outState.putBoolean(ANSWERED, answered);
     }
+
+
 
     @Override
     public void onDestroy() {

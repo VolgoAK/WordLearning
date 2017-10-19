@@ -226,7 +226,7 @@
         <Word transcription="kruːʃn" translation="карась" word="crucian"/>
         <Word transcription="paɪk" translation="щука" word="pike"/>
         <Word transcription="briːm" translation="лещ" word="bream"/>
-        <Word transcription="sɒm" translation="сом" word="som"/>
+        <Word transcription="" translation="сом" word="catfish"/>
         <Word transcription="traʊt" translation="форель" word="trout"/>
         <Word transcription="ˈstɜːʤən" translation="осетр" word="sturgeon"/>
         <Word transcription="ˈsæmən" translation="лосось" word="salmon"/>
@@ -336,7 +336,7 @@
 	</Set>
 
 	<Set name="Письменные принадлежности"
-		description="Инструмента для письма и рисования"
+		description="Инструменты для письма и рисования"
 		image="pens.jpg"
     theme="004">
         <Word transcription="pɛn" translation="ручка " word="pen"/>
@@ -356,7 +356,7 @@
 		image="transport.jpg">
         <Word transcription="kɑː" translation="Автомобиль" word="car"/>
         <Word transcription="ˈməʊtəˈsaɪkl" translation="Мотоцикл" word="motorcycle"/>
-        <Word transcription="ˈɛəkrɑːft" translation="Самолет" word="aircraft"/>
+        <Word transcription="" translation="Самолет" word="plane"/>
         <Word transcription="ˈhelɪkɔptə" translation="вертолет" word="helicopter"/>
         <Word transcription="bʌs" translation="автобус" word="bus"/>
         <Word transcription="træm" translation="трамвай" word="tram"/>
@@ -640,5 +640,51 @@
         <Word transcription="" translation="носки" word="socks"/>
         <Word transcription="" translation="гольфы" word="knee socks"/>
     </Set>
-	
+
+    <Set name="Тело человека. Часть 1"
+        description="Части тела, первая часть. Туловище и конечности"
+        image="body.jpg"
+        theme="001">
+        <Word transcription="ʧest" translation="грудная клетка" word="chest"/>
+        <Word transcription="bæk" translation="спина" word="back"/>
+        <Word transcription="ˈstʌmək" translation="живот" word="stomach"/>
+        <Word transcription="ˈʃəʊldə" translation="плечо" word="shoulder"/>
+        <Word transcription="ˈelbəʊ" translation="локоть" word="elbow"/>
+        <Word transcription="ˈɑːmpɪt" translation="подмышка" word="armpit"/>
+        <Word transcription="hænd" translation="рука" word="hand"/>
+        <Word transcription="pɑːm" translation="ладонь" word="palm"/>
+        <Word transcription="fɪst" translation="кулак" word="fist"/>
+        <Word transcription="lɛg" translation="нога" word="leg"/>
+        <Word transcription="fʊt" translation="ступня" word="foot"/>
+        <Word transcription="niː" translation="колено" word="knee"/>
+        <Word transcription="hiːl" translation="пятка" word="heel"/>
+        <Word transcription="neɪl" translation="ноготь" word="nail"/>
+        <Word transcription="ˈskelɪtn" translation="скелет" word="skeleton"/>
+        <Word transcription="skɪn" translation="кожа" word="skin"/>
+        <Word transcription="θʌm" translation="большой палец" word="thumb"/>
+    </Set>
+
+    <Set name="Тело человека. Часть 2"
+        description="Части тела, вторая часть. Голова и лицо."
+        image="body2.jpg"
+        theme="001">
+        <Word transcription="hed" translation="голова" word="head"/>
+        <Word transcription="templ" translation="висок" word="temple"/>
+        <Word transcription="pɜːsn" translation="лицо" word="person"/>
+        <Word transcription="ˈfɔrɪd" translation="лоб " word="forehead"/>
+        <Word transcription="aɪ" translation="глаз" word="eye"/>
+        <Word transcription="maʊθ" translation="рот" word="mouth"/>
+        <Word transcription="tʌŋ" translation="язык" word="tongue"/>
+        <Word transcription="lɪp" translation="губа" word="lip"/>
+        <Word transcription="tuːθ" translation="зуб" word="tooth"/>
+        <Word transcription="ʧɪn" translation="подбородок" word="chin"/>
+        <Word transcription="ʧiːk" translation="щека" word="cheek"/>
+        <Word transcription="ɪə" translation="ухо" word="ear"/>
+        <Word transcription="θrəʊt" translation="горло" word="throat"/>
+        <Word transcription="ˈtʃikˌboʊn" translation="скула" word="cheek-bone"/>
+        <Word transcription="hɛə" translation="волосы" word="hair"/>
+        <Word transcription="skʌl" translation="череп" word="skull"/>
+        <Word transcription="breɪn" translation="мозг" word="brain"/>
+        <Word transcription="" translation="ресницы" word="eyelashes"/>
+    </Set>
 </Data>

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.google.android.gms.gcm.GcmNetworkManager;
 import com.google.android.gms.gcm.OneoffTask;
@@ -27,6 +28,7 @@ import xyz.volgoak.wordlearning.utils.SetsUpdatingInfo;
  */
 public class WordsApp extends Application{
     private static WordsApp sInstance;
+    public static final String TAG = WordsApp.class.getSimpleName();
 
 
     private static long SEC_IN_TWO_DAYS = 60 * 60 * 24 * 2;
@@ -64,7 +66,9 @@ public class WordsApp extends Application{
         boolean baseLoaded = preferences.getBoolean(PREFERENCE_BASE_LOADED, false);
         if(!baseLoaded){
             SetsUpdatingInfo info = SetsLoader.loadStartBase(this);
+            Log.d(TAG, "onCreate: load db");
             boolean successfulyLoaded = info.isUpdatingSuccess();
+            Log.d(TAG, "onCreate: soccess " + successfulyLoaded);
             preferences.edit().putBoolean(PREFERENCE_BASE_LOADED, successfulyLoaded).apply();
             if(successfulyLoaded) startImagesLoading();
         }

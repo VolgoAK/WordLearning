@@ -1,17 +1,24 @@
 package xyz.volgoak.wordlearning;
 
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateInterpolator;
 
 import xyz.volgoak.wordlearning.data.DictionaryInfo;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.databinding.FragmentStartBinding;
+import xyz.volgoak.wordlearning.utils.AppearingAnimator;
 
 /**
  * Created by Alexander Karachev on 07.05.2017.
@@ -21,9 +28,13 @@ import xyz.volgoak.wordlearning.databinding.FragmentStartBinding;
  * A simple {@link Fragment} subclass.
  */
 public class StartFragment extends Fragment {
+    
+    public static final String TAG = StartFragment.class.getSimpleName();
 
     private FragmentListener mListener;
     private FragmentStartBinding mBinding;
+
+    private boolean mAppearanceAnimated;
 
     public StartFragment() {
         // Required empty public constructor
@@ -34,12 +45,25 @@ public class StartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_start, container, false);
+        //run animation when views created
+        ViewTreeObserver vto = mBinding.getRoot().getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Log.d(TAG, "onGlobalLayout: createAnimator");
+                if(!mAppearanceAnimated){
+                    mAppearanceAnimated = true;
+                    runAppearAnimation();
+                }
+            }
+        });
         return mBinding.getRoot();
     }
 
     @Override
     public void onStart(){
         super.onStart();
+        Log.d(TAG, "onStart: ");
         mBinding.setListener(mListener);
         mBinding.notifyPropertyChanged(BR._all);
         mListener.setActionBarTitle(getString(R.string.app_name));
@@ -49,6 +73,8 @@ public class StartFragment extends Fragment {
         DictionaryInfo info = adapter.getDictionaryInfo();
         mBinding.tvWordsDicStartF.setText(getString(R.string.words_in_dictionary, info.getWordsInDictionary()));
         mBinding.tvWordsLearnedStartF.setText(getString(R.string.words_learned, info.getLearnedWords(), info.getAllWords()));
+
+        mAppearanceAnimated = false;
     }
 
     @Override
@@ -63,5 +89,47 @@ public class StartFragment extends Fragment {
     public void onDetach(){
         super.onDetach();
         mListener = null;
+    }
+
+    private void runAppearAnimation(){
+        float pathFromLeft = mBinding.cvTransWordMain.getX() + mBinding.cvTransWordMain.getWidth();
+        /*ValueAnimator animator = ValueAnimator.ofFloat(pathFromLeft, 0);
+        animator.setInterpolator(new MetallBounceInterpoltor());
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float f = (float) animation.getAnimatedValue();
+                mBinding.cvWordTransMain.setTranslationX(f);
+                mBinding.cvTransWordMain.setTranslationX(-f);
+                mBinding.cvRedactorMain.setTranslationX(f);
+                mBinding.cvSetsMain.setTranslationX(-f);
+            }
+        });*/
+
+        ValueAnimator visibilityAnimator = ValueAnimator.ofFloat(0, 1);
+        visibilityAnimator.setInterpolator(new AccelerateInterpolator());
+        visibilityAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float f = (float) animation.getAnimatedValue();
+                mBinding.cvInfoMain.setAlpha(f);
+            }
+        });
+
+
+        AnimatorSet set = new AnimatorSet();
+        set.setDuration(1500);
+
+        set.play(visibilityAnimator)
+                .with(AppearingAnimator.createAnimator(getActivity(), mBinding.cvWordTransMain,
+                        AppearingAnimator.FROM_LEFT, false))
+                .with(AppearingAnimator.createAnimator(getActivity(), mBinding.cvTransWordMain,
+                        AppearingAnimator.FROM_RIGHT, false))
+                .with(AppearingAnimator.createAnimator(getActivity(), mBinding.cvRedactorMain,
+                        AppearingAnimator.FROM_LEFT, false))
+                .with(AppearingAnimator.createAnimator(getActivity(), mBinding.cvSetsMain,
+                        AppearingAnimator.FROM_RIGHT, false));
+
+        set.start();
     }
 }
