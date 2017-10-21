@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -32,6 +33,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 
 /**
@@ -94,6 +97,29 @@ public final class SetsLoader {
                 info.addInfo(loadDataByFileName(setSource, dataId, context));
             }
         }
+
+        return info;
+    }
+
+    /**
+     * Loads new sets from firebase storage.
+     * @param context
+     * @return information about loaded sets
+     */
+    public static SetsUpdatingInfo checkForDbUpdate(final Context context){
+        final SetsUpdatingInfo info = new SetsUpdatingInfo();
+        String indexFile = context.getString(R.string.sets_index_file_ru_en);
+        StorageReference indexRef = FirebaseStorage.getInstance().getReference(indexFile);
+        indexRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                try {
+                    info.addInfo(SetsLoader.check(bytes, context));
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }
+        });
 
         return info;
     }

@@ -71,37 +71,14 @@ public class SetsLoaderService extends GcmTaskService{
         FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signInAnonymously();
 //        Thread.currentThread().join();
-        SetsUpdatingInfo info = checkForDbUpdate(this);
+        SetsUpdatingInfo info = SetsLoader.checkForDbUpdate(this);
         Log.d(TAG, " sets loaded " + info.getSetsAdded() + "words loaded " + info.getWordsAdded());
         if(info.getWordsAdded() > 0) {
 
         }
     }
 
-    /**
-     * Loads new sets from firebase storage.
-     * @param context
-     * @return information about loaded sets
-     */
-    public SetsUpdatingInfo checkForDbUpdate(final Context context){
-        final SetsUpdatingInfo info = new SetsUpdatingInfo();
-        String indexFile = context.getString(R.string.sets_index_file_ru_en);
-        StorageReference indexRef = FirebaseStorage.getInstance().getReference(indexFile);
-        indexRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                try {
-                    info.addInfo(SetsLoader.check(bytes, context));
-                    checkImages();
-                    createUpdateNotification(info);
-                }catch (Exception ex){
-                    ex.printStackTrace();
-                }
-            }
-        });
 
-        return info;
-    }
 
     private void createUpdateNotification(SetsUpdatingInfo info){
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
@@ -219,5 +196,12 @@ public class SetsLoaderService extends GcmTaskService{
 
         mTitleImagesDir = new File(getFilesDir(), StorageContract.IMAGES_W_400_FOLDER);
         if(!mTitleImagesDir.exists()) mTitleImagesDir.mkdirs();
+    }
+
+    class TaskLoadSetsAndImages implements Runnable{
+        @Override
+        public void run() {
+
+        }
     }
 }
