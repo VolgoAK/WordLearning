@@ -82,7 +82,7 @@ public final class DatabaseContract {
         public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME +
                 "( " + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_NAME + " TEXT, " +
-                COLUMN_CODE + " INTEGER " +
+                COLUMN_CODE + " INTEGER UNIQUE ON CONFLICT REPLACE" +
                 ");";
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;

@@ -68,31 +68,10 @@ public final class SetsLoader {
 
     }
 
-    /**
-     * Loads new sets from firebase storage.
-     * @param context
-     * @return information about loaded sets
-     */
-    public static SetsUpdatingInfo checkForDbUpdate(final Context context){
-        final SetsUpdatingInfo info = new SetsUpdatingInfo();
-        String indexFile = context.getString(R.string.sets_index_file_ru_en);
-        StorageReference indexRef = FirebaseStorage.getInstance().getReference(indexFile);
-            indexRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                @Override
-                public void onSuccess(byte[] bytes) {
-                    try {
-                        info.addInfo(check(bytes, context));
-                    }catch (Exception ex){
-                        ex.printStackTrace();
-                    }
-                }
-            });
-
-        return info;
-    }
 
 
-    private static SetsUpdatingInfo check(byte[] bytes, Context context) throws Exception{
+
+    public static SetsUpdatingInfo check(byte[] bytes, Context context) throws Exception{
         SetsUpdatingInfo info = new SetsUpdatingInfo();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);

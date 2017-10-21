@@ -119,7 +119,7 @@ public class WordsDbAdapter {
     }
 
     public long insertTheme(ContentValues theme){
-       return mDb.insert(DatabaseContract.Themes.TABLE_NAME, null, theme);
+       return mDb.insertWithOnConflict(DatabaseContract.Themes.TABLE_NAME, null, theme, SQLiteDatabase.CONFLICT_REPLACE);
     }
 
     public Cursor fetchDictionaryWords(){

@@ -59,8 +59,7 @@
         <activity
             android:name=".SetsActivity"
             android:label="@string/sets" />
-        <activity android:name=".FilesTestActivity" />
-        <activity android:name=".TestActivity"></activity>
+
     </application>
 
 </manifest>
