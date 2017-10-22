@@ -32,7 +32,6 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
     private static boolean isDrawableInit = false;
     private static Drawable[] sProgresIcons = new Drawable[5];
 
-    private WordSpeaker mSpeaker;
     private boolean isSelectable;
 
     View rootView;
@@ -54,8 +53,6 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
         inDictionaryImage = (ImageView) view.findViewById(R.id.iv_status_word_controller);
         soundButton = (ImageButton) view.findViewById(R.id.adapter_button);
         checkBox = (CheckBox) view.findViewById(R.id.cb_selected_dict_adapter);
-
-        mSpeaker = new WordSpeaker(mContext);
 
         if(!isDrawableInit) initDrawables(context);
     }
@@ -98,7 +95,7 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
         soundButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSpeaker.speakWord(word);
+                WordSpeaker.speakWord(word);
             }
         });
     }

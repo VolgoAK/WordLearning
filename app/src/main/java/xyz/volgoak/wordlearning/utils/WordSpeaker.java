@@ -5,31 +5,35 @@ import android.os.Build;
 import android.speech.tts.TextToSpeech;
 
 import java.util.Locale;
+
+import xyz.volgoak.wordlearning.WordsApp;
+
 /**
  * Created by Alexander Karachev on 07.05.2017.
  */
 
-public class WordSpeaker {
+public abstract class WordSpeaker {
 
     public static final String TAG = "WordSpeaker";
 
-    private TextToSpeech mTTS;
-    private boolean mInitilized;
+    private static TextToSpeech sTts;
+    private static boolean sInitilized = false;
 
     //save first word and speak it when initialized
     //probably it's bad idea, but it's best what I can think out for now
-    String mSavedWord;
+    private static String mSavedWord;
 
-    public WordSpeaker(Context context){
-        mTTS = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
+    private static void init(){
+        Context context = WordsApp.getContext();
+        sTts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
                 if(status != TextToSpeech.ERROR){
-                    mTTS.setLanguage(Locale.US);
+                    sTts.setLanguage(Locale.US);
                 }
 
                 if(status == TextToSpeech.SUCCESS){
-                    mInitilized = true;
+                    sInitilized = true;
                     if(mSavedWord != null) {
                         speakWord(mSavedWord);
                     }
@@ -37,25 +41,27 @@ public class WordSpeaker {
             }
         });
 
-        mTTS.setSpeechRate(0.8f);
-
+        sTts.setSpeechRate(0.8f);
     }
 
-    public void speakWord(String word){
+    public static void speakWord(String word){
 //        Log.d(TAG, "speakWord: " + word);
 
-        if(mInitilized) {
+        if(sInitilized) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
-                mTTS.speak(word, TextToSpeech.QUEUE_FLUSH, null, null);
-            } else mTTS.speak(word, TextToSpeech.QUEUE_FLUSH, null);
+                sTts.speak(word, TextToSpeech.QUEUE_FLUSH, null, null);
+            } else sTts.speak(word, TextToSpeech.QUEUE_FLUSH, null);
         }else{
             mSavedWord = word;
+            init();
         }
     }
 
-    public void close(){
-        mTTS.stop();
-        mTTS.shutdown();
+    public static void close(){
+        if(sTts != null) {
+            sTts.stop();
+            sTts.shutdown();
+        }
     }
 }

@@ -70,8 +70,6 @@ public class TrainingFragment extends Fragment {
     private Drawable mWrongAnswerBackground;
     private Drawable mCorrectAnswerBackground;
 
-    private WordSpeaker mSpeaker;
-
     //animations fields
     private boolean mIsAnimated = false;
     private float mNextButtonPath = 0f;
@@ -94,9 +92,6 @@ public class TrainingFragment extends Fragment {
 
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_training, container, false);
         mBinding.setFragment(this);
-
-        //we need word speaker only if we train word-translation
-        if(mTrainingType == TrainingFabric.WORD_TRANSLATION) mSpeaker = new WordSpeaker(getContext());
 
         mDefaultBackground = ContextCompat.getDrawable(getContext(), R.drawable.blue_button);
         mCorrectAnswerBackground = ContextCompat.getDrawable(getContext(), R.drawable.green_button);
@@ -233,7 +228,7 @@ public class TrainingFragment extends Fragment {
 
     public void pronounceWord(){
 //        Log.d(TAG, "pronounceWord: ");
-        if(mSpeaker != null) mSpeaker.speakWord(mTrainingWord.getWord());
+        if(mTrainingType == TrainingFabric.WORD_TRANSLATION) WordSpeaker.speakWord(mTrainingWord.getWord());
     }
 
     //checks is answer correct and sets background for button
@@ -291,7 +286,7 @@ public class TrainingFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        if(mSpeaker != null)mSpeaker.close();
+        WordSpeaker.close();
         super.onDestroy();
     }
 
