@@ -8,30 +8,43 @@ package xyz.volgoak.wordlearning.utils;
  * Simple dataholder class for keep information
  * about updating database
  */
-public class SetsUpdatingInfo{
+public class SetsUpdatingInfo {
     private int setsAdded;
     private int wordsAdded;
     private boolean isUpdatingSuccess;
 
+    private SetsUpdatingInfo mInfo;
+
     public int getSetsAdded() {
-        return setsAdded;
+        int allAdded = setsAdded;
+        if (mInfo != null) {
+            allAdded += mInfo.getSetsAdded();
+        }
+        return allAdded;
     }
 
     public int getWordsAdded() {
-        return wordsAdded;
+        int allAdded = wordsAdded;
+        if (mInfo != null) {
+            allAdded += mInfo.getWordsAdded();
+        }
+        return allAdded;
     }
 
-    public void incrementSetsAdded(){
+    public void incrementSetsAdded() {
         setsAdded++;
     }
 
-    public void incrementWordsAdded(){
+    public void incrementWordsAdded() {
         wordsAdded++;
     }
 
-    public void addInfo(SetsUpdatingInfo info){
-        setsAdded += info.getSetsAdded();
-        wordsAdded += info.getWordsAdded();
+    public void addInfo(SetsUpdatingInfo info) {
+        if (mInfo == null) {
+            mInfo = info;
+        } else {
+            mInfo.addInfo(info);
+        }
     }
 
     public boolean isUpdatingSuccess() {
