@@ -11,6 +11,8 @@ import android.view.View;
 
 abstract class RowController extends RecyclerView.ViewHolder{
 
+
+
     protected Context mContext;
     protected CursorRecyclerAdapter mAdapter;
 
