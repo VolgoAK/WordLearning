@@ -56,10 +56,7 @@ public class AboutActivity extends AppCompatActivity {
             RecyclerViewLicenseFragment fragment = RecyclerViewLicenseFragment.newInstance();
             ArrayList<License> licenses = new ArrayList<>();
             licenses.add(new License(this, "Support Design", LicenseType.APACHE_LICENSE_20, "2016", "Android Open Source Project"));
-            licenses.add(new License(this, "Support ConstraintLayout", LicenseType.APACHE_LICENSE_20, "2015", "Android Open Source Project"));
-            licenses.add(new License(this, "Support CardView", LicenseType.APACHE_LICENSE_20, "2015", "Android Open Source Project"));
-            licenses.add(new License(this, "CursorRecyclerAdapter", LicenseType.MIT_LICENSE, "2014", "Matthieu Harlé"));
-            licenses.add(new License(this, "FirebaseStorage", LicenseType.APACHE_LICENSE_20, "2016", "Google Inc"));
+            licenses.add(new License(this, "Firebase", LicenseType.APACHE_LICENSE_20, "2016", "Google Inc"));
             licenses.add(new License(this, "FirebaseAuth", LicenseType.APACHE_LICENSE_20, "2016", "Google Inc"));
             licenses.add(new License(this, "Firebase UI Storage", LicenseType.APACHE_LICENSE_20, "2016", "Google Inc"));
             licenses.add(new License(this, "Google PlayServices GCM", LicenseType.APACHE_LICENSE_20, "2015", "Google Inc"));
