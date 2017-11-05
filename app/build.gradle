@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 25
     buildToolsVersion '26.0.2'
     dataBinding.enabled = "true"
 
@@ -31,7 +31,7 @@ android {
 }
 
 ext{
-    supportVersion="27.0.0"
+    supportVersion="25.3.1"
 }
 
 
@@ -76,7 +76,7 @@ configurations.all {
         def requested = details.requested
         if (requested.group == 'com.android.support') {
             if (!requested.name.startsWith("multidex")) {
-                details.useVersion '27.0.0'
+                details.useVersion '25.3.1'
             }
         }
     }

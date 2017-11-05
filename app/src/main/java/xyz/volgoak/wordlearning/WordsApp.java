@@ -81,7 +81,7 @@ public class WordsApp extends Application {
             preferences.edit().putInt(PREFERENCE_LAST_VERSION, currentVersion).apply();
         } else {
 
-            //create task for updating db with 2 weeks period
+            //create task for updating db with 2 days period
             Task task = new PeriodicTask.Builder()
                     .setService(SetsLoaderService.class)
                     .setTag(SetsLoaderService.TASK_CHECK_UPDATE_SETS)

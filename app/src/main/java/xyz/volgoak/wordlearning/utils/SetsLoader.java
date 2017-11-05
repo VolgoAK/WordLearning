@@ -102,7 +102,7 @@ public final class SetsLoader {
             dbAdapter.insertWord("What", "Что");
             dbAdapter.insertWord("Time", "Время");
             dbAdapter.insertWord("Country", "Страна");
-            InputStream inputStream = context.getAssets().open("start_base_test.xml");
+            InputStream inputStream = context.getAssets().open("start_base.xml");
             info.addInfo(insertSetsIntoDb(prepareDocument(inputStream), dbAdapter));
             dbAdapter.endTransaction(true);
             info.setUpdatingSuccess(true);
