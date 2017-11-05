@@ -17,6 +17,7 @@
 #}
 
 -dontwarn com.akexorcist.roundcornerprogressbar.**
+-dontwarn com.google.android.gms.internal.**
 
 -keepattributes *Annotation*
 -keep public class com.google.vending.licensing.ILicensingService

@@ -38,13 +38,18 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
 
     public static final String TAG = "WordSetsFragment";
     public static final String EXTRA_PARTSCREEN_MODE = "extra_screen_mode";
+    public static final String SAVED_POSITION = "saved_position";
 
     private FragmentListener mFragmentListener;
     private SetsFragmentListener mSetsFragmentListener;
     private WordsDbAdapter mDbAdapter;
     private SetsRecyclerAdapter mCursorAdapter;
 
+    private RecyclerView mRecyclerView;
+
     private boolean mPartScreenMode = true;
+
+    private int mRvSavedPosition;
 
      public static WordSetsFragment newInstance(boolean part_mode) {
         Bundle args = new Bundle();
@@ -73,6 +78,10 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         if(getArguments() != null) {
             mPartScreenMode = getArguments().getBoolean(EXTRA_PARTSCREEN_MODE, false);
         }
+
+        if(savedInstanceState != null){
+            mRvSavedPosition = savedInstanceState.getInt(SAVED_POSITION, 0);
+        }
     }
 
     @Override
@@ -83,14 +92,14 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
 
         mDbAdapter = new WordsDbAdapter();
 
-        RecyclerView rv = (RecyclerView) getView().findViewById(R.id.rv_setsfrag);
-        rv.setHasFixedSize(true);
+        mRecyclerView = (RecyclerView) getView().findViewById(R.id.rv_setsfrag);
+        mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
-        rv.setLayoutManager(llm);
+        mRecyclerView.setLayoutManager(llm);
 
         Cursor setsCursor = mDbAdapter.fetchAllSets();
-        mCursorAdapter = new SetsRecyclerAdapter(getContext(), setsCursor, rv);
+        mCursorAdapter = new SetsRecyclerAdapter(getContext(), setsCursor, mRecyclerView);
         mCursorAdapter.setAdapterClickListener(this);
         mCursorAdapter.setSetStatusChanger(this);
 
@@ -98,7 +107,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
             mCursorAdapter.setChoiceMode(new SingleChoiceMode());
         }
 
-        rv.setAdapter(mCursorAdapter);
+        mRecyclerView.setAdapter(mCursorAdapter);
 
 //
 //        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -147,6 +156,25 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         Log.d(TAG, "onDetach: ");
         mSetsFragmentListener = null;
         mFragmentListener = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mRecyclerView.getLayoutManager().scrollToPosition(mRvSavedPosition);
+        mRvSavedPosition = 0;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mRvSavedPosition = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(SAVED_POSITION, mRvSavedPosition);
     }
 
     public void invokeSetMenu(final long setId) {
@@ -242,7 +270,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     @Override
     public void onClick(View root, int position, long id) {
         Log.d(TAG, "onClick: " + id);
-        mSetsFragmentListener.startSet(id);
+        mSetsFragmentListener.startSet(id, root.findViewById(R.id.civ_sets));
     }
 
     @Override
@@ -253,6 +281,6 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     }
 
     interface SetsFragmentListener{
-        void startSet(long setId);
+        void startSet(long setId, View shared);
     }
 }

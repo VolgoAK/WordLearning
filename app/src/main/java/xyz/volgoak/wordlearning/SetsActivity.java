@@ -3,8 +3,10 @@ package xyz.volgoak.wordlearning;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.GravityCompat;
 import android.view.MenuItem;
+import android.view.View;
 
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
@@ -71,7 +73,7 @@ public class SetsActivity extends NavigationActivity implements FragmentListener
     }
 
     @Override
-    public void startSet(long setId) {
+    public void startSet(long setId, View shared) {
         if(findViewById(R.id.container_detail_sets_activity ) != null){
             mSingleSetFragment = SingleSetFragment.newInstance(setId, false);
             getSupportFragmentManager().beginTransaction()
@@ -79,8 +81,12 @@ public class SetsActivity extends NavigationActivity implements FragmentListener
                     .commit();
             mSelectedSetId = setId;
         }else {
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                    shared, "title");
             Intent intent = new Intent(this, SingleSetActivity.class);
             intent.putExtra(SingleSetActivity.ID_EXTRA, setId);
+            // TODO: 05.11.2017 add shared element transition - uncomment first line
+//            startActivity(intent, optionsCompat.toBundle());
             startActivity(intent);
         }
     }
