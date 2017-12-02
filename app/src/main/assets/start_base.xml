@@ -10,6 +10,8 @@
         code="004"/>
     <Theme name="Основы"
         code="005"/>
+    <Theme name="Техника"
+        code="006"/>
 
     <Set name="Морские жители"
         description="Обитатели морских глубин"

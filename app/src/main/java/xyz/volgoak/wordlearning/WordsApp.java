@@ -29,6 +29,7 @@ public class WordsApp extends Application {
     public static final String TAG = WordsApp.class.getSimpleName();
     public static final String PREFERENCE_BASE_LOADED = "base_loaded";
     public static final String PREFERENCE_LAST_VERSION = "last_app_version";
+    public static final String THEME_ISSUE_FIXED = "theme_issue_fixed";
     private static WordsApp sInstance;
 
     private static long SEC_IN_TWO_DAYS = 60 * 60 * 24 * 2;
@@ -59,7 +60,15 @@ public class WordsApp extends Application {
             boolean successfulyLoaded = info.isUpdatingSuccess();
             Log.d(TAG, "onCreate: soccess " + successfulyLoaded);
             preferences.edit().putBoolean(PREFERENCE_BASE_LOADED, successfulyLoaded).apply();
+            //if app not updated but installed we don't need to fix
+            preferences.edit().putBoolean(THEME_ISSUE_FIXED, true).apply();
             if (successfulyLoaded) startImagesLoading();
+        }
+
+        boolean issuesFixed = preferences.getBoolean(THEME_ISSUE_FIXED, false);
+        if(!issuesFixed){
+            SetsLoader.fixThemesIssue(this);
+            preferences.edit().putBoolean(THEME_ISSUE_FIXED, true).apply();
         }
 
         GcmNetworkManager networkManager = GcmNetworkManager.getInstance(this);

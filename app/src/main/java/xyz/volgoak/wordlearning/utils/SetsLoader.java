@@ -3,6 +3,7 @@ package xyz.volgoak.wordlearning.utils;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -115,6 +116,44 @@ public final class SetsLoader {
             dbAdapter.endTransaction(false);
         }
         return info;
+    }
+
+    // TODO: 02.12.2017 Удалить этот метод, когда все обновятся до версии 8
+    public static void fixThemesIssue(Context context){
+        WordsDbAdapter adapter = new WordsDbAdapter();
+        ContentValues newTheme = new ContentValues();
+        newTheme.put(DatabaseContract.Themes.COLUMN_NAME, "Техника");
+        newTheme.put(DatabaseContract.Themes.COLUMN_CODE, "006");
+        long themeId = adapter.insertTheme(newTheme);
+
+        long colorsSetId = -1;
+        long transportSetId = -1;
+
+        Cursor allSets = adapter.fetchAllSets();
+        allSets.moveToFirst();
+
+        do{
+            String setName = allSets.getString(allSets.getColumnIndex(DatabaseContract.Sets.COLUMN_NAME));
+            long setId = allSets.getLong(allSets.getColumnIndex(DatabaseContract.Sets._ID));
+            if(setName.toLowerCase().equals("транспорт")) transportSetId = setId;
+            if(setName.toLowerCase().equals("цвета")) colorsSetId = setId;
+
+            if(colorsSetId != -1 && transportSetId != -1) break;
+        }while (allSets.moveToNext());
+
+        allSets.close();
+
+        if(colorsSetId != -1) {
+            ContentValues colorsSetValues = new ContentValues();
+            colorsSetValues.put(DatabaseContract.Sets.COLUMN_THEME_CODE, "005");
+            adapter.updateSet(colorsSetValues, colorsSetId);
+        }
+
+        if(transportSetId != -1){
+            ContentValues transportSetValues = new ContentValues();
+            transportSetValues.put(DatabaseContract.Sets.COLUMN_THEME_CODE, "006");
+            adapter.updateSet(transportSetValues, transportSetId);
+        }
     }
 
     static Document prepareDocument(byte[] bytes)

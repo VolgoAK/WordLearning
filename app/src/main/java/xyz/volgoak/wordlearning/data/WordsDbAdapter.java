@@ -183,6 +183,16 @@ public class WordsDbAdapter {
             " WHERE " + DatabaseContract.Sets._ID + "=?", new String[]{Long.toString(setId)});
     }
 
+    public Cursor fetchSetsByThemeCode(long themeCode){
+        return mDb.rawQuery("SELECT * FROM " + DatabaseContract.Sets.TABLE_NAME
+                + " WHERE " + DatabaseContract.Sets.COLUMN_THEME_CODE + "=" + themeCode, null);
+    }
+
+    public void updateSet(ContentValues setValues, long setId){
+        mDb.update(DatabaseContract.Sets.TABLE_NAME, setValues,
+                DatabaseContract.Sets._ID + "=?", new String[]{Long.toString(setId)});
+    }
+
     public Cursor fetchSetByParam(String column, String value){
         return mDb.query(DatabaseContract.Sets.TABLE_NAME, null, column + "=?", new String[]{value},
                 null, null, null);
@@ -196,6 +206,10 @@ public class WordsDbAdapter {
                 " WHERE "+DatabaseContract.WordLinks.COLUMN_SET_ID+"="+id+")" +
                 " ORDER BY " + DatabaseContract.Words.COLUMN_WORD + " COLLATE NOCASE";
         return mDb.rawQuery(query, null);
+    }
+
+    public Cursor fetchAllThemes(){
+        return mDb.rawQuery("SELECT *  FROM " + DatabaseContract.Themes.TABLE_NAME, null);
     }
 
     public String[] getVariants(int id, String column, long setId){
