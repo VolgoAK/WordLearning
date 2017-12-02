@@ -14,6 +14,7 @@ import com.google.android.gms.gcm.Task;
 import xyz.volgoak.wordlearning.services.SetsLoaderService;
 import xyz.volgoak.wordlearning.utils.SetsLoader;
 import xyz.volgoak.wordlearning.utils.SetsUpdatingInfo;
+import xyz.volgoak.wordlearning.utils.WordSpeaker;
 
 /**
  * Created by Volgoak on 15.05.2017.
@@ -114,5 +115,11 @@ public class WordsApp extends Application {
                 .build();
 
         manager.schedule(task);
+    }
+
+    @Override
+    public void onTerminate() {
+        WordSpeaker.close();
+        super.onTerminate();
     }
 }

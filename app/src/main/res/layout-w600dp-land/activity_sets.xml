@@ -5,22 +5,21 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="xyz.volgoak.wordlearning.SetsActivity"
     android:background="@drawable/background"
+    tools:context="xyz.volgoak.wordlearning.SetsActivity"
+    android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <FrameLayout
             android:id="@+id/container_master_sets_activity"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
-            />
+            android:layout_weight="3" />
 
         <FrameLayout
             android:id="@+id/container_detail_sets_activity"
@@ -31,13 +30,15 @@
 
     </LinearLayout>
 
+
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="@dimen/navigation_panel_size"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
+        android:layout_gravity="start|left"
         app:headerLayout="@layout/navigation_header"
         app:itemTextAppearance="@style/navigation_text"
         app:menu="@menu/navigation_menu" />
+
 
 </android.support.v4.widget.DrawerLayout>

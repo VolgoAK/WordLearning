@@ -59,6 +59,13 @@
         <item name="android:layout_marginBottom">@dimen/views_small_margin</item>
     </style>
 
+    <style name="DialogCard" parent="MenuCards">
+        <item name="android:layout_height">@dimen/dialog_card_height</item>
+        <item name="android:layout_width">@dimen/dialog_card_width</item>
+        <item name="android:layout_marginLeft">@dimen/views_small_margin</item>
+        <item name="android:layout_marginRight">@dimen/views_small_margin</item>
+    </style>
+
     <style name="StateCard" parent="MenuCards">
         <item name="android:layout_height">@dimen/stats_card_height</item>
         <item name="android:layout_width">@dimen/stats_card_width</item>
@@ -70,12 +77,21 @@
         <item name="android:textSize">@dimen/medium_text_size</item>
     </style>
 
+    <style name="DialogCardsText" parent="CardsText">
+        <item name="android:textSize">@dimen/dialog_button_text_size</item>
+    </style>
+
     <style name="Cyv_menu">
         <item name="civ_fill_color">@color/colorAccent</item>
         <item name="android:layout_width">@dimen/menu_image_size</item>
         <item name="android:layout_height">@dimen/menu_image_size</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_margin">@dimen/menu_image_margin</item>
+    </style>
+
+    <style name="CyvDialog" parent="Cyv_menu">
+        <item name="android:layout_width">@dimen/dialog_image_size</item>
+        <item name="android:layout_height">@dimen/dialog_image_size</item>
     </style>
 
 

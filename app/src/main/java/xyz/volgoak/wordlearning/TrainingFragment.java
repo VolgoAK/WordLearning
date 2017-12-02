@@ -286,7 +286,6 @@ public class TrainingFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        WordSpeaker.close();
         super.onDestroy();
     }
 

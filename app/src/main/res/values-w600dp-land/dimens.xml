@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="iv_result_height">180dp</dimen>
+    <dimen name="card_dialog_width">360dp</dimen>
 </resources>
