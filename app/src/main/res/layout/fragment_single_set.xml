@@ -65,10 +65,20 @@
             android:layout_width="@dimen/fab_size"
             android:layout_height="@dimen/fab_size"
             android:elevation="8dp"
-            android:src="@drawable/ic_add_white_24dp"
-            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_add_white_24dp"
             app:layout_behavior=".CustomFloatingButtonBehavior"
             app:behavior_order_in_row="1"
+            app:behavior_max_size="@dimen/fab_size"
+            app:behavior_min_size="@dimen/fab_min_size"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/set_training_fab"
+            android:layout_width="@dimen/fab_size"
+            android:layout_height="@dimen/fab_size"
+            android:elevation="8dp"
+            app:srcCompat="@drawable/ic_training_24dp"
+            app:layout_behavior=".CustomFloatingButtonBehavior"
+            app:behavior_order_in_row="2"
             app:behavior_max_size="@dimen/fab_size"
             app:behavior_min_size="@dimen/fab_min_size"/>
 
@@ -77,11 +87,11 @@
             android:layout_width="@dimen/fab_size"
             android:layout_height="@dimen/fab_size"
             android:elevation="8dp"
-            android:src="@drawable/ic_reset_white_24dp"
+            app:srcCompat="@drawable/ic_reset_white_24dp"
             app:layout_behavior=".CustomFloatingButtonBehavior"
             app:behavior_max_size="@dimen/fab_size"
             app:behavior_min_size="@dimen/fab_min_size"
-            app:behavior_order_in_row="2"/>
+            app:behavior_order_in_row="3"/>
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>

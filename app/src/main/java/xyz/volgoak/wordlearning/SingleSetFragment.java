@@ -1,14 +1,19 @@
 package xyz.volgoak.wordlearning;
 
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
@@ -35,6 +41,8 @@ import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding;
 import xyz.volgoak.wordlearning.recycler.CursorRecyclerAdapter;
 import xyz.volgoak.wordlearning.recycler.MultiChoiceMode;
 import xyz.volgoak.wordlearning.recycler.WordsRecyclerAdapter;
+import xyz.volgoak.wordlearning.training_utils.Training;
+import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
 
 /**
@@ -48,6 +56,7 @@ public class SingleSetFragment extends Fragment {
     public static final String SAVED_CHOICE_MODE = "saved_choice_mode";
 
     private FragmentSingleSetBinding mBinding;
+    private FragmentListener mFragmentListener;
 
     private long mSetId;
     private boolean mSingleFragMode;
@@ -134,6 +143,22 @@ public class SingleSetFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(context instanceof FragmentListener){
+            mFragmentListener = (FragmentListener) context;
+        }else{
+            throw new RuntimeException("Context must implement FragmentListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mFragmentListener = null;
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if(mWordsCallBack != null){
@@ -168,29 +193,38 @@ public class SingleSetFragment extends Fragment {
 
         prepareSetStatusFabs();
 
-        mBinding.setAddFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addOrRemoveSetFromDictionary();
-            }
-        });
+        mBinding.setAddFab.setOnClickListener((v) -> addOrRemoveSetFromDictionary());
 
-        mBinding.setResetFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                resetSetProgress();
-            }
-        });
+        mBinding.setResetFab.setOnClickListener((v) -> resetSetProgress());
+
+        mBinding.setTrainingFab.setOnClickListener((v) -> showTrainingDialog());
     }
 
     private void prepareSetStatusFabs(){
         mBinding.setResetFab.setVisibility(mSetInDictionary ? View.VISIBLE : View.GONE);
         int addDrawableId = mSetInDictionary ? R.drawable.ic_remove_white_24dp : R.drawable.ic_add_white_24dp;
-        mBinding.setAddFab.setImageDrawable(ContextCompat.getDrawable(getContext(), addDrawableId));
+        mBinding.setAddFab.setImageResource(addDrawableId);
     }
 
     private void manageTrainingStatusMenu(){
 
+    }
+
+    private void showTrainingDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(R.string.start_training);
+        builder.setItems(new String[]{getString(R.string.word_translation), getString(R.string.translation_word)},
+                (dialog, which) -> {
+                    if(which == 0) mFragmentListener.startTraining(TrainingFabric.WORD_TRANSLATION, mSetId);
+                    if(which == 1) mFragmentListener.startTraining(TrainingFabric.TRANSLATION_WORD, mSetId);
+                    dialog.dismiss();
+                }
+        );
+
+        builder.setNegativeButton(R.string.cancel, (d, w) -> d.dismiss());
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void prepareRecycler(){
