@@ -70,6 +70,8 @@
     <string name="in_dictionary">In dictionary</string>
     <string name="words_learned">Words learned %1$d of %2$d</string>
     <string name="words_in_dictionary">Words in a dictionary %1$d </string>
+    <string name="sort">sort</string>
+    <string name="all_themes">All themes</string>
 
 
 </resources>

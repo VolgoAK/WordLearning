@@ -6,12 +6,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -39,6 +44,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     public static final String TAG = "WordSetsFragment";
     public static final String EXTRA_PARTSCREEN_MODE = "extra_screen_mode";
     public static final String SAVED_POSITION = "saved_position";
+    public static final String SAVED_THEME = "saved_theme";
 
     private FragmentListener mFragmentListener;
     private SetsFragmentListener mSetsFragmentListener;
@@ -50,6 +56,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     private boolean mPartScreenMode = true;
 
     private int mRvSavedPosition;
+    private int mSelectedTheme = -1;
 
      public static WordSetsFragment newInstance(boolean part_mode) {
         Bundle args = new Bundle();
@@ -75,12 +82,15 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
         if(getArguments() != null) {
             mPartScreenMode = getArguments().getBoolean(EXTRA_PARTSCREEN_MODE, false);
         }
 
         if(savedInstanceState != null){
             mRvSavedPosition = savedInstanceState.getInt(SAVED_POSITION, 0);
+            mSelectedTheme = savedInstanceState.getInt(SAVED_THEME, -1);
         }
     }
 
@@ -98,17 +108,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(llm);
 
-        Cursor setsCursor = mDbAdapter.fetchAllSets();
-        mCursorAdapter = new SetsRecyclerAdapter(getContext(), setsCursor, mRecyclerView);
-        mCursorAdapter.setAdapterClickListener(this);
-        mCursorAdapter.setSetStatusChanger(this);
-
-        if(mPartScreenMode) {
-            mCursorAdapter.setChoiceMode(new SingleChoiceMode());
-        }
-
-        mRecyclerView.setAdapter(mCursorAdapter);
-
+        initRecycler(mSelectedTheme);
 //
 //        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 //
@@ -151,6 +151,60 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.sets_fragment_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.item_sort_by_theme :
+                showThemesList();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void showThemesList(){
+        View view = getActivity().findViewById(R.id.item_sort_by_theme);
+        PopupMenu popupMenu = new PopupMenu(getContext(), view);
+
+        MenuItem allThemes = popupMenu.getMenu().add(1, -1, 0, R.string.all_themes);
+        allThemes.setCheckable(true);
+        allThemes.setChecked(true);
+
+        Cursor themesCursor = mDbAdapter.fetchAllThemes();
+        int nameColumn = themesCursor.getColumnIndex(DatabaseContract.Themes.COLUMN_NAME);
+        int codeColumn = themesCursor.getColumnIndex(DatabaseContract.Themes.COLUMN_CODE);
+
+        themesCursor.moveToFirst();
+        do{
+            String name = themesCursor.getString(nameColumn);
+            int code = themesCursor.getInt(codeColumn);
+            MenuItem item = popupMenu.getMenu().add(1, code, 0, name);
+            item.setCheckable(true);
+            if(code == mSelectedTheme){
+                Log.d(TAG, "showThemesList: set checked");
+                item.setChecked(true);
+                allThemes.setChecked(false);
+            }
+        }while( themesCursor.moveToNext());
+        themesCursor.close();
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                mSelectedTheme = item.getItemId();
+                initRecycler(mSelectedTheme);
+                return true;
+            }
+        });
+
+        popupMenu.show();
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         Log.d(TAG, "onDetach: ");
@@ -175,6 +229,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(SAVED_POSITION, mRvSavedPosition);
+        outState.putInt(SAVED_THEME, mSelectedTheme);
     }
 
     public void invokeSetMenu(final long setId) {
@@ -278,6 +333,25 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         Log.d(TAG, "on item long click");
         invokeSetMenu(id);
         return true;
+    }
+
+    public void initRecycler(int themeCode){
+        Cursor setsCursor ;
+        if(themeCode == -1){
+            setsCursor = mDbAdapter.fetchAllSets();
+        }else{
+            setsCursor = mDbAdapter.fetchSetsByThemeCode(themeCode);
+        }
+        mCursorAdapter = new SetsRecyclerAdapter(getContext(), setsCursor, mRecyclerView);
+        mCursorAdapter.setAdapterClickListener(this);
+        mCursorAdapter.setSetStatusChanger(this);
+
+        if(mPartScreenMode) {
+            mCursorAdapter.setChoiceMode(new SingleChoiceMode());
+        }
+
+        mRecyclerView.setAdapter(mCursorAdapter);
+
     }
 
     interface SetsFragmentListener{
