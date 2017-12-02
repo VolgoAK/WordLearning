@@ -4,63 +4,28 @@
 <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context="xyz.volgoak.wordlearning.RedactorFragment"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/linear_layout_redactor"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/dictionary_card_height"
-        android:layout_marginTop="@dimen/views_small_margin"
-        android:orientation="horizontal"
-        android:background="@drawable/gray_rectangle"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
-
-        <EditText
-            android:id="@+id/et_word_redactor"
-            android:textSize="@dimen/medium_text_size"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:hint="@string/word"/>
-
-        <EditText
-            android:id="@+id/et_translation_redactor"
-            android:textSize="@dimen/medium_text_size"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:hint="@string/translation"/>
-
-        <Button
-            android:id="@+id/bt_add_redactor"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:textSize="@dimen/small_text_size"
-            android:layout_weight="2"
-            android:text="@string/add"/>
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="4dp"
-        android:background="@drawable/shadow"
-        app:layout_constraintTop_toBottomOf="@+id/linear_layout_redactor"
-        app:layout_constraintLeft_toLeftOf="@+id/linear_layout_redactor"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_redactor"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/views_small_margin"
-        app:layout_constraintTop_toBottomOf="@+id/linear_layout_redactor"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_add_redactor"
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
+        app:srcCompat="@drawable/ic_add_white_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="@dimen/views_vertical_margin"/>
 
 </android.support.constraint.ConstraintLayout>
 </layout>

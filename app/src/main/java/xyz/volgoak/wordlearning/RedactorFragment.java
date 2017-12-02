@@ -6,15 +6,18 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
+import xyz.volgoak.wordlearning.databinding.DialogAddWordBinding;
 import xyz.volgoak.wordlearning.databinding.FragmentRedactorBinding;
 import xyz.volgoak.wordlearning.recycler.CursorRecyclerAdapter;
 import xyz.volgoak.wordlearning.recycler.WordsRecyclerAdapter;
@@ -72,22 +75,7 @@ public class RedactorFragment extends Fragment{
 
         });
 
-        mBinding.btAddRedactor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String word = mBinding.etWordRedactor.getText().toString();
-                String translation = mBinding.etTranslationRedactor.getText().toString();
-
-                if(word.isEmpty() || translation.isEmpty()){
-                    Toast.makeText(getContext(), getString(R.string.fields_empty_message), Toast.LENGTH_LONG).show();
-                    return;
-                }
-                mDbAdapter.insertWord(word, translation);
-                mBinding.etWordRedactor.setText("");
-                mBinding.etTranslationRedactor.setText("");
-                mRecyclerAdapter.changeCursor(mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE, -1));
-            }
-        });
+        mBinding.fabAddRedactor.setOnClickListener((v) -> fireAddWordDialog());
     }
 
     @Override
@@ -125,6 +113,37 @@ public class RedactorFragment extends Fragment{
                 dialog.dismiss();
             }
         });
+
+        dialog.show();
+    }
+
+    public void fireAddWordDialog(){
+        Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_add_word);
+
+        EditText wordEt = (EditText) dialog.findViewById(R.id.et_word_redactor_dialog);
+        EditText translationEt = (EditText) dialog.findViewById(R.id.et_translation_redactor_dialog);
+
+        Button addButton = (Button) dialog.findViewById(R.id.bt_add_redactor_dialog);
+        addButton.setOnClickListener((v) -> {
+            String word = wordEt.getText().toString();
+            String translation = translationEt.getText().toString();
+            if(!word.isEmpty() && !translation.isEmpty()){
+                mDbAdapter.insertWord(word, translation);
+                mRecyclerAdapter.changeCursor(mDbAdapter
+                        .fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE, -1));
+            }else{
+                Toast.makeText(getContext(), R.string.fields_empty_message, Toast.LENGTH_LONG).show();
+            }
+            dialog.dismiss();
+        });
+
+        Button cancelButton = (Button) dialog.findViewById(R.id.bt_cancel_redactor_dialog);
+        cancelButton.setOnClickListener((v) -> dialog.dismiss());
+
+        Toolbar toolbar = (Toolbar) dialog.findViewById(R.id.dialog_add_word_toolbar);
+        toolbar.setTitle(R.string.new_word);
 
         dialog.show();
     }

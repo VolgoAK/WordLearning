@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dialog_add_word_root"
+    android:layout_width="@dimen/card_dialog_width"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/dialog_add_word_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@color/white" />
+
+    <EditText
+        android:id="@+id/et_word_redactor_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/word"
+        android:textSize="@dimen/medium_text_size"
+        app:layout_constraintTop_toBottomOf="@id/dialog_add_word_toolbar" />
+
+    <EditText
+        android:id="@+id/et_translation_redactor_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/translation"
+        android:textSize="@dimen/medium_text_size"
+        app:layout_constraintTop_toBottomOf="@+id/et_word_redactor_dialog" />
+
+    <Button
+        android:id="@+id/bt_cancel_redactor_dialog"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        android:textSize="@dimen/small_text_size"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/bt_add_redactor_dialog"
+        app:layout_constraintTop_toBottomOf="@id/et_translation_redactor_dialog" />
+
+    <Button
+        android:id="@+id/bt_add_redactor_dialog"
+        android:layout_width="0sp"
+        android:layout_height="wrap_content"
+        android:text="@string/add"
+        android:textSize="@dimen/small_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@id/bt_cancel_redactor_dialog"
+        app:layout_constraintRight_toRightOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

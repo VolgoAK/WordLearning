@@ -75,6 +75,7 @@
     <string name="start_training">Start training</string>
     <string name="training">Training</string>
     <string name="cancel">cancel</string>
+    <string name="new_word">New word</string>
 
 
 </resources>
