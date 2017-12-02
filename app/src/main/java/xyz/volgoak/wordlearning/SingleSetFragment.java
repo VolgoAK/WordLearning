@@ -1,6 +1,7 @@
 package xyz.volgoak.wordlearning;
 
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
@@ -16,13 +17,16 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ListView;
 
 import com.bumptech.glide.Glide;
@@ -197,7 +201,7 @@ public class SingleSetFragment extends Fragment {
 
         mBinding.setResetFab.setOnClickListener((v) -> resetSetProgress());
 
-        mBinding.setTrainingFab.setOnClickListener((v) -> showTrainingDialog());
+        mBinding.setTrainingFab.setOnClickListener((v) -> showCoolDialog());
     }
 
     private void prepareSetStatusFabs(){
@@ -210,20 +214,27 @@ public class SingleSetFragment extends Fragment {
 
     }
 
-    private void showTrainingDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle(R.string.start_training);
-        builder.setItems(new String[]{getString(R.string.word_translation), getString(R.string.translation_word)},
-                (dialog, which) -> {
-                    if(which == 0) mFragmentListener.startTraining(TrainingFabric.WORD_TRANSLATION, mSetId);
-                    if(which == 1) mFragmentListener.startTraining(TrainingFabric.TRANSLATION_WORD, mSetId);
-                    dialog.dismiss();
-                }
-        );
+    private void showCoolDialog(){
+        Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.start_training_dialog);
 
-        builder.setNegativeButton(R.string.cancel, (d, w) -> d.dismiss());
+        Toolbar titleToolbar = (Toolbar) dialog.findViewById(R.id.dialog_toolbar);
+        titleToolbar.setTitle(R.string.training);
+        titleToolbar.setNavigationIcon(R.drawable.ic_training_24dp);
+//        titleToolbar.setTitleMarginStart(8);
 
-        AlertDialog dialog = builder.create();
+        CardView wtCard = (CardView) dialog.findViewById(R.id.cv_word_trans_dialog);
+        wtCard.setOnClickListener((v) -> {
+            mFragmentListener.startTraining(TrainingFabric.WORD_TRANSLATION, mSetId);
+            dialog.dismiss();
+        });
+
+        CardView twCard = (CardView) dialog.findViewById(R.id.cv_trans_word_dialog);
+        twCard.setOnClickListener((v) -> {
+            mFragmentListener.startTraining(TrainingFabric.TRANSLATION_WORD, mSetId);
+            dialog.dismiss();
+        });
         dialog.show();
     }
 

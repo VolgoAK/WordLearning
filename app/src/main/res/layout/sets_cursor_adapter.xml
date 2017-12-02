@@ -71,13 +71,14 @@
 
         <ImageButton
             android:id="@+id/ibt_add_sets"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/add_image_button"
+            android:layout_height="@dimen/add_image_button"
             android:background="@null"
+            android:scaleType="fitXY"
             app:srcCompat="@drawable/ic_add_blue_50dp"
             android:layout_margin="@dimen/views_small_margin"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:elevation="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/civ_sets"
             app:layout_constraintRight_toLeftOf="@id/civ_sets"/>
 
 

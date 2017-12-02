@@ -64,8 +64,9 @@ import xyz.volgoak.wordlearning.data.StorageContract;
         setDescriptionTv.setText(cursor.getString(columnDescriptionIndex));
 
         int setStatus = cursor.getInt(columnStatusIndex);
-        int drawableId = setStatus == DatabaseContract.Sets.IN_DICTIONARY ? R.drawable.ic_added : R.drawable.ic_add;
-        addButton.setImageDrawable(ContextCompat.getDrawable(mContext, drawableId));
+        int drawableId = setStatus == DatabaseContract.Sets.IN_DICTIONARY
+                ? R.drawable.ic_added_green_50dp : R.drawable.ic_add_blue_50dp;
+        addButton.setImageResource(drawableId);
 
         final long id = cursor.getLong(columnIdIndex);
         addButton.setOnClickListener(new View.OnClickListener() {

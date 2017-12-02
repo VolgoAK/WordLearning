@@ -52,4 +52,7 @@
 
     <!-- messages -->
     <string name="sets_index_file_ru_en">sets_index.xml</string>
+
+    <string name="training">Тренировка</string>
+    <string name="start_training">Начать тренировку</string>
 </resources>
