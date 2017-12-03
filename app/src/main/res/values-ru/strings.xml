@@ -55,4 +55,8 @@
 
     <string name="training">Тренировка</string>
     <string name="start_training">Начать тренировку</string>
+    <string name="cancel">отмена</string>
+    <string name="all_themes">Все темы</string>
+    <string name="sort">Сортировать</string>
+    <string name="in_dictionary">В словаре</string>
 </resources>
