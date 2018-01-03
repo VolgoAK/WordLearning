@@ -11,6 +11,7 @@ import xyz.volgoak.wordlearning.data.Entity;
  * Created by alex on 1/3/18.
  */
 
+// TODO: 1/3/18 rename
 public abstract class NewRowController extends RecyclerView.ViewHolder{
 
 

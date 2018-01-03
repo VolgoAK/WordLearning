@@ -18,8 +18,8 @@ public abstract class RecyclerAdapter<RC extends NewRowController> extends Recyc
 
     protected Context mContext;
     protected List<Entity> mEntities;
-    private CursorRecyclerAdapter.AdapterClickListener mAdapterClickListener;
-    private CursorRecyclerAdapter.AdapterLongClickListener mAdapterLongClickListener;
+    private AdapterClickListener mAdapterClickListener;
+    private AdapterLongClickListener mAdapterLongClickListener;
     private RecyclerView mRecyclerView;
     private boolean mSelectable;
     private ChoiceMode mChoiceMode;
@@ -53,7 +53,7 @@ public abstract class RecyclerAdapter<RC extends NewRowController> extends Recyc
         if(mSelectable != selectable) {
             mSelectable = selectable;
             for (int a = 0; a < getItemCount(); a++) {
-                RowController controller = (RowController) mRecyclerView.findViewHolderForAdapterPosition(a);
+                NewRowController controller = (NewRowController) mRecyclerView.findViewHolderForAdapterPosition(a);
 
                 if (controller != null) {
                     controller.setSelectable(selectable);
@@ -95,11 +95,11 @@ public abstract class RecyclerAdapter<RC extends NewRowController> extends Recyc
         return mContext;
     }
 
-    public void setAdapterClickListener(CursorRecyclerAdapter.AdapterClickListener listener){
+    public void setAdapterClickListener(AdapterClickListener listener){
         mAdapterClickListener = listener;
     }
 
-    public void setAdapterLongClickListener(CursorRecyclerAdapter.AdapterLongClickListener adapterLongClickListener) {
+    public void setAdapterLongClickListener(AdapterLongClickListener adapterLongClickListener) {
         mAdapterLongClickListener = adapterLongClickListener;
     }
 
@@ -107,7 +107,7 @@ public abstract class RecyclerAdapter<RC extends NewRowController> extends Recyc
         if(mChoiceMode != null){
             if(mChoiceMode instanceof SingleChoiceMode) {
                 if(mChoiceMode.getCheckedPosition() != -1){
-                    RowController rc = (RowController)
+                    NewRowController rc = (NewRowController)
                             mRecyclerView.findViewHolderForAdapterPosition(mChoiceMode.getCheckedPosition());
                     if(rc != null) rc.setChecked(false);
                 }

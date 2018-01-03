@@ -16,11 +16,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
+import xyz.volgoak.wordlearning.data.Word;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.databinding.FragmentRedactorBinding;
-import xyz.volgoak.wordlearning.recycler.CursorRecyclerAdapter;
+import xyz.volgoak.wordlearning.recycler.RecyclerAdapter;
 import xyz.volgoak.wordlearning.recycler.WordsRecyclerAdapter;
-import xyz.volgoak.wordlearning.utils.WordSpeaker;
 
 /**
  * Created by Alexander Karachev on 07.05.2017.
@@ -61,12 +63,12 @@ public class RedactorFragment extends Fragment{
         mBinding.rvRedactor.setLayoutManager(layoutManager);
 
         mDbAdapter = new WordsDbAdapter();
-        Cursor cursor = mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE, -1);
+        List<Word> words = mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE, -1);
 
-        mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), cursor, mBinding.rvRedactor);
+        mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), words, mBinding.rvRedactor);
         mBinding.rvRedactor.setAdapter(mRecyclerAdapter);
 
-        mRecyclerAdapter.setAdapterClickListener(new CursorRecyclerAdapter.AdapterClickListener() {
+        mRecyclerAdapter.setAdapterClickListener(new RecyclerAdapter.AdapterClickListener() {
             @Override
             public void onClick(View root, int position, long id) {
                 fireCustomDialog(id);
@@ -75,12 +77,6 @@ public class RedactorFragment extends Fragment{
         });
 
         mBinding.fabAddRedactor.setOnClickListener((v) -> fireAddWordDialog());
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        mRecyclerAdapter.closeCursor();
     }
 
     public void fireCustomDialog(final long id){
@@ -97,7 +93,7 @@ public class RedactorFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 mDbAdapter.resetWordProgress(id);
-                mRecyclerAdapter.changeCursor(mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE, -1));
+                mRecyclerAdapter.changeData(mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE, -1));
                 dialog.dismiss();
             }
         });
@@ -108,7 +104,7 @@ public class RedactorFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 mDbAdapter.deleteOrHideWordById(id);
-                mRecyclerAdapter.changeCursor(mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE, -1));
+                mRecyclerAdapter.changeData(mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE, -1));
                 dialog.dismiss();
             }
         });
@@ -130,7 +126,7 @@ public class RedactorFragment extends Fragment{
             String translation = translationEt.getText().toString();
             if(!word.isEmpty() && !translation.isEmpty()){
                 mDbAdapter.insertWord(word, translation);
-                mRecyclerAdapter.changeCursor(mDbAdapter
+                mRecyclerAdapter.changeData(mDbAdapter
                         .fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE, -1));
             }else{
                 Toast.makeText(getContext(), R.string.fields_empty_message, Toast.LENGTH_LONG).show();

@@ -36,4 +36,26 @@ public class Converter {
         return set;
     }
 
+    public static List<Word> convertWords(Cursor wordsCursor) {
+        if(!wordsCursor.moveToFirst()) return null;
+        List<Word> words = new ArrayList<>();
+        do{
+            Word word = convertWord(wordsCursor);
+            words.add(word);
+        } while (wordsCursor.moveToNext());
+        return words;
+    }
+
+    public static Word convertWord(Cursor cursor) {
+        Word word = new Word(cursor.getString(cursor.getColumnIndex(DatabaseContract.Words.COLUMN_WORD)));
+        word.setTranslation(cursor.getString(cursor.getColumnIndex(DatabaseContract.Words.COLUMN_TRANSLATION)));
+        word.setTranscription(cursor.getString(cursor.getColumnIndex(DatabaseContract.Words.COLUMN_TRANSCRIPTION)));
+        word.setId(cursor.getLong(cursor.getColumnIndex(DatabaseContract.Words._ID)));
+        word.setTrainedWt(cursor.getInt(cursor.getColumnIndex(DatabaseContract.Words.COLUMN_TRAINED_WT)));
+        word.setTrainedTw(cursor.getInt(cursor.getColumnIndex(DatabaseContract.Words.COLUMN_TRAINED_TW)));
+        word.setStatus(cursor.getInt(cursor.getColumnIndex(DatabaseContract.Words.COLUMN_STATUS)));
+        word.setStudied(cursor.getInt(cursor.getColumnIndex(DatabaseContract.Words.COLUMN_STUDIED)));
+        return word;
+    }
+
 }

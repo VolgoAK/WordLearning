@@ -28,7 +28,7 @@ import java.util.List;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.Set;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
-import xyz.volgoak.wordlearning.recycler.CursorRecyclerAdapter;
+import xyz.volgoak.wordlearning.recycler.RecyclerAdapter;
 import xyz.volgoak.wordlearning.recycler.SetsRecyclerAdapter;
 import xyz.volgoak.wordlearning.recycler.SingleChoiceMode;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
@@ -41,7 +41,7 @@ import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
  * A simple {@link Fragment} subclass.
  */
 public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.SetStatusChanger,
-        CursorRecyclerAdapter.AdapterClickListener, CursorRecyclerAdapter.AdapterLongClickListener{
+        RecyclerAdapter.AdapterClickListener, RecyclerAdapter.AdapterLongClickListener{
 
     public static final String TAG = "WordSetsFragment";
     public static final String EXTRA_PARTSCREEN_MODE = "extra_screen_mode";

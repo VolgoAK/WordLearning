@@ -32,35 +32,11 @@ public class DbTests {
 
     @Test
     public void testGetTestByThemeCode(){
-        Cursor themes = mDbAdapter.fetchAllThemes();
-        Cursor sets = mDbAdapter.fetchAllSets();
-        int allSetsCount = sets.getCount();
-        sets.close();
 
-        int setsByThemesCount = 0;
-        themes.moveToFirst();
-
-        do{
-            Cursor themeSets = mDbAdapter.fetchSetsByThemeCode(themes.getInt
-                    (themes.getColumnIndex(DatabaseContract.Themes.COLUMN_CODE)));
-            setsByThemesCount += themeSets.getCount();
-            themeSets.close();
-        }while (themes.moveToNext());
-
-        themes.close();
-
-        assertEquals(allSetsCount, setsByThemesCount);
     }
 
     @Test
     public void testSetsConverter() {
-        Cursor sets = mDbAdapter.fetchAllSets();
-        int count = sets.getCount();
-        sets.moveToFirst();
-        String firstSetName = sets.getString(sets.getColumnIndex(DatabaseContract.Sets.COLUMN_NAME));
-        List<Set> setList = Converter.convertSets(sets);
 
-        assertEquals(count, setList.size());
-        assertEquals(firstSetName, setList.get(0).getName());
     }
 }

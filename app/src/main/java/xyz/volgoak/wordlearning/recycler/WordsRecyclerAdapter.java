@@ -7,16 +7,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.data.Word;
 
 /**
  * Created by Volgoak on 18.08.2017.
  */
 
-public class WordsRecyclerAdapter extends CursorRecyclerAdapter {
+public class WordsRecyclerAdapter extends RecyclerAdapter {
 
-    public WordsRecyclerAdapter(Context context, Cursor cursor, RecyclerView rv){
-        super(context, cursor, rv);
+    public WordsRecyclerAdapter(Context context, List<Word> wordList, RecyclerView rv){
+        super(context, wordList, rv);
     }
 
     @Override

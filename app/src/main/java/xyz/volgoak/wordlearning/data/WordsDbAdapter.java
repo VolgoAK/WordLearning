@@ -91,6 +91,7 @@ public class WordsDbAdapter {
         }
     }
 
+    // TODO: 1/3/18 pass word instead of values
     private long insertWord(ContentValues wordValues){
         return mDb.insert(DatabaseContract.Words.TABLE_NAME, null, wordValues);
     }
@@ -143,7 +144,7 @@ public class WordsDbAdapter {
      *              use -1 for ignore set id
      * @return cursor with words
      */
-    public Cursor fetchWordsByTrained(String trainedType, int wordsLimit, int trainedLimit, long setId){
+    public List<Word> fetchWordsByTrained(String trainedType, int wordsLimit, int trainedLimit, long setId){
         if(trainedType == null) trainedType = DatabaseContract.Words.COLUMN_STUDIED;
 
         String select = "";
@@ -170,8 +171,9 @@ public class WordsDbAdapter {
 
         Cursor cursor = mDb.rawQuery(select, null);
 //        Log.d(TAG, "fetchWordsByTrained: count " + cursor.getCount());
-
-        return cursor;
+        List<Word> words = Converter.convertWords(cursor);
+        cursor.close();
+        return words;
     }
 
     public List<Set> fetchAllSets(){
@@ -200,24 +202,18 @@ public class WordsDbAdapter {
         return setList;
     }
 
-    public void updateSet(ContentValues setValues, long setId){
-        mDb.update(DatabaseContract.Sets.TABLE_NAME, setValues,
-                DatabaseContract.Sets._ID + "=?", new String[]{Long.toString(setId)});
-    }
 
-    public Cursor fetchSetByParam(String column, String value){
-        return mDb.query(DatabaseContract.Sets.TABLE_NAME, null, column + "=?", new String[]{value},
-                null, null, null);
-    }
-
-    public Cursor fetchWordsBySetId(long id){
+    public List<Word> fetchWordsBySetId(long id){
         String query = "SELECT * FROM "+DatabaseContract.Words.TABLE_NAME +
                 " WHERE "+DatabaseContract.Words._ID+" IN " +
                 "(SELECT "+DatabaseContract.WordLinks.COLUMN_WORD_ID+" FROM " +
                 DatabaseContract.WordLinks.TABLE_NAME+
                 " WHERE "+DatabaseContract.WordLinks.COLUMN_SET_ID+"="+id+")" +
                 " ORDER BY " + DatabaseContract.Words.COLUMN_WORD + " COLLATE NOCASE";
-        return mDb.rawQuery(query, null);
+        Cursor cursor = mDb.rawQuery(query, null);
+        List<Word> words = Converter.convertWords(cursor);
+        cursor.close();
+        return words;
     }
 
     public Cursor fetchAllThemes(){

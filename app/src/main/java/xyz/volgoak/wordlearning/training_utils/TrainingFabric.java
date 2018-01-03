@@ -1,17 +1,15 @@
 package xyz.volgoak.wordlearning.training_utils;
 
 
-import android.database.Cursor;
-
 import java.util.ArrayList;
+import java.util.List;
 
 import xyz.volgoak.wordlearning.data.DatabaseContract;
+import xyz.volgoak.wordlearning.data.Word;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 
 import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_TRAINED_TW;
 import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_TRAINED_WT;
-import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_TRANSLATION;
-import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_WORD;
 import static xyz.volgoak.wordlearning.data.WordsDbAdapter.TRAINING_LIMIT;
 
 
@@ -23,45 +21,48 @@ public abstract class TrainingFabric {
     public final static int WORD_TRANSLATION = 0;
     public final static int TRANSLATION_WORD = 1;
 
+
     public static Training getTraining(int trainingType, long setId){
-        int wordColumn = 0;
-        int variantsColumn = 0;
+
         String variantsColumnString = "";
-        Cursor cursor = null;
+        List<Word> wordList = null;
 
         WordsDbAdapter dbAdapter = new WordsDbAdapter();
 
+        GetWord wordGetter;
+        GetWord variantsGetter;
+
         if(trainingType == WORD_TRANSLATION){
-            cursor = dbAdapter.fetchWordsByTrained(COLUMN_TRAINED_WT, 10, TRAINING_LIMIT, setId);
-            wordColumn = cursor.getColumnIndex(COLUMN_WORD);
-            variantsColumn = cursor.getColumnIndex(COLUMN_TRANSLATION);
-            variantsColumnString = COLUMN_TRANSLATION;
+            wordList = dbAdapter.fetchWordsByTrained(COLUMN_TRAINED_WT, 10, TRAINING_LIMIT, setId);
+            wordGetter = Word::getWord;
+            variantsGetter = Word::getTranslation;
+            variantsColumnString = DatabaseContract.Words.COLUMN_TRANSLATION;
         }else if(trainingType == TRANSLATION_WORD){
-            cursor = dbAdapter.fetchWordsByTrained(COLUMN_TRAINED_TW, 10,TRAINING_LIMIT, setId);
-            wordColumn = cursor.getColumnIndex(COLUMN_TRANSLATION);
-            variantsColumn = cursor.getColumnIndex(COLUMN_WORD);
-            variantsColumnString = COLUMN_WORD;
+            wordList = dbAdapter.fetchWordsByTrained(COLUMN_TRAINED_TW, 10,TRAINING_LIMIT, setId);
+            wordGetter = Word::getTranslation;
+            variantsGetter = Word::getWord;
+            variantsColumnString = DatabaseContract.Words.COLUMN_WORD;
         }else throw new IllegalArgumentException("incorrect training type");
 
-        if(!cursor.moveToFirst()){
+        if(wordList.size() == 0){
             //no untrained words in a dictionary
-            cursor.close();
             return null;
         }
-        int idColumn = cursor.getColumnIndex(DatabaseContract.Words._ID);
 
         ArrayList<PlayWord> playWords = new ArrayList<>();
-        cursor.moveToFirst();
 
-        do{
-            String word = cursor.getString(wordColumn);
-            String translation = cursor.getString(variantsColumn);
-            String[] vars = dbAdapter.getVariants(cursor.getInt(idColumn), variantsColumnString, setId);
-            PlayWord playWord = new PlayWord(word, translation, vars, cursor.getInt(idColumn));
+        for(Word w : wordList) {
+            String word = wordGetter.getString(w);
+            String translation = variantsGetter.getString(w);
+            String[] vars = dbAdapter.getVariants((int)w.getId(), variantsColumnString, setId);
+            PlayWord playWord = new PlayWord(word, translation, vars, (int) w.getId());
             playWords.add(playWord);
-        }while (cursor.moveToNext());
+        }
 
-        cursor.close();
         return new Training(playWords, trainingType);
+    }
+
+    interface GetWord{
+        String getString(Word word);
     }
 }

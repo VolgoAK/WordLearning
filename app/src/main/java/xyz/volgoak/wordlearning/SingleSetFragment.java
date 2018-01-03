@@ -41,10 +41,11 @@ import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.FirebaseContract;
 import xyz.volgoak.wordlearning.data.Set;
 import xyz.volgoak.wordlearning.data.StorageContract;
+import xyz.volgoak.wordlearning.data.Word;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding;
-import xyz.volgoak.wordlearning.recycler.CursorRecyclerAdapter;
 import xyz.volgoak.wordlearning.recycler.MultiChoiceMode;
+import xyz.volgoak.wordlearning.recycler.RecyclerAdapter;
 import xyz.volgoak.wordlearning.recycler.WordsRecyclerAdapter;
 import xyz.volgoak.wordlearning.training_utils.Training;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
@@ -124,7 +125,7 @@ public class SingleSetFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        mRecyclerAdapter.changeCursor(mDbAdapter.fetchWordsBySetId(mSetId));
+        mRecyclerAdapter.changeData(mDbAdapter.fetchWordsBySetId(mSetId));
         if(mSingleFragMode){
             mBinding.setToolbar.setNavigationIcon(R.drawable.ic_back_toolbar);
             mBinding.setToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -139,12 +140,6 @@ public class SingleSetFragment extends Fragment {
 //            layoutParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP | AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL);
 //            mBinding.collapsingToolbarSetAct.setLayoutParams(layoutParams);
         }
-    }
-
-    @Override
-    public void onStop() {
-        mRecyclerAdapter.closeCursor();
-        super.onStop();
     }
 
     @Override
@@ -238,31 +233,27 @@ public class SingleSetFragment extends Fragment {
     }
 
     private void prepareRecycler(){
-        Cursor cursor = mDbAdapter.fetchWordsBySetId(mSetId);
+        List<Word> words = mDbAdapter.fetchWordsBySetId(mSetId);
 
         mBinding.rvSetAc.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mBinding.rvSetAc.setLayoutManager(llm);
 
-        mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), cursor, mBinding.rvSetAc);
+        mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), words, mBinding.rvSetAc);
 
         if(mWordsCallBack != null){
             mRecyclerAdapter.setChoiceMode(mWordsCallBack.choiceMode);
         }
 
-        mRecyclerAdapter.setAdapterClickListener(new CursorRecyclerAdapter.AdapterClickListener() {
-            @Override
-            public void onClick(View root, int position, long id) {
+        mRecyclerAdapter.setAdapterClickListener((root, position, id) -> {
                 if(mActionMode != null){
                     mActionMode.invalidate();
                 }
-            }
         });
 
-        mRecyclerAdapter.setAdapterLongClickListener(new CursorRecyclerAdapter.AdapterLongClickListener() {
-            @Override
-            public boolean onLongClick(View root, int position, long id) {
+        mRecyclerAdapter.setAdapterLongClickListener((root, position, id) -> {
+
                 if(mActionMode == null) {
                     AppCompatActivity activity = (AppCompatActivity) getActivity();
                     //set action mode to fragment toolbar only in single mode
@@ -274,8 +265,8 @@ public class SingleSetFragment extends Fragment {
 
                     return true;
                 }else return false;
-            }
         });
+
         mBinding.rvSetAc.setAdapter(mRecyclerAdapter);
     }
 
@@ -298,7 +289,7 @@ public class SingleSetFragment extends Fragment {
         String message = getString(messageId, mSetName);
         Snackbar.make(getView().findViewById(R.id.coordinator_setact), message, BaseTransientBottomBar.LENGTH_LONG).show();
 
-        mRecyclerAdapter.changeCursor(mDbAdapter.fetchWordsBySetId(mSetId));
+        mRecyclerAdapter.changeData(mDbAdapter.fetchWordsBySetId(mSetId));
     }
 
     public void resetSetProgress(){
@@ -307,7 +298,7 @@ public class SingleSetFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mDbAdapter.resetSetProgress(mSetId);
-                mRecyclerAdapter.changeCursor(mDbAdapter.fetchWordsBySetId(mSetId));
+                mRecyclerAdapter.changeData(mDbAdapter.fetchWordsBySetId(mSetId));
             }
         };
 
@@ -335,8 +326,7 @@ public class SingleSetFragment extends Fragment {
     }
 
     public void updateAdapterCursor(){
-        Cursor cursor = mDbAdapter.fetchWordsBySetId(mSetId);
-        mRecyclerAdapter.changeCursor(cursor);
+        mRecyclerAdapter.changeData(mDbAdapter.fetchWordsBySetId(mSetId));
     }
 
     class WordsActionModeCallback implements ActionMode.Callback{
