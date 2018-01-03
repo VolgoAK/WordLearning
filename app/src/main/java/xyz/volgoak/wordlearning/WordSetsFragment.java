@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,7 +23,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import xyz.volgoak.wordlearning.data.DatabaseContract;
+import xyz.volgoak.wordlearning.data.Set;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.recycler.CursorRecyclerAdapter;
 import xyz.volgoak.wordlearning.recycler.SetsRecyclerAdapter;
@@ -49,7 +51,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     private FragmentListener mFragmentListener;
     private SetsFragmentListener mSetsFragmentListener;
     private WordsDbAdapter mDbAdapter;
-    private SetsRecyclerAdapter mCursorAdapter;
+    private SetsRecyclerAdapter mRecyclerAdapter;
 
     private RecyclerView mRecyclerView;
 
@@ -114,7 +116,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
 //
 //            @Override
 //            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                long setId = mCursorAdapter.getItemId(position);
+//                long setId = mRecyclerAdapter.getItemId(position);
 //                mSetsFragmentListener.startSet(setId);
 //                return true;
 //            }
@@ -129,11 +131,6 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
 
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        mCursorAdapter.closeCursor();
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -237,16 +234,14 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog);
 
-        Cursor cursor = mDbAdapter.fetchSetById(setId);
-        cursor.moveToFirst();
-        String name = cursor.getString(cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_NAME));
-        final int currentSetStatus = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_STATUS));
-        cursor.close();
+        Set set = mDbAdapter.fetchSetById(setId);
+        String name = set.getName();
+        final int currentSetStatus = set.getStatus();
 
-        TextView dialogTitle = (TextView) dialog.findViewById(R.id.dialog_title);
+        TextView dialogTitle = dialog.findViewById(R.id.dialog_title);
         dialogTitle.setText(name);
 
-        Button openButton = (Button) dialog.findViewById(R.id.dialog_bt_one);
+        Button openButton = dialog.findViewById(R.id.dialog_bt_one);
         openButton.setText(R.string.open);
         openButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -258,7 +253,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
             }
         });
 
-        Button addButton = (Button) dialog.findViewById(R.id.dialog_bt_two);
+        Button addButton = dialog.findViewById(R.id.dialog_bt_two);
         int actionStringId = currentSetStatus == DatabaseContract.Sets.IN_DICTIONARY ?
                 R.string.remove_from_dictionary :  R.string.add_to_dictionary;
 
@@ -272,7 +267,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         });
 
 
-        Button wtButton = (Button) dialog.findViewById(R.id.dialog_bt_three);
+        Button wtButton = dialog.findViewById(R.id.dialog_bt_three);
         wtButton.setVisibility(View.VISIBLE);
         wtButton.setText(R.string.word_translation);
         wtButton.setOnClickListener(new View.OnClickListener() {
@@ -283,7 +278,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
             }
         });
 
-        Button twButton = (Button) dialog.findViewById(R.id.dialog_bt_four);
+        Button twButton = dialog.findViewById(R.id.dialog_bt_four);
         twButton.setVisibility(View.VISIBLE);
         twButton.setText(R.string.translation_word);
         twButton.setOnClickListener(new View.OnClickListener() {
@@ -300,18 +295,16 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     @Override
     public void changeSetStatus(long setId) {
 //        Log.d(TAG, "changeSetStatus: ");
-        Cursor cursor = mDbAdapter.fetchSetById(setId);
-        if(!cursor.moveToFirst()){
+        Set set = mDbAdapter.fetchSetById(setId);
+        if(set == null){
 //            Log.d(TAG, "changeSetStatus: incorrect id");
-            cursor.close();
             return;
         }
 
-        int currentStatus = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_STATUS));
+        int currentStatus = set.getStatus();
         int newStatus = currentStatus == DatabaseContract.Sets.IN_DICTIONARY ?
             DatabaseContract.Sets.OUT_OF_DICTIONARY : DatabaseContract.Sets.IN_DICTIONARY;
-        String setName = cursor.getString(cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_NAME));
-        cursor.close();
+        String setName = set.getName();
 
         String message ;
         message = newStatus == DatabaseContract.Sets.IN_DICTIONARY ? getString(R.string.set_added_message, setName) :
@@ -319,7 +312,8 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
         mDbAdapter.changeSetStatus(setId, newStatus);
 
-        mCursorAdapter.changeCursor(mDbAdapter.fetchAllSets());
+        set.setStatus(newStatus);
+        mRecyclerAdapter.notifyEntityChanged(set);
     }
 
     @Override
@@ -336,21 +330,21 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     }
 
     public void initRecycler(int themeCode){
-        Cursor setsCursor ;
+        List<Set> setList;
         if(themeCode == -1){
-            setsCursor = mDbAdapter.fetchAllSets();
+            setList = mDbAdapter.fetchAllSets();
         }else{
-            setsCursor = mDbAdapter.fetchSetsByThemeCode(themeCode);
+            setList = mDbAdapter.fetchSetsByThemeCode(themeCode);
         }
-        mCursorAdapter = new SetsRecyclerAdapter(getContext(), setsCursor, mRecyclerView);
-        mCursorAdapter.setAdapterClickListener(this);
-        mCursorAdapter.setSetStatusChanger(this);
+        mRecyclerAdapter = new SetsRecyclerAdapter(getContext(), setList, mRecyclerView);
+        mRecyclerAdapter.setAdapterClickListener(this);
+        mRecyclerAdapter.setSetStatusChanger(this);
 
         if(mPartScreenMode) {
-            mCursorAdapter.setChoiceMode(new SingleChoiceMode());
+            mRecyclerAdapter.setChoiceMode(new SingleChoiceMode());
         }
 
-        mRecyclerView.setAdapter(mCursorAdapter);
+        mRecyclerView.setAdapter(mRecyclerAdapter);
 
     }
 

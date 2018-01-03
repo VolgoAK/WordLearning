@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
+import java.util.List;
+
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.utils.SetsLoader;
 
@@ -172,20 +174,30 @@ public class WordsDbAdapter {
         return cursor;
     }
 
-    public Cursor fetchAllSets(){
+    public List<Set> fetchAllSets(){
         String query = "SELECT * FROM " + DatabaseContract.Sets.TABLE_NAME +
                 " WHERE " + DatabaseContract.Sets.COLUMN_VISIBILITY + " = " + DatabaseContract.Sets.VISIBLE;
-        return mDb.rawQuery(query, null);
+        Cursor cursor = mDb.rawQuery(query, null);
+        List<Set> setList = Converter.convertSets(cursor);
+        cursor.close();
+        return setList;
     }
 
-    public Cursor fetchSetById(long setId){
-        return mDb.rawQuery("SELECT * FROM " + DatabaseContract.Sets.TABLE_NAME +
+    public Set fetchSetById(long setId){
+        Cursor cursor = mDb.rawQuery("SELECT * FROM " + DatabaseContract.Sets.TABLE_NAME +
             " WHERE " + DatabaseContract.Sets._ID + "=?", new String[]{Long.toString(setId)});
+        if (!cursor.moveToFirst()) return null;
+        Set set = Converter.convertSet(cursor);
+        cursor.close();
+        return set;
     }
 
-    public Cursor fetchSetsByThemeCode(long themeCode){
-        return mDb.rawQuery("SELECT * FROM " + DatabaseContract.Sets.TABLE_NAME
+    public List<Set> fetchSetsByThemeCode(long themeCode){
+        Cursor cursor =  mDb.rawQuery("SELECT * FROM " + DatabaseContract.Sets.TABLE_NAME
                 + " WHERE " + DatabaseContract.Sets.COLUMN_THEME_CODE + "=" + themeCode, null);
+        List<Set> setList = Converter.convertSets(cursor);
+        cursor.close();
+        return setList;
     }
 
     public void updateSet(ContentValues setValues, long setId){

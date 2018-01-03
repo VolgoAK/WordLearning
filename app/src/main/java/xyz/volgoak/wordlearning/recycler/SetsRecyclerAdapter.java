@@ -7,18 +7,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.data.Entity;
+import xyz.volgoak.wordlearning.data.Set;
 
 /**
  * Created by Volgoak on 18.08.2017.
  */
 
-public class SetsRecyclerAdapter extends CursorRecyclerAdapter {
+public class SetsRecyclerAdapter extends RecyclerAdapter {
 
     private SetStatusChanger mSetStatusChanger;
 
-    public SetsRecyclerAdapter(Context context, Cursor cursor, RecyclerView recyclerView){
-        super(context, cursor, recyclerView);
+    public SetsRecyclerAdapter(Context context, List<Set> entityList, RecyclerView recyclerView){
+        super(context, entityList, recyclerView);
 
     }
 
@@ -31,7 +35,7 @@ public class SetsRecyclerAdapter extends CursorRecyclerAdapter {
     }
 
     @Override
-    public void onControllerClick(RowController controller, View root, int position) {
+    public void onControllerClick(NewRowController controller, View root, int position) {
         super.onControllerClick(controller, root, position);
 
     }

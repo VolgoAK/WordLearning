@@ -17,25 +17,20 @@ import java.net.URI;
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
+import xyz.volgoak.wordlearning.data.Entity;
+import xyz.volgoak.wordlearning.data.Set;
 import xyz.volgoak.wordlearning.data.StorageContract;
 
 /**
  * Created by Volgoak on 16.08.2017.
  */
 
- class SetsRowController extends RowController{
+ class SetsRowController extends NewRowController{
 
     public static final String TAG = "SetsRowController";
 
     private View mRoot;
     private CardView mCardRoot;
-
-    private static boolean isColumnsBound = false;
-    private static int columnIdIndex = -1;
-    private static int columnNameIndex = -1;
-    private static int columnDescriptionIndex = -1;
-    private static int columnStatusIndex = -1;
-    private static int columnImageUrlIndex = -1;
 
     private TextView setNameTv;
     private TextView setDescriptionTv;
@@ -45,7 +40,7 @@ import xyz.volgoak.wordlearning.data.StorageContract;
 
     private SetsRecyclerAdapter.SetStatusChanger mStatusChanger;
 
-    public SetsRowController(View view, Context context, CursorRecyclerAdapter adapter){
+    public SetsRowController(View view, Context context, RecyclerAdapter adapter){
         super(view, context, adapter);
 
         mRoot = view;
@@ -58,17 +53,17 @@ import xyz.volgoak.wordlearning.data.StorageContract;
     }
 
     @Override
-    public void bindController(final Cursor cursor) {
-        if(!isColumnsBound) bindCollumns(cursor);
-        setNameTv.setText(cursor.getString(columnNameIndex));
-        setDescriptionTv.setText(cursor.getString(columnDescriptionIndex));
+    public void bindController(Entity entity) {
+        Set set = (Set) entity;
+        setNameTv.setText(set.getName());
+        setDescriptionTv.setText(set.getDescription());
 
-        int setStatus = cursor.getInt(columnStatusIndex);
+        int setStatus = set.getStatus();
         int drawableId = setStatus == DatabaseContract.Sets.IN_DICTIONARY
                 ? R.drawable.ic_added_green_50dp : R.drawable.ic_add_blue_50dp;
         addButton.setImageResource(drawableId);
 
-        final long id = cursor.getLong(columnIdIndex);
+        final long id = set.getId();
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,9 +87,9 @@ import xyz.volgoak.wordlearning.data.StorageContract;
             }
         });
 
-        String imageName = cursor.getString(columnImageUrlIndex);
+        String imageUrl = set.getImageUrl();
         File imagesDir = new File(mContext.getFilesDir(), StorageContract.IMAGES_W_50_FOLDER);
-        File imageFile = new File(imagesDir, imageName);
+        File imageFile = new File(imagesDir, imageUrl);
         Uri imageUri = Uri.fromFile(imageFile);
 
         Glide.with(mContext).load(imageUri)
@@ -109,15 +104,6 @@ import xyz.volgoak.wordlearning.data.StorageContract;
         int ss = mAdapter.getContext().getResources()
                 .getColor(backGroundColor);
         mCardRoot.setCardBackgroundColor(ss);
-    }
-
-    public void bindCollumns(Cursor cursor){
-        columnIdIndex = cursor.getColumnIndex(DatabaseContract.Sets._ID);
-        columnNameIndex = cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_NAME);
-        columnDescriptionIndex = cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_DESCRIPTION);
-        columnStatusIndex = cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_STATUS);
-        columnImageUrlIndex = cursor.getColumnIndex(DatabaseContract.Sets.COLUMN_IMAGE_URL);
-        isColumnsBound = true;
     }
 
     public void setmStatusChanger(SetsRecyclerAdapter.SetStatusChanger StatusChanger) {

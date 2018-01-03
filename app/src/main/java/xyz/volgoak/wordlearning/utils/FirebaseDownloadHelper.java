@@ -186,13 +186,10 @@ public class FirebaseDownloadHelper {
         mTitleImagesReference = FirebaseStorage.getInstance().getReference(FirebaseContract.TITLE_IMAGES_FOLDER);
 
         WordsDbAdapter adapter = new WordsDbAdapter();
-        Cursor setsCursor = adapter.fetchAllSets();
-        int imageColumnIndex = setsCursor.getColumnIndex(DatabaseContract.Sets.COLUMN_IMAGE_URL);
-        setsCursor.moveToFirst();
-        do {
-            String imageName = setsCursor.getString(imageColumnIndex);
-            checkAndLoadImage(imageName);
-        } while (setsCursor.moveToNext());
+        List<xyz.volgoak.wordlearning.data.Set> sets = adapter.fetchAllSets();
+        for(xyz.volgoak.wordlearning.data.Set set : sets) {
+            checkAndLoadImage(set.getImageUrl());
+        }
     }
 
     private void loadNewImages(ArrayList<String> images) {

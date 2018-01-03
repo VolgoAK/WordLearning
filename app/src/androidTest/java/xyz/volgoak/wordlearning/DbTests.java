@@ -7,7 +7,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.List;
+
+import xyz.volgoak.wordlearning.data.Converter;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
+import xyz.volgoak.wordlearning.data.Set;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 
 import static junit.framework.Assert.assertEquals;
@@ -46,5 +50,17 @@ public class DbTests {
         themes.close();
 
         assertEquals(allSetsCount, setsByThemesCount);
+    }
+
+    @Test
+    public void testSetsConverter() {
+        Cursor sets = mDbAdapter.fetchAllSets();
+        int count = sets.getCount();
+        sets.moveToFirst();
+        String firstSetName = sets.getString(sets.getColumnIndex(DatabaseContract.Sets.COLUMN_NAME));
+        List<Set> setList = Converter.convertSets(sets);
+
+        assertEquals(count, setList.size());
+        assertEquals(firstSetName, setList.get(0).getName());
     }
 }

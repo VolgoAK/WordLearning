@@ -66,12 +66,6 @@ public class WordsApp extends Application {
             if (successfulyLoaded) startImagesLoading();
         }
 
-        boolean issuesFixed = preferences.getBoolean(THEME_ISSUE_FIXED, false);
-        if(!issuesFixed){
-            SetsLoader.fixThemesIssue(this);
-            preferences.edit().putBoolean(THEME_ISSUE_FIXED, true).apply();
-        }
-
         GcmNetworkManager networkManager = GcmNetworkManager.getInstance(this);
 
         //run updating as soon as possible at first launch and after update

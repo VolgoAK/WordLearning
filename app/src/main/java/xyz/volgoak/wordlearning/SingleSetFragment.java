@@ -39,6 +39,7 @@ import java.util.List;
 
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.FirebaseContract;
+import xyz.volgoak.wordlearning.data.Set;
 import xyz.volgoak.wordlearning.data.StorageContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding;
@@ -172,14 +173,13 @@ public class SingleSetFragment extends Fragment {
     }
 
     private void loadSetInformation(){
-        Cursor setCursor = mDbAdapter.fetchSetById(mSetId);
-        setCursor.moveToFirst();
+        Set set = mDbAdapter.fetchSetById(mSetId);
         //set title
-        mSetName = setCursor.getString(setCursor.getColumnIndex(DatabaseContract.Sets.COLUMN_NAME));
+        mSetName = set.getName();
         mBinding.collapsingToolbarSetAct.setTitle(mSetName);
 
         //load title image
-        String imageRes = setCursor.getString(setCursor.getColumnIndex(DatabaseContract.Sets.COLUMN_IMAGE_URL));
+        String imageRes = set.getImageUrl();
 
         File imageDir = new File(getActivity().getFilesDir(), StorageContract.IMAGES_W_400_FOLDER);
         File imageFile = new File(imageDir, imageRes);
@@ -191,9 +191,8 @@ public class SingleSetFragment extends Fragment {
                 .into(mBinding.setIvTitle);
 
 
-        int setStatus = setCursor.getInt(setCursor.getColumnIndex(DatabaseContract.Sets.COLUMN_STATUS));
+        int setStatus = set.getStatus();
         mSetInDictionary = setStatus == DatabaseContract.Sets.IN_DICTIONARY;
-        setCursor.close();
 
         prepareSetStatusFabs();
 
