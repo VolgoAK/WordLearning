@@ -1,17 +1,11 @@
 package xyz.volgoak.wordlearning;
 
-import android.database.Cursor;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.List;
-
-import xyz.volgoak.wordlearning.data.Converter;
-import xyz.volgoak.wordlearning.data.DatabaseContract;
-import xyz.volgoak.wordlearning.data.Set;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 
 import static junit.framework.Assert.assertEquals;

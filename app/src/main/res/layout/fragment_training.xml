@@ -5,7 +5,7 @@
     <data>
         <variable
             name="fragment"
-            type="xyz.volgoak.wordlearning.TrainingFragment"/>
+            type="xyz.volgoak.wordlearning.fragment.TrainingFragment"/>
 
         <import type="android.view.View"/>
         <import type="xyz.volgoak.wordlearning.training_utils.TrainingFabric"/>
@@ -14,7 +14,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="xyz.volgoak.wordlearning.TrainingFragment"
+        tools:context="xyz.volgoak.wordlearning.fragment.TrainingFragment"
         >
 
         <ImageView

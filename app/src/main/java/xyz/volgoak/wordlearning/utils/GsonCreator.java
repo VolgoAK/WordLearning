@@ -2,21 +2,16 @@ package xyz.volgoak.wordlearning.utils;
 
 import android.content.Context;
 import android.os.Environment;
-import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
 import java.util.List;
 
-import xyz.volgoak.wordlearning.data.Set;
+import xyz.volgoak.wordlearning.entities.Dictionary;
+import xyz.volgoak.wordlearning.entities.Set;
 import xyz.volgoak.wordlearning.data.Word;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 

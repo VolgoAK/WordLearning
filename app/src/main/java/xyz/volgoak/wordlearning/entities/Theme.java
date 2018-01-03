@@ -1,4 +1,4 @@
-package xyz.volgoak.wordlearning.data;
+package xyz.volgoak.wordlearning.entities;
 
 import com.google.gson.annotations.Expose;
 

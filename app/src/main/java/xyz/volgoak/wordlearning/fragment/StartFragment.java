@@ -1,8 +1,7 @@
-package xyz.volgoak.wordlearning;
+package xyz.volgoak.wordlearning.fragment;
 
 
 import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -15,6 +14,9 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 
+import xyz.volgoak.wordlearning.BR;
+import xyz.volgoak.wordlearning.FragmentListener;
+import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.data.DictionaryInfo;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.databinding.FragmentStartBinding;

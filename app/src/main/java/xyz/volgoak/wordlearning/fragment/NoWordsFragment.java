@@ -1,4 +1,4 @@
-package xyz.volgoak.wordlearning;
+package xyz.volgoak.wordlearning.fragment;
 
 
 import android.content.Context;
@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import xyz.volgoak.wordlearning.BR;
+import xyz.volgoak.wordlearning.FragmentListener;
+import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.databinding.FragmentNoWordsBinding;
 
 /**

@@ -1,7 +1,6 @@
 package xyz.volgoak.wordlearning.recycler;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -12,7 +11,7 @@ import android.widget.TextView;
 
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
-import xyz.volgoak.wordlearning.data.Entity;
+import xyz.volgoak.wordlearning.entities.Entity;
 import xyz.volgoak.wordlearning.data.Word;
 import xyz.volgoak.wordlearning.utils.WordSpeaker;
 

@@ -15,7 +15,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="xyz.volgoak.wordlearning.StartFragment"
+        tools:context="xyz.volgoak.wordlearning.fragment.StartFragment"
         android:layout_marginTop="@dimen/views_vertical_margin">
 
         <android.support.v7.widget.CardView

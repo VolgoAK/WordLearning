@@ -1,4 +1,4 @@
-package xyz.volgoak.wordlearning;
+package xyz.volgoak.wordlearning.activity;
 
 import android.content.Intent;
 import android.os.Bundle;

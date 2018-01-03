@@ -1,4 +1,4 @@
-package xyz.volgoak.wordlearning;
+package xyz.volgoak.wordlearning.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,10 @@ import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import xyz.volgoak.wordlearning.FragmentListener;
+import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.fragment.RedactorFragment;
+import xyz.volgoak.wordlearning.fragment.StartFragment;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 import xyz.volgoak.wordlearning.utils.GsonCreator;
 
@@ -17,7 +21,7 @@ import xyz.volgoak.wordlearning.utils.GsonCreator;
  * Created by Alexander Karachev on 07.05.2017.
  */
 
-public class MainActivity extends NavigationActivity implements FragmentListener{
+public class MainActivity extends NavigationActivity implements FragmentListener {
 
     public static final String TAG = "MainActivity";
     public static final String EXTRA_MODE = "extra_mode";

@@ -1,8 +1,10 @@
-package xyz.volgoak.wordlearning.data;
+package xyz.volgoak.wordlearning.entities;
 
 import com.google.gson.annotations.Expose;
 
 import java.util.List;
+
+import xyz.volgoak.wordlearning.data.Word;
 
 /**
  * Created by alex on 1/3/18.

@@ -7,7 +7,7 @@ import android.view.View;
 
 import java.util.List;
 
-import xyz.volgoak.wordlearning.data.Entity;
+import xyz.volgoak.wordlearning.entities.Entity;
 
 /**
  * Created by alex on 1/3/18.

@@ -1,9 +1,7 @@
 package xyz.volgoak.wordlearning.recycler;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.net.Uri;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ImageButton;
@@ -12,13 +10,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.io.File;
-import java.net.URI;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
-import xyz.volgoak.wordlearning.data.Entity;
-import xyz.volgoak.wordlearning.data.Set;
+import xyz.volgoak.wordlearning.entities.Entity;
+import xyz.volgoak.wordlearning.entities.Set;
 import xyz.volgoak.wordlearning.data.StorageContract;
 
 /**

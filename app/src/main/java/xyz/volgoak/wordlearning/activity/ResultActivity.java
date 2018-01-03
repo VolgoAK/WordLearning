@@ -1,4 +1,4 @@
-package xyz.volgoak.wordlearning;
+package xyz.volgoak.wordlearning.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,13 +6,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
+import xyz.volgoak.wordlearning.FragmentListener;
+import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.fragment.ResultsFragment;
+import xyz.volgoak.wordlearning.fragment.NoWordsFragment;
 import xyz.volgoak.wordlearning.training_utils.Results;
 
 /**
  * Created by Alexander Karachev on 07.05.2017.
  */
 
-public class ResultActivity extends AppCompatActivity implements FragmentListener{
+public class ResultActivity extends AppCompatActivity implements FragmentListener {
 
     public static final String EXTRA_TRAINING_RESULTS = "results";
 

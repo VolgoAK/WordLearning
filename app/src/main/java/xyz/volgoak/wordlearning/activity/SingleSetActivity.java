@@ -1,4 +1,4 @@
-package xyz.volgoak.wordlearning;
+package xyz.volgoak.wordlearning.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,12 +6,16 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import xyz.volgoak.wordlearning.FragmentListener;
+import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.fragment.SingleSetFragment;
+
 
 /**
  * Created by Alexander Karachev on 07.05.2017.
  */
 
-public class SingleSetActivity extends AppCompatActivity implements FragmentListener{
+public class SingleSetActivity extends AppCompatActivity implements FragmentListener {
 
     public static final String TAG = "SingleSetActivity";
     public static final String ID_EXTRA = "id_extra";

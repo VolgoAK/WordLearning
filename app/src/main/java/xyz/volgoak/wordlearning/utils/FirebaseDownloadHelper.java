@@ -2,7 +2,6 @@ package xyz.volgoak.wordlearning.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -30,7 +29,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import xyz.volgoak.wordlearning.R;
-import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.FirebaseContract;
 import xyz.volgoak.wordlearning.data.StorageContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
@@ -186,8 +184,8 @@ public class FirebaseDownloadHelper {
         mTitleImagesReference = FirebaseStorage.getInstance().getReference(FirebaseContract.TITLE_IMAGES_FOLDER);
 
         WordsDbAdapter adapter = new WordsDbAdapter();
-        List<xyz.volgoak.wordlearning.data.Set> sets = adapter.fetchAllSets();
-        for(xyz.volgoak.wordlearning.data.Set set : sets) {
+        List<xyz.volgoak.wordlearning.entities.Set> sets = adapter.fetchAllSets();
+        for(xyz.volgoak.wordlearning.entities.Set set : sets) {
             checkAndLoadImage(set.getImageUrl());
         }
     }

@@ -15,7 +15,7 @@ import com.google.android.gms.gcm.TaskParams;
 import com.google.firebase.auth.FirebaseAuth;
 
 import xyz.volgoak.wordlearning.R;
-import xyz.volgoak.wordlearning.SplashActivity;
+import xyz.volgoak.wordlearning.activity.SplashActivity;
 import xyz.volgoak.wordlearning.utils.FirebaseDownloadHelper;
 import xyz.volgoak.wordlearning.utils.SetsUpdatingInfo;
 

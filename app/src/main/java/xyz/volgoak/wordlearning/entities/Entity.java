@@ -1,4 +1,4 @@
-package xyz.volgoak.wordlearning.data;
+package xyz.volgoak.wordlearning.entities;
 
 /**
  * Created by alex on 1/3/18.

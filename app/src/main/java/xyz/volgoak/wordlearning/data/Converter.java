@@ -4,6 +4,9 @@ import android.database.Cursor;
 import java.util.ArrayList;
 import java.util.List;
 
+import xyz.volgoak.wordlearning.entities.Set;
+import xyz.volgoak.wordlearning.entities.Theme;
+
 
 /**
  * Created by alex on 1/3/18.

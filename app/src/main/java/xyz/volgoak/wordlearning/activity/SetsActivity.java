@@ -1,4 +1,4 @@
-package xyz.volgoak.wordlearning;
+package xyz.volgoak.wordlearning.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,9 +8,13 @@ import android.support.v4.view.GravityCompat;
 import android.view.MenuItem;
 import android.view.View;
 
+import xyz.volgoak.wordlearning.FragmentListener;
+import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.fragment.SingleSetFragment;
+import xyz.volgoak.wordlearning.fragment.WordSetsFragment;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
-public class SetsActivity extends NavigationActivity implements FragmentListener, WordSetsFragment.SetsFragmentListener{
+public class SetsActivity extends NavigationActivity implements FragmentListener, WordSetsFragment.SetsFragmentListener {
 
     private WordSetsFragment mSetsFragment;
     private SingleSetFragment mSingleSetFragment;

@@ -11,7 +11,8 @@ import android.util.Log;
 import java.util.List;
 
 import xyz.volgoak.wordlearning.WordsApp;
-import xyz.volgoak.wordlearning.utils.SetsLoader;
+import xyz.volgoak.wordlearning.entities.Set;
+import xyz.volgoak.wordlearning.entities.Theme;
 
 import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.IN_DICTIONARY;
 

@@ -1,11 +1,9 @@
-package xyz.volgoak.wordlearning.utils;
+package xyz.volgoak.wordlearning.entities;
 
 import com.google.gson.annotations.Expose;
 
 import java.util.List;
 
-import xyz.volgoak.wordlearning.data.Set;
-import xyz.volgoak.wordlearning.data.Theme;
 
 /**
  * Created by alex on 1/3/18.

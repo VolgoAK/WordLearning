@@ -1,10 +1,9 @@
-package xyz.volgoak.wordlearning;
+package xyz.volgoak.wordlearning.fragment;
 
 
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,9 +24,12 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import xyz.volgoak.wordlearning.FragmentListener;
+import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.activity.SingleSetActivity;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
-import xyz.volgoak.wordlearning.data.Set;
-import xyz.volgoak.wordlearning.data.Theme;
+import xyz.volgoak.wordlearning.entities.Set;
+import xyz.volgoak.wordlearning.entities.Theme;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.recycler.RecyclerAdapter;
 import xyz.volgoak.wordlearning.recycler.SetsRecyclerAdapter;
@@ -344,7 +346,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
 
     }
 
-    interface SetsFragmentListener{
+    public interface SetsFragmentListener{
         void startSet(long setId, View shared);
     }
 }

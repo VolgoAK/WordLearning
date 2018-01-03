@@ -1,20 +1,14 @@
-package xyz.volgoak.wordlearning;
+package xyz.volgoak.wordlearning.fragment;
 
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.database.Cursor;
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.CardView;
@@ -27,27 +21,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ListView;
 
 import com.bumptech.glide.Glide;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.util.List;
 
+import xyz.volgoak.wordlearning.FragmentListener;
+import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
-import xyz.volgoak.wordlearning.data.FirebaseContract;
-import xyz.volgoak.wordlearning.data.Set;
+import xyz.volgoak.wordlearning.entities.Set;
 import xyz.volgoak.wordlearning.data.StorageContract;
 import xyz.volgoak.wordlearning.data.Word;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding;
 import xyz.volgoak.wordlearning.recycler.MultiChoiceMode;
-import xyz.volgoak.wordlearning.recycler.RecyclerAdapter;
 import xyz.volgoak.wordlearning.recycler.WordsRecyclerAdapter;
-import xyz.volgoak.wordlearning.training_utils.Training;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
 

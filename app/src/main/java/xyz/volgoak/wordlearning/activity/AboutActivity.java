@@ -1,4 +1,4 @@
-package xyz.volgoak.wordlearning;
+package xyz.volgoak.wordlearning.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -14,6 +14,9 @@ import com.artitk.licensefragment.model.LicenseType;
 import com.artitk.licensefragment.support.v4.RecyclerViewLicenseFragment;
 
 import java.util.ArrayList;
+
+import xyz.volgoak.wordlearning.AboutAppFragment;
+import xyz.volgoak.wordlearning.R;
 
 /**
  * Created by Alexander Karachev on 07.05.2017.

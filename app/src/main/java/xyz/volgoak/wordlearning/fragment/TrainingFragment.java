@@ -1,7 +1,6 @@
-package xyz.volgoak.wordlearning;
+package xyz.volgoak.wordlearning.fragment;
 
 
-import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -13,22 +12,17 @@ import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPropertyAnimatorCompat;
-import android.support.v4.view.WindowCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.Window;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.Toast;
 
+import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.databinding.FragmentTrainingBinding;
 import xyz.volgoak.wordlearning.training_utils.Results;
 import xyz.volgoak.wordlearning.training_utils.Training;
@@ -300,7 +294,7 @@ public class TrainingFragment extends Fragment {
         return mTrainingType;
     }
 
-    interface ResultReceiver{
+    public interface ResultReceiver{
         void showResults(Results results);
     }
 }
