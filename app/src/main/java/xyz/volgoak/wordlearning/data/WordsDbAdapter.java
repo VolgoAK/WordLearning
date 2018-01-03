@@ -96,26 +96,6 @@ public class WordsDbAdapter {
         return mDb.insert(DatabaseContract.Words.TABLE_NAME, null, wordValues);
     }
 
-    /*private void insertDefaultDictionary(){
-//        Log.d(TAG, "insertDefaultDictionary");
-
-        insertWord("Hello", "Привет");
-        insertWord("Name", "Имя");
-        insertWord("Human", "Человек");
-        insertWord("He", "Он");
-        insertWord("She", "Она");
-        insertWord("Where", "Где");
-        insertWord("When", "Когда");
-        insertWord("Why", "Почему");
-        insertWord("Who", "Кто");
-        insertWord("What", "Что");
-        insertWord("Time", "Время");
-        insertWord("Country", "Страна");
-
-        SetsLoader.loadStartBase(mContext);
-//        SetsLoader.checkForDbUpdate(mContext);
-    }
-*/
     public long insertSet(ContentValues set){
 //        Log.d(TAG, "insertSet: ");
         return mDb.insert(DatabaseContract.Sets.TABLE_NAME, null, set);
@@ -216,8 +196,11 @@ public class WordsDbAdapter {
         return words;
     }
 
-    public Cursor fetchAllThemes(){
-        return mDb.rawQuery("SELECT *  FROM " + DatabaseContract.Themes.TABLE_NAME, null);
+    public List<Theme> fetchAllThemes(){
+        Cursor cursor = mDb.rawQuery("SELECT *  FROM " + DatabaseContract.Themes.TABLE_NAME, null);
+        List<Theme> themes = Converter.convertThmes(cursor);
+        cursor.close();
+        return themes;
     }
 
     public String[] getVariants(int id, String column, long setId){

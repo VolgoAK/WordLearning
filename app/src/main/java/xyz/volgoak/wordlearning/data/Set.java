@@ -1,20 +1,37 @@
 package xyz.volgoak.wordlearning.data;
 
+import com.google.gson.annotations.Expose;
+
+import java.util.List;
+
 /**
  * Created by alex on 1/3/18.
  */
 
 public class Set implements Entity{
 
+    @Expose
     private String name;
+    @Expose
     private String description;
+    @Expose
     private String imageUrl;
+    @Expose
     private String lang;
     private long id;
+
+    @Expose
+    private List<Word> words;
+
     private int wordsCount;
     private int status;
     private int visibitity;
+
+    @Expose
     private int themeCode;
+
+    public Set() {
+    }
 
     public Set(String name) {
         this.name = name;
@@ -105,6 +122,14 @@ public class Set implements Entity{
 
     public void setThemeCode(int themeCode) {
         this.themeCode = themeCode;
+    }
+
+    public List<Word> getWords() {
+        return words;
+    }
+
+    public void setWords(List<Word> words) {
+        this.words = words;
     }
 
     @Override

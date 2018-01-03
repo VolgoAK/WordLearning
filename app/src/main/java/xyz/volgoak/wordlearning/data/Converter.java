@@ -1,11 +1,9 @@
 package xyz.volgoak.wordlearning.data;
 
 import android.database.Cursor;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * Created by alex on 1/3/18.
@@ -56,6 +54,22 @@ public class Converter {
         word.setStatus(cursor.getInt(cursor.getColumnIndex(DatabaseContract.Words.COLUMN_STATUS)));
         word.setStudied(cursor.getInt(cursor.getColumnIndex(DatabaseContract.Words.COLUMN_STUDIED)));
         return word;
+    }
+
+    public static List<Theme> convertThmes(Cursor themesCursor) {
+        if(!themesCursor.moveToFirst()) return null;
+        List<Theme> themes = new ArrayList<>();
+        do {
+            themes.add(convertTheme(themesCursor));
+        } while (themesCursor.moveToNext());
+        return themes;
+    }
+
+    public static Theme convertTheme(Cursor cursor) {
+        Theme theme = new Theme();
+        theme.setCode(cursor.getInt(cursor.getColumnIndex(DatabaseContract.Themes.COLUMN_CODE)));
+        theme.setName(cursor.getString(cursor.getColumnIndex(DatabaseContract.Themes.COLUMN_NAME)));
+        return theme;
     }
 
 }

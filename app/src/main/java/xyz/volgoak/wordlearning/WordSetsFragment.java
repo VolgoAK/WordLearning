@@ -27,6 +27,7 @@ import java.util.List;
 
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.Set;
+import xyz.volgoak.wordlearning.data.Theme;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.recycler.RecyclerAdapter;
 import xyz.volgoak.wordlearning.recycler.SetsRecyclerAdapter;
@@ -171,14 +172,10 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         allThemes.setCheckable(true);
         allThemes.setChecked(true);
 
-        Cursor themesCursor = mDbAdapter.fetchAllThemes();
-        int nameColumn = themesCursor.getColumnIndex(DatabaseContract.Themes.COLUMN_NAME);
-        int codeColumn = themesCursor.getColumnIndex(DatabaseContract.Themes.COLUMN_CODE);
-
-        themesCursor.moveToFirst();
-        do{
-            String name = themesCursor.getString(nameColumn);
-            int code = themesCursor.getInt(codeColumn);
+        List<Theme> themes = mDbAdapter.fetchAllThemes();
+        for(Theme theme : themes) {
+            String name = theme.getName();
+            int code = theme.getCode();
             MenuItem item = popupMenu.getMenu().add(1, code, 0, name);
             item.setCheckable(true);
             if(code == mSelectedTheme){
@@ -186,8 +183,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
                 item.setChecked(true);
                 allThemes.setChecked(false);
             }
-        }while( themesCursor.moveToNext());
-        themesCursor.close();
+        }
 
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override

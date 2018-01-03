@@ -1,13 +1,18 @@
 package xyz.volgoak.wordlearning.data;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Created by alex on 1/3/18.
  */
 
 public class Word implements Entity{
     private long id;
+    @Expose
     private String word;
+    @Expose
     private String translation;
+    @Expose
     private String transcription;
     private int trainedWt;
     private int trainedTw;

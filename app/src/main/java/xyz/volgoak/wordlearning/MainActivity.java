@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import com.google.firebase.auth.FirebaseAuth;
 
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
+import xyz.volgoak.wordlearning.utils.GsonCreator;
 
 /**
  * Created by Alexander Karachev on 07.05.2017.
@@ -61,7 +62,7 @@ public class MainActivity extends NavigationActivity implements FragmentListener
     @Override
     protected void onStart(){
         mAuth.signInAnonymously();
-
+        new GsonCreator().createGson(this);
         super.onStart();
     }
 
