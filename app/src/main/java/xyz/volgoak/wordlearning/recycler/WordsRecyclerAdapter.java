@@ -1,7 +1,6 @@
 package xyz.volgoak.wordlearning.recycler;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import xyz.volgoak.wordlearning.R;
-import xyz.volgoak.wordlearning.data.Word;
+import xyz.volgoak.wordlearning.entities.Word;
 
 /**
  * Created by Volgoak on 18.08.2017.

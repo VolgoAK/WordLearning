@@ -7,7 +7,7 @@ import android.view.View;
 
 import java.util.List;
 
-import xyz.volgoak.wordlearning.entities.Entity;
+import xyz.volgoak.wordlearning.entities.DataEntity;
 
 /**
  * Created by alex on 1/3/18.
@@ -17,14 +17,14 @@ public abstract class RecyclerAdapter<RC extends NewRowController> extends Recyc
     public static final String TAG = "CursorRecyclerAdapter";
 
     protected Context mContext;
-    protected List<Entity> mEntities;
+    protected List<DataEntity> mEntities;
     private AdapterClickListener mAdapterClickListener;
     private AdapterLongClickListener mAdapterLongClickListener;
     private RecyclerView mRecyclerView;
     private boolean mSelectable;
     private ChoiceMode mChoiceMode;
 
-    public RecyclerAdapter(Context context, List<Entity> entities, RecyclerView rv){
+    public RecyclerAdapter(Context context, List<DataEntity> entities, RecyclerView rv){
         mContext = context;
         mEntities = entities;
         mRecyclerView = rv;
@@ -82,12 +82,12 @@ public abstract class RecyclerAdapter<RC extends NewRowController> extends Recyc
         }else setSelectable(false);
     }
 
-    public void changeData(List<Entity> entities){
+    public void changeData(List<DataEntity> entities){
         mEntities = entities;
         notifyDataSetChanged();
     }
 
-    public List<Entity> getData(){
+    public List<DataEntity> getData(){
         return mEntities;
     }
 
@@ -132,10 +132,10 @@ public abstract class RecyclerAdapter<RC extends NewRowController> extends Recyc
         return false;
     }
 
-    public void notifyEntityChanged(Entity entity) {
-        int position = mEntities.indexOf(entity);
+    public void notifyEntityChanged(DataEntity dataEntity) {
+        int position = mEntities.indexOf(dataEntity);
         if(position != -1) {
-            mEntities.set(position, entity);
+            mEntities.set(position, dataEntity);
             notifyItemChanged(position);
         }
     }

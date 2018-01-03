@@ -1,7 +1,6 @@
 package xyz.volgoak.wordlearning.fragment;
 
 import android.app.Dialog;
-import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,7 +19,7 @@ import java.util.List;
 
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
-import xyz.volgoak.wordlearning.data.Word;
+import xyz.volgoak.wordlearning.entities.Word;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.databinding.FragmentRedactorBinding;
 import xyz.volgoak.wordlearning.recycler.RecyclerAdapter;

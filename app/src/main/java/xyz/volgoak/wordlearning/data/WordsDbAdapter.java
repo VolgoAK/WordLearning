@@ -1,5 +1,6 @@
 package xyz.volgoak.wordlearning.data;
 
+import android.arch.persistence.room.Room;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -13,6 +14,7 @@ import java.util.List;
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.entities.Set;
 import xyz.volgoak.wordlearning.entities.Theme;
+import xyz.volgoak.wordlearning.entities.Word;
 
 import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.IN_DICTIONARY;
 
@@ -72,6 +74,7 @@ public class WordsDbAdapter {
         return mDb.insert(DatabaseContract.WordLinks.TABLE_NAME, null, linkValues);
     }
 
+    //!!!!!!!!
     //for adding words via dictionary
     public long insertWord(String word, String translation){
         long id = getWordId(word);
@@ -92,6 +95,7 @@ public class WordsDbAdapter {
         }
     }
 
+//    !!!!!!!!!!!!!!!!!!
     // TODO: 1/3/18 pass word instead of values
     private long insertWord(ContentValues wordValues){
         return mDb.insert(DatabaseContract.Words.TABLE_NAME, null, wordValues);
@@ -116,6 +120,7 @@ public class WordsDbAdapter {
         return cursor;
     }
 
+    //!!!!!!!!!!
     /***
      * Returns cursor with words sorted by trained status
      * @param trainedType type of training for sorting

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.volgoak.wordlearning.data.DatabaseContract;
-import xyz.volgoak.wordlearning.data.Word;
+import xyz.volgoak.wordlearning.entities.Word;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 
 import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_TRAINED_TW;

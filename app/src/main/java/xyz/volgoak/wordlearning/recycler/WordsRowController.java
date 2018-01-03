@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
-import xyz.volgoak.wordlearning.entities.Entity;
-import xyz.volgoak.wordlearning.data.Word;
+import xyz.volgoak.wordlearning.entities.DataEntity;
+import xyz.volgoak.wordlearning.entities.Word;
 import xyz.volgoak.wordlearning.utils.WordSpeaker;
 
 /**
@@ -50,8 +50,8 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
     }
 
     @Override
-    public void bindController(Entity entity) {
-        Word word = (Word) entity;
+    public void bindController(DataEntity dataEntity) {
+        Word word = (Word) dataEntity;
 
         wordText.setText(word.getWord());
         translationText.setText(word.getTranslation());

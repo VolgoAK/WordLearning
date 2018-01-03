@@ -12,7 +12,7 @@ import java.util.List;
 
 import xyz.volgoak.wordlearning.entities.Dictionary;
 import xyz.volgoak.wordlearning.entities.Set;
-import xyz.volgoak.wordlearning.data.Word;
+import xyz.volgoak.wordlearning.entities.Word;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 
 /**

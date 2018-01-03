@@ -1,5 +1,6 @@
 package xyz.volgoak.wordlearning.activity;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.data.AppDatabase;
 import xyz.volgoak.wordlearning.fragment.RedactorFragment;
 import xyz.volgoak.wordlearning.fragment.StartFragment;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
@@ -66,8 +68,9 @@ public class MainActivity extends NavigationActivity implements FragmentListener
     @Override
     protected void onStart(){
         mAuth.signInAnonymously();
-        new GsonCreator().createGson(this);
+//        new GsonCreator().createGson(this);
         super.onStart();
+
     }
 
     @Override

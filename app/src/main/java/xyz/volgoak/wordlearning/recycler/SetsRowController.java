@@ -14,7 +14,7 @@ import java.io.File;
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
-import xyz.volgoak.wordlearning.entities.Entity;
+import xyz.volgoak.wordlearning.entities.DataEntity;
 import xyz.volgoak.wordlearning.entities.Set;
 import xyz.volgoak.wordlearning.data.StorageContract;
 
@@ -50,8 +50,8 @@ import xyz.volgoak.wordlearning.data.StorageContract;
     }
 
     @Override
-    public void bindController(Entity entity) {
-        Set set = (Set) entity;
+    public void bindController(DataEntity dataEntity) {
+        Set set = (Set) dataEntity;
         setNameTv.setText(set.getName());
         setDescriptionTv.setText(set.getDescription());
 

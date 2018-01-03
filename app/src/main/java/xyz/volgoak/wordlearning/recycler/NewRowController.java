@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import xyz.volgoak.wordlearning.entities.Entity;
+import xyz.volgoak.wordlearning.entities.DataEntity;
 
 /**
  * Created by alex on 1/3/18.
@@ -24,7 +24,7 @@ public abstract class NewRowController extends RecyclerView.ViewHolder{
         mAdapter = adapter;
     }
 
-    public abstract void bindController(Entity entity);
+    public abstract void bindController(DataEntity dataEntity);
 
     public abstract void setChecked(boolean checked);
 

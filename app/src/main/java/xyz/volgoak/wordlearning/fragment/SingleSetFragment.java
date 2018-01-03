@@ -32,7 +32,7 @@ import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.entities.Set;
 import xyz.volgoak.wordlearning.data.StorageContract;
-import xyz.volgoak.wordlearning.data.Word;
+import xyz.volgoak.wordlearning.entities.Word;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding;
 import xyz.volgoak.wordlearning.recycler.MultiChoiceMode;

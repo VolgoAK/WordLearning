@@ -1,36 +1,53 @@
 package xyz.volgoak.wordlearning.entities;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 
 import java.util.List;
-
-import xyz.volgoak.wordlearning.data.Word;
+import xyz.volgoak.wordlearning.data.DatabaseContract.*;
 
 /**
  * Created by alex on 1/3/18.
  */
 
-public class Set implements Entity{
+@Entity(tableName = Sets.TABLE_NAME, foreignKeys = @ForeignKey(entity = Theme.class, parentColumns = Themes.COLUMN_CODE,
+        childColumns = Sets.COLUMN_THEME_CODE))
+public class Set implements DataEntity {
 
-    @Expose
-    private String name;
-    @Expose
-    private String description;
-    @Expose
-    private String imageUrl;
-    @Expose
-    private String lang;
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = Sets._ID)
     private long id;
 
     @Expose
-    private List<Word> words;
-
+    @ColumnInfo(name = Sets.COLUMN_NAME)
+    private String name;
+    @Expose
+    @ColumnInfo(name = Sets.COLUMN_DESCRIPTION)
+    private String description;
+    @Expose
+    @ColumnInfo(name = Sets.COLUMN_IMAGE_URL)
+    private String imageUrl;
+    @Expose
+    @ColumnInfo(name = Sets.COLUMN_LANG)
+    private String lang;
+    @ColumnInfo(name = Sets.COLUMN_NUM_OF_WORDS)
     private int wordsCount;
+    @ColumnInfo(name = Sets.COLUMN_STATUS)
     private int status;
+    @ColumnInfo(name = Sets.COLUMN_VISIBILITY)
     private int visibitity;
 
     @Expose
+    @ColumnInfo(name = Sets.COLUMN_THEME_CODE)
     private int themeCode;
+    @Expose
+    @Ignore
+    private List<Word> words;
 
     public Set() {
     }

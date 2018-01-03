@@ -6,6 +6,7 @@ import java.util.List;
 
 import xyz.volgoak.wordlearning.entities.Set;
 import xyz.volgoak.wordlearning.entities.Theme;
+import xyz.volgoak.wordlearning.entities.Word;
 
 
 /**
