@@ -15,5 +15,9 @@ import xyz.volgoak.wordlearning.entities.Word;
 @Database(entities = {Word.class, Set.class, Link.class, Theme.class},
     version = 16, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase{
-    public abstract WordDao wordDao();
+    public abstract WordDao getWordDao();
+    public abstract SetsDao getSetsDao();
+    public abstract LinkDao getLinkDao();
+    public abstract ThemeDao getThemeDao();
+    public abstract InfoDao getInfoDao();
 }

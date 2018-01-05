@@ -188,7 +188,7 @@ public class WordsDbAdapter {
         return setList;
     }
 
-
+//    !!!!!!!!!!!
     public List<Word> fetchWordsBySetId(long id){
         String query = "SELECT * FROM "+DatabaseContract.Words.TABLE_NAME +
                 " WHERE "+DatabaseContract.Words._ID+" IN " +
@@ -301,6 +301,7 @@ public class WordsDbAdapter {
 
     }
 
+    //!!!!!!!!
     public int resetWordProgress(Long...ids){
         String[] stringIds = new String[ids.length];
         for(int a = 0; a < ids.length; a++){

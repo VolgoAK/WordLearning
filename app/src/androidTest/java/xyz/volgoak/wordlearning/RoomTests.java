@@ -29,7 +29,7 @@ public class RoomTests {
     public void initDb(){
         Context context = InstrumentationRegistry.getTargetContext();
         database = Room.databaseBuilder(context, AppDatabase.class, DatabaseContract.DB_NAME).build();
-        dao = database.wordDao();
+        dao = database.getWordDao();
     }
 
     @Test
