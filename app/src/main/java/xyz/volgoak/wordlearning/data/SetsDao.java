@@ -17,6 +17,9 @@ import xyz.volgoak.wordlearning.entities.Set;
 public interface SetsDao {
 
     @Insert
+    long insertSet(Set set);
+
+    @Insert
     void insertSets(Set...sets);
 
     @Update

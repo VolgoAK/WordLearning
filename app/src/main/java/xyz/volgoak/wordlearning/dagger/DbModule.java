@@ -2,7 +2,6 @@ package xyz.volgoak.wordlearning.dagger;
 
 import android.app.Application;
 import android.arch.persistence.room.Room;
-import android.arch.persistence.room.RoomDatabase;
 
 import javax.inject.Singleton;
 
@@ -16,7 +15,6 @@ import xyz.volgoak.wordlearning.data.LinkDao;
 import xyz.volgoak.wordlearning.data.SetsDao;
 import xyz.volgoak.wordlearning.data.ThemeDao;
 import xyz.volgoak.wordlearning.data.WordDao;
-import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 
 /**
  * Created by alex on 1/5/18.

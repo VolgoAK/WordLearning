@@ -2,6 +2,9 @@ package xyz.volgoak.wordlearning.data;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.Query;
+
+import java.util.List;
 
 import xyz.volgoak.wordlearning.entities.Theme;
 
@@ -14,4 +17,7 @@ public interface ThemeDao {
 
     @Insert
     int insertTheme(Theme theme);
+
+    @Query("SELECT * FROM THEMES_TABLE")
+    List<Theme> getAllThemes();
 }
