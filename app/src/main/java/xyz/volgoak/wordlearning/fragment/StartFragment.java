@@ -14,11 +14,14 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 
+import javax.inject.Inject;
+
 import xyz.volgoak.wordlearning.BR;
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.WordsApp;
+import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.data.DictionaryInfo;
-import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.databinding.FragmentStartBinding;
 import xyz.volgoak.wordlearning.utils.AppearingAnimator;
 
@@ -30,11 +33,14 @@ import xyz.volgoak.wordlearning.utils.AppearingAnimator;
  * A simple {@link Fragment} subclass.
  */
 public class StartFragment extends Fragment {
-    
+
     public static final String TAG = StartFragment.class.getSimpleName();
 
     private FragmentListener mListener;
     private FragmentStartBinding mBinding;
+
+    @Inject
+    DataProvider mDataProvider;
 
     private boolean mAppearanceAnimated;
 
@@ -46,6 +52,7 @@ public class StartFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        WordsApp.getsComponent().inject(this);
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_start, container, false);
         //run animation when views created
         ViewTreeObserver vto = mBinding.getRoot().getViewTreeObserver();
@@ -53,7 +60,7 @@ public class StartFragment extends Fragment {
             @Override
             public void onGlobalLayout() {
                 Log.d(TAG, "onGlobalLayout: createAnimator");
-                if(!mAppearanceAnimated){
+                if (!mAppearanceAnimated) {
                     mAppearanceAnimated = true;
                     runAppearAnimation();
                 }
@@ -63,7 +70,7 @@ public class StartFragment extends Fragment {
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
         Log.d(TAG, "onStart: ");
         mBinding.setListener(mListener);
@@ -71,8 +78,8 @@ public class StartFragment extends Fragment {
         mListener.setActionBarTitle(getString(R.string.app_name));
 
         //load dictionary info
-        WordsDbAdapter adapter = new WordsDbAdapter();
-        DictionaryInfo info = adapter.getDictionaryInfo();
+
+        DictionaryInfo info = mDataProvider.getDictionaryInfo();
         mBinding.tvWordsDicStartF.setText(getString(R.string.words_in_dictionary, info.getWordsInDictionary()));
         mBinding.tvWordsLearnedStartF.setText(getString(R.string.words_learned, info.getLearnedWords(), info.getAllWords()));
 
@@ -82,18 +89,18 @@ public class StartFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof FragmentListener){
+        if (context instanceof FragmentListener) {
             mListener = (FragmentListener) context;
-        }else throw new RuntimeException(context.toString() + " must implement FragmentListener");
+        } else throw new RuntimeException(context.toString() + " must implement FragmentListener");
     }
 
     @Override
-    public void onDetach(){
+    public void onDetach() {
         super.onDetach();
         mListener = null;
     }
 
-    private void runAppearAnimation(){
+    private void runAppearAnimation() {
         float pathFromLeft = mBinding.cvTransWordMain.getX() + mBinding.cvTransWordMain.getWidth();
         /*ValueAnimator animator = ValueAnimator.ofFloat(pathFromLeft, 0);
         animator.setInterpolator(new MetallBounceInterpoltor());

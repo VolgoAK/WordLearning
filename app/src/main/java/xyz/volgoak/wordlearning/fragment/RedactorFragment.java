@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +18,14 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.WordsApp;
+import xyz.volgoak.wordlearning.data.DataProvider;
+import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.entities.Word;
-import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.databinding.FragmentRedactorBinding;
 import xyz.volgoak.wordlearning.recycler.RecyclerAdapter;
 import xyz.volgoak.wordlearning.recycler.WordsRecyclerAdapter;
@@ -34,11 +39,15 @@ import xyz.volgoak.wordlearning.recycler.WordsRecyclerAdapter;
  */
 public class RedactorFragment extends Fragment{
 
-    private WordsDbAdapter mDbAdapter;
+    public static final String TAG = RedactorFragment.class.getSimpleName();
+
+    @Inject
+    DataProvider mDataProvider;
     private WordsRecyclerAdapter mRecyclerAdapter;
     private FragmentListener mFragmentListener;
 
     private FragmentRedactorBinding mBinding;
+    private List<Word> mWords;
 
     public RedactorFragment() {
         // Required empty public constructor
@@ -48,6 +57,7 @@ public class RedactorFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        WordsApp.getsComponent().inject(this);
         // Inflate the layout for this fragment
         mFragmentListener = (FragmentListener) getActivity();
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_redactor, container, false);
@@ -63,10 +73,11 @@ public class RedactorFragment extends Fragment{
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mBinding.rvRedactor.setLayoutManager(layoutManager);
 
-        mDbAdapter = new WordsDbAdapter();
-        List<Word> words = mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE, -1);
+        mWords = mDataProvider.getDictionaryWords();
 
-        mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), words, mBinding.rvRedactor);
+        Log.d(TAG, "onStart: words " + mWords.size());
+
+        mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), mWords, mBinding.rvRedactor);
         mBinding.rvRedactor.setAdapter(mRecyclerAdapter);
 
         mRecyclerAdapter.setAdapterClickListener(new RecyclerAdapter.AdapterClickListener() {
@@ -88,24 +99,24 @@ public class RedactorFragment extends Fragment{
         TextView dialogTitle = (TextView) dialog.findViewById(R.id.dialog_title);
         dialogTitle.setText(R.string.what_to_do);
 
-        Button toTrainingButton = (Button) dialog.findViewById(R.id.dialog_bt_one);
+        Button toTrainingButton = dialog.findViewById(R.id.dialog_bt_one);
         toTrainingButton.setText(getString(R.string.send_to_training));
         toTrainingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDbAdapter.resetWordProgress(id);
-                mRecyclerAdapter.changeData(mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE, -1));
+                mDataProvider.resetWordProgress(id);
+                mRecyclerAdapter.changeData(mDataProvider.getDictionaryWords());
                 dialog.dismiss();
             }
         });
 
-        Button deleteButton = (Button) dialog.findViewById(R.id.dialog_bt_two);
+        Button deleteButton = dialog.findViewById(R.id.dialog_bt_two);
         deleteButton.setText(getString(R.string.delete));
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDbAdapter.deleteOrHideWordById(id);
-                mRecyclerAdapter.changeData(mDbAdapter.fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE, -1));
+                mDataProvider.deleteOrHideWordById(id);
+                mRecyclerAdapter.changeData(mDataProvider.getDictionaryWords());
                 dialog.dismiss();
             }
         });
@@ -118,27 +129,28 @@ public class RedactorFragment extends Fragment{
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_add_word);
 
-        EditText wordEt = (EditText) dialog.findViewById(R.id.et_word_redactor_dialog);
-        EditText translationEt = (EditText) dialog.findViewById(R.id.et_translation_redactor_dialog);
+        EditText wordEt = dialog.findViewById(R.id.et_word_redactor_dialog);
+        EditText translationEt = dialog.findViewById(R.id.et_translation_redactor_dialog);
 
-        Button addButton = (Button) dialog.findViewById(R.id.bt_add_redactor_dialog);
+        Button addButton = dialog.findViewById(R.id.bt_add_redactor_dialog);
         addButton.setOnClickListener((v) -> {
             String word = wordEt.getText().toString();
             String translation = translationEt.getText().toString();
             if(!word.isEmpty() && !translation.isEmpty()){
-                mDbAdapter.insertWord(word, translation);
-                mRecyclerAdapter.changeData(mDbAdapter
-                        .fetchWordsByTrained(null, Integer.MAX_VALUE, Integer.MAX_VALUE, -1));
+                Word newWord = new Word(word, translation);
+                newWord.setStatus(DatabaseContract.Words.IN_DICTIONARY);
+                mDataProvider.insertWord(newWord);
+                mRecyclerAdapter.changeData(mDataProvider.getDictionaryWords());
             }else{
                 Toast.makeText(getContext(), R.string.fields_empty_message, Toast.LENGTH_LONG).show();
             }
             dialog.dismiss();
         });
 
-        Button cancelButton = (Button) dialog.findViewById(R.id.bt_cancel_redactor_dialog);
+        Button cancelButton = dialog.findViewById(R.id.bt_cancel_redactor_dialog);
         cancelButton.setOnClickListener((v) -> dialog.dismiss());
 
-        Toolbar toolbar = (Toolbar) dialog.findViewById(R.id.dialog_add_word_toolbar);
+        Toolbar toolbar = dialog.findViewById(R.id.dialog_add_word_toolbar);
         toolbar.setTitle(R.string.new_word);
 
         dialog.show();

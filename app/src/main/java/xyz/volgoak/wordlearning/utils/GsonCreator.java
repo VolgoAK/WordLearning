@@ -13,7 +13,6 @@ import java.util.List;
 import xyz.volgoak.wordlearning.entities.Dictionary;
 import xyz.volgoak.wordlearning.entities.Set;
 import xyz.volgoak.wordlearning.entities.Word;
-import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 
 /**
  * Created by alex on 1/3/18.
@@ -22,7 +21,7 @@ import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 public class GsonCreator {
 
     public void createGson(Context context) {
-        GsonBuilder gsonBuilder = new GsonBuilder();
+        /*GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
         gsonBuilder.disableHtmlEscaping();
         gsonBuilder.setPrettyPrinting();
@@ -47,6 +46,6 @@ public class GsonCreator {
             writer.close();
         }catch (Exception ex) {
             ex.printStackTrace();
-        }
+        }*/
     }
 }

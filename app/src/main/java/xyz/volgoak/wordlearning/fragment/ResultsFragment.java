@@ -9,9 +9,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
-import xyz.volgoak.wordlearning.data.WordsDbAdapter;
+import xyz.volgoak.wordlearning.WordsApp;
+import xyz.volgoak.wordlearning.data.DataProvider;
+import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.training_utils.Results;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
@@ -25,6 +29,8 @@ public class ResultsFragment extends Fragment {
 
     private Results mResults;
     private FragmentListener mListener;
+    @Inject
+    DataProvider mProvider;
 
     public ResultsFragment() {
         // Required empty public constructor
@@ -41,6 +47,7 @@ public class ResultsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        WordsApp.getsComponent().inject(this);
         return inflater.inflate(R.layout.fragment_results, container, false);
     }
 
@@ -111,9 +118,9 @@ public class ResultsFragment extends Fragment {
     }
 
     private void updateWordsStatus(){
-        WordsDbAdapter adapter = new WordsDbAdapter();
+        // TODO: 1/7/18 create update machanism
         for(Long id : mResults.idsForUpdate){
-            adapter.changeTrainedStatus(id, WordsDbAdapter.INCREASE, mResults.trainedType);
+//            adapter.changeTrainedStatus(id, WordsDbAdapter.INCREASE, mResults.trainedType);
         }
     }
 

@@ -4,6 +4,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
+import android.support.annotation.NonNull;
 
 import java.util.List;
 
@@ -26,10 +27,16 @@ public interface WordDao {
     @Update
     void udateWords(Word...words);
 
+    @Query("SELECT * FROM words_table WHERE _id = :id")
+    Word getWordById(long id);
+
+    @Query("SELECT * FROM words_table WHERE STATUS=" + Words.IN_DICTIONARY)
+    List<Word> getDictionaryWords();
+
     @Query("SELECT * FROM words_table WHERE STATUS = "+Words.IN_DICTIONARY
         + " AND :trainedType < :trainedLimit "
         + " ORDER BY :trainedType LIMIT :wordsLimit")
-    List<Word> getWordsByTrained(String trainedType, int wordsLimit, int trainedLimit);
+    List<Word> getWordsByTrained(@NonNull String trainedType, int wordsLimit, int trainedLimit);
 
     @Query("SELECT * FROM words_table WHERE _id IN "
             + "(SELECT "+WordLinks.COLUMN_WORD_ID+" FROM "+WordLinks.TABLE_NAME

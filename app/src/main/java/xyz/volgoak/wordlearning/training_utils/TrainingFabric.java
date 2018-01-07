@@ -4,13 +4,15 @@ package xyz.volgoak.wordlearning.training_utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import xyz.volgoak.wordlearning.WordsApp;
+import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.entities.Word;
-import xyz.volgoak.wordlearning.data.WordsDbAdapter;
+
 
 import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_TRAINED_TW;
 import static xyz.volgoak.wordlearning.data.DatabaseContract.Words.COLUMN_TRAINED_WT;
-import static xyz.volgoak.wordlearning.data.WordsDbAdapter.TRAINING_LIMIT;
+
 
 
 /**
@@ -20,25 +22,27 @@ public abstract class TrainingFabric {
 
     public final static int WORD_TRANSLATION = 0;
     public final static int TRANSLATION_WORD = 1;
+    public static final int TRAINING_LIMIT = 4;
 
 
-    public static Training getTraining(int trainingType, long setId){
+
+    public static Training getTraining(int trainingType, long setId, DataProvider provider){
 
         String variantsColumnString = "";
         List<Word> wordList = null;
 
-        WordsDbAdapter dbAdapter = new WordsDbAdapter();
+
 
         GetWord wordGetter;
         GetWord variantsGetter;
 
         if(trainingType == WORD_TRANSLATION){
-            wordList = dbAdapter.fetchWordsByTrained(COLUMN_TRAINED_WT, 10, TRAINING_LIMIT, setId);
+            wordList = provider.getWordsByTrained(COLUMN_TRAINED_WT, 10, TRAINING_LIMIT);
             wordGetter = Word::getWord;
             variantsGetter = Word::getTranslation;
             variantsColumnString = DatabaseContract.Words.COLUMN_TRANSLATION;
         }else if(trainingType == TRANSLATION_WORD){
-            wordList = dbAdapter.fetchWordsByTrained(COLUMN_TRAINED_TW, 10,TRAINING_LIMIT, setId);
+            wordList = provider.getWordsByTrained(COLUMN_TRAINED_TW, 10,TRAINING_LIMIT);
             wordGetter = Word::getTranslation;
             variantsGetter = Word::getWord;
             variantsColumnString = DatabaseContract.Words.COLUMN_WORD;
@@ -54,7 +58,8 @@ public abstract class TrainingFabric {
         for(Word w : wordList) {
             String word = wordGetter.getString(w);
             String translation = variantsGetter.getString(w);
-            String[] vars = dbAdapter.getVariants((int)w.getId(), variantsColumnString, setId);
+            // TODO: 1/7/18 variants
+            String[] vars = new String[]{"One", "Two", "Three"};
             PlayWord playWord = new PlayWord(word, translation, vars, (int) w.getId());
             playWords.add(playWord);
         }

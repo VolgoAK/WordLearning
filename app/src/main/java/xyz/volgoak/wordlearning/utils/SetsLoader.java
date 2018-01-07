@@ -28,7 +28,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
-import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.entities.Theme;
 import xyz.volgoak.wordlearning.entities.Word;
 
@@ -90,7 +89,7 @@ public final class SetsLoader {
      */
     public static SetsUpdatingInfo loadStartBase(Context context) {
         SetsUpdatingInfo info = new SetsUpdatingInfo();
-        WordsDbAdapter dbAdapter = new WordsDbAdapter();
+        /*WordsDbAdapter dbAdapter = new WordsDbAdapter();
         try {
             dbAdapter.beginTransaction();
             // TODO: 22.09.2017 move this to other method, or load from xml file
@@ -117,7 +116,7 @@ public final class SetsLoader {
             ex.printStackTrace();
         } finally {
             dbAdapter.endTransaction(false);
-        }
+        }*/
         return info;
     }
 
@@ -163,8 +162,8 @@ public final class SetsLoader {
         return doc;
     }
 
-    static SetsUpdatingInfo insertSetsIntoDb(Document document, WordsDbAdapter dbAdapter) {
-        SetsUpdatingInfo info = new SetsUpdatingInfo();
+    static SetsUpdatingInfo insertSetsIntoDb(Document document) {
+        /*SetsUpdatingInfo info = new SetsUpdatingInfo();
 
         Element rootElement = document.getDocumentElement();
         rootElement.normalize();
@@ -247,11 +246,9 @@ public final class SetsLoader {
                     info.incrementWordsAdded();
                 }
             }
-        }
+        }*/
 
-        Log.d(TAG, "added sets " + info.getSetsAdded());
-        Log.d(TAG, "added words " + info.getWordsAdded());
-        return info;
+        return null;
     }
 
     private static String capitalize(String string) {

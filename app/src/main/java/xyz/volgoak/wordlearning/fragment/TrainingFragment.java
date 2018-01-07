@@ -22,7 +22,11 @@ import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.Toast;
 
+import javax.inject.Inject;
+
 import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.WordsApp;
+import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.databinding.FragmentTrainingBinding;
 import xyz.volgoak.wordlearning.training_utils.Results;
 import xyz.volgoak.wordlearning.training_utils.Training;
@@ -52,6 +56,9 @@ public class TrainingFragment extends Fragment {
 
     private Training mTraining;
     private TrainingWord mTrainingWord;
+
+    @Inject
+    DataProvider mDataProvider;
 
     private FragmentTrainingBinding mBinding;
 
@@ -84,6 +91,8 @@ public class TrainingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        WordsApp.getsComponent().inject(this);
+
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_training, container, false);
         mBinding.setFragment(this);
 
@@ -102,7 +111,7 @@ public class TrainingFragment extends Fragment {
             }
         }else {
             mAnswered.set(false);
-            mTraining = TrainingFabric.getTraining(mTrainingType, mSetId);
+            mTraining = TrainingFabric.getTraining(mTrainingType, mSetId, mDataProvider);
             //if training is null, we have to go to the dictionary
             if(mTraining != null) {
                 mTrainingWord = mTraining.getFirstWord();

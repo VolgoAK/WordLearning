@@ -29,7 +29,7 @@ public interface SetsDao {
     List<Set> getAllSets();
 
     @Query("SELECT * FROM SETS_TABLE WHERE _id = :setId")
-    Set getSetById(int setId);
+    Set getSetById(long setId);
 
     @Query("SELECT * FROM SETS_TABLE WHERE THEME_CODE = :themeCode")
     List<Set> getSetsByTheme(int themeCode);

@@ -1,5 +1,7 @@
 package xyz.volgoak.wordlearning.data;
 
+import android.support.annotation.NonNull;
+
 import java.util.List;
 
 import xyz.volgoak.wordlearning.entities.Link;
@@ -43,9 +45,30 @@ public class DataProvider {
         wordDao.udateWords(words);
     }
 
-    public List<Word> getWordsByTrained(String trainedType, int wordsLimit, int trainedLimit) {
+    // TODO: 1/7/18 Temp methods. Delete them and replace 
+    public void resetWordProgress(long id) {
+        Word word = wordDao.getWordById(id);
+        word.setStudied(0);
+        word.setTrainedTw(0);
+        word.setTrainedWt(0);
+        
+        wordDao.udateWords(word);
+    }
+    
+    public void deleteOrHideWordById(long wordId) {
+        // TODO: 1/7/18 implement this method 
+    }
+
+    public void updateWordStatus(){}
+
+    public List<Word> getDictionaryWords() {
+        return wordDao.getDictionaryWords();
+    }
+
+    public List<Word> getWordsByTrained(@NonNull String trainedType, int wordsLimit, int trainedLimit) {
         return wordDao.getWordsByTrained(trainedType, wordsLimit, trainedLimit);
     }
+    
 
     public List<Word> getWordsBySetId(long setId) {
         return wordDao.getWordsBySetId(setId);
@@ -59,11 +82,15 @@ public class DataProvider {
         setsDao.insertSets(sets);
     }
 
+    public void updateSets(Set...sets) {
+        setsDao.updateSets(sets);
+    }
+
     public List<Set> getAllSets() {
         return setsDao.getAllSets();
     }
 
-    public Set getSetById(int setId) {
+    public Set getSetById(long setId) {
         return setsDao.getSetById(setId);
     }
 

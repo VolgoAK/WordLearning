@@ -24,13 +24,16 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.activity.SingleSetActivity;
+import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.entities.Set;
 import xyz.volgoak.wordlearning.entities.Theme;
-import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.recycler.RecyclerAdapter;
 import xyz.volgoak.wordlearning.recycler.SetsRecyclerAdapter;
 import xyz.volgoak.wordlearning.recycler.SingleChoiceMode;
@@ -53,8 +56,10 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
 
     private FragmentListener mFragmentListener;
     private SetsFragmentListener mSetsFragmentListener;
-    private WordsDbAdapter mDbAdapter;
     private SetsRecyclerAdapter mRecyclerAdapter;
+
+    @Inject
+    DataProvider mDataProvider;
 
     private RecyclerView mRecyclerView;
 
@@ -81,6 +86,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 //        mFragmentListener = (FragmentListener) getActivity();
+        WordsApp.getsComponent().inject(this);
         return inflater.inflate(R.layout.fragment_word_sets, container, false);
     }
 
@@ -104,8 +110,6 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         super.onStart();
 
 //        mFragmentListener.setActionBarTitle(getString(R.string.sets));
-
-        mDbAdapter = new WordsDbAdapter();
 
         mRecyclerView = (RecyclerView) getView().findViewById(R.id.rv_setsfrag);
         mRecyclerView.setHasFixedSize(true);
@@ -174,7 +178,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         allThemes.setCheckable(true);
         allThemes.setChecked(true);
 
-        List<Theme> themes = mDbAdapter.fetchAllThemes();
+        List<Theme> themes = mDataProvider.getAllThemes();
         for(Theme theme : themes) {
             String name = theme.getName();
             int code = theme.getCode();
@@ -232,7 +236,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog);
 
-        Set set = mDbAdapter.fetchSetById(setId);
+        Set set = mDataProvider.getSetById(setId);
         String name = set.getName();
         final int currentSetStatus = set.getStatus();
 
@@ -293,7 +297,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     @Override
     public void changeSetStatus(long setId) {
 //        Log.d(TAG, "changeSetStatus: ");
-        Set set = mDbAdapter.fetchSetById(setId);
+        Set set = mDataProvider.getSetById(setId);
         if(set == null){
 //            Log.d(TAG, "changeSetStatus: incorrect id");
             return;
@@ -308,9 +312,9 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         message = newStatus == DatabaseContract.Sets.IN_DICTIONARY ? getString(R.string.set_added_message, setName) :
                 getString(R.string.set_removed_message, setName);
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-        mDbAdapter.changeSetStatus(setId, newStatus);
 
         set.setStatus(newStatus);
+        mDataProvider.updateSets(set);
         mRecyclerAdapter.notifyEntityChanged(set);
     }
 
@@ -330,9 +334,9 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     public void initRecycler(int themeCode){
         List<Set> setList;
         if(themeCode == -1){
-            setList = mDbAdapter.fetchAllSets();
+            setList = mDataProvider.getAllSets();
         }else{
-            setList = mDbAdapter.fetchSetsByThemeCode(themeCode);
+            setList = mDataProvider.getSetsByTheme(themeCode);
         }
         mRecyclerAdapter = new SetsRecyclerAdapter(getContext(), setList, mRecyclerView);
         mRecyclerAdapter.setAdapterClickListener(this);

@@ -27,14 +27,17 @@ import com.bumptech.glide.Glide;
 import java.io.File;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.WordsApp;
+import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
-import xyz.volgoak.wordlearning.entities.Set;
 import xyz.volgoak.wordlearning.data.StorageContract;
-import xyz.volgoak.wordlearning.entities.Word;
-import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding;
+import xyz.volgoak.wordlearning.entities.Set;
+import xyz.volgoak.wordlearning.entities.Word;
 import xyz.volgoak.wordlearning.recycler.MultiChoiceMode;
 import xyz.volgoak.wordlearning.recycler.WordsRecyclerAdapter;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
@@ -56,14 +59,15 @@ public class SingleSetFragment extends Fragment {
     private long mSetId;
     private boolean mSingleFragMode;
 
-    private WordsDbAdapter mDbAdapter;
+    @Inject
+    DataProvider mDataProvider;
     private WordsRecyclerAdapter mRecyclerAdapter;
     private ActionMode mActionMode;
     private WordsActionModeCallback mWordsCallBack;
     private boolean mSetInDictionary;
     private String mSetName;
 
-    public static SingleSetFragment newInstance(long setId, boolean singleFragmentMode){
+    public static SingleSetFragment newInstance(long setId, boolean singleFragmentMode) {
         SingleSetFragment fragment = new SingleSetFragment();
         Bundle args = new Bundle();
         args.putLong(EXTRA_SET_ID, setId);
@@ -79,14 +83,15 @@ public class SingleSetFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getArguments() != null){
+        WordsApp.getsComponent().inject(this);
+        if (getArguments() != null) {
             mSetId = getArguments().getLong(EXTRA_SET_ID);
             mSingleFragMode = getArguments().getBoolean(EXTRA_SINGLE_MODE);
         }
 
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             boolean inMultiChoice = savedInstanceState.getBoolean(SAVED_IS_MULTI_CHOICE, false);
-            if(inMultiChoice){
+            if (inMultiChoice) {
                 mWordsCallBack = new WordsActionModeCallback();
                 mWordsCallBack.onRestoreInstanceState(savedInstanceState);
             }
@@ -98,14 +103,13 @@ public class SingleSetFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_single_set, container, false);
-        mDbAdapter = new WordsDbAdapter();
 
         manageTrainingStatusMenu();
         loadSetInformation();
         prepareRecycler();
 
-        if(mWordsCallBack != null){
-            ((AppCompatActivity)getActivity()).startSupportActionMode(mWordsCallBack);
+        if (mWordsCallBack != null) {
+            ((AppCompatActivity) getActivity()).startSupportActionMode(mWordsCallBack);
         }
 
         return mBinding.getRoot();
@@ -114,8 +118,8 @@ public class SingleSetFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        mRecyclerAdapter.changeData(mDbAdapter.fetchWordsBySetId(mSetId));
-        if(mSingleFragMode){
+        mRecyclerAdapter.changeData(mDataProvider.getWordsBySetId(mSetId));
+        if (mSingleFragMode) {
             mBinding.setToolbar.setNavigationIcon(R.drawable.ic_back_toolbar);
             mBinding.setToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
@@ -124,7 +128,7 @@ public class SingleSetFragment extends Fragment {
                 }
             });
             mBinding.coordinatorSetact.setFitsSystemWindows(true);
-        }else{
+        } else {
 //            AppBarLayout.LayoutParams layoutParams =(AppBarLayout.LayoutParams) mBinding.collapsingToolbarSetAct.getLayoutParams();
 //            layoutParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP | AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL);
 //            mBinding.collapsingToolbarSetAct.setLayoutParams(layoutParams);
@@ -134,9 +138,9 @@ public class SingleSetFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof FragmentListener){
+        if (context instanceof FragmentListener) {
             mFragmentListener = (FragmentListener) context;
-        }else{
+        } else {
             throw new RuntimeException("Context must implement FragmentListener");
         }
     }
@@ -150,14 +154,14 @@ public class SingleSetFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(mWordsCallBack != null){
+        if (mWordsCallBack != null) {
             outState.putBoolean(SAVED_IS_MULTI_CHOICE, true);
             mWordsCallBack.onSaveInstanceState(outState);
         }
     }
 
-    private void loadSetInformation(){
-        Set set = mDbAdapter.fetchSetById(mSetId);
+    private void loadSetInformation() {
+        Set set = mDataProvider.getSetById(mSetId);
         //set title
         mSetName = set.getName();
         mBinding.collapsingToolbarSetAct.setTitle(mSetName);
@@ -187,17 +191,17 @@ public class SingleSetFragment extends Fragment {
         mBinding.setTrainingFab.setOnClickListener((v) -> showCoolDialog());
     }
 
-    private void prepareSetStatusFabs(){
+    private void prepareSetStatusFabs() {
         mBinding.setResetFab.setVisibility(mSetInDictionary ? View.VISIBLE : View.GONE);
         int addDrawableId = mSetInDictionary ? R.drawable.ic_remove_white_24dp : R.drawable.ic_add_white_24dp;
         mBinding.setAddFab.setImageResource(addDrawableId);
     }
 
-    private void manageTrainingStatusMenu(){
+    private void manageTrainingStatusMenu() {
 
     }
 
-    private void showCoolDialog(){
+    private void showCoolDialog() {
         Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.start_training_dialog);
@@ -221,8 +225,8 @@ public class SingleSetFragment extends Fragment {
         dialog.show();
     }
 
-    private void prepareRecycler(){
-        List<Word> words = mDbAdapter.fetchWordsBySetId(mSetId);
+    private void prepareRecycler() {
+        List<Word> words = mDataProvider.getWordsBySetId(mSetId);
 
         mBinding.rvSetAc.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
@@ -231,36 +235,36 @@ public class SingleSetFragment extends Fragment {
 
         mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), words, mBinding.rvSetAc);
 
-        if(mWordsCallBack != null){
+        if (mWordsCallBack != null) {
             mRecyclerAdapter.setChoiceMode(mWordsCallBack.choiceMode);
         }
 
         mRecyclerAdapter.setAdapterClickListener((root, position, id) -> {
-                if(mActionMode != null){
-                    mActionMode.invalidate();
-                }
+            if (mActionMode != null) {
+                mActionMode.invalidate();
+            }
         });
 
         mRecyclerAdapter.setAdapterLongClickListener((root, position, id) -> {
 
-                if(mActionMode == null) {
-                    AppCompatActivity activity = (AppCompatActivity) getActivity();
-                    //set action mode to fragment toolbar only in single mode
-                    if (mSingleFragMode) activity.setSupportActionBar(mBinding.setToolbar);
+            if (mActionMode == null) {
+                AppCompatActivity activity = (AppCompatActivity) getActivity();
+                //set action mode to fragment toolbar only in single mode
+                if (mSingleFragMode) activity.setSupportActionBar(mBinding.setToolbar);
 
-                    mWordsCallBack = new WordsActionModeCallback();
-                    mWordsCallBack.choiceMode.setChecked(position, true);
-                    activity.startSupportActionMode(mWordsCallBack);
+                mWordsCallBack = new WordsActionModeCallback();
+                mWordsCallBack.choiceMode.setChecked(position, true);
+                activity.startSupportActionMode(mWordsCallBack);
 
-                    return true;
-                }else return false;
+                return true;
+            } else return false;
         });
 
         mBinding.rvSetAc.setAdapter(mRecyclerAdapter);
     }
 
     // TODO: 25.08.2017 manage this method/ I don't remember why I broke it
-    public void addOrRemoveSetFromDictionary(){
+    public void addOrRemoveSetFromDictionary() {
         View.OnClickListener snackListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -270,7 +274,10 @@ public class SingleSetFragment extends Fragment {
         int newStatus = mSetInDictionary ? DatabaseContract.Sets.OUT_OF_DICTIONARY : DatabaseContract.Sets.IN_DICTIONARY;
         mSetInDictionary = !mSetInDictionary;
 
-        mDbAdapter.changeSetStatus(mSetId, newStatus);
+        Set set = mDataProvider.getSetById(mSetId);
+        set.setStatus(newStatus);
+
+        mDataProvider.updateSets(set);
         prepareSetStatusFabs();
         manageTrainingStatusMenu();
 
@@ -278,16 +285,18 @@ public class SingleSetFragment extends Fragment {
         String message = getString(messageId, mSetName);
         Snackbar.make(getView().findViewById(R.id.coordinator_setact), message, BaseTransientBottomBar.LENGTH_LONG).show();
 
-        mRecyclerAdapter.changeData(mDbAdapter.fetchWordsBySetId(mSetId));
+        mRecyclerAdapter.changeData(mDataProvider.getWordsBySetId(mSetId));
     }
 
-    public void resetSetProgress(){
+    public void resetSetProgress() {
 
-        View.OnClickListener snackListener = new View.OnClickListener(){
+        View.OnClickListener snackListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDbAdapter.resetSetProgress(mSetId);
-                mRecyclerAdapter.changeData(mDbAdapter.fetchWordsBySetId(mSetId));
+                /*Set set = mDataProvider.getSetById(mSetId);
+                mDbAdapter.resetSetProgress(mSetId);*/
+                // TODO: 1/7/18 implement reset mechanism
+                mRecyclerAdapter.changeData(mDataProvider.getWordsBySetId(mSetId));
             }
         };
 
@@ -295,46 +304,48 @@ public class SingleSetFragment extends Fragment {
                 .setAction(R.string.reset, snackListener).show();
     }
 
-    public void changeWordsStatus(List<Integer> positions, int newStatus){
-        if(positions.size() == 0) return;
+    public void changeWordsStatus(List<Integer> positions, int newStatus) {
+        if (positions.size() == 0) return;
         Long[] idsArray = new Long[positions.size()];
-        for(int a = 0; a < positions.size(); a++){
+        for (int a = 0; a < positions.size(); a++) {
             idsArray[a] = mRecyclerAdapter.getItemId(positions.get(a));
         }
-        mDbAdapter.changeWordStatus(newStatus, idsArray);
+        // TODO: 1/7/18 implement this shit
+//        mDbAdapter.changeWordStatus(newStatus, idsArray);
         updateAdapterCursor();
     }
 
-    public void resetWordsProgress(List<Integer> positions){
-        if(positions.size() == 0) return;
+    public void resetWordsProgress(List<Integer> positions) {
+        if (positions.size() == 0) return;
         Long[] idsArray = new Long[positions.size()];
-        for(int a = 0; a < positions.size(); a++){
+        for (int a = 0; a < positions.size(); a++) {
             idsArray[a] = mRecyclerAdapter.getItemId(positions.get(a));
         }
-        mDbAdapter.resetWordProgress(idsArray);
+        // TODO: 1/7/18 manage this shit
+//        mDbAdapter.resetWordProgress(idsArray);
     }
 
-    public void updateAdapterCursor(){
-        mRecyclerAdapter.changeData(mDbAdapter.fetchWordsBySetId(mSetId));
+    public void updateAdapterCursor() {
+        mRecyclerAdapter.changeData(mDataProvider.getWordsBySetId(mSetId));
     }
 
-    class WordsActionModeCallback implements ActionMode.Callback{
+    class WordsActionModeCallback implements ActionMode.Callback {
 
         MultiChoiceMode choiceMode;
 //        TextView counter;
 
-        WordsActionModeCallback(){
+        WordsActionModeCallback() {
             choiceMode = new MultiChoiceMode();
         }
 
-        public void onSaveInstanceState(Bundle instanceState){
-            if(choiceMode != null){
+        public void onSaveInstanceState(Bundle instanceState) {
+            if (choiceMode != null) {
                 choiceMode.onSaveInstanceState(instanceState);
                 Log.d("Callback", "onSaveInstanceState: size " + choiceMode.getCheckedCount());
             }
         }
 
-        public void onRestoreInstanceState(Bundle savedInstanceState){
+        public void onRestoreInstanceState(Bundle savedInstanceState) {
             choiceMode.restoreInstanceState(savedInstanceState);
             Log.d("Callback", "onRestoreInstanceState: size " + choiceMode.getCheckedCount());
         }
@@ -359,16 +370,16 @@ public class SingleSetFragment extends Fragment {
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             int itemId = item.getItemId();
-            switch(itemId){
-                case R.id.menu_add_setfrag_action :
+            switch (itemId) {
+                case R.id.menu_add_setfrag_action:
                     changeWordsStatus(choiceMode.getCheckedList(), DatabaseContract.Words.IN_DICTIONARY);
                     mActionMode.finish();
                     return true;
-                case R.id.menu_remove_setfrag_action :
+                case R.id.menu_remove_setfrag_action:
                     changeWordsStatus(choiceMode.getCheckedList(), DatabaseContract.Words.OUT_OF_DICTIONARY);
                     mActionMode.finish();
                     return true;
-                case R.id.menu_reset_setfrag_action :
+                case R.id.menu_reset_setfrag_action:
                     resetWordsProgress(choiceMode.getCheckedList());
                     mActionMode.finish();
                     return true;

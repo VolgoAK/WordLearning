@@ -28,10 +28,13 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.WordsApp;
+import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.data.FirebaseContract;
 import xyz.volgoak.wordlearning.data.StorageContract;
-import xyz.volgoak.wordlearning.data.WordsDbAdapter;
 
 import static xyz.volgoak.wordlearning.utils.SetsLoader.DATA_ID_ATTR;
 import static xyz.volgoak.wordlearning.utils.SetsLoader.DATA_SET_NODE;
@@ -55,8 +58,12 @@ public class FirebaseDownloadHelper {
     private StorageReference mTitleImagesReference;
     private List<Task<byte[]>> tasks;
 
+    @Inject
+    DataProvider mDataProvider;
+
     public FirebaseDownloadHelper(Context context) {
         mContext = context;
+        WordsApp.getsComponent().inject(this);
     }
 
     public SetsUpdatingInfo check(byte[] bytes, Context context) throws Exception {
@@ -148,14 +155,13 @@ public class FirebaseDownloadHelper {
     private SetsUpdatingInfo loadDataByFileName(String fileName, final String fileId, final Context context) {
         final SetsUpdatingInfo info = new SetsUpdatingInfo();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference(fileName);
-        final WordsDbAdapter adapter = new WordsDbAdapter();
         Task<byte[]> task = storageReference.getBytes(Long.MAX_VALUE);
         tasks.add(task);
-        task.addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        /*task.addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
                 try {
-                    adapter.beginTransaction();
+
                     Document doc = SetsLoader.prepareDocument(bytes);
                     SetsUpdatingInfo setInfo = SetsLoader.insertSetsIntoDb(doc, adapter);
                     Log.d(TAG, "onSuccess: load set task");
@@ -170,7 +176,7 @@ public class FirebaseDownloadHelper {
                     adapter.endTransaction(false);
                 }
             }
-        });
+        });*/
 
         // TODO: 19.10.2017 load image when new set loaded
 
@@ -183,8 +189,7 @@ public class FirebaseDownloadHelper {
         mSmallImagesReference = FirebaseStorage.getInstance().getReference(FirebaseContract.IMAGES_FOLDER);
         mTitleImagesReference = FirebaseStorage.getInstance().getReference(FirebaseContract.TITLE_IMAGES_FOLDER);
 
-        WordsDbAdapter adapter = new WordsDbAdapter();
-        List<xyz.volgoak.wordlearning.entities.Set> sets = adapter.fetchAllSets();
+        List<xyz.volgoak.wordlearning.entities.Set> sets = mDataProvider.getAllSets();
         for(xyz.volgoak.wordlearning.entities.Set set : sets) {
             checkAndLoadImage(set.getImageUrl());
         }
