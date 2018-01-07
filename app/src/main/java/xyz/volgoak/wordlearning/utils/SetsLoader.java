@@ -205,7 +205,13 @@ public final class SetsLoader {
             List<Word> words = set.getWords();
 
             for(Word word : words) {
-                long wordId = provider.insertWord(word);
+                Word dictionaryWord = provider.getWord(word.getWord(), word.getTranslation());
+                long wordId;
+                if(dictionaryWord != null) {
+                    wordId = dictionaryWord.getId();
+                } else {
+                    wordId = provider.insertWord(word);
+                }
                 Link link = new Link();
                 link.setWordId(wordId);
                 link.setIdOfSet(setId);

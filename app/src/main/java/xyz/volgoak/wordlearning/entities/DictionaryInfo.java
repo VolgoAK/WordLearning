@@ -1,4 +1,4 @@
-package xyz.volgoak.wordlearning.data;
+package xyz.volgoak.wordlearning.entities;
 
 /**
  * Created by Volgoak on 02.09.2017.
@@ -6,9 +6,9 @@ package xyz.volgoak.wordlearning.data;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.database.Cursor;
-import android.provider.ContactsContract;
 
-import xyz.volgoak.wordlearning.entities.Dictionary;
+import xyz.volgoak.wordlearning.data.DatabaseContract;
+
 
 /**Keeps info about database
 * amount of words, words in users dictionary,

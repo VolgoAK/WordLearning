@@ -111,7 +111,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
 
 //        mFragmentListener.setActionBarTitle(getString(R.string.sets));
 
-        mRecyclerView = (RecyclerView) getView().findViewById(R.id.rv_setsfrag);
+        mRecyclerView = getView().findViewById(R.id.rv_setsfrag);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -296,10 +296,8 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
 
     @Override
     public void changeSetStatus(long setId) {
-//        Log.d(TAG, "changeSetStatus: ");
         Set set = mDataProvider.getSetById(setId);
         if(set == null){
-//            Log.d(TAG, "changeSetStatus: incorrect id");
             return;
         }
 
@@ -314,7 +312,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
 
         set.setStatus(newStatus);
-        mDataProvider.updateSets(set);
+        mDataProvider.updateSetStatus(set);
         mRecyclerAdapter.notifyEntityChanged(set);
     }
 

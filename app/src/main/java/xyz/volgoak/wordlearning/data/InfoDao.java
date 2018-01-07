@@ -3,6 +3,8 @@ package xyz.volgoak.wordlearning.data;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Query;
 
+import xyz.volgoak.wordlearning.entities.DictionaryInfo;
+
 /**
  * Created by alex on 1/5/18.
  */

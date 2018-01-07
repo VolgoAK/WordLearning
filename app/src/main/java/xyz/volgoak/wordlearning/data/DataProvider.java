@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import xyz.volgoak.wordlearning.entities.DictionaryInfo;
 import xyz.volgoak.wordlearning.entities.Link;
 import xyz.volgoak.wordlearning.entities.Set;
 import xyz.volgoak.wordlearning.entities.Theme;
@@ -72,7 +73,6 @@ public class DataProvider {
     public List<Word> getWordsByTrained(@NonNull String trainedType, int wordsLimit, int trainedLimit) {
         return wordDao.getWordsByTrained(trainedType, wordsLimit, trainedLimit);
     }
-    
 
     public List<Word> getWordsBySetId(long setId) {
         return wordDao.getWordsBySetId(setId);
@@ -88,6 +88,16 @@ public class DataProvider {
 
     public void updateSets(Set...sets) {
         setsDao.updateSets(sets);
+    }
+
+    public void updateSetStatus(Set set) {
+        setsDao.updateSets(set);
+        List<Word> words = wordDao.getWordsBySetId(set.getId());
+        for(Word word : words) {
+            word.setStatus(set.getStatus());
+        }
+        Word[] wordsArray = words.toArray(new Word[0]);
+        wordDao.udateWords(wordsArray);
     }
 
     public List<Set> getAllSets() {

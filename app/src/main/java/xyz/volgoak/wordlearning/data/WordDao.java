@@ -37,7 +37,7 @@ public interface WordDao {
     List<Word> getDictionaryWords();
 
     @Query("SELECT * FROM words_table WHERE STATUS = "+Words.IN_DICTIONARY
-        + " AND :trainedType < :trainedLimit "
+        + " AND WT_TRAINED < :trainedLimit "
         + " ORDER BY :trainedType LIMIT :wordsLimit")
     List<Word> getWordsByTrained(@NonNull String trainedType, int wordsLimit, int trainedLimit);
 

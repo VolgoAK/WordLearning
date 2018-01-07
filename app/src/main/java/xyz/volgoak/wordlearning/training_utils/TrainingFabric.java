@@ -1,6 +1,8 @@
 package xyz.volgoak.wordlearning.training_utils;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,10 +39,11 @@ public abstract class TrainingFabric {
         GetWord variantsGetter;
 
         if(trainingType == WORD_TRANSLATION){
-            wordList = provider.getWordsByTrained(COLUMN_TRAINED_WT, 10, TRAINING_LIMIT);
+            wordList = provider.getWordsByTrained("0", 10, 1);
             wordGetter = Word::getWord;
             variantsGetter = Word::getTranslation;
             variantsColumnString = DatabaseContract.Words.COLUMN_TRANSLATION;
+            Log.d("Fabric", "getTraining: words " + wordList.size());
         }else if(trainingType == TRANSLATION_WORD){
             wordList = provider.getWordsByTrained(COLUMN_TRAINED_TW, 10,TRAINING_LIMIT);
             wordGetter = Word::getTranslation;
@@ -52,6 +55,7 @@ public abstract class TrainingFabric {
             //no untrained words in a dictionary
             return null;
         }
+
 
         ArrayList<PlayWord> playWords = new ArrayList<>();
 

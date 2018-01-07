@@ -21,7 +21,7 @@ import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.data.DataProvider;
-import xyz.volgoak.wordlearning.data.DictionaryInfo;
+import xyz.volgoak.wordlearning.entities.DictionaryInfo;
 import xyz.volgoak.wordlearning.databinding.FragmentStartBinding;
 import xyz.volgoak.wordlearning.utils.AppearingAnimator;
 
