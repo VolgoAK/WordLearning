@@ -29,12 +29,16 @@ public class DataProvider {
         this.wordDao = wordDao;
     }
 
-    public void insertLink(Word word, int setId) {
-
+    public void insertLink(Link link) {
+        linkDao.insertLinks(link);
     }
 
     public long insertWord(Word word) {
         return wordDao.insertWord(word);
+    }
+
+    public Word getWord(String word, String translation) {
+        return wordDao.getWord(word, translation);
     }
 
     public void insertWords(Word... words) {
@@ -108,6 +112,10 @@ public class DataProvider {
 
     public long insertTheme(Theme theme) {
         return themeDao.insertTheme(theme);
+    }
+
+    public void insertThemes(Theme...themes) {
+        themeDao.insertThemes(themes);
     }
 
     public List<Theme> getAllThemes() {

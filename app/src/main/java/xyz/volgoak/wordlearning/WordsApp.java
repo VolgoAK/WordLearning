@@ -84,7 +84,7 @@ public class WordsApp extends Application {
             preferences.edit().putBoolean(THEME_ISSUE_FIXED, true).apply();
             if (successfulyLoaded) startImagesLoading();*/
 
-            SetsLoader.insertTestBase(dataProvider);
+            SetsLoader.insertTestBase(dataProvider, this);
         }
 
         GcmNetworkManager networkManager = GcmNetworkManager.getInstance(this);

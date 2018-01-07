@@ -2,6 +2,7 @@ package xyz.volgoak.wordlearning.data;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
 import java.util.List;
@@ -15,8 +16,11 @@ import xyz.volgoak.wordlearning.entities.Theme;
 @Dao
 public interface ThemeDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insertTheme(Theme theme);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertThemes(Theme...themes);
 
     @Query("SELECT * FROM THEMES_TABLE")
     List<Theme> getAllThemes();

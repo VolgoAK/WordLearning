@@ -30,6 +30,9 @@ public interface WordDao {
     @Query("SELECT * FROM words_table WHERE _id = :id")
     Word getWordById(long id);
 
+    @Query("SELECT * FROM WORDS_TABLE WHERE WORD = :word AND TRANSLATION = :translation")
+    Word getWord(String word, String translation);
+
     @Query("SELECT * FROM words_table WHERE STATUS=" + Words.IN_DICTIONARY)
     List<Word> getDictionaryWords();
 

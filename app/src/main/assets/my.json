@@ -23,7 +23,9 @@
     {
       "code": 6,
       "name": "Искусство"
-    }
+    },
+    { "code": 7,
+      "name": "Техника"}
   ],
   "sets": [
     {
@@ -1392,7 +1394,7 @@
       "description": "Морской, наземный и воздушный транспорт",
       "imageUrl": "transport.jpg",
       "name": "Транспорт",
-      "themeCode": 0,
+      "themeCode": 7,
       "words": [
         {
           "transcription": "bəʊt",
@@ -1573,7 +1575,7 @@
       "description": "Основные цвета и оттенки",
       "imageUrl": "colors.jpg",
       "name": "Цвета",
-      "themeCode": 0,
+      "themeCode": 5,
       "words": [
         {
           "transcription": "blæk",

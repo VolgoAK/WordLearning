@@ -7,6 +7,9 @@ import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -17,10 +20,10 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -28,6 +31,9 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
+import xyz.volgoak.wordlearning.entities.Dictionary;
+import xyz.volgoak.wordlearning.entities.Link;
+import xyz.volgoak.wordlearning.entities.Set;
 import xyz.volgoak.wordlearning.entities.Theme;
 import xyz.volgoak.wordlearning.entities.Word;
 
@@ -74,11 +80,11 @@ public final class SetsLoader {
      * @param context context for access to sharedPreferences
      */
     static synchronized void addSuccessPreference(String fileId, Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        /*SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         Set<String> loadedSet = preferences.getStringSet(LOADED_SETS_PREF, new HashSet<String>());
         loadedSet.add(fileId);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putStringSet(LOADED_SETS_PREF, loadedSet).apply();
+        editor.putStringSet(LOADED_SETS_PREF, loadedSet).apply();*/
     }
 
     /**
@@ -120,7 +126,7 @@ public final class SetsLoader {
         return info;
     }
 
-    public static void insertTestBase(DataProvider dataProvider) {
+    public static void insertTestBase(DataProvider dataProvider, Context context) {
 
         /*Theme theme = new Theme();
         theme.setCode(1);
@@ -130,6 +136,7 @@ public final class SetsLoader {
         xyz.volgoak.wordlearning.entities.Set set = new xyz.volgoak.wordlearning.entities.Set();
         set.setImageUrl("");
         set.setName("Test");
+        set.setStatus(DatabaseContract.Sets.VISIBLE);
         set.setLang("ru");
         set.setThemeCode(1);
         set.setId(dataProvider.insertSet(set));
@@ -146,6 +153,28 @@ public final class SetsLoader {
         dataProvider.insertWord(new Word("What", "Что"));
         dataProvider.insertWord(new Word("Time", "Время"));
         dataProvider.insertWord(new Word("Country", "Страна"));
+
+        try {
+            InputStream inputStream = context.getAssets().open("my.json");
+            int syze = inputStream.available();
+            byte[] buffer = new byte[syze];
+            inputStream.read(buffer);
+
+            String json = new String(buffer);
+
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.excludeFieldsWithoutExposeAnnotation();
+            gsonBuilder.disableHtmlEscaping();
+            gsonBuilder.setPrettyPrinting();
+            Gson gson = gsonBuilder.create();
+
+            Dictionary dictionary = gson.fromJson(json, Dictionary.class);
+
+            insertSetsIntoDb(dataProvider, dictionary);
+
+        }catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     static Document prepareDocument(byte[] bytes)
@@ -160,6 +189,31 @@ public final class SetsLoader {
         Document doc = builder.parse(is);
 
         return doc;
+    }
+
+    static SetsUpdatingInfo insertSetsIntoDb(DataProvider provider, Dictionary dictionary) {
+        List<Theme> themes = dictionary.getThemes();
+        Theme[] themesArray = new Theme[themes.size()];
+        provider.insertThemes(themes.toArray(themesArray));
+
+        List<Set> sets = dictionary.getSets();
+        for(Set set : sets) {
+            set.setVisibitity(DatabaseContract.Sets.VISIBLE);
+
+            // TODO: 1/7/18 manage links
+            long setId = provider.insertSet(set);
+            List<Word> words = set.getWords();
+
+            for(Word word : words) {
+                long wordId = provider.insertWord(word);
+                Link link = new Link();
+                link.setWordId(wordId);
+                link.setIdOfSet(setId);
+                provider.insertLink(link);
+            }
+        }
+
+        return new SetsUpdatingInfo();
     }
 
     static SetsUpdatingInfo insertSetsIntoDb(Document document) {
