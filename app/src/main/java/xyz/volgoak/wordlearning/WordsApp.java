@@ -11,6 +11,12 @@ import com.google.android.gms.gcm.OneoffTask;
 import com.google.android.gms.gcm.PeriodicTask;
 import com.google.android.gms.gcm.Task;
 
+import javax.inject.Inject;
+
+import xyz.volgoak.wordlearning.dagger.DaggerDbComponent;
+import xyz.volgoak.wordlearning.dagger.DbComponent;
+import xyz.volgoak.wordlearning.dagger.DbModule;
+import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.services.SetsLoaderService;
 import xyz.volgoak.wordlearning.utils.SetsLoader;
 import xyz.volgoak.wordlearning.utils.SetsUpdatingInfo;
@@ -32,23 +38,36 @@ public class WordsApp extends Application {
     public static final String PREFERENCE_LAST_VERSION = "last_app_version";
     public static final String THEME_ISSUE_FIXED = "theme_issue_fixed";
     private static WordsApp sInstance;
+    private static DbComponent sComponent;
 
     private static long SEC_IN_TWO_DAYS = 60 * 60 * 24 * 2;
     private static long ONE_HOUR_WINDOW = 60 * 60;
     private static long MILLIS_IN_ONE_MINUT = 60;
 
+    @Inject
+    DataProvider dataProvider;
+
     public WordsApp() {
         sInstance = this;
+        initComponent();
     }
 
     public static Context getContext() {
         return sInstance;
     }
 
+    public static DbComponent getsComponent() {
+        return sComponent;
+    }
+
+    private void initComponent() {
+        sComponent = DaggerDbComponent.builder().dbModule(new DbModule(this)).build();
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
-
+        sComponent.inject(this);
 
         // TODO: 21.10.2017 add insta checking at first launch
 
@@ -56,14 +75,16 @@ public class WordsApp extends Application {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean baseLoaded = preferences.getBoolean(PREFERENCE_BASE_LOADED, false);
         if (!baseLoaded) {
-            SetsUpdatingInfo info = SetsLoader.loadStartBase(this);
+            /*SetsUpdatingInfo info = SetsLoader.loadStartBase(this);
             Log.d(TAG, "onCreate: load db");
             boolean successfulyLoaded = info.isUpdatingSuccess();
             Log.d(TAG, "onCreate: soccess " + successfulyLoaded);
             preferences.edit().putBoolean(PREFERENCE_BASE_LOADED, successfulyLoaded).apply();
             //if app not updated but installed we don't need to fix
             preferences.edit().putBoolean(THEME_ISSUE_FIXED, true).apply();
-            if (successfulyLoaded) startImagesLoading();
+            if (successfulyLoaded) startImagesLoading();*/
+
+            SetsLoader.insertTestBase(dataProvider);
         }
 
         GcmNetworkManager networkManager = GcmNetworkManager.getInstance(this);

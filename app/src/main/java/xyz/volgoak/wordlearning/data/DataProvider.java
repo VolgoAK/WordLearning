@@ -79,7 +79,7 @@ public class DataProvider {
         return infoDao.getDictionaryInfo();
     }
 
-    public int insertTheme(Theme theme) {
+    public long insertTheme(Theme theme) {
         return themeDao.insertTheme(theme);
     }
 

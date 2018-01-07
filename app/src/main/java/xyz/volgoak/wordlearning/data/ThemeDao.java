@@ -16,7 +16,7 @@ import xyz.volgoak.wordlearning.entities.Theme;
 public interface ThemeDao {
 
     @Insert
-    int insertTheme(Theme theme);
+    long insertTheme(Theme theme);
 
     @Query("SELECT * FROM THEMES_TABLE")
     List<Theme> getAllThemes();

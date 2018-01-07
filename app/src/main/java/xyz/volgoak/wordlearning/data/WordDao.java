@@ -18,7 +18,7 @@ import xyz.volgoak.wordlearning.data.DatabaseContract.*;
 public interface WordDao {
 
     @Insert
-    int insertWord(Word word);
+    long insertWord(Word word);
 
     @Insert
     void insertWords(Word...words);

@@ -42,6 +42,12 @@ public class Word implements DataEntity {
         this.word = word;
     }
 
+    @Ignore
+    public Word(String word, String translation) {
+        this.word = word;
+        this.translation = translation;
+    }
+
     public Word(long id, String word, String translation, String transcription, int trainedWt,
                 int trainedTw, int studied, int status) {
         this.id = id;

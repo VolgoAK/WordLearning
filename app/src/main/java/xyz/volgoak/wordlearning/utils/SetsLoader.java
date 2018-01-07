@@ -26,8 +26,11 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.WordsDbAdapter;
+import xyz.volgoak.wordlearning.entities.Theme;
+import xyz.volgoak.wordlearning.entities.Word;
 
 
 /**
@@ -116,6 +119,34 @@ public final class SetsLoader {
             dbAdapter.endTransaction(false);
         }
         return info;
+    }
+
+    public static void insertTestBase(DataProvider dataProvider) {
+
+        /*Theme theme = new Theme();
+        theme.setCode(1);
+        theme.setName("Test");
+        dataProvider.insertTheme(theme);*/
+
+        xyz.volgoak.wordlearning.entities.Set set = new xyz.volgoak.wordlearning.entities.Set();
+        set.setImageUrl("");
+        set.setName("Test");
+        set.setLang("ru");
+        set.setThemeCode(1);
+        set.setId(dataProvider.insertSet(set));
+
+        dataProvider.insertWord(new Word("Hello", "Привет"));
+        dataProvider.insertWord(new Word("Name", "Имя"));
+        dataProvider.insertWord(new Word("Human", "Человек"));
+        dataProvider.insertWord(new Word("He", "Он"));
+        dataProvider.insertWord(new Word("She", "Она"));
+        dataProvider.insertWord(new Word("Where", "Где"));
+        dataProvider.insertWord(new Word("When", "Когда"));
+        dataProvider.insertWord(new Word("Why", "Почему"));
+        dataProvider.insertWord(new Word("Who", "Кто"));
+        dataProvider.insertWord(new Word("What", "Что"));
+        dataProvider.insertWord(new Word("Time", "Время"));
+        dataProvider.insertWord(new Word("Country", "Страна"));
     }
 
     static Document prepareDocument(byte[] bytes)
