@@ -1,5 +1,7 @@
 package xyz.volgoak.wordlearning.utils;
 
+import android.content.Context;
+import android.content.res.AssetManager;
 import android.os.Environment;
 import android.util.Log;
 
@@ -8,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOError;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.channels.FileChannel;
 
 import xyz.volgoak.wordlearning.data.DatabaseContract;
@@ -39,6 +42,25 @@ public class DbExporter {
             destination.close();
             Log.d("DBExporter", "exportDb: completed");
         } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void importDb(Context context) {
+        AssetManager assetManager = context.getAssets();
+        try {
+            InputStream inputStream = assetManager.open("WORDS_DATABASE.sqlite3");
+            File file = new File(Environment.getDataDirectory()
+                    + "/data/"+ "xyz.volgoak.wordlearning" +"/databases/"+ DatabaseContract.DB_NAME);
+            file.createNewFile();
+            FileOutputStream outputStream = new FileOutputStream(file);
+            byte[] buffer = new byte[1024];
+            int read = inputStream.read(buffer);
+            while (read != -1) {
+                outputStream.write(buffer, 0, read);
+                read = inputStream.read(buffer);
+            }
+        }catch(IOException ex) {
             ex.printStackTrace();
         }
     }
