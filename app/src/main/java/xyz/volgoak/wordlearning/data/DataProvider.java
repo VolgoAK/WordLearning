@@ -30,9 +30,9 @@ public class DataProvider {
         this.wordDao = wordDao;
     }
 
-    public void insertLink(Link link) {
-        linkDao.insertLinks(link);
-    }
+    ///////////////////////////////////////////////////////////////////////////
+    // Words methods
+    ///////////////////////////////////////////////////////////////////////////
 
     public long insertWord(Word word) {
         return wordDao.insertWord(word);
@@ -40,6 +40,10 @@ public class DataProvider {
 
     public Word getWord(String word, String translation) {
         return wordDao.getWord(word, translation);
+    }
+
+    public Word getWordById(long id) {
+        return wordDao.getWordById(id);
     }
 
     public void insertWords(Word... words) {
@@ -70,13 +74,24 @@ public class DataProvider {
         return wordDao.getDictionaryWords();
     }
 
-    public List<Word> getWordsByTrained(@NonNull String trainedType, int wordsLimit, int trainedLimit) {
-        return wordDao.getWordsByTrained(trainedType, wordsLimit, trainedLimit);
+    public List<Word> getTrainingWords(long setId) {
+        if(setId == -1) {
+            return wordDao.getDictionaryWords();
+        } else return wordDao.getWordsBySetId(setId);
+    }
+
+    public List<Word> getVariants(long wordId, int limit) {
+        // TODO: 1/8/18 use set id
+        return wordDao.getVariants(wordId, limit);
     }
 
     public List<Word> getWordsBySetId(long setId) {
         return wordDao.getWordsBySetId(setId);
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Sets methods
+    ///////////////////////////////////////////////////////////////////////////
 
     public long insertSet(Set set) {
         return setsDao.insertSet(set);
@@ -110,6 +125,14 @@ public class DataProvider {
 
     public List<Set> getSetsByTheme(int themeCode) {
         return setsDao.getSetsByTheme(themeCode);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Links, themes and info
+    ///////////////////////////////////////////////////////////////////////////
+
+    public void insertLink(Link link) {
+        linkDao.insertLinks(link);
     }
 
     public void insertLinks(Link... links) {

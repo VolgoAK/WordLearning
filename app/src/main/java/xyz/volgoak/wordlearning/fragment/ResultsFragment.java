@@ -16,7 +16,9 @@ import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
+import xyz.volgoak.wordlearning.entities.Word;
 import xyz.volgoak.wordlearning.training_utils.Results;
+import xyz.volgoak.wordlearning.training_utils.Training;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
 /**
@@ -118,10 +120,26 @@ public class ResultsFragment extends Fragment {
     }
 
     private void updateWordsStatus(){
-        // TODO: 1/7/18 create update machanism
-        for(Long id : mResults.idsForUpdate){
-//            adapter.changeTrainedStatus(id, WordsDbAdapter.INCREASE, mResults.trainedType);
+        if(mResults.idsForUpdate.size() == 0) return;
+
+        Updater updater;
+        if(mResults.trainedType == TrainingFabric.TRANSLATION_WORD) {
+            updater = (w) -> w.setTrainedTw(w.getTrainedTw() + 1);
+        }else if (mResults.trainedType == TrainingFabric.WORD_TRANSLATION) {
+            updater = (w) -> w.setTrainedWt(w.getTrainedWt() + 1);
+        } else return;
+
+        Word[] words = new Word[mResults.idsForUpdate.size()];
+        for(int i = 0; i < mResults.idsForUpdate.size(); i++) {
+            Word word = mProvider.getWordById(mResults.idsForUpdate.get(i));
+            updater.updateWord(word);
+            words[i] = word;
         }
+
+        mProvider.updateWords(words);
     }
 
+    interface Updater {
+        void updateWord(Word word);
+    }
 }

@@ -46,6 +46,7 @@ public class Word implements DataEntity {
     public Word(String word, String translation) {
         this.word = word;
         this.translation = translation;
+        this.status = Words.IN_DICTIONARY;
     }
 
     public Word(long id, String word, String translation, String transcription, int trainedWt,
@@ -122,5 +123,11 @@ public class Word implements DataEntity {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public void resetProgress() {
+        trainedTw = 0;
+        trainedWt = 0;
+        studied = 0;
     }
 }

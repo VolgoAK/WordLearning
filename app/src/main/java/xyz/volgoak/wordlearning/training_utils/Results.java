@@ -18,7 +18,7 @@ public class Results implements Serializable{
 
     public ResultType resultType;
     public ArrayList<Long> idsForUpdate;
-    public String trainedType;
+    public int trainedType;
     public long setId = -1;
     public int wordCount;
     public int correctAnswers;

@@ -52,21 +52,11 @@ public class Training implements Serializable{
     }
 
     public Results getResults(){
-        String trainedType = "";
-        switch (trainingType){
-            case TrainingFabric.TRANSLATION_WORD :
-                trainedType = DatabaseContract.Words.COLUMN_TRAINED_TW;
-                break;
-            case TrainingFabric.WORD_TRANSLATION:
-                trainedType = DatabaseContract.Words.COLUMN_TRAINED_WT;
-                break;
-        }
-
         Results results = new Results(Results.ResultType.SUCCESS);
         results.correctAnswers = score;
         results.wordCount = playWords.size();
         results.idsForUpdate = mIdsForUpdate;
-        results.trainedType = trainedType;
+        results.trainedType = trainingType;
 
         return results;
     }

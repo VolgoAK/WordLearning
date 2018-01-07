@@ -133,14 +133,6 @@ public final class SetsLoader {
         theme.setName("Test");
         dataProvider.insertTheme(theme);*/
 
-        xyz.volgoak.wordlearning.entities.Set set = new xyz.volgoak.wordlearning.entities.Set();
-        set.setImageUrl("");
-        set.setName("Test");
-        set.setStatus(DatabaseContract.Sets.VISIBLE);
-        set.setLang("ru");
-        set.setThemeCode(1);
-        set.setId(dataProvider.insertSet(set));
-
         dataProvider.insertWord(new Word("Hello", "Привет"));
         dataProvider.insertWord(new Word("Name", "Имя"));
         dataProvider.insertWord(new Word("Human", "Человек"));

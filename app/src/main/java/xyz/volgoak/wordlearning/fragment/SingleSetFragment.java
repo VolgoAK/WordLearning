@@ -56,6 +56,8 @@ public class SingleSetFragment extends Fragment {
     private FragmentSingleSetBinding mBinding;
     private FragmentListener mFragmentListener;
 
+    private List<Word> mWords;
+
     private long mSetId;
     private boolean mSingleFragMode;
 
@@ -226,14 +228,14 @@ public class SingleSetFragment extends Fragment {
     }
 
     private void prepareRecycler() {
-        List<Word> words = mDataProvider.getWordsBySetId(mSetId);
+        mWords = mDataProvider.getWordsBySetId(mSetId);
 
         mBinding.rvSetAc.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mBinding.rvSetAc.setLayoutManager(llm);
 
-        mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), words, mBinding.rvSetAc);
+        mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), mWords, mBinding.rvSetAc);
 
         if (mWordsCallBack != null) {
             mRecyclerAdapter.setChoiceMode(mWordsCallBack.choiceMode);
@@ -293,9 +295,11 @@ public class SingleSetFragment extends Fragment {
         View.OnClickListener snackListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Set set = mDataProvider.getSetById(mSetId);
-                mDbAdapter.resetSetProgress(mSetId);*/
-                // TODO: 1/7/18 implement reset mechanism
+                List<Word> words = mDataProvider.getWordsBySetId(mSetId);
+                for(Word word : words) {
+                    word.resetProgress();
+                }
+                mDataProvider.updateWords(words.toArray(new Word[words.size()]));
                 mRecyclerAdapter.changeData(mDataProvider.getWordsBySetId(mSetId));
             }
         };
@@ -306,23 +310,26 @@ public class SingleSetFragment extends Fragment {
 
     public void changeWordsStatus(List<Integer> positions, int newStatus) {
         if (positions.size() == 0) return;
-        Long[] idsArray = new Long[positions.size()];
+        Word[] wordsArray = new Word[positions.size()];
         for (int a = 0; a < positions.size(); a++) {
-            idsArray[a] = mRecyclerAdapter.getItemId(positions.get(a));
+            Word word = mWords.get(positions.get(a));
+            word.setStatus(newStatus);
+            wordsArray[a] = word;
         }
-        // TODO: 1/7/18 implement this shit
-//        mDbAdapter.changeWordStatus(newStatus, idsArray);
-        updateAdapterCursor();
+
+        mDataProvider.updateWords(wordsArray);
     }
 
     public void resetWordsProgress(List<Integer> positions) {
         if (positions.size() == 0) return;
-        Long[] idsArray = new Long[positions.size()];
+        Word[] wordsArray = new Word[positions.size()];
         for (int a = 0; a < positions.size(); a++) {
-            idsArray[a] = mRecyclerAdapter.getItemId(positions.get(a));
+            Word word = mWords.get(positions.get(a));
+            word.resetProgress();
+            wordsArray[a] = word;
         }
-        // TODO: 1/7/18 manage this shit
-//        mDbAdapter.resetWordProgress(idsArray);
+
+        mDataProvider.updateWords(wordsArray);
     }
 
     public void updateAdapterCursor() {

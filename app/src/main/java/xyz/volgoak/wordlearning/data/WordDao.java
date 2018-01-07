@@ -36,17 +36,8 @@ public interface WordDao {
     @Query("SELECT * FROM words_table WHERE STATUS=" + Words.IN_DICTIONARY)
     List<Word> getDictionaryWords();
 
-    @Query("SELECT * FROM words_table WHERE STATUS = "+Words.IN_DICTIONARY
-        + " AND WT_TRAINED < :trainedLimit "
-        + " ORDER BY :trainedType LIMIT :wordsLimit")
-    List<Word> getWordsByTrained(@NonNull String trainedType, int wordsLimit, int trainedLimit);
-
-    @Query("SELECT * FROM words_table WHERE _id IN "
-            + "(SELECT "+WordLinks.COLUMN_WORD_ID+" FROM "+WordLinks.TABLE_NAME
-            + " WHERE "+WordLinks.COLUMN_SET_ID+"=:setId)"
-            + " AND :trainedType < :trainedLimit"
-            + " ORDER BY :trainedType LIMIT :wordsLimit")
-    List<Word> getWordsByTrained(String trainedType, int wordsLimit, int trainedLimit, long setId);
+    @Query("SELECT * FROM words_table WHERE _id != :id ORDER BY RANDOM() LIMIT :wordsLimit ")
+    List<Word> getVariants(long id, int wordsLimit);
 
     @Query("SELECT * FROM words_table WHERE _id IN "
             + "(SELECT "+WordLinks.COLUMN_WORD_ID+" FROM "+WordLinks.TABLE_NAME
