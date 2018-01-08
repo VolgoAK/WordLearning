@@ -10,7 +10,7 @@ import xyz.volgoak.wordlearning.fragment.SingleSetFragment;
 import xyz.volgoak.wordlearning.fragment.StartFragment;
 import xyz.volgoak.wordlearning.fragment.TrainingFragment;
 import xyz.volgoak.wordlearning.fragment.WordSetsFragment;
-import xyz.volgoak.wordlearning.utils.FirebaseDownloadHelper;
+import xyz.volgoak.wordlearning.update.FirebaseDownloadHelper;
 
 /**
  * Created by alex on 1/7/18.

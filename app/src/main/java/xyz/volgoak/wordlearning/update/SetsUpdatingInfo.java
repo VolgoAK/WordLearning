@@ -1,4 +1,4 @@
-package xyz.volgoak.wordlearning.utils;
+package xyz.volgoak.wordlearning.update;
 
 /**
  * Created by Alexander Karachev on 07.05.2017.

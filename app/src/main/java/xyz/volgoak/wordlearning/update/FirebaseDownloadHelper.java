@@ -1,4 +1,4 @@
-package xyz.volgoak.wordlearning.utils;
+package xyz.volgoak.wordlearning.update;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -36,10 +36,10 @@ import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.data.FirebaseContract;
 import xyz.volgoak.wordlearning.data.StorageContract;
 
-import static xyz.volgoak.wordlearning.utils.SetsLoader.DATA_ID_ATTR;
-import static xyz.volgoak.wordlearning.utils.SetsLoader.DATA_SET_NODE;
-import static xyz.volgoak.wordlearning.utils.SetsLoader.DATA_SOURCE_ATTR;
-import static xyz.volgoak.wordlearning.utils.SetsLoader.LOADED_SETS_PREF;
+import static xyz.volgoak.wordlearning.update.SetsLoader.DATA_ID_ATTR;
+import static xyz.volgoak.wordlearning.update.SetsLoader.DATA_SET_NODE;
+import static xyz.volgoak.wordlearning.update.SetsLoader.DATA_SOURCE_ATTR;
+import static xyz.volgoak.wordlearning.update.SetsLoader.LOADED_SETS_PREF;
 
 
 /**

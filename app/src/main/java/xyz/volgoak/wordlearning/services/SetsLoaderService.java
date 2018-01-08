@@ -16,8 +16,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.activity.SplashActivity;
-import xyz.volgoak.wordlearning.utils.FirebaseDownloadHelper;
-import xyz.volgoak.wordlearning.utils.SetsUpdatingInfo;
+import xyz.volgoak.wordlearning.update.FirebaseDownloadHelper;
+import xyz.volgoak.wordlearning.update.SetsUpdatingInfo;
 
 /**
  * Created by Volgoak on 26.05.2017.
