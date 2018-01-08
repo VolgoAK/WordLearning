@@ -1,6 +1,7 @@
 package xyz.volgoak.wordlearning.recycler;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.view.View;
@@ -8,15 +9,22 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 
 import java.io.File;
 
+import javax.inject.Inject;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.entities.DataEntity;
 import xyz.volgoak.wordlearning.entities.Set;
 import xyz.volgoak.wordlearning.data.StorageContract;
+import xyz.volgoak.wordlearning.update.ImageDownloader;
 
 /**
  * Created by Volgoak on 16.08.2017.
@@ -91,7 +99,18 @@ import xyz.volgoak.wordlearning.data.StorageContract;
 
         Glide.with(mContext).load(imageUri)
                 .error(R.drawable.button_back)
-                .into(civ);
+                .into(new SimpleTarget<GlideDrawable>() {
+                    @Override
+                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                        civ.setImageDrawable(resource);
+                    }
+
+                    @Override
+                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                        super.onLoadFailed(e, errorDrawable);
+                        ((SetsRecyclerAdapter)mAdapter).updateImages();
+                    }
+                });
     }
 
     @Override

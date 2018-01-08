@@ -14,9 +14,13 @@ import com.google.android.gms.gcm.GcmTaskService;
 import com.google.android.gms.gcm.TaskParams;
 import com.google.firebase.auth.FirebaseAuth;
 
+import javax.inject.Inject;
+
 import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.activity.SplashActivity;
 import xyz.volgoak.wordlearning.update.FirebaseDownloadHelper;
+import xyz.volgoak.wordlearning.update.ImageDownloader;
 import xyz.volgoak.wordlearning.update.SetsUpdatingInfo;
 
 /**
@@ -30,6 +34,8 @@ public class SetsLoaderService extends GcmTaskService {
     public static final String TAG = SetsLoaderService.class.getSimpleName();
     public static final int NOTIFICATION_ID = 445566778;
 
+    @Inject
+    ImageDownloader downloader;
 
     @Override
     public int onRunTask(TaskParams taskParams) {
@@ -65,11 +71,10 @@ public class SetsLoaderService extends GcmTaskService {
     }
 
     private void checkImages() {
-        FirebaseDownloadHelper helper = new FirebaseDownloadHelper(this);
-        helper.checkImages();
+        WordsApp.getsComponent().inject(this);
+        downloader.checkImages();
     }
-
-
+    
     private void createUpdateNotification(SetsUpdatingInfo info) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setContentTitle(getString(R.string.new_sets_loaded))

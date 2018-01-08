@@ -12,9 +12,11 @@ import com.google.android.gms.gcm.Task;
 
 import javax.inject.Inject;
 
+import xyz.volgoak.wordlearning.dagger.AppModule;
 import xyz.volgoak.wordlearning.dagger.DaggerDbComponent;
 import xyz.volgoak.wordlearning.dagger.DbComponent;
 import xyz.volgoak.wordlearning.dagger.DbModule;
+import xyz.volgoak.wordlearning.dagger.DownloaderModule;
 import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.services.SetsLoaderService;
 import xyz.volgoak.wordlearning.update.SetsLoader;
@@ -59,7 +61,8 @@ public class WordsApp extends Application {
     }
 
     private void initComponent() {
-        sComponent = DaggerDbComponent.builder().dbModule(new DbModule(this)).build();
+        sComponent = DaggerDbComponent.builder().dbModule(new DbModule(this))
+                .appModule(new AppModule(this)).downloaderModule(new DownloaderModule()).build();
     }
 
     @Override

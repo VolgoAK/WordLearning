@@ -52,10 +52,7 @@ public class FirebaseDownloadHelper {
     private final Object lock = new Object();
     private final Object checkLock = new Object();
     private Context mContext;
-    private File mSmallImagesDir;
-    private File mTitleImagesDir;
-    private StorageReference mSmallImagesReference;
-    private StorageReference mTitleImagesReference;
+
     private List<Task<byte[]>> tasks;
 
     @Inject
@@ -183,95 +180,7 @@ public class FirebaseDownloadHelper {
         return info;
     }
 
-    public void checkImages() {
-        Log.d(TAG, "checkImages()");
-        checkOrCreateDirs();
-        mSmallImagesReference = FirebaseStorage.getInstance().getReference(FirebaseContract.IMAGES_FOLDER);
-        mTitleImagesReference = FirebaseStorage.getInstance().getReference(FirebaseContract.TITLE_IMAGES_FOLDER);
 
-        List<xyz.volgoak.wordlearning.entities.Set> sets = mDataProvider.getAllSets();
-        for(xyz.volgoak.wordlearning.entities.Set set : sets) {
-            checkAndLoadImage(set.getImageUrl());
-        }
-    }
 
-    private void loadNewImages(ArrayList<String> images) {
-        Log.d(TAG, "loadNewImages: ");
-        for (String name : images) {
-            checkAndLoadImage(name);
-        }
-    }
 
-    private void checkAndLoadImage(String imageName) {
-        if (!isBigImageExists(imageName)) {
-            loadTitleImage(imageName);
-        }
-
-        if (!isSmallImageExists(imageName)) {
-            loadSmallImage(imageName);
-        }
-    }
-
-    private boolean isSmallImageExists(String imageName) {
-        File directory = new File(mContext.getFilesDir(), StorageContract.IMAGES_W_50_FOLDER);
-        File image = new File(directory, imageName);
-        return image.exists();
-    }
-
-    private boolean isBigImageExists(String imageName) {
-        File directory = new File(mContext.getFilesDir(), StorageContract.IMAGES_W_400_FOLDER);
-        File image = new File(directory, imageName);
-        return image.exists();
-    }
-
-    private void loadSmallImage(final String imageName) {
-//        Log.d(TAG, "loadSmallImage: " + imageName);
-        StorageReference imageRef = mSmallImagesReference.child(imageName);
-        //test
-//          Task task = imageRef.getBytes(Long.MAX_VALUE);
-//        task.addOnSuccessListener()
-        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                File imageFile = new File(mSmallImagesDir, imageName);
-                try {
-//                    Log.d(TAG, "onSuccess: image " + imageName);
-                    FileOutputStream fous = new FileOutputStream(imageFile);
-                    fous.write(bytes);
-                    fous.close();
-                } catch (FileNotFoundException ex) {
-                    // TODO: 22.09.2017 can it happen? What can I do if can?
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-    }
-
-    private void loadTitleImage(final String imageName) {
-        StorageReference imageRef = mTitleImagesReference.child(imageName);
-        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                File imageFile = new File(mTitleImagesDir, imageName);
-                try {
-                    FileOutputStream fous = new FileOutputStream(imageFile);
-                    fous.write(bytes);
-                    fous.close();
-                } catch (FileNotFoundException ex) {
-                    ex.printStackTrace();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-    }
-
-    private void checkOrCreateDirs() {
-        mSmallImagesDir = new File(mContext.getFilesDir(), StorageContract.IMAGES_W_50_FOLDER);
-        if (!mSmallImagesDir.exists()) mSmallImagesDir.mkdirs();
-
-        mTitleImagesDir = new File(mContext.getFilesDir(), StorageContract.IMAGES_W_400_FOLDER);
-        if (!mTitleImagesDir.exists()) mTitleImagesDir.mkdirs();
-    }
 }

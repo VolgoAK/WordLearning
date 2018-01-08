@@ -8,8 +8,12 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.entities.Set;
+import xyz.volgoak.wordlearning.update.ImageDownloader;
 
 /**
  * Created by Volgoak on 18.08.2017.
@@ -18,6 +22,11 @@ import xyz.volgoak.wordlearning.entities.Set;
 public class SetsRecyclerAdapter extends RecyclerAdapter {
 
     private SetStatusChanger mSetStatusChanger;
+
+    @Inject
+    ImageDownloader downloader;
+
+    // TODO: 1/9/18 merge adapters in one class
 
     public SetsRecyclerAdapter(Context context, List<Set> entityList, RecyclerView recyclerView){
         super(context, entityList, recyclerView);
@@ -40,6 +49,11 @@ public class SetsRecyclerAdapter extends RecyclerAdapter {
 
     public void setSetStatusChanger(SetStatusChanger SetStatusChanger) {
         mSetStatusChanger = SetStatusChanger;
+    }
+
+    public void updateImages() {
+        WordsApp.getsComponent().inject(this);
+        downloader.checkImagesAsynk();
     }
 
     public interface SetStatusChanger{
