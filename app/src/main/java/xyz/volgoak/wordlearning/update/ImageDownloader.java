@@ -63,7 +63,6 @@ public class ImageDownloader {
             loadSmallImage(imageName);
         }
 
-        // TODO: 1/9/18 move to loop
         if(queuedTasks > MAX_TASKS_LIMIT) {
             Log.d(TAG, "checkAndLoadImage: limit reached, wait");
             while (queuedTasks > RESUME_TASKS_LIMIT) {

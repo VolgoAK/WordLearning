@@ -2,13 +2,13 @@ package xyz.volgoak.wordlearning.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.google.firebase.auth.FirebaseAuth;
+import android.widget.Toast;
 
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
@@ -26,10 +26,7 @@ public class MainActivity extends NavigationActivity implements FragmentListener
     public static final String EXTRA_MODE = "extra_mode";
     public static final String START_DICTIONARY = "dictionary";
 
-    /*private ActionBarDrawerToggle mDrawerToggle;
-    private DrawerLayout mDrawerLayout;*/
-
-    private FirebaseAuth mAuth;
+    private boolean exitPressed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,35 +34,18 @@ public class MainActivity extends NavigationActivity implements FragmentListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         super.onCreateNavigationDrawer();
-        /*if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
-        }*/
-
-        /*mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close);
-        mDrawerLayout.addDrawerListener(mDrawerToggle);
-
-        mDrawerToggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(this);*/
-
-        mAuth = FirebaseAuth.getInstance();
 
         String extraTask = getIntent().getStringExtra(EXTRA_MODE);
-        if(extraTask != null){
-            if(extraTask.equals(START_DICTIONARY)){
+        if (extraTask != null) {
+            if (extraTask.equals(START_DICTIONARY)) {
                 startDictionary();
             }
-        }else if(savedInstanceState == null)
+        } else if (savedInstanceState == null)
             startHomeFragment();
     }
 
     @Override
-    protected void onStart(){
-        mAuth.signInAnonymously();
-//        new GsonCreator().createGson(this);
+    protected void onStart() {
         super.onStart();
 
     }
@@ -76,19 +56,23 @@ public class MainActivity extends NavigationActivity implements FragmentListener
         return super.onCreateOptionsMenu(menu);
     }
 
-    /*@Override
-    public void onBackPressed(){
-        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mDrawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }*/
+    @Override
+    public void onBackPressed() {
+        Fragment current = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (current != null && current instanceof StartFragment) {
+            if (exitPressed) finish();
+            else {
+                exitPressed = true;
+                Toast.makeText(this, R.string.press_exit_again, Toast.LENGTH_LONG).show();
+                new Handler().postDelayed(() -> exitPressed = false, 2000);
+            }
+        } else super.onBackPressed();
+    }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
-            case R.id.item_about_main :
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item_about_main:
                 Intent intent = new Intent(this, AboutActivity.class);
                 startActivity(intent);
                 return true;
@@ -100,22 +84,22 @@ public class MainActivity extends NavigationActivity implements FragmentListener
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item){
+    public boolean onNavigationItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        switch (itemId){
-            case R.id.navigation_menu_to_home :
+        switch (itemId) {
+            case R.id.navigation_menu_to_home:
                 startHomeFragment();
                 break;
-            case R.id.navigation_menu_trans_word :
+            case R.id.navigation_menu_trans_word:
                 startTraining(TrainingFabric.TRANSLATION_WORD);
                 break;
-            case R.id.navigation_menu_word_trans :
+            case R.id.navigation_menu_word_trans:
                 startTraining(TrainingFabric.WORD_TRANSLATION);
                 break;
-            case R.id.navigation_menu_redactor :
+            case R.id.navigation_menu_redactor:
                 startDictionary();
                 break;
-            case R.id.navigation_menu_sets :
+            case R.id.navigation_menu_sets:
                 startSets();
                 break;
         }
@@ -123,18 +107,18 @@ public class MainActivity extends NavigationActivity implements FragmentListener
         return false;
     }
 
-    public void startHomeFragment(){
+    public void startHomeFragment() {
         StartFragment fragment = new StartFragment();
         startFragment(fragment, false);
     }
 
-    public void startDictionary(){
+    public void startDictionary() {
         RedactorFragment redactorFragment = new RedactorFragment();
-        startFragment(redactorFragment,true);
+        startFragment(redactorFragment, true);
     }
 
     @Override
-    public void startTraining(int type){
+    public void startTraining(int type) {
         startTraining(type, -1);
     }
 
@@ -152,17 +136,23 @@ public class MainActivity extends NavigationActivity implements FragmentListener
         startActivity(intent);
     }
 
-    public void startFragment(Fragment fragment, boolean addToBackStack){
+    public void startFragment(Fragment fragment, boolean addToBackStack) {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (currentFragment != null) {
+            Class<?> klass = currentFragment.getClass();
+            if (klass.isInstance(fragment)) return;
+        }
+
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_container, fragment);
-        if(addToBackStack)ft.addToBackStack(null);
+        if (addToBackStack) ft.addToBackStack(null);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
     }
 
     @Override
-    public void setActionBarTitle(String title){
-        if(getSupportActionBar() != null)
-        getSupportActionBar().setTitle(title);
+    public void setActionBarTitle(String title) {
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle(title);
     }
 }

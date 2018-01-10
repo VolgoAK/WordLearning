@@ -9,6 +9,7 @@ import com.google.android.gms.gcm.GcmNetworkManager;
 import com.google.android.gms.gcm.OneoffTask;
 import com.google.android.gms.gcm.PeriodicTask;
 import com.google.android.gms.gcm.Task;
+import com.google.firebase.auth.FirebaseAuth;
 
 import javax.inject.Inject;
 
@@ -19,6 +20,7 @@ import xyz.volgoak.wordlearning.dagger.DbModule;
 import xyz.volgoak.wordlearning.dagger.DownloaderModule;
 import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.services.SetsLoaderService;
+import xyz.volgoak.wordlearning.update.ImageDownloader;
 import xyz.volgoak.wordlearning.update.SetsLoader;
 import xyz.volgoak.wordlearning.utils.WordSpeaker;
 
@@ -70,6 +72,8 @@ public class WordsApp extends Application {
         super.onCreate();
         sComponent.inject(this);
 
+        FirebaseAuth.getInstance().signInAnonymously();
+
         // TODO: 21.10.2017 add insta checking at first launch
 
         //load default database if not loaded yet
@@ -86,6 +90,7 @@ public class WordsApp extends Application {
             if (successfulyLoaded) startImagesLoading();*/
 
             SetsLoader.insertTestBase(dataProvider, this);
+            new ImageDownloader().checkImagesAsynk();
         }
 
         GcmNetworkManager networkManager = GcmNetworkManager.getInstance(this);
@@ -94,7 +99,6 @@ public class WordsApp extends Application {
         int currentVersion = BuildConfig.VERSION_CODE;
 
         if (preferences.getInt(PREFERENCE_LAST_VERSION, 0) < currentVersion) {
-            // TODO: 21.10.2017 start task from here
 
             Task task = new OneoffTask.Builder()
                     .setService(SetsLoaderService.class)
@@ -119,18 +123,6 @@ public class WordsApp extends Application {
 
             networkManager.schedule(task);
         }
-    }
-
-    private void startImagesLoading() {
-        GcmNetworkManager manager = GcmNetworkManager.getInstance(this);
-        Task task = new OneoffTask.Builder()
-                .setExecutionWindow(0, 10)
-                .setRequiredNetwork(Task.NETWORK_STATE_CONNECTED)
-                .setService(SetsLoaderService.class)
-                .setTag(SetsLoaderService.TASK_LOAD_IMAGES)
-                .build();
-
-        manager.schedule(task);
     }
 
     @Override

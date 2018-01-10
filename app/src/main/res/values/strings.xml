@@ -76,6 +76,7 @@
     <string name="training">Training</string>
     <string name="cancel">cancel</string>
     <string name="new_word">New word</string>
+    <string name="press_exit_again">Press again to exit</string>
 
 
 </resources>
