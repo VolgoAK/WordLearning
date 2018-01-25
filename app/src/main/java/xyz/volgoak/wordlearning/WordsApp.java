@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.google.android.gms.gcm.GcmNetworkManager;
 import com.google.android.gms.gcm.OneoffTask;
@@ -19,7 +20,9 @@ import xyz.volgoak.wordlearning.dagger.DbComponent;
 import xyz.volgoak.wordlearning.dagger.DbModule;
 import xyz.volgoak.wordlearning.dagger.DownloaderModule;
 import xyz.volgoak.wordlearning.data.DataProvider;
+import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.services.SetsLoaderService;
+import xyz.volgoak.wordlearning.update.DbUpdateManager;
 import xyz.volgoak.wordlearning.update.ImageDownloader;
 import xyz.volgoak.wordlearning.update.SetsLoader;
 import xyz.volgoak.wordlearning.utils.WordSpeaker;
@@ -36,15 +39,9 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
  */
 public class WordsApp extends Application {
     public static final String TAG = WordsApp.class.getSimpleName();
-    public static final String PREFERENCE_BASE_LOADED = "base_loaded";
-    public static final String PREFERENCE_LAST_VERSION = "last_app_version";
-    public static final String THEME_ISSUE_FIXED = "theme_issue_fixed";
+
     private static WordsApp sInstance;
     private static DbComponent sComponent;
-
-    private static long SEC_IN_TWO_DAYS = 60 * 60 * 24 * 2;
-    private static long ONE_HOUR_WINDOW = 60 * 60;
-    private static long MILLIS_IN_ONE_MINUT = 60;
 
     @Inject
     DataProvider dataProvider;
@@ -73,56 +70,7 @@ public class WordsApp extends Application {
         sComponent.inject(this);
 
         FirebaseAuth.getInstance().signInAnonymously();
-
-        // TODO: 21.10.2017 add insta checking at first launch
-
-        //load default database if not loaded yet
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean baseLoaded = preferences.getBoolean(PREFERENCE_BASE_LOADED, false);
-        if (!baseLoaded) {
-            /*SetsUpdatingInfo info = SetsLoader.loadStartBase(this);
-            Log.d(TAG, "onCreate: load db");
-            boolean successfulyLoaded = info.isUpdatingSuccess();
-            Log.d(TAG, "onCreate: soccess " + successfulyLoaded);
-            preferences.edit().putBoolean(PREFERENCE_BASE_LOADED, successfulyLoaded).apply();
-            //if app not updated but installed we don't need to fix
-            preferences.edit().putBoolean(THEME_ISSUE_FIXED, true).apply();
-            if (successfulyLoaded) startImagesLoading();*/
-
-            SetsLoader.insertTestBase(dataProvider, this);
-            new ImageDownloader().checkImagesAsynk();
-        }
-
-        GcmNetworkManager networkManager = GcmNetworkManager.getInstance(this);
-
-        //run updating as soon as possible at first launch and after update
-        int currentVersion = BuildConfig.VERSION_CODE;
-
-        if (preferences.getInt(PREFERENCE_LAST_VERSION, 0) < currentVersion) {
-
-            Task task = new OneoffTask.Builder()
-                    .setService(SetsLoaderService.class)
-                    .setExecutionWindow(0, 30)
-                    .setTag(SetsLoaderService.TASK_CHECK_UPDATE_SETS)
-                    .setRequiredNetwork(Task.NETWORK_STATE_CONNECTED)
-                    .build();
-
-            networkManager.schedule(task);
-            preferences.edit().putInt(PREFERENCE_LAST_VERSION, currentVersion).apply();
-        } else {
-
-            //create task for updating db with 2 days period
-            Task task = new PeriodicTask.Builder()
-                    .setService(SetsLoaderService.class)
-                    .setTag(SetsLoaderService.TASK_CHECK_UPDATE_SETS)
-                    .setPeriod(SEC_IN_TWO_DAYS)
-                    .setFlex(ONE_HOUR_WINDOW)
-                    .setUpdateCurrent(false)
-                    .setRequiredNetwork(Task.NETWORK_STATE_CONNECTED)
-                    .build();
-
-            networkManager.schedule(task);
-        }
+        DbUpdateManager.manageDbState(this, dataProvider);
     }
 
     @Override

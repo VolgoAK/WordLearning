@@ -1,6 +1,8 @@
 package xyz.volgoak.wordlearning.update;
 
 import android.content.Context;
+import android.os.Environment;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -10,8 +12,11 @@ import org.xml.sax.SAXException;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.channels.FileChannel;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -131,5 +136,55 @@ public final class SetsLoader {
         String s = string.substring(0, 1).toUpperCase();
         String s2 = s + string.substring(1);
         return s2;
+    }
+
+    public static void exportDbToFile(Context context, String dbName) {
+        File sd = Environment.getExternalStorageDirectory();
+        File data = Environment.getDataDirectory();
+        FileChannel source=null;
+        FileChannel destination=null;
+        String currentDBPath = context.getDatabasePath(dbName).toString();
+        String backupDBPath = dbName;
+        File currentDB = new File(currentDBPath);
+        File backupDB = new File(sd, backupDBPath);
+        try {
+            source = new FileInputStream(currentDB).getChannel();
+            destination = new FileOutputStream(backupDB).getChannel();
+            destination.transferFrom(source, 0, source.size());
+            source.close();
+            destination.close();
+            Toast.makeText(context, "DB Exported!", Toast.LENGTH_LONG).show();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void importDbFromAsset(Context context, String dbName) {
+        InputStream dbIs = null;
+        FileOutputStream dbOus = null;
+        try {
+            File data = Environment.getDataDirectory();
+            File dbFileTarget = context.getDatabasePath(dbName);
+            dbFileTarget.getParentFile().mkdirs();
+
+            dbOus = new FileOutputStream(dbFileTarget);
+
+            dbIs = context.getAssets().open(dbName);
+
+            byte[] buffer = new byte[1024];
+            int read = dbIs.read(buffer);
+
+            while (read != -1) {
+                dbOus.write(buffer);
+                read = dbIs.read(buffer);
+            }
+
+            dbIs.close();
+            dbOus.flush();
+            dbOus.close();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }
