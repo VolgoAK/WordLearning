@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -66,7 +67,8 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     private boolean mPartScreenMode = true;
 
     private int mRvSavedPosition;
-    private int mSelectedTheme = -1;
+    private String mSelectedTheme = DatabaseContract.Themes.THEME_ANY;
+    private List<Theme> mThemes;
 
      public static WordSetsFragment newInstance(boolean part_mode) {
         Bundle args = new Bundle();
@@ -101,7 +103,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
 
         if(savedInstanceState != null){
             mRvSavedPosition = savedInstanceState.getInt(SAVED_POSITION, 0);
-            mSelectedTheme = savedInstanceState.getInt(SAVED_THEME, -1);
+            mSelectedTheme = savedInstanceState.getString(SAVED_THEME, DatabaseContract.Themes.THEME_ANY);
         }
     }
 
@@ -178,13 +180,16 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         allThemes.setCheckable(true);
         allThemes.setChecked(true);
 
-        List<Theme> themes = mDataProvider.getAllThemes();
-        for(Theme theme : themes) {
+        if(mThemes == null) {
+            mThemes = mDataProvider.getAllThemes();
+        }
+
+        for( int i = 0; i < mThemes.size(); i++) {
+            Theme theme = mThemes.get(i);
             String name = theme.getName();
-            int code = theme.getCode();
-            MenuItem item = popupMenu.getMenu().add(1, code, 0, name);
+            MenuItem item = popupMenu.getMenu().add(1, i, 0, name);
             item.setCheckable(true);
-            if(code == mSelectedTheme){
+            if(mSelectedTheme.equals(theme.getCode())){
                 Log.d(TAG, "showThemesList: set checked");
                 item.setChecked(true);
                 allThemes.setChecked(false);
@@ -194,7 +199,11 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                mSelectedTheme = item.getItemId();
+                if(item.getItemId() == -1) {
+                    mSelectedTheme = DatabaseContract.Themes.THEME_ANY;
+                } else {
+                    mSelectedTheme = mThemes.get(item.getItemId()).getCode();
+                }
                 initRecycler(mSelectedTheme);
                 return true;
             }
@@ -225,10 +234,10 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(SAVED_POSITION, mRvSavedPosition);
-        outState.putInt(SAVED_THEME, mSelectedTheme);
+        outState.putString(SAVED_THEME, mSelectedTheme);
     }
 
     public void invokeSetMenu(final long setId) {
@@ -329,13 +338,14 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         return true;
     }
 
-    public void initRecycler(int themeCode){
+    public void initRecycler(String themeCode){
         List<Set> setList;
-        if(themeCode == -1){
+        if(themeCode.equals(DatabaseContract.Themes.THEME_ANY)){
             setList = mDataProvider.getAllSets();
         }else{
             setList = mDataProvider.getSetsByTheme(themeCode);
         }
+
         mRecyclerAdapter = new SetsRecyclerAdapter(getContext(), setList, mRecyclerView);
         mRecyclerAdapter.setAdapterClickListener(this);
         mRecyclerAdapter.setSetStatusChanger(this);

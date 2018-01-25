@@ -58,7 +58,7 @@ public final class DatabaseContract {
         public static final String COLUMN_DESCRIPTION = "DESCRIPTION";
         public static final String COLUMN_IMAGE_URL = "image_url";
         public static final String COLUMN_LANG = "LANG";
-        public static final String COLUMN_THEME_CODE = "THEME_CODE";
+        public static final String COLUMN_THEME_CODES = "THEME_CODES";
 
         public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME +
                 "( " + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -68,13 +68,14 @@ public final class DatabaseContract {
                 COLUMN_IMAGE_URL + " TEXT," +
                 COLUMN_VISIBILITY + " INTEGER DEFAULT " + VISIBLE + ", " +
                 COLUMN_LANG + " TEXT ," +
-                COLUMN_THEME_CODE + " INTEGER ," +
+                COLUMN_THEME_CODES + " STRING ," +
                 COLUMN_STATUS + " INTEGER DEFAULT " + OUT_OF_DICTIONARY + ");";
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 
     public static abstract class Themes implements BaseColumns{
+        public static final String THEME_ANY = "ANY_THEME";
         public static final String TABLE_NAME = "THEMES_TABLE";
         public static final String COLUMN_NAME = "THEME_NAME";
         public static final String COLUMN_CODE = "THEME_COD";

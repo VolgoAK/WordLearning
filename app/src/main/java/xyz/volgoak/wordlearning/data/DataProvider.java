@@ -123,8 +123,9 @@ public class DataProvider {
         return setsDao.getSetById(setId);
     }
 
-    public List<Set> getSetsByTheme(int themeCode) {
-        return setsDao.getSetsByTheme(themeCode);
+    // TODO: 1/25/18 make with string
+    public List<Set> getSetsByTheme(String themeCode) {
+        return setsDao.getSetsByTheme("%" + themeCode + "%");
     }
 
     ///////////////////////////////////////////////////////////////////////////

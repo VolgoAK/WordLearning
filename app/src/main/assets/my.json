@@ -1,30 +1,30 @@
 {
   "themes": [
     {
-      "code": 1,
+      "code": "001",
       "name": "Люди"
     },
     {
-      "code": 2,
+      "code": "002",
       "name": "Дом"
     },
     {
-      "code": 3,
+      "code": "003",
       "name": "Природа"
     },
     {
-      "code": 4,
+      "code": "004",
       "name": "Вещи"
     },
     {
-      "code": 5,
+      "code": "005",
       "name": "Основы"
     },
     {
-      "code": 6,
+      "code": "006",
       "name": "Искусство"
     },
-    { "code": 7,
+    { "code": "007",
       "name": "Техника"}
   ],
   "sets": [
@@ -32,7 +32,7 @@
       "description": "Обитатели морских глубин",
       "imageUrl": "sea.jpg",
       "name": "Морские жители",
-      "themeCode": 3,
+      "themeCodes": "003",
       "words": [
         {
           "transcription": "kræb",
@@ -100,7 +100,7 @@
       "description": "Названия растений и мест, где они растут",
       "imageUrl": "vegetables.jpg",
       "name": "Растения",
-      "themeCode": 3,
+      "themeCodes": "003",
       "words": [
         {
           "transcription": "ˈælʤiː",
@@ -233,7 +233,7 @@
       "description": "Названия фруктов, только самые вкусные",
       "imageUrl": "fruits.jpg",
       "name": "Фрукты",
-      "themeCode": 3,
+      "themeCodes": "003",
       "words": [
         {
           "transcription": "æpl",
@@ -331,7 +331,7 @@
       "description": "Названия орехов и ягод",
       "imageUrl": "berries.jpg",
       "name": "Ягоды и орехи",
-      "themeCode": 3,
+      "themeCodes": "003",
       "words": [
         {
           "transcription": "ˈberɪ",
@@ -424,7 +424,7 @@
       "description": "Вкусные и полезные овощи",
       "imageUrl": "vegs.jpg",
       "name": "Овощи",
-      "themeCode": 3,
+      "themeCodes": "003",
       "words": [
         {
           "transcription": "",
@@ -512,7 +512,7 @@
       "description": "Деревья в саду и лесу",
       "imageUrl": "plants.jpg",
       "name": "Деревья",
-      "themeCode": 3,
+      "themeCodes": "003",
       "words": [
         {
           "transcription": "",
@@ -625,7 +625,7 @@
       "description": "Животные дома и на ферме",
       "imageUrl": "pets.jpg",
       "name": "Домашние животные",
-      "themeCode": 3,
+      "themeCodes": "003",
       "words": [
         {
           "transcription": "bʊl",
@@ -753,7 +753,7 @@
       "description": "Животные в дикой природе",
       "imageUrl": "beasts.jpg",
       "name": "Дикие животные",
-      "themeCode": 3,
+      "themeCodes": "003",
       "words": [
         {
           "transcription": "ˈæntɪləʊp",
@@ -876,7 +876,7 @@
       "description": "Морские и речные виды рыбы",
       "imageUrl": "fishes.jpg",
       "name": "Рыбы",
-      "themeCode": 3,
+      "themeCodes": "003",
       "words": [
         {
           "transcription": "briːm",
@@ -949,7 +949,7 @@
       "description": "Насекомые, летающие и ползающие",
       "imageUrl": "insects.jpg",
       "name": "Насекомые",
-      "themeCode": 3,
+      "themeCodes": "003",
       "words": [
         {
           "transcription": "ænt",
@@ -1042,7 +1042,7 @@
       "description": "Названия месяцев и дней недели",
       "imageUrl": "calendar.jpg",
       "name": "Дни недели и месяцы",
-      "themeCode": 5,
+      "themeCodes": "005",
       "words": [
         {
           "transcription": "ˈeɪprəl",
@@ -1145,7 +1145,7 @@
       "description": "Первые и вторые блюда, а также десерт",
       "imageUrl": "food.jpg",
       "name": "Еда и напитки",
-      "themeCode": 2,
+      "themeCodes": "005",
       "words": [
         {
           "transcription": "brɔθ",
@@ -1248,7 +1248,7 @@
       "description": "Посуда и мебель на кухне",
       "imageUrl": "kitchen.jpg",
       "name": "Кухня",
-      "themeCode": 2,
+      "themeCodes": "002",
       "words": [
         {
           "transcription": "ˈkɔfɪ ˈmeɪkə",
@@ -1336,7 +1336,7 @@
       "description": "Инструменты для письма и рисования",
       "imageUrl": "pens.jpg",
       "name": "Письменные принадлежности",
-      "themeCode": 4,
+      "themeCodes": "004",
       "words": [
         {
           "transcription": "brʌʃ",
@@ -1394,7 +1394,7 @@
       "description": "Морской, наземный и воздушный транспорт",
       "imageUrl": "transport.jpg",
       "name": "Транспорт",
-      "themeCode": 7,
+      "themeCodes": "007",
       "words": [
         {
           "transcription": "bəʊt",
@@ -1492,7 +1492,7 @@
       "description": "Предметы в туалете и в ванной комнате",
       "imageUrl": "bathroom.jpg",
       "name": "Туалет и ванная комната",
-      "themeCode": 2,
+      "themeCodes": "002",
       "words": [
         {
           "transcription": "kreɪn",
@@ -1575,7 +1575,7 @@
       "description": "Основные цвета и оттенки",
       "imageUrl": "colors.jpg",
       "name": "Цвета",
-      "themeCode": 5,
+      "themeCodes": "005",
       "words": [
         {
           "transcription": "blæk",
@@ -1648,7 +1648,7 @@
       "description": "Наши эмоции",
       "imageUrl": "emotions.jpg",
       "name": "Эмоции и чувства",
-      "themeCode": 1,
+      "themeCodes": "001",
       "words": [
         {
           "transcription": "ˈæŋgə",
@@ -1771,7 +1771,7 @@
       "description": "Названия популярных профессий",
       "imageUrl": "professional.jpg",
       "name": "Профессии",
-      "themeCode": 1,
+      "themeCodes": "001",
       "words": [
         {
           "transcription": "əˈkaʊntənt",
@@ -1869,7 +1869,7 @@
       "description": "Близкие и дальние родственники",
       "imageUrl": "family.jpg",
       "name": "Семья",
-      "themeCode": 1,
+      "themeCodes": "001",
       "words": [
         {
           "transcription": "ɑːnt",
@@ -1992,7 +1992,7 @@
       "description": "Глаголы, обозначающие движение, часть первая",
       "imageUrl": "moves.jpg",
       "name": "Глаголы движений 1",
-      "themeCode": 1,
+      "themeCodes": "001",
       "words": [
         {
           "transcription": "əˈsɛnd",
@@ -2080,7 +2080,7 @@
       "description": "Глаголы, обозначающие движение, часть вторая",
       "imageUrl": "moves.jpg",
       "name": "Глаголы движений 2",
-      "themeCode": 1,
+      "themeCodes": "001",
       "words": [
         {
           "transcription": "əˈraɪv",
@@ -2178,7 +2178,7 @@
       "description": "Глаголы, обозначающие действия",
       "imageUrl": "actions.jpg",
       "name": "Глаголы действий",
-      "themeCode": 1,
+      "themeCodes": "001",
       "words": [
         {
           "transcription": "əkˈseləreɪt",
@@ -2276,7 +2276,7 @@
       "description": "Мебель которая есть в каждом доме",
       "imageUrl": "furniture2.jpg",
       "name": "Мебель",
-      "themeCode": 2,
+      "themeCodes": "002",
       "words": [
         {
           "transcription": "ˈɑrmˌtʃɛr",
@@ -2369,7 +2369,7 @@
       "description": "Предметы одежды часть 1",
       "imageUrl": "dress2.jpg",
       "name": "Одежда и аксессуары 1",
-      "themeCode": 4,
+      "themeCodes": "004",
       "words": [
         {
           "transcription": "ˈbɑːθrəʊb",
@@ -2472,7 +2472,7 @@
       "description": "Предметы одежды, вторая часть",
       "imageUrl": "dress.jpg",
       "name": "Одежда и аксессуары 2",
-      "themeCode": 4,
+      "themeCodes": "004",
       "words": [
         {
           "transcription": "belt",
@@ -2565,7 +2565,7 @@
       "description": "Части тела, первая часть. Туловище и конечности",
       "imageUrl": "body.jpg",
       "name": "Тело человека. Часть 1",
-      "themeCode": 1,
+      "themeCodes": "001",
       "words": [
         {
           "transcription": "ˈɑːmpɪt",
@@ -2658,7 +2658,7 @@
       "description": "Части тела, вторая часть. Голова и лицо.",
       "imageUrl": "body2.jpg",
       "name": "Тело человека. Часть 2",
-      "themeCode": 1,
+      "themeCodes": "001",
       "words": [
         {
           "transcription": "breɪn",
@@ -2756,7 +2756,7 @@
       "description": "Струнные, духовые и ударные инструменты",
       "imageUrl": "music_instruments.jpg",
       "name": "Музыкальные инструменты",
-      "themeCode": 6,
+      "themeCodes": "006",
       "words": [
         {
           "transcription": "əˈkɔːdjən",

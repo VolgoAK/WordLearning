@@ -15,8 +15,7 @@ import xyz.volgoak.wordlearning.data.DatabaseContract.*;
  * Created by alex on 1/3/18.
  */
 
-@Entity(tableName = Sets.TABLE_NAME, foreignKeys = @ForeignKey(entity = Theme.class, parentColumns = Themes.COLUMN_CODE,
-        childColumns = Sets.COLUMN_THEME_CODE))
+@Entity(tableName = Sets.TABLE_NAME)
 public class Set implements DataEntity {
 
     @PrimaryKey(autoGenerate = true)
@@ -43,8 +42,8 @@ public class Set implements DataEntity {
     private int visibitity;
 
     @Expose
-    @ColumnInfo(name = Sets.COLUMN_THEME_CODE)
-    private int themeCode;
+    @ColumnInfo(name = Sets.COLUMN_THEME_CODES)
+    private String themeCodes;
     @Expose
     @Ignore
     private List<Word> words;
@@ -57,7 +56,7 @@ public class Set implements DataEntity {
     }
 
     public Set(String name, String description, String imageUrl, String lang,
-               long id, int wordsCount, int status, int visibitity, int themeCode) {
+               long id, int wordsCount, int status, int visibitity, String themeCodes) {
         this.name = name;
         this.description = description;
         this.imageUrl = imageUrl;
@@ -66,7 +65,7 @@ public class Set implements DataEntity {
         this.wordsCount = wordsCount;
         this.status = status;
         this.visibitity = visibitity;
-        this.themeCode = themeCode;
+        this.themeCodes = themeCodes;
     }
 
     public String getName() {
@@ -135,12 +134,12 @@ public class Set implements DataEntity {
         this.visibitity = visibitity;
     }
 
-    public int getThemeCode() {
-        return themeCode;
+    public String getThemeCodes() {
+        return themeCodes;
     }
 
-    public void setThemeCode(int themeCode) {
-        this.themeCode = themeCode;
+    public void setThemeCodes(String themeCodes) {
+        this.themeCodes = themeCodes;
     }
 
     public List<Word> getWords() {

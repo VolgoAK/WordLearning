@@ -31,7 +31,7 @@ public interface SetsDao {
     @Query("SELECT * FROM SETS_TABLE WHERE _id = :setId")
     Set getSetById(long setId);
 
-    @Query("SELECT * FROM SETS_TABLE WHERE THEME_CODE = :themeCode")
-    List<Set> getSetsByTheme(int themeCode);
+    @Query("SELECT * FROM SETS_TABLE WHERE THEME_CODES LIKE :themeCode")
+    List<Set> getSetsByTheme(String themeCode);
 
 }

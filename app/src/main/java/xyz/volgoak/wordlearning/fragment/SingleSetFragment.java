@@ -48,6 +48,8 @@ import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
  */
 public class SingleSetFragment extends Fragment {
 
+    public static final String TAG = SingleSetFragment.class.getSimpleName();
+
     public static final String EXTRA_SET_ID = "set_id";
     public static final String EXTRA_SINGLE_MODE = "single_mode";
     public static final String SAVED_IS_MULTI_CHOICE = "is_multi_choice";
@@ -164,6 +166,7 @@ public class SingleSetFragment extends Fragment {
 
     private void loadSetInformation() {
         Set set = mDataProvider.getSetById(mSetId);
+        Log.d(TAG, "loadSetInformation: theme " + set.getThemeCodes());
         //set title
         mSetName = set.getName();
         mBinding.collapsingToolbarSetAct.setTitle(mSetName);
