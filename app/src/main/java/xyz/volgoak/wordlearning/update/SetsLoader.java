@@ -37,19 +37,6 @@ public final class SetsLoader {
     public static final String DATA_SET_NODE = "Data_set";
     public static final String DATA_ID_ATTR = "data_id";
     public static final String DATA_SOURCE_ATTR = "source";
-    public static final String SET_NODE = "Set";
-    public static final String NAME_ATTR = "name";
-    public static final String IMAGE_ATTR = "image";
-    public static final String THEME_ATTR = "theme";
-
-    public static final String WORD_ATTR = "word";
-    public static final String TRANSLATION_ATTR = "translation";
-    public static final String DESCRIPTION_ATTR = "description";
-    public static final String TRANSCRIPTION_ATTR = "transcription";
-
-    public static final String THEME_NODE = "Theme";
-    public static final String THEME_NAME_ATTR = "name";
-    public static final String THEME_CODE_ATTR = "code";
 
     public static final String LOADED_SETS_PREF = "loaded_sets";
 
@@ -58,11 +45,6 @@ public final class SetsLoader {
     }
 
     public static void insertTestBase(DataProvider dataProvider, Context context) {
-
-        /*Theme theme = new Theme();
-        theme.setCode(1);
-        theme.setName("Test");
-        dataProvider.insertTheme(theme);*/
 
         dataProvider.insertWord(new Word("Hello", "Привет"));
         dataProvider.insertWord(new Word("Name", "Имя"));

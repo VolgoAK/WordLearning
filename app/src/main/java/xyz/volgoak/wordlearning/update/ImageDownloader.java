@@ -38,7 +38,7 @@ public class ImageDownloader {
     private File mSmallImagesDir;
     private File mTitleImagesDir;
 
-    private boolean inProgress = false;
+    private static boolean inProgress = false;
 
     private volatile int queuedTasks = 0;
 
