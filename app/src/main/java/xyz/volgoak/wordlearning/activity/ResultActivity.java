@@ -8,8 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
-import xyz.volgoak.wordlearning.fragment.ResultsFragment;
 import xyz.volgoak.wordlearning.fragment.NoWordsFragment;
+import xyz.volgoak.wordlearning.fragment.ResultsFragment;
 import xyz.volgoak.wordlearning.training_utils.Results;
 
 /**
@@ -27,11 +27,11 @@ public class ResultActivity extends AppCompatActivity implements FragmentListene
 
         Results results = (Results) getIntent().getSerializableExtra(EXTRA_TRAINING_RESULTS);
         Fragment fragment;
-        switch (results.resultType){
-            case NO_WORDS :
+        switch (results.resultType) {
+            case NO_WORDS:
                 fragment = new NoWordsFragment();
                 break;
-            default :
+            default:
                 fragment = ResultsFragment.getResultFragment(results);
                 break;
         }
@@ -75,6 +75,11 @@ public class ResultActivity extends AppCompatActivity implements FragmentListene
 
     @Override
     public void setActionBarTitle(String title) {
+
+    }
+
+    @Override
+    public void selectTraining() {
 
     }
 }

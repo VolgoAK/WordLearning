@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.view.Menu;
@@ -16,7 +15,7 @@ import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.fragment.BoolTrainingFragment;
 import xyz.volgoak.wordlearning.fragment.RedactorFragment;
 import xyz.volgoak.wordlearning.fragment.StartFragment;
-import xyz.volgoak.wordlearning.fragment.WordCardsFragment;
+import xyz.volgoak.wordlearning.fragment.TrainingSelectFragment;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
 /**
@@ -142,6 +141,12 @@ public class MainActivity extends NavigationActivity implements FragmentListener
     public void startSets() {
         Intent intent = new Intent(this, SetsActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void selectTraining() {
+        TrainingSelectFragment fragment = new TrainingSelectFragment();
+        startFragment(fragment, true);
     }
 
     public void startFragment(Fragment fragment, boolean addToBackStack) {

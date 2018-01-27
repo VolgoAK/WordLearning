@@ -56,7 +56,7 @@
         <item name="cardCornerRadius">6dp</item>
         <item name="cardBackgroundColor">@color/semi_transparent_white</item>
         <item name="android:layout_marginTop">@dimen/views_small_margin</item>
-        <item name="android:layout_marginBottom">@dimen/views_small_margin</item>
+
     </style>
 
     <style name="DialogCard" parent="MenuCards">

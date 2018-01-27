@@ -59,11 +59,11 @@
 
 
         <android.support.v7.widget.CardView
-            android:id="@+id/cv_word_trans_main"
+            android:id="@+id/cv_training_main"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cv_info_main"
-            android:onClick="@{() -> listener.startTraining(TrainingFabric.WORD_TRANSLATION)}"
+            android:onClick="@{() -> listener.selectTraining()}"
             style="@style/MenuCards">
 
             <LinearLayout
@@ -79,41 +79,13 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="@string/word_translation" />
+                    android:text="@string/training" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <ImageView
                     style="@style/Cyv_menu"
-                    android:src="@drawable/ic_wt"/>
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cv_trans_word_main"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cv_word_trans_main"
-            android:onClick="@{() -> listener.startTraining(TrainingFabric.TRANSLATION_WORD)}"
-            style="@style/MenuCards">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:descendantFocusability="blocksDescendants"
-                android:background="?selectableItemBackgroundBorderless">
-
-                <TextView
-                    style="@style/CardsText"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:text="@string/translation_word" />
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    style="@style/Cyv_menu"
-                    android:src="@drawable/ic_tw"/>
+                    android:background="@drawable/yellow_circle"
+                    app:srcCompat="@drawable/ic_training_24dp"
+                    android:scaleType="fitCenter"/>
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
@@ -124,7 +96,7 @@
             android:onClick="@{() -> listener.startDictionary()}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cv_trans_word_main">
+            app:layout_constraintTop_toBottomOf="@+id/cv_training_main">
 
             <LinearLayout
                 android:layout_width="match_parent"

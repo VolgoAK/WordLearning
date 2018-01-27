@@ -21,8 +21,8 @@ import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.data.DataProvider;
-import xyz.volgoak.wordlearning.entities.DictionaryInfo;
 import xyz.volgoak.wordlearning.databinding.FragmentStartBinding;
+import xyz.volgoak.wordlearning.entities.DictionaryInfo;
 import xyz.volgoak.wordlearning.utils.AppearingAnimator;
 
 /**
@@ -62,7 +62,7 @@ public class StartFragment extends Fragment {
                 Log.d(TAG, "onGlobalLayout: createAnimator");
                 if (!mAppearanceAnimated) {
                     mAppearanceAnimated = true;
-                    runAppearAnimation();
+                    runAppearAnimation(false);
                 }
             }
         });
@@ -100,22 +100,10 @@ public class StartFragment extends Fragment {
         mListener = null;
     }
 
-    private void runAppearAnimation() {
-        float pathFromLeft = mBinding.cvTransWordMain.getX() + mBinding.cvTransWordMain.getWidth();
-        /*ValueAnimator animator = ValueAnimator.ofFloat(pathFromLeft, 0);
-        animator.setInterpolator(new MetallBounceInterpoltor());
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float f = (float) animation.getAnimatedValue();
-                mBinding.cvWordTransMain.setTranslationX(f);
-                mBinding.cvTransWordMain.setTranslationX(-f);
-                mBinding.cvRedactorMain.setTranslationX(f);
-                mBinding.cvSetsMain.setTranslationX(-f);
-            }
-        });*/
-
-        ValueAnimator visibilityAnimator = ValueAnimator.ofFloat(0, 1);
+    private void runAppearAnimation(boolean disappearing) {
+        float first = disappearing ? 1 : 0;
+        float second = disappearing ? 0 : 1;
+        ValueAnimator visibilityAnimator = ValueAnimator.ofFloat(first, second);
         visibilityAnimator.setInterpolator(new AccelerateInterpolator());
         visibilityAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -130,14 +118,12 @@ public class StartFragment extends Fragment {
         set.setDuration(1500);
 
         set.play(visibilityAnimator)
-                .with(AppearingAnimator.createAnimator(getActivity(), mBinding.cvWordTransMain,
-                        AppearingAnimator.FROM_LEFT, false))
-                .with(AppearingAnimator.createAnimator(getActivity(), mBinding.cvTransWordMain,
-                        AppearingAnimator.FROM_RIGHT, false))
+                .with(AppearingAnimator.createAnimator(getActivity(), mBinding.cvTrainingMain,
+                        AppearingAnimator.FROM_RIGHT, disappearing))
                 .with(AppearingAnimator.createAnimator(getActivity(), mBinding.cvRedactorMain,
-                        AppearingAnimator.FROM_LEFT, false))
+                        AppearingAnimator.FROM_LEFT, disappearing))
                 .with(AppearingAnimator.createAnimator(getActivity(), mBinding.cvSetsMain,
-                        AppearingAnimator.FROM_RIGHT, false));
+                        AppearingAnimator.FROM_RIGHT, disappearing));
 
         set.start();
     }

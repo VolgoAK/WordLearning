@@ -4,6 +4,7 @@
     <!-- fragment and menu titles -->
     <string name="word_translation">Word - translation</string>
     <string name="translation_word">Translation - word</string>
+    <string name="right_wrong">Right - wrong</string>
     <string name="start_redactor">Redactor</string>
     <string name="results">Results</string>
     <string name="redactor">Redactor</string>

@@ -30,16 +30,16 @@ public class SetsActivity extends NavigationActivity implements FragmentListener
 
         isMultiFrag = findViewById(R.id.container_detail_sets_activity) != null;
 
-        mSetsFragment =(WordSetsFragment) getSupportFragmentManager().findFragmentById(R.id.container_master_sets_activity);
-        if(mSetsFragment == null){
+        mSetsFragment = (WordSetsFragment) getSupportFragmentManager().findFragmentById(R.id.container_master_sets_activity);
+        if (mSetsFragment == null) {
             mSetsFragment = WordSetsFragment.newInstance(isMultiFrag);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container_master_sets_activity, mSetsFragment)
                     .commit();
         }
 
-        mSingleSetFragment = (SingleSetFragment)getSupportFragmentManager().findFragmentById(R.id.container_detail_sets_activity);
-        if(mSingleSetFragment == null && isMultiFrag){
+        mSingleSetFragment = (SingleSetFragment) getSupportFragmentManager().findFragmentById(R.id.container_detail_sets_activity);
+        if (mSingleSetFragment == null && isMultiFrag) {
             // TODO: 17.06.2017 change test id to real
             mSingleSetFragment = SingleSetFragment.newInstance(1, false);
             getSupportFragmentManager().beginTransaction()
@@ -50,20 +50,20 @@ public class SetsActivity extends NavigationActivity implements FragmentListener
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.navigation_menu_sets :
+        switch (item.getItemId()) {
+            case R.id.navigation_menu_sets:
                 break;
-            case R.id.navigation_menu_redactor :
+            case R.id.navigation_menu_redactor:
                 startDictionary();
                 break;
-            case R.id.navigation_menu_to_home :
+            case R.id.navigation_menu_to_home:
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.navigation_menu_trans_word :
+            case R.id.navigation_menu_trans_word:
                 startTraining(TrainingFabric.TRANSLATION_WORD);
                 break;
-            case R.id.navigation_menu_word_trans :
+            case R.id.navigation_menu_word_trans:
                 startTraining(TrainingFabric.WORD_TRANSLATION);
                 break;
         }
@@ -78,13 +78,13 @@ public class SetsActivity extends NavigationActivity implements FragmentListener
 
     @Override
     public void startSet(long setId, View shared) {
-        if(findViewById(R.id.container_detail_sets_activity ) != null){
+        if (findViewById(R.id.container_detail_sets_activity) != null) {
             mSingleSetFragment = SingleSetFragment.newInstance(setId, false);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container_detail_sets_activity, mSingleSetFragment)
                     .commit();
             mSelectedSetId = setId;
-        }else {
+        } else {
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
                     shared, "title");
             Intent intent = new Intent(this, SingleSetActivity.class);
@@ -123,5 +123,10 @@ public class SetsActivity extends NavigationActivity implements FragmentListener
     @Override
     public void setActionBarTitle(String title) {
         //do nothing. Just part of interface
+    }
+
+    @Override
+    public void selectTraining() {
+
     }
 }

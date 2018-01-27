@@ -5,8 +5,14 @@ package xyz.volgoak.wordlearning;
  */
 public interface FragmentListener {
     void startTraining(int type);
+
     void startTraining(int type, long setId);
+
+    void selectTraining();
+
     void startDictionary();
+
     void startSets();
+
     void setActionBarTitle(String title);
 }

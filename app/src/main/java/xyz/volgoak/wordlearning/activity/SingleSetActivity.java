@@ -32,11 +32,11 @@ public class SingleSetActivity extends AppCompatActivity implements FragmentList
 
         mSetId = getIntent().getLongExtra(ID_EXTRA, -1);
 
-        mSetFragment =(SingleSetFragment) getSupportFragmentManager().findFragmentById(android.R.id.content);
+        mSetFragment = (SingleSetFragment) getSupportFragmentManager().findFragmentById(android.R.id.content);
 
         findViewById(android.R.id.content).setBackgroundResource(R.drawable.background);
 
-        if(mSetFragment == null){
+        if (mSetFragment == null) {
             mSetFragment = SingleSetFragment.newInstance(mSetId, true);
             getSupportFragmentManager().beginTransaction()
                     .add(android.R.id.content, mSetFragment)
@@ -69,6 +69,11 @@ public class SingleSetActivity extends AppCompatActivity implements FragmentList
 
     @Override
     public void setActionBarTitle(String title) {
+
+    }
+
+    @Override
+    public void selectTraining() {
 
     }
 }

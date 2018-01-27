@@ -10,11 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mindorks.placeholderview.SwipePlaceHolderView;
-import com.mindorks.placeholderview.listeners.ItemRemovedListener;
-
-import java.util.List;
-
 import javax.inject.Inject;
 
 import xyz.volgoak.wordlearning.R;
@@ -22,7 +17,6 @@ import xyz.volgoak.wordlearning.SwipeHolder;
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.databinding.FragmentBoolTrainingBinding;
-import xyz.volgoak.wordlearning.entities.Word;
 import xyz.volgoak.wordlearning.training_utils.PlayWord;
 import xyz.volgoak.wordlearning.training_utils.TrainingBool;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
@@ -30,7 +24,7 @@ import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeListener{
+public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeListener {
 
     public static final String TAG = BoolTrainingFragment.class.getSimpleName();
 
@@ -42,6 +36,9 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
     private int timer = 60;
     private boolean paused = false;
 
+    private int drawableStar = R.drawable.ic_star_24dp;
+    private int drawableNoStar = R.drawable.ic_star_border_24dp;
+
     public BoolTrainingFragment() {
         // Required empty public constructor
     }
@@ -51,12 +48,12 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         WordsApp.getsComponent().inject(this);
-        dataBinding  = DataBindingUtil.inflate(inflater, R.layout.fragment_bool_training, container, false);
+        dataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_bool_training, container, false);
 
         // TODO: 1/27/18 pass set id for training
         trainingBool = TrainingFabric.getBoolTraining(-1, dataProvider);
 
-        for(PlayWord pw : trainingBool.getInitialWords()) {
+        for (PlayWord pw : trainingBool.getInitialWords()) {
             SwipeHolder holder = new SwipeHolder(getContext(), pw);
             holder.setSwipeListener(this);
             dataBinding.swipeView.addView(holder);
@@ -70,18 +67,26 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
 
     @Override
     public void onSwipe(boolean answer) {
-        if(trainingBool != null) {
+        if (trainingBool != null) {
             boolean correct = trainingBool.checkAnswer(answer);
             Log.d(TAG, "onSwipe: answer " + correct);
             SwipeHolder swipeHolder = new SwipeHolder(getContext(), trainingBool.nextWord());
             swipeHolder.setSwipeListener(this);
             dataBinding.swipeView.addView(swipeHolder);
             dataBinding.tvPointsBool.setText(getString(R.string.scores_format, trainingBool.getScores()));
+            manageStars();
         }
     }
 
     private void checkAnswer(boolean answer) {
         dataBinding.swipeView.doSwipe(answer);
+    }
+
+    private void manageStars() {
+        int stars = trainingBool.getStars();
+        dataBinding.ivStarOneBool.setImageResource(stars >= 1 ? drawableStar : drawableNoStar);
+        dataBinding.ivStarTwoBool.setImageResource(stars >= 2 ? drawableStar : drawableNoStar);
+        dataBinding.ivStarThreeBool.setImageResource(stars >= 3 ? drawableStar : drawableNoStar);
     }
 
     @Override
@@ -92,7 +97,7 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(!paused) {
+                if (!paused) {
                     int sec = timer % 60;
                     int min = timer / 60;
                     String timeString = String.format("%02d:%02d", min, sec);

@@ -2,12 +2,14 @@ package xyz.volgoak.wordlearning.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.fragment.BoolTrainingFragment;
 import xyz.volgoak.wordlearning.fragment.TrainingFragment;
 import xyz.volgoak.wordlearning.training_utils.Results;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
@@ -32,9 +34,14 @@ public class TrainingActivity extends AppCompatActivity implements TrainingFragm
         }
 
         if(savedInstanceState == null) {
-            TrainingFragment fragment = TrainingFragment.getWordTrainingFragment(training_type, setId);
+            Fragment trainingFragment;
+            if(training_type == TrainingFabric.BOOL_TRAINING) {
+                trainingFragment = new BoolTrainingFragment();
+            } else {
+                trainingFragment = TrainingFragment.getWordTrainingFragment(training_type, setId);
+            }
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.container_training, fragment);
+            transaction.replace(R.id.container_training, trainingFragment);
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             transaction.commit();
         }
