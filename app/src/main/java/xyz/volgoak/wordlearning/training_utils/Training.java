@@ -13,7 +13,7 @@ public class Training implements Serializable{
 
     public static final String TAG = "Training";
 
-    private ArrayList<PlayWord> playWords;
+    protected ArrayList<PlayWord> playWords;
     private int currentPosition = 0;
     private int tries = 0;
     private int score = 0;

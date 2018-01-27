@@ -27,12 +27,13 @@ public abstract class TrainingFabric {
 
     public final static int WORD_TRANSLATION = 0;
     public final static int TRANSLATION_WORD = 1;
+    public static final int BOOL_TRAINING = 3;
     public static final int TRAINING_LIMIT = 4;
     public static final int WORDS_LIMIT = 10;
 
 
 
-    public static Training getTraining(int trainingType, long setId, DataProvider provider){
+    public static Training getSimpleTraining(int trainingType, long setId, DataProvider provider){
 
         String variantsColumnString = "";
         List<Word> wordList = provider.getTrainingWords(setId);
@@ -48,7 +49,7 @@ public abstract class TrainingFabric {
             variantsGetter = Word::getTranslation;
             compareField = Word::getTrainedWt;
 
-            Log.d("Fabric", "getTraining: words " + wordList.size());
+            Log.d("Fabric", "getSimpleTraining: words " + wordList.size());
         }else if(trainingType == TRANSLATION_WORD){
             wordGetter = Word::getTranslation;
             variantsGetter = Word::getWord;
@@ -71,13 +72,26 @@ public abstract class TrainingFabric {
             for(int a = 0; a < 3; a++) {
                 vars[a] = variantsGetter.getString(varList.get(a));
             }
-            PlayWord playWord = new PlayWord(word, translation, vars, (int) w.getId());
+            PlayWord playWord = new PlayWord(word, translation, vars, w.getId());
             playWords.add(playWord);
             if(playWords.size() == WORDS_LIMIT) break;
         }
 
         if(playWords.size() == 0) return null;
         return new Training(playWords, trainingType);
+    }
+
+    public static TrainingBool getBoolTraining(long setId, DataProvider provider) {
+        // TODO: 1/27/18 implement this
+        List<Word> words = provider.getDictionaryWords();
+        ArrayList<PlayWord> playWords = new ArrayList<>();
+        Collections.shuffle(words);
+        for(Word w : words) {
+            List<Word> vars = provider.getVariants(w.getId(), 1);
+            PlayWord pw = new PlayWord(w.getWord(), w.getTranslation(), new String[] {vars.get(0).getTranslation()}, w.getId());
+            playWords.add(pw);
+        }
+        return new TrainingBool(playWords, BOOL_TRAINING);
     }
 
     interface GetWord{

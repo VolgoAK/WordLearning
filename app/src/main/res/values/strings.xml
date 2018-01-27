@@ -70,6 +70,7 @@
     <string name="in_dictionary">In dictionary</string>
     <string name="words_learned">Words learned %1$d of %2$d</string>
     <string name="words_in_dictionary">Words in a dictionary %1$d </string>
+    <string name="scores_format">Scores : %1$d</string>
     <string name="sort">sort</string>
     <string name="all_themes">All themes</string>
     <string name="start_training">Start training</string>
@@ -78,5 +79,7 @@
     <string name="new_word">New word</string>
     <string name="press_exit_again">Press again to exit</string>
 
+    <string name="correct">Correct</string>
+    <string name="wrong">Wrong</string>
 
 </resources>

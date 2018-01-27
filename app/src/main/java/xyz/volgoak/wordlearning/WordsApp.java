@@ -27,16 +27,6 @@ import xyz.volgoak.wordlearning.update.ImageDownloader;
 import xyz.volgoak.wordlearning.update.SetsLoader;
 import xyz.volgoak.wordlearning.utils.WordSpeaker;
 
-/**
- * Created by Volgoak on 15.05.2017.
- */
-
-/**
- * Keeps app context to pass it where it need.
- * Do not use it with classes which interact with UI.
- * As far as I know it's only good enough for SQLite
- * and TTS.
- */
 public class WordsApp extends Application {
     public static final String TAG = WordsApp.class.getSimpleName();
 

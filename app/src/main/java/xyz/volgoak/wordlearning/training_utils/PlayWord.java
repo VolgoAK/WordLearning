@@ -21,7 +21,7 @@ public class PlayWord implements Serializable{
         private String[] vars;
         private long id;
 
-        public PlayWord(String word, String translation, String[] vars, int id){
+        public PlayWord(String word, String translation, String[] vars, long id){
             this.word = word;
             this.translation = translation;
             this.id = id;
@@ -54,4 +54,16 @@ public class PlayWord implements Serializable{
             return word;
          }
 
+    @Override
+    public String toString() {
+        StringBuilder representation = new StringBuilder("PlayWord: word ");
+        representation.append(word).append(", translation ").append(translation);
+        if(vars != null) {
+            representation.append(", vars : ");
+            for (String s : vars) {
+                representation.append(s).append(",");
+            }
+        }
+        return representation.toString();
+    }
 }

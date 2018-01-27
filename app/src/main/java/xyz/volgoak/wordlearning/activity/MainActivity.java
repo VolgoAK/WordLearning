@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.view.Menu;
@@ -12,8 +13,10 @@ import android.widget.Toast;
 
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.fragment.BoolTrainingFragment;
 import xyz.volgoak.wordlearning.fragment.RedactorFragment;
 import xyz.volgoak.wordlearning.fragment.StartFragment;
+import xyz.volgoak.wordlearning.fragment.WordCardsFragment;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
 /**
@@ -75,6 +78,11 @@ public class MainActivity extends NavigationActivity implements FragmentListener
             case R.id.item_about_main:
                 Intent intent = new Intent(this, AboutActivity.class);
                 startActivity(intent);
+                return true;
+
+            case R.id.item_cards:
+                Fragment fragment = new BoolTrainingFragment();
+                startFragment(fragment, true);
                 return true;
             /*case R.id.item_update_main :
                 SetsLoader.checkForDbUpdate(this);

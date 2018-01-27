@@ -4,11 +4,13 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import xyz.volgoak.wordlearning.WordsApp;
+import xyz.volgoak.wordlearning.fragment.BoolTrainingFragment;
 import xyz.volgoak.wordlearning.fragment.RedactorFragment;
 import xyz.volgoak.wordlearning.fragment.ResultsFragment;
 import xyz.volgoak.wordlearning.fragment.SingleSetFragment;
 import xyz.volgoak.wordlearning.fragment.StartFragment;
 import xyz.volgoak.wordlearning.fragment.TrainingFragment;
+import xyz.volgoak.wordlearning.fragment.WordCardsFragment;
 import xyz.volgoak.wordlearning.fragment.WordSetsFragment;
 import xyz.volgoak.wordlearning.recycler.RecyclerAdapter;
 import xyz.volgoak.wordlearning.recycler.SetsRecyclerAdapter;
@@ -30,6 +32,8 @@ public interface DbComponent {
     void inject(StartFragment fragment);
     void inject(WordSetsFragment fragment);
     void inject(TrainingFragment fragment);
+    void inject(BoolTrainingFragment fragment);
+    void inject(WordCardsFragment fragment);
     void inject(FirebaseDownloadHelper helper);
 
     void inject(ImageDownloader downloader);

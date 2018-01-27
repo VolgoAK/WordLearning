@@ -7,4 +7,7 @@
     <!--<item android:title="Update"
         android:id="@+id/item_update_main"/>-->
 
+    <item android:title="cards"
+        android:id="@+id/item_cards"/>
+
 </menu>

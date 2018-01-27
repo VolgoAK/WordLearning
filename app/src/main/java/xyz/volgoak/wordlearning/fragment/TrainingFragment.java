@@ -111,7 +111,7 @@ public class TrainingFragment extends Fragment {
             }
         }else {
             mAnswered.set(false);
-            mTraining = TrainingFabric.getTraining(mTrainingType, mSetId, mDataProvider);
+            mTraining = TrainingFabric.getSimpleTraining(mTrainingType, mSetId, mDataProvider);
             //if training is null, we have to go to the dictionary
             if(mTraining != null) {
                 mTrainingWord = mTraining.getFirstWord();
