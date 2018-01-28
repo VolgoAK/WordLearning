@@ -9,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.fragment.NoWordsFragment;
+import xyz.volgoak.wordlearning.fragment.ResultBoolFragment;
 import xyz.volgoak.wordlearning.fragment.ResultsFragment;
 import xyz.volgoak.wordlearning.training_utils.Results;
+import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
 /**
  * Created by Alexander Karachev on 07.05.2017.
@@ -32,10 +34,16 @@ public class ResultActivity extends AppCompatActivity implements FragmentListene
                 fragment = new NoWordsFragment();
                 break;
             default:
-                fragment = ResultsFragment.getResultFragment(results);
-                break;
+                switch (results.trainedType) {
+                    case TrainingFabric.BOOL_TRAINING:
+                        fragment = ResultBoolFragment.newInstance(results);
+                        break;
+                    default:
+                        fragment = ResultsFragment.getResultFragment(results);
+                        break;
+                }
         }
-        //ResultsFragment fragment = ResultsFragment.getResultFragment(results);
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.result_container, fragment);
         transaction.setTransition(FragmentTransaction.TRANSIT_NONE);

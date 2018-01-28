@@ -22,4 +22,5 @@ public class Results implements Serializable{
     public long setId = -1;
     public int wordCount;
     public int correctAnswers;
+    public int scores;
 }

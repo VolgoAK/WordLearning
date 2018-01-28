@@ -1,6 +1,7 @@
 package xyz.volgoak.wordlearning.fragment;
 
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
@@ -39,6 +40,8 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
     private int drawableStar = R.drawable.ic_star_24dp;
     private int drawableNoStar = R.drawable.ic_star_border_24dp;
 
+    private TrainingFragment.ResultReceiver resultReceiver;
+
     public BoolTrainingFragment() {
         // Required empty public constructor
     }
@@ -70,12 +73,23 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
         if (trainingBool != null) {
             boolean correct = trainingBool.checkAnswer(answer);
             Log.d(TAG, "onSwipe: answer " + correct);
-            SwipeHolder swipeHolder = new SwipeHolder(getContext(), trainingBool.nextWord());
+            PlayWord playWord = trainingBool.nextWord();
+            if(playWord == null) {
+                finishTraining();
+                return;
+            }
+            SwipeHolder swipeHolder = new SwipeHolder(getContext(), playWord);
             swipeHolder.setSwipeListener(this);
             dataBinding.swipeView.addView(swipeHolder);
             dataBinding.tvPointsBool.setText(getString(R.string.scores_format, trainingBool.getScores()));
             manageStars();
         }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        resultReceiver = (TrainingFragment.ResultReceiver) context;
     }
 
     private void checkAnswer(boolean answer) {
@@ -97,6 +111,10 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                if(timer <= 0) {
+                    finishTraining();
+                    return;
+                }
                 if (!paused) {
                     int sec = timer % 60;
                     int min = timer / 60;
@@ -113,5 +131,9 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
     public void onPause() {
         super.onPause();
         paused = true;
+    }
+
+    public void finishTraining() {
+        resultReceiver.showResults(trainingBool.getResults());
     }
 }

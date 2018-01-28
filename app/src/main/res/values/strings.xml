@@ -44,6 +44,8 @@
     <string name="fields_empty_message">Fields should not be empty</string>
     <string name="new_sets_loaded">New sets was loaded</string>
     <string name="num_of_words_loaded">Loaded %1$d words</string>
+    <string name="you_got">You\'ve got</string>
+    <string name="points_format">%1$d points</string>
 
     <string name="bogus_text" translatable="false">Definition of content of set, and something else just for make this stupid sentese little bit longer.
         But not too long</string>

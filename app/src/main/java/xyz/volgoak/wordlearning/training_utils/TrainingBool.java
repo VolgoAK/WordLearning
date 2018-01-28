@@ -65,6 +65,13 @@ public class TrainingBool extends Training {
         return 0;
     }
 
+    @Override
+    public Results getResults() {
+        Results results = super.getResults();
+        results.scores = scores;
+        return results;
+    }
+
     public int getScores() {
         return scores;
     }

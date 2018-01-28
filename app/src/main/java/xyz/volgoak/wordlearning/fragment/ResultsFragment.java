@@ -1,6 +1,7 @@
 package xyz.volgoak.wordlearning.fragment;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
+import xyz.volgoak.wordlearning.databinding.FragmentRedactorBinding;
+import xyz.volgoak.wordlearning.databinding.FragmentResultsBinding;
 import xyz.volgoak.wordlearning.entities.Word;
 import xyz.volgoak.wordlearning.training_utils.Results;
 import xyz.volgoak.wordlearning.training_utils.Training;
@@ -34,6 +37,8 @@ public class ResultsFragment extends Fragment {
     @Inject
     DataProvider mProvider;
 
+    private FragmentResultsBinding mDataBinding;
+
     public ResultsFragment() {
         // Required empty public constructor
     }
@@ -50,7 +55,8 @@ public class ResultsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         WordsApp.getsComponent().inject(this);
-        return inflater.inflate(R.layout.fragment_results, container, false);
+        mDataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_results, container, false);
+        return mDataBinding.getRoot();
     }
 
     @Override
@@ -71,15 +77,26 @@ public class ResultsFragment extends Fragment {
     public void onStart(){
         super.onStart();
 
-        //mListener.setActionBarTitle(getString(R.string.results));
+        manageFeedBack();
 
+        mDataBinding.resultStartRedactor.setOnClickListener((v) -> mListener.startDictionary());
+
+        mDataBinding.resultStartTw.setOnClickListener(
+                (v) -> mListener.startTraining(TrainingFabric.WORD_TRANSLATION, mResults.setId));
+
+        mDataBinding.resultStartWt.setOnClickListener(
+                (v) -> mListener.startTraining(TrainingFabric.TRANSLATION_WORD, mResults.setId));
+
+
+        updateWordsStatus();
+    }
+
+    private void manageFeedBack() {
         String results = getString(R.string.correct_answers) + "  " + mResults.correctAnswers + "/" + mResults.wordCount;
-        TextView resultTv = (TextView)getView().findViewById(R.id.tv_result_resfrag);
-        resultTv.setText(results);
+        mDataBinding.tvResultResfrag.setText(results);
 
         String opinion;
         double percentage = mResults.correctAnswers * 1.0/ mResults.wordCount;
-//        Log.d(TAG, "onStart: percentage " + percentage);
 
         if(percentage == 1){
             opinion = getString(R.string.perfect_result);
@@ -89,34 +106,7 @@ public class ResultsFragment extends Fragment {
             opinion = getString(R.string.bad_result);
         }else opinion = getString(R.string.disaster_result);
 
-        TextView opinionTv = (TextView) getView().findViewById(R.id.tv_result_opinion);
-        opinionTv.setText(opinion);
-
-        Button redactorButton  = (Button)getView().findViewById(R.id.result_start_redactor);
-        redactorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.startDictionary();
-            }
-        });
-
-        Button startWTbutton = (Button) getView().findViewById(R.id.result_start_wt);
-        startWTbutton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-               mListener.startTraining(TrainingFabric.WORD_TRANSLATION, mResults.setId);
-            }
-        });
-
-        Button startTWbutton = (Button) getView().findViewById(R.id.result_start_tw);
-        startTWbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.startTraining(TrainingFabric.TRANSLATION_WORD, mResults.setId);
-            }
-        });
-
-        updateWordsStatus();
+        mDataBinding.tvResultOpinion.setText(opinion);
     }
 
     private void updateWordsStatus(){
