@@ -3,9 +3,13 @@ package xyz.volgoak.wordlearning.fragment;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,10 +46,13 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
 
     private TrainingFragment.ResultReceiver resultReceiver;
 
+    private SoundPool soundPool;
+    private int wrongSound;
+    private int correctSound;
+
     public BoolTrainingFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,8 +69,12 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
             dataBinding.swipeView.addView(holder);
         }
 
+
         dataBinding.btBoolRight.setOnClickListener((v) -> checkAnswer(true));
         dataBinding.btBoolWrong.setOnClickListener((v) -> checkAnswer(false));
+
+        String scores = getString(R.string.scores_format, 0);
+        dataBinding.tvPointsBool.setText(scores);
 
         return dataBinding.getRoot();
     }
@@ -72,17 +83,16 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
     public void onSwipe(boolean answer) {
         if (trainingBool != null) {
             boolean correct = trainingBool.checkAnswer(answer);
+            manageAnswer(correct);
             Log.d(TAG, "onSwipe: answer " + correct);
             PlayWord playWord = trainingBool.nextWord();
-            if(playWord == null) {
+            if (playWord == null) {
                 finishTraining();
                 return;
             }
             SwipeHolder swipeHolder = new SwipeHolder(getContext(), playWord);
             swipeHolder.setSwipeListener(this);
             dataBinding.swipeView.addView(swipeHolder);
-            dataBinding.tvPointsBool.setText(getString(R.string.scores_format, trainingBool.getScores()));
-            manageStars();
         }
     }
 
@@ -92,15 +102,38 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
         resultReceiver = (TrainingFragment.ResultReceiver) context;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            soundPool = new SoundPool.Builder().setMaxStreams(2).build();
+        } else {
+            soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 1);
+        }
+
+        correctSound = soundPool.load(getContext(), R.raw.correct, 1);
+        wrongSound = soundPool.load(getContext(), R.raw.wrong, 1);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        soundPool.release();
+    }
+
     private void checkAnswer(boolean answer) {
         dataBinding.swipeView.doSwipe(answer);
     }
 
-    private void manageStars() {
+    private void manageAnswer(boolean correct) {
         int stars = trainingBool.getStars();
         dataBinding.ivStarOneBool.setImageResource(stars >= 1 ? drawableStar : drawableNoStar);
         dataBinding.ivStarTwoBool.setImageResource(stars >= 2 ? drawableStar : drawableNoStar);
         dataBinding.ivStarThreeBool.setImageResource(stars >= 3 ? drawableStar : drawableNoStar);
+
+        int sound = correct ? correctSound : wrongSound;
+        soundPool.play(sound, 1, 1, 1, 0, 1);
+        dataBinding.tvPointsBool.setText(getString(R.string.scores_format, trainingBool.getScores()));
     }
 
     @Override
@@ -111,7 +144,7 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(timer <= 0) {
+                if (timer <= 0) {
                     finishTraining();
                     return;
                 }
@@ -119,6 +152,9 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
                     int sec = timer % 60;
                     int min = timer / 60;
                     String timeString = String.format("%02d:%02d", min, sec);
+                    if (timer >= 5) {
+                        dataBinding.tvTimeBool.setTextColor(ContextCompat.getColor(getContext(), R.color.red));
+                    }
                     dataBinding.tvTimeBool.setText(timeString);
                     timer--;
                     handler.postDelayed(this, 1000);

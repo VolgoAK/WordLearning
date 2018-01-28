@@ -7,6 +7,40 @@
         android:layout_height="match_parent"
         tools:context="xyz.volgoak.wordlearning.fragment.BoolTrainingFragment">
 
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/semi_transparent_white"
+            android:layout_margin="@dimen/views_small_margin"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/views_small_margin">
+
+                <ImageView
+                    android:id="@+id/iv_clock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/views_small_margin"
+                    app:srcCompat="@drawable/ic_timer_24dp" />
+                <TextView
+                    android:id="@+id/tv_time_bool"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/activity_vertical_margin"
+                    android:textSize="@dimen/medium_text_size"
+                    tools:text="00:58" />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+
         <TextView
             android:id="@+id/tv_points_bool"
             android:layout_width="wrap_content"
@@ -15,72 +49,56 @@
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Scores 200" />
+            app:layout_constraintTop_toBottomOf="@id/cv_timer"
+            app:layout_goneMarginTop="@dimen/views_small_margin"
+            />
 
-        <TextView
-            android:id="@+id/tv_time_bool"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/activity_vertical_margin"
-            android:textSize="@dimen/medium_text_size"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_points_bool"
-            tools:text="00:58" />
 
         <ImageView
-            app:srcCompat="@drawable/ic_star_border_24dp"
             android:id="@+id/iv_star_one_bool"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_time_bool"
-            app:layout_constraintRight_toLeftOf="@+id/iv_star_two_bool"/>
+            app:layout_constraintRight_toLeftOf="@+id/iv_star_two_bool"
+            app:layout_constraintTop_toBottomOf="@id/tv_points_bool"
+            app:srcCompat="@drawable/ic_star_border_24dp" />
 
         <ImageView
-            app:srcCompat="@drawable/ic_star_border_24dp"
             android:id="@+id/iv_star_two_bool"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toRightOf="@id/iv_star_one_bool"
+            app:layout_constraintRight_toLeftOf="@+id/iv_star_three_bool"
             app:layout_constraintTop_toTopOf="@id/iv_star_one_bool"
-            app:layout_constraintRight_toLeftOf="@+id/iv_star_three_bool"/>
+            app:srcCompat="@drawable/ic_star_border_24dp" />
 
         <ImageView
-            app:srcCompat="@drawable/ic_star_border_24dp"
             android:id="@+id/iv_star_three_bool"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toRightOf="@id/iv_star_two_bool"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/iv_star_one_bool"
-            app:layout_constraintRight_toRightOf="parent"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/views_small_margin"
-            app:layout_constraintRight_toLeftOf="@id/tv_time_bool"
-            app:layout_constraintTop_toTopOf="@id/tv_time_bool"
-            app:srcCompat="@drawable/ic_timer_24dp" />
+            app:srcCompat="@drawable/ic_star_border_24dp" />
 
         <Button
             android:id="@+id/bt_bool_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/correct"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/bt_bool_wrong"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent" />
 
         <Button
             android:id="@+id/bt_bool_wrong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/wrong"
-            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/bt_bool_right" />
 
 
