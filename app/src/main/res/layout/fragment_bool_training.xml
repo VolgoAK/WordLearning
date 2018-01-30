@@ -11,16 +11,16 @@
             android:id="@+id/cv_timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/semi_transparent_white"
             android:layout_margin="@dimen/views_small_margin"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
+            app:cardBackgroundColor="@color/semi_transparent_white"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_margin="@dimen/views_small_margin">
+                android:layout_margin="@dimen/views_small_margin"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/iv_clock"
@@ -28,6 +28,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/views_small_margin"
                     app:srcCompat="@drawable/ic_timer_24dp" />
+
                 <TextView
                     android:id="@+id/tv_time_bool"
                     android:layout_width="wrap_content"
@@ -40,102 +41,73 @@
         </android.support.v7.widget.CardView>
 
         <android.support.constraint.Guideline
+            android:id="@+id/guideline_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/guideline_horizontal"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5"/>
+            app:layout_constraintGuide_percent="0.5" />
 
         <android.support.constraint.Guideline
+            android:id="@+id/guideline_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/guideline_vertical"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5"/>
+            app:layout_constraintGuide_percent="0.5" />
 
         <TextView
             android:id="@+id/tv_points_label"
-            android:text="@string/scores"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/medium_text_size"
             android:layout_marginRight="@dimen/views_small_margin"
-            android:layout_marginBottom="@dimen/views_horizontal_margin"
-            app:layout_constraintRight_toLeftOf="@id/guideline_vertical"
-            app:layout_constraintBottom_toTopOf="@id/iv_star_one_bool" />
+            android:text="@string/scores"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_points_bool"
+            app:layout_constraintRight_toLeftOf="@id/guideline_vertical" />
 
         <TextView
             android:id="@+id/tv_points_bool"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/large_text_size"
             android:layout_marginLeft="@dimen/views_small_margin"
+            android:textSize="@dimen/large_text_size"
+            app:layout_constraintBottom_toBottomOf="@id/cv_timer"
             app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-            app:layout_constraintBottom_toBottomOf="@id/tv_points_label"
-            tools:text="1000"/>
+            tools:text="1000" />
 
         <TextView
             android:id="@+id/tv_scores_plus_bool"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/stars_bottom_margin"
             android:textColor="@color/yellow"
             android:textSize="@dimen/large_text_size"
-            app:layout_constraintLeft_toLeftOf="@id/tv_points_bool"
-            app:layout_constraintTop_toTopOf="@id/tv_points_bool"
-            android:visibility="invisible"/>
-
-        <ImageView
-            android:id="@+id/iv_star_one_bool"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/stars_bottom_margin"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/iv_star_two_bool"
+            android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
-            app:srcCompat="@drawable/ic_star_border_24dp" />
-
-        <ImageView
-            android:id="@+id/iv_star_two_bool"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@id/iv_star_one_bool"
-            app:layout_constraintRight_toLeftOf="@+id/iv_star_three_bool"
-            app:layout_constraintTop_toTopOf="@id/iv_star_one_bool"
-            app:srcCompat="@drawable/ic_star_border_24dp" />
-
-        <ImageView
-            android:id="@+id/iv_star_three_bool"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@id/iv_star_two_bool"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/iv_star_one_bool"
-            app:srcCompat="@drawable/ic_star_border_24dp" />
+            app:layout_constraintLeft_toLeftOf="@id/guideline_vertical" />
 
         <Button
             android:id="@+id/bt_bool_right"
             android:layout_width="@dimen/bool_bt_width"
             android:layout_height="wrap_content"
-            android:text="@string/correct"
-            android:background="@drawable/green_button"
             android:layout_marginLeft="@dimen/views_small_margin"
             android:layout_marginTop="@dimen/bool_bt_top_margin"
-            app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
+            android:background="@drawable/green_button"
+            android:text="@string/correct"
             app:layout_constraintLeft_toRightOf="@id/bt_bool_wrong"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline_horizontal" />
 
         <Button
             android:id="@+id/bt_bool_wrong"
             android:layout_width="@dimen/bool_bt_width"
             android:layout_height="wrap_content"
-            android:text="@string/wrong"
-            android:background="@drawable/orange_button"
             android:layout_marginRight="@dimen/views_small_margin"
-            app:layout_constraintTop_toTopOf="@id/bt_bool_right"
+            android:background="@drawable/orange_button"
+            android:text="@string/wrong"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/bt_bool_right" />
+            app:layout_constraintRight_toLeftOf="@+id/bt_bool_right"
+            app:layout_constraintTop_toTopOf="@id/bt_bool_right" />
 
         <com.mindorks.placeholderview.SwipePlaceHolderView
             android:id="@+id/swipe_view"

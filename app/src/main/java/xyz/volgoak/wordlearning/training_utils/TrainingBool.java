@@ -24,11 +24,14 @@ public class TrainingBool extends Training {
 
     public TrainingBool(ArrayList<PlayWord> playWords, int trainingType) {
         super(playWords, trainingType);
+        for (PlayWord pw : playWords) {
+            Log.d(TAG, "TrainingBool: " + pw.getWord());
+        }
     }
 
     public List<PlayWord> getInitialWords() {
-        if (playWords.size() >= 2) {
-            return playWords.subList(0, 2);
+        if (playWords.size() >= position + 1) {
+            return playWords.subList(position, position + 2);
         } else return null;
     }
 
