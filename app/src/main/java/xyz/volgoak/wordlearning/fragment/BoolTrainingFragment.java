@@ -152,7 +152,7 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
                     int sec = timer % 60;
                     int min = timer / 60;
                     String timeString = String.format("%02d:%02d", min, sec);
-                    if (timer >= 5) {
+                    if (timer <= 5) {
                         dataBinding.tvTimeBool.setTextColor(ContextCompat.getColor(getContext(), R.color.red));
                     }
                     dataBinding.tvTimeBool.setText(timeString);

@@ -39,7 +39,12 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
-
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideline"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5"/>
 
         <TextView
             android:id="@+id/tv_points_bool"
@@ -49,8 +54,7 @@
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cv_timer"
-            app:layout_goneMarginTop="@dimen/views_small_margin"
+            app:layout_constraintBottom_toTopOf="@id/iv_star_one_bool"
             />
 
 
@@ -58,10 +62,11 @@
             android:id="@+id/iv_star_one_bool"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/stars_bottom_margin"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/iv_star_two_bool"
-            app:layout_constraintTop_toBottomOf="@id/tv_points_bool"
+            app:layout_constraintBottom_toTopOf="@id/guideline"
             app:srcCompat="@drawable/ic_star_border_24dp" />
 
         <ImageView
@@ -100,6 +105,8 @@
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/bt_bool_right" />
+        
+
 
 
         <com.mindorks.placeholderview.SwipePlaceHolderView
