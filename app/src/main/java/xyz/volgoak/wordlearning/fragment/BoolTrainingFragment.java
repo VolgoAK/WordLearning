@@ -1,6 +1,10 @@
 package xyz.volgoak.wordlearning.fragment;
 
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.media.AudioManager;
@@ -73,8 +77,7 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
         dataBinding.btBoolRight.setOnClickListener((v) -> checkAnswer(true));
         dataBinding.btBoolWrong.setOnClickListener((v) -> checkAnswer(false));
 
-        String scores = getString(R.string.scores_format, 0);
-        dataBinding.tvPointsBool.setText(scores);
+        dataBinding.tvPointsBool.setText(String.valueOf(trainingBool.getScores()));
 
         return dataBinding.getRoot();
     }
@@ -133,7 +136,33 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
 
         int sound = correct ? correctSound : wrongSound;
         soundPool.play(sound, 1, 1, 1, 0, 1);
-        dataBinding.tvPointsBool.setText(getString(R.string.scores_format, trainingBool.getScores()));
+        dataBinding.tvPointsBool.setText(String.valueOf(trainingBool.getScores()));
+
+        if (correct) animateScores();
+    }
+
+    private void animateScores() {
+        dataBinding.tvScoresPlusBool.setVisibility(View.VISIBLE);
+        dataBinding.tvScoresPlusBool.setText("+" + trainingBool.scoresCounter());
+
+        ObjectAnimator positionAnimator = ObjectAnimator.ofFloat(dataBinding.tvScoresPlusBool,
+                "translationY", 0, -100);
+        ObjectAnimator sizeAnimator = ObjectAnimator.ofFloat(dataBinding.tvScoresPlusBool,
+                "scaleX", 0, 2);
+        ObjectAnimator size3Animator = ObjectAnimator.ofFloat(dataBinding.tvScoresPlusBool,
+                "scaleY", 0, 2);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.setDuration(500);
+        animatorSet.play(positionAnimator).with(sizeAnimator).with(size3Animator);
+
+        animatorSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                dataBinding.tvScoresPlusBool.setVisibility(View.INVISIBLE);
+            }
+        });
+        animatorSet.start();
     }
 
     @Override
@@ -141,7 +170,7 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
         super.onResume();
 
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
                 if (timer <= 0) {
@@ -160,7 +189,7 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
                     handler.postDelayed(this, 1000);
                 }
             }
-        }, 1000);
+        });
     }
 
     @Override

@@ -42,21 +42,47 @@
         <android.support.constraint.Guideline
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/guideline"
+            android:id="@+id/guideline_horizontal"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.5"/>
+
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideline_vertical"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5"/>
+
+        <TextView
+            android:id="@+id/tv_points_label"
+            android:text="@string/scores"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/medium_text_size"
+            android:layout_marginRight="@dimen/views_small_margin"
+            android:layout_marginBottom="@dimen/views_horizontal_margin"
+            app:layout_constraintRight_toLeftOf="@id/guideline_vertical"
+            app:layout_constraintBottom_toTopOf="@id/iv_star_one_bool" />
 
         <TextView
             android:id="@+id/tv_points_bool"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:textSize="@dimen/medium_text_size"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/iv_star_one_bool"
-            />
+            android:textSize="@dimen/large_text_size"
+            android:layout_marginLeft="@dimen/views_small_margin"
+            app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
+            app:layout_constraintBottom_toBottomOf="@id/tv_points_label"
+            tools:text="1000"/>
 
+        <TextView
+            android:id="@+id/tv_scores_plus_bool"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/yellow"
+            android:textSize="@dimen/large_text_size"
+            app:layout_constraintLeft_toLeftOf="@id/tv_points_bool"
+            app:layout_constraintTop_toTopOf="@id/tv_points_bool"
+            android:visibility="invisible"/>
 
         <ImageView
             android:id="@+id/iv_star_one_bool"
@@ -66,7 +92,7 @@
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/iv_star_two_bool"
-            app:layout_constraintBottom_toTopOf="@id/guideline"
+            app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
             app:srcCompat="@drawable/ic_star_border_24dp" />
 
         <ImageView
@@ -89,25 +115,27 @@
 
         <Button
             android:id="@+id/bt_bool_right"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/bool_bt_width"
             android:layout_height="wrap_content"
             android:text="@string/correct"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/green_button"
+            android:layout_marginLeft="@dimen/views_small_margin"
+            android:layout_marginTop="@dimen/bool_bt_top_margin"
+            app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
             app:layout_constraintLeft_toRightOf="@id/bt_bool_wrong"
             app:layout_constraintRight_toRightOf="parent" />
 
         <Button
             android:id="@+id/bt_bool_wrong"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/bool_bt_width"
             android:layout_height="wrap_content"
             android:text="@string/wrong"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/orange_button"
+            android:layout_marginRight="@dimen/views_small_margin"
+            app:layout_constraintTop_toTopOf="@id/bt_bool_right"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/bt_bool_right" />
-        
-
-
 
         <com.mindorks.placeholderview.SwipePlaceHolderView
             android:id="@+id/swipe_view"

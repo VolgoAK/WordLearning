@@ -45,13 +45,13 @@ public class TrainingBool extends Training {
                 : playWords.get(position).checkAnswer(1);
         if (answer) {
             rightInLine++;
-            scores += countScores();
+            scores += scoresCounter();
         } else rightInLine = 0;
 
         return answer;
     }
 
-    private int countScores() {
+    public int scoresCounter() {
         if (rightInLine >= THREE_STAR) return 10;
         if (rightInLine >= TWO_STAR) return 5;
         if (rightInLine >= ONE_STAR) return 3;
