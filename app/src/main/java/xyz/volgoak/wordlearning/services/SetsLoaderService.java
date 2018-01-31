@@ -45,7 +45,7 @@ public class SetsLoaderService extends GcmTaskService {
                 checkUpdate();
                 return GcmNetworkManager.RESULT_SUCCESS;
             case TASK_LOAD_IMAGES:
-                checkImages();
+//                checkImages();
                 return GcmNetworkManager.RESULT_SUCCESS;
             default:
                 return GcmNetworkManager.RESULT_FAILURE;
@@ -62,7 +62,7 @@ public class SetsLoaderService extends GcmTaskService {
         Log.d(TAG, " sets loaded " + info.getSetsAdded() + "words loaded " + info.getWordsAdded());
         //bad code replace with something
 
-        checkImages();
+//        checkImages();
         if (info.getWordsAdded() > 0) {
 
 
@@ -70,10 +70,10 @@ public class SetsLoaderService extends GcmTaskService {
         }
     }
 
-    private void checkImages() {
+    /*private void checkImages() {
         WordsApp.getsComponent().inject(this);
         downloader.checkImages();
-    }
+    }*/
     
     private void createUpdateNotification(SetsUpdatingInfo info) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);

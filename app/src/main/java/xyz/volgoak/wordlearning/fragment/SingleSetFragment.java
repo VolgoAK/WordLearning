@@ -174,7 +174,7 @@ public class SingleSetFragment extends Fragment {
         //load title image
         String imageRes = set.getImageUrl();
 
-        File imageDir = new File(getActivity().getFilesDir(), StorageContract.IMAGES_W_400_FOLDER);
+        File imageDir = new File(getActivity().getFilesDir(), StorageContract.IMAGES_FOLDER);
         File imageFile = new File(imageDir, imageRes);
 
         Glide.with(this)

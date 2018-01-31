@@ -12,6 +12,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.crashlytics.android.Crashlytics;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 
@@ -21,6 +24,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
+import xyz.volgoak.wordlearning.data.FirebaseContract;
 import xyz.volgoak.wordlearning.entities.DataEntity;
 import xyz.volgoak.wordlearning.entities.Set;
 import xyz.volgoak.wordlearning.data.StorageContract;
@@ -93,24 +97,21 @@ import xyz.volgoak.wordlearning.update.ImageDownloader;
         });
 
         String imageUrl = set.getImageUrl();
-        File imagesDir = new File(mContext.getFilesDir(), StorageContract.IMAGES_W_50_FOLDER);
+        File imagesDir = new File(mContext.getFilesDir(), StorageContract.IMAGES_FOLDER);
         File imageFile = new File(imagesDir, imageUrl);
         Uri imageUri = Uri.fromFile(imageFile);
 
-        Glide.with(mContext).load(imageUri)
-                .error(R.drawable.button_back)
-                .into(new SimpleTarget<GlideDrawable>() {
-                    @Override
-                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-                        civ.setImageDrawable(resource);
-                    }
+        if(imageFile.exists()) {
+            Glide.with(mContext).load(imageUri)
+                    .error(R.drawable.button_back)
+                    .into(civ);
+        } else {
+            // TODO: 1/31/18 load new image
+            // TODO: 1/31/18 how to load with new glide?
+            Crashlytics.log(1, "Image fail", set.getImageUrl());
 
-                    @Override
-                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                        super.onLoadFailed(e, errorDrawable);
-                        ((SetsRecyclerAdapter)mAdapter).updateImages();
-                    }
-                });
+            Glide.with(mContext).load(R.drawable.button_back).into(civ);
+        }
     }
 
     @Override

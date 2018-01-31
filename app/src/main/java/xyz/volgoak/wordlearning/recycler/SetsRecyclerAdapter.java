@@ -53,7 +53,7 @@ public class SetsRecyclerAdapter extends RecyclerAdapter {
 
     public void updateImages() {
         WordsApp.getsComponent().inject(this);
-        downloader.checkImagesAsynk();
+//        downloader.checkImagesAsynk();
     }
 
     public interface SetStatusChanger{

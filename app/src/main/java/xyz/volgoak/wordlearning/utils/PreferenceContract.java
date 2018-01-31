@@ -6,4 +6,9 @@ package xyz.volgoak.wordlearning.utils;
 
 public abstract class PreferenceContract {
     public static final String BOOL_RECORD = "record_boolean";
+
+    public static final String BASE_CREATED = "base_loaded";
+    public static final String LAST_VERSION = "last_app_version";
+
+    public static final String IMAGES_LOADED = "images_loaded";
 }

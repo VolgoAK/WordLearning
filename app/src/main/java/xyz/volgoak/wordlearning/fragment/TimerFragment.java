@@ -127,9 +127,9 @@ public class TimerFragment extends Fragment {
                 time--;
 
                 if (time < 0) {
-                    handler.postDelayed(() -> timerListener.onTimerFinished(), 1600);
+                    handler.postDelayed(() -> timerListener.onTimerFinished(), 1100);
                 } else {
-                    handler.postDelayed(this, 1600);
+                    handler.postDelayed(this, 1100);
                 }
             }
         });

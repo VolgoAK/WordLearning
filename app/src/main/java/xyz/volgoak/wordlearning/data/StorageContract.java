@@ -9,4 +9,6 @@ public class StorageContract {
     public static final String IMAGES_FOLDER = "/images";
     public static final String IMAGES_W_50_FOLDER = IMAGES_FOLDER + "/w_50";
     public static final String IMAGES_W_400_FOLDER = IMAGES_FOLDER + "/w_400";
+
+    public static final String PHOTOS_ARCHIVE = "photos.zip";
 }
