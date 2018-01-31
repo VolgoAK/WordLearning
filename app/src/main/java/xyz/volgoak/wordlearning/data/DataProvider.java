@@ -75,14 +75,21 @@ public class DataProvider {
     }
 
     public List<Word> getTrainingWords(long setId) {
+        return getTrainingWords(setId, Integer.MAX_VALUE);
+    }
+
+    public List<Word> getTrainingWords(long setId, int limit) {
         if(setId == -1) {
             return wordDao.getDictionaryWords();
         } else return wordDao.getWordsBySetId(setId);
     }
 
-    public List<Word> getVariants(long wordId, int limit) {
-        // TODO: 1/8/18 use set id
-        return wordDao.getVariants(wordId, limit);
+    public List<Word> getVariants(long wordId, int limit, long setId) {
+        if(setId == -1) {
+            return wordDao.getVariants(wordId, limit);
+        } else {
+            return wordDao.getVarints(wordId, limit, setId);
+        }
     }
 
     public List<Word> getWordsBySetId(long setId) {

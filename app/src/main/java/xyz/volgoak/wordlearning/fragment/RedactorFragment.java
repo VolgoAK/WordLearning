@@ -74,6 +74,9 @@ public class RedactorFragment extends Fragment{
         mBinding.rvRedactor.setLayoutManager(layoutManager);
 
         mWords = mDataProvider.getDictionaryWords();
+        for(Word word : mWords) {
+            Log.d(TAG, "onStart: " + word);
+        }
 
         Log.d(TAG, "onStart: words " + mWords.size());
 

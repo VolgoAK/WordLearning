@@ -80,6 +80,7 @@ public class StartFragment extends Fragment {
         //load dictionary info
 
         DictionaryInfo info = mDataProvider.getDictionaryInfo();
+        Log.d(TAG, "onStart: learned " + info.getLearnedWords());
         mBinding.tvWordsDicStartF.setText(getString(R.string.words_in_dictionary, info.getWordsInDictionary()));
         mBinding.tvWordsLearnedStartF.setText(getString(R.string.words_learned, info.getLearnedWords(), info.getAllWords()));
 

@@ -23,14 +23,6 @@ public class DictionaryInfo {
 
     public DictionaryInfo() {}
 
-    public DictionaryInfo(Cursor cursor){
-        cursor.moveToFirst();
-        allWords = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Info.ALL_WORDS_COUNT));
-        wordsInDictionary = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Info.DICTIONARY_WORDS_COUNT));
-        learnedWords = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Info.STUDIED_WORDS_COUNT));
-        cursor.close();
-    }
-
     public int getAllWords() {
         return allWords;
     }

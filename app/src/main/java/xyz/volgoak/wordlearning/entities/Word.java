@@ -130,4 +130,9 @@ public class Word implements DataEntity {
         trainedWt = 0;
         studied = 0;
     }
+
+    @Override
+    public String toString() {
+        return word + ", " + translation + ", tw " + trainedTw + ", wt " + trainedWt;
+    }
 }

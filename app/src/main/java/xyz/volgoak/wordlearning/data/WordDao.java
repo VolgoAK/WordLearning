@@ -39,6 +39,12 @@ public interface WordDao {
     @Query("SELECT * FROM words_table WHERE _id != :id ORDER BY RANDOM() LIMIT :wordsLimit ")
     List<Word> getVariants(long id, int wordsLimit);
 
+    @Query("SELECT * FROM words_table WHERE _id != :id AND _id IN "
+            + "(SELECT "+WordLinks.COLUMN_WORD_ID+" FROM "+WordLinks.TABLE_NAME
+            + " WHERE "+WordLinks.COLUMN_SET_ID+"=:setId)"
+            + " ORDER BY RANDOM() LIMIT :wordsLimit")
+    List<Word> getVarints(long id, int wordsLimit, long setId);
+
     @Query("SELECT * FROM words_table WHERE _id IN "
             + "(SELECT "+WordLinks.COLUMN_WORD_ID+" FROM "+WordLinks.TABLE_NAME
             + " WHERE "+WordLinks.COLUMN_SET_ID+"=:setId)"

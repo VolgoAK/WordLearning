@@ -19,7 +19,7 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
  * Created by Volgoak on 18.08.2017.
  */
 
- class WordsRowController extends NewRowController{
+class WordsRowController extends NewRowController {
 
     private static boolean isDrawableInit = false;
     private static Drawable[] sProgresIcons = new Drawable[5];
@@ -46,7 +46,7 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
         soundButton = view.findViewById(R.id.adapter_button);
         checkBox = view.findViewById(R.id.cb_selected_dict_adapter);
 
-        if(!isDrawableInit) initDrawables(context);
+        if (!isDrawableInit) initDrawables(context);
     }
 
     @Override
@@ -56,13 +56,18 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
         wordText.setText(word.getWord());
         translationText.setText(word.getTranslation());
 
-        try{
+        try {
             trainTWImage.setImageDrawable(sProgresIcons[word.getTrainedTw()]);
+        } catch (IndexOutOfBoundsException ex) {
+            ex.printStackTrace();
+            trainTWImage.setImageResource(R.drawable.ic_progress_4);
+        }
+
+        try {
             trainWTImage.setImageDrawable(sProgresIcons[word.getTrainedWt()]);
-        }catch(IndexOutOfBoundsException ex){
+        } catch (IndexOutOfBoundsException ex) {
             ex.printStackTrace();
             trainWTImage.setImageResource(R.drawable.ic_progress_4);
-            trainTWImage.setImageResource(R.drawable.ic_progress_4);
         }
 
         int status = word.getStatus();
@@ -72,15 +77,14 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
         rootView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                    return mAdapter.onControllerLongClick(WordsRowController.this, v, getAdapterPosition());
-                }
+                return mAdapter.onControllerLongClick(WordsRowController.this, v, getAdapterPosition());
+            }
         });
 
         rootView.setOnClickListener((v) -> {
             mAdapter.onControllerClick(WordsRowController.this, v, getAdapterPosition());
         });
 
-        // TODO: 25.08.2017 many speakers is cause of memory leaks. Fix it 
         soundButton.setOnClickListener((v) -> {
             WordSpeaker.speakWord(word.getWord());
         });
@@ -88,7 +92,7 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
 
     @Override
     public void setChecked(boolean checked) {
-        if(isSelectable) checkBox.setChecked(checked);
+        if (isSelectable) checkBox.setChecked(checked);
     }
 
     @Override
@@ -97,7 +101,7 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
         checkBox.setVisibility(selectable ? View.VISIBLE : View.GONE);
     }
 
-    public static void initDrawables(Context context){
+    public static void initDrawables(Context context) {
         sProgresIcons[0] = ContextCompat.getDrawable(context, R.drawable.ic_progress_0);
         sProgresIcons[1] = ContextCompat.getDrawable(context, R.drawable.ic_progress_1);
         sProgresIcons[2] = ContextCompat.getDrawable(context, R.drawable.ic_progress_2);
