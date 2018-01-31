@@ -144,7 +144,7 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
     public void onStop() {
         super.onStop();
         soundPool.release();
-//        EventBus.getDefault().removeStickyEvent(IntegerEvent.class);
+        EventBus.getDefault().removeStickyEvent(IntegerEvent.class);
     }
 
     @Override

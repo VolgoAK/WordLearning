@@ -10,22 +10,26 @@ import android.view.MenuItem;
 
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.fragment.BoolTrainingFragment;
+import xyz.volgoak.wordlearning.fragment.TimerFragment;
 import xyz.volgoak.wordlearning.fragment.TrainingFragment;
 import xyz.volgoak.wordlearning.training_utils.Results;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
 
-public class TrainingActivity extends AppCompatActivity implements TrainingFragment.ResultReceiver {
+public class TrainingActivity extends AppCompatActivity implements TrainingFragment.ResultReceiver, TimerFragment.TimerListener {
 
     public static final String EXTRA_TRAINING_TYPE = "training_type";
     public static final String EXTRA_SET_ID = "set_id";
+
+    private int trainingType;
+    private long setId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_training);
-        int training_type = getIntent().getIntExtra(EXTRA_TRAINING_TYPE, TrainingFabric.WORD_TRANSLATION);
-        long setId = getIntent().getLongExtra(EXTRA_SET_ID, -1);
+        trainingType = getIntent().getIntExtra(EXTRA_TRAINING_TYPE, TrainingFabric.WORD_TRANSLATION);
+        setId = getIntent().getLongExtra(EXTRA_SET_ID, -1);
 
         ActionBar bar = getSupportActionBar();
         if(bar != null){
@@ -34,16 +38,13 @@ public class TrainingActivity extends AppCompatActivity implements TrainingFragm
         }
 
         if(savedInstanceState == null) {
-            Fragment trainingFragment;
-            if(training_type == TrainingFabric.BOOL_TRAINING) {
-                trainingFragment = new BoolTrainingFragment();
-            } else {
-                trainingFragment = TrainingFragment.getWordTrainingFragment(training_type, setId);
-            }
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.container_training, trainingFragment);
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            transaction.commit();
+            if(trainingType == TrainingFabric.BOOL_TRAINING) {
+                Fragment trainingFragment = new TimerFragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.container_training, trainingFragment);
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                transaction.commit();
+            } else onTimerFinished();
         }
     }
 
@@ -63,5 +64,19 @@ public class TrainingActivity extends AppCompatActivity implements TrainingFragm
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onTimerFinished() {
+        Fragment trainingFragment;
+        if(trainingType == TrainingFabric.BOOL_TRAINING) {
+            trainingFragment = new BoolTrainingFragment();
+        } else {
+            trainingFragment = TrainingFragment.getWordTrainingFragment(trainingType, setId);
+        }
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container_training, trainingFragment);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.commit();
     }
 }

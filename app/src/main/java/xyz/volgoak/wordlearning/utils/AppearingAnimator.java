@@ -25,7 +25,11 @@ public class AppearingAnimator {
             path = width - v.getX() + v.getWidth();
         }
 
-        ObjectAnimator animator = ObjectAnimator.ofFloat(v, "TranslationX", path, 0);
+        //why reverse does not work?
+        float from = disappearing ? 0 : path;
+        float to = disappearing ? path : 0;
+
+        ObjectAnimator animator = ObjectAnimator.ofFloat(v, "TranslationX", from, to);
         animator.setInterpolator(new MetallBounceInterpoltor());
         if(disappearing)animator.reverse();
         return animator;
