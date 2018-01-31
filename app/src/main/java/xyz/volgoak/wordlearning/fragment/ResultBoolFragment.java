@@ -2,6 +2,7 @@ package xyz.volgoak.wordlearning.fragment;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.databinding.FragmentResultBoolBinding;
 import xyz.volgoak.wordlearning.training_utils.Results;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
+import xyz.volgoak.wordlearning.utils.PreferenceContract;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,6 +58,19 @@ public class ResultBoolFragment extends Fragment {
         String scores = getString(R.string.points_format, results.scores);
         dataBinding.tvScores.setText(scores);
 
+        //check records
+        SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        int hightScores = preferences.getInt(PreferenceContract.BOOL_RECORD, results.scores);
+
+        if (results.scores >= hightScores) {
+            dataBinding.tvYouGot.setText(R.string.new_record);
+            preferences.edit().putInt(PreferenceContract.BOOL_RECORD, results.scores).apply();
+            hightScores = results.scores;
+        }
+
+        dataBinding.tvRecord.setText(getString(R.string.record_format, hightScores));
+
+        //bind listeners
         dataBinding.resultStartRedactor.setOnClickListener((v) -> fragmentListener.startDictionary());
 
         dataBinding.resultStartTw.setOnClickListener((v) ->

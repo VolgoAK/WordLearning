@@ -56,6 +56,7 @@
 
     <!-- text -->
     <dimen name="large_text_size">22sp</dimen>
+    <dimen name="not_so_big_text">18sp</dimen>
     <dimen name="medium_text_size">16sp</dimen>
     <dimen name="small_text_size">14sp</dimen>
     <dimen name="word_max_text_size">30sp</dimen>

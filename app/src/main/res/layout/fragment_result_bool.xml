@@ -44,11 +44,11 @@
                     android:layout_height="wrap_content"
                     android:text="@string/you_got"
                     android:layout_marginTop="@dimen/views_vertical_margin"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textSize="@dimen/medium_text_size"
+                    android:textSize="@dimen/not_so_big_text"
                     app:layout_constraintLeft_toLeftOf="@id/iv_result"
                     app:layout_constraintRight_toRightOf="@id/iv_result"
-                    app:layout_constraintTop_toBottomOf="@id/tv_train_finish" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_train_finish"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_scores"/>
 
                 <TextView
                     android:id="@+id/tv_scores"
@@ -57,10 +57,32 @@
                     tools:text="1000 points"
                     android:layout_marginBottom="@dimen/activity_vertical_margin"
                     android:textSize="@dimen/large_text_size"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_result"
+                    app:layout_constraintBottom_toTopOf="@id/iv_star_record"
                     app:layout_constraintLeft_toLeftOf="@id/iv_result"
                     app:layout_constraintRight_toRightOf="@id/iv_result"
                     app:layout_constraintTop_toBottomOf="@id/tv_you_got" />
+
+                <ImageView
+                    android:id="@+id/iv_star_record"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_star_24dp"
+                    android:layout_margin="@dimen/views_small_margin"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintLeft_toLeftOf="@id/iv_result"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_result"
+                    app:layout_constraintRight_toLeftOf="@+id/tv_record"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_record"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintRight_toRightOf="@id/iv_result"
+                    app:layout_constraintLeft_toRightOf="@id/iv_star_record"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_star_record"
+                    app:layout_constraintTop_toTopOf="@id/iv_star_record"
+                    tools:text="Record : 1000"/>
 
 
                 <Button

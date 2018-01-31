@@ -48,6 +48,8 @@
     <string name="points_format">%1$d points</string>
     <string name="scores">Scores:</string>
     <string name="go">Go!</string>
+    <string name="record_format">Record : %1$d</string>
+    <string name="new_record">New record!</string>
 
     <string name="bogus_text" translatable="false">Definition of content of set, and something else just for make this stupid sentese little bit longer.
         But not too long</string>
