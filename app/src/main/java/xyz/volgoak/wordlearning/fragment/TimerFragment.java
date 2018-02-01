@@ -3,6 +3,7 @@ package xyz.volgoak.wordlearning.fragment;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +57,7 @@ public class TimerFragment extends Fragment {
         btTwo = root.findViewById(R.id.bt_two_timer);
         ViewTreeObserver observer = root.getViewTreeObserver();
         observer.addOnGlobalLayoutListener(() -> {
-            if (!timerStarted) runTimer();
+            if (!timerStarted) runTimerBounce();
             timerStarted = true;
         });
         return root;
@@ -91,7 +93,53 @@ public class TimerFragment extends Fragment {
         paused = true;
     }
 
-    private void runTimer() {
+    private void runTimerBounce() {
+
+        Handler handler = new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (paused) return;
+
+                soundPool.play(timeSound, 0.8f, 0.8f, 1, 0, 1);
+
+                btTwo.setAlpha(1.0f);
+
+                btTwo.setText(String.valueOf(time + 1));
+                btOne.setText("" + time);
+                if (time == 0) {
+                    btOne.setText(R.string.go);
+                    btOne.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.green_circle));
+                }
+
+                float path = AppearingAnimator.getPathToEndOfScreen(getActivity(), btTwo, AppearingAnimator.FROM_LEFT);
+
+                ValueAnimator animator = ValueAnimator.ofFloat(0f, 1f);
+                animator.addUpdateListener((updatedAnimation) -> {
+                    float percent = (float) updatedAnimation.getAnimatedValue();
+                    float x = path * percent;
+                    btTwo.setTranslationX(x);
+                    btTwo.setTranslationY((float) (-Math.sqrt(Math.abs(x * 6)) * 4));
+                    btTwo.setAlpha(1f - percent);
+                    btTwo.setRotation(720 * percent);
+                });
+
+                animator.setInterpolator(new AccelerateInterpolator());
+                animator.setDuration(500);
+                animator.start();
+
+                time--;
+
+                if (time < 0) {
+                    handler.postDelayed(() -> timerListener.onTimerFinished(), 1000);
+                } else {
+                    handler.postDelayed(this, 1000);
+                }
+            }
+        });
+    }
+
+    private void runRightToLeft() {
         Handler handler = new Handler();
         handler.post(new Runnable() {
             @Override
