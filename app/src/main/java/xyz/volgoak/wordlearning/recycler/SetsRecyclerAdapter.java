@@ -51,9 +51,9 @@ public class SetsRecyclerAdapter extends RecyclerAdapter {
         mSetStatusChanger = SetStatusChanger;
     }
 
-    public void updateImages() {
+    public void downloadImage(String image) {
         WordsApp.getsComponent().inject(this);
-//        downloader.checkImagesAsynk();
+        downloader.loadImage(image);
     }
 
     public interface SetStatusChanger{

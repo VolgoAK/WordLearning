@@ -2,10 +2,12 @@ package xyz.volgoak.wordlearning.update;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -79,7 +81,7 @@ public class ImageDownloader {
         return image.exists();
     }
 
-    private void loadImage(final String imageName) {
+    private void downloadImage(final String imageName) {
         StorageReference imageDirRef = FirebaseStorage.getInstance().getReference(FirebaseContract.IMAGES_FOLDER);
         StorageReference imageRef = imageDirRef.child(imageName);
         imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -91,11 +93,30 @@ public class ImageDownloader {
                     fous.write(bytes);
                     fous.close();
                 } catch (FileNotFoundException ex) {
+                    Crashlytics.logException(ex);
                     ex.printStackTrace();
                 } catch (IOException ex) {
+                    Crashlytics.logException(ex);
                     ex.printStackTrace();
                 }
             }
         });
+    }
+
+    public void loadImage(final String imageName) {
+        if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+            downloadImage(imageName);
+        } else {
+            FirebaseAuth.getInstance().signInAnonymously();
+            FirebaseAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+                @Override
+                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                    if(firebaseAuth.getCurrentUser() != null) {
+                        downloadImage(imageName);
+                        firebaseAuth.removeAuthStateListener(this);
+                    }
+                }
+            });
+        }
     }
 }

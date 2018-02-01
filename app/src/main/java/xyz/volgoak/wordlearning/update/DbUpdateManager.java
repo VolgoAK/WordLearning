@@ -3,6 +3,7 @@ package xyz.volgoak.wordlearning.update;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GcmNetworkManager;
@@ -13,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import xyz.volgoak.wordlearning.BuildConfig;
+import xyz.volgoak.wordlearning.Config;
 import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.services.SetsLoaderService;
@@ -26,9 +28,6 @@ public class DbUpdateManager {
 
     public static final String TAG = DbUpdateManager.class.getSimpleName();
 
-    public static final boolean EXPORT_DB = false;
-    public static final boolean IMPORT_PREBUILT_DB = true;
-
     private static long SEC_IN_TWO_DAYS = 60 * 60 * 24 * 2;
     private static long ONE_HOUR_WINDOW = 60 * 60;
     private static long MILLIS_IN_ONE_MINUT = 60;
@@ -39,21 +38,20 @@ public class DbUpdateManager {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         boolean baseLoaded = preferences.getBoolean(PreferenceContract.BASE_CREATED, false);
         if (!baseLoaded) {
-            if(IMPORT_PREBUILT_DB) {
-                long startTime = System.currentTimeMillis();
-                SetsLoader.importDbFromAsset(context, DatabaseContract.DB_NAME);
-                Log.d(TAG, "onCreate: db import in " + (System.currentTimeMillis() - startTime));
+            if(Config.IMPORT_PREBUILT_DB) {
+                baseLoaded = SetsLoader.importDbFromAsset(context, DatabaseContract.DB_NAME);
             } else {
+                baseLoaded = true;
                 SetsLoader.insertTestBase(provider, context);
             }
-            // TODO: 1/26/18 Add some check is db was loaded correctly
-            preferences.edit().putBoolean(PreferenceContract.BASE_CREATED, true).apply();
+            preferences.edit().putBoolean(PreferenceContract.BASE_CREATED, baseLoaded).apply();
         }
 
-        if (EXPORT_DB) {
+        if (Config.EXPORT_DB) {
             SetsLoader.exportDbToFile(context, DatabaseContract.DB_NAME);
         }
 
+        if(!Config.SCHEDULE_UPDATE) return;
         //check auth and download images and new sets
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null ) {
@@ -61,9 +59,13 @@ public class DbUpdateManager {
             scheduleUpdateTasks(context);
         } else {
             FirebaseAuth.getInstance().signInAnonymously();
-            FirebaseAuth.getInstance().addAuthStateListener((firebaseAuth) -> {
-                if(firebaseAuth.getCurrentUser() != null) {
-                    scheduleUpdateTasks(context);
+            FirebaseAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+                @Override
+                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                    if(firebaseAuth.getCurrentUser() != null) {
+                        scheduleUpdateTasks(context);
+                        firebaseAuth.removeAuthStateListener(this);
+                    }
                 }
             });
         }

@@ -159,16 +159,14 @@ public final class SetsLoader {
         }
     }
 
-    public static void importDbFromAsset(Context context, String dbName) {
+    public static boolean importDbFromAsset(Context context, String dbName) {
         InputStream dbIs = null;
         FileOutputStream dbOus = null;
+        File dbFileTarget = context.getDatabasePath(dbName);
+        File data = Environment.getDataDirectory();
         try {
-            File data = Environment.getDataDirectory();
-            File dbFileTarget = context.getDatabasePath(dbName);
             dbFileTarget.getParentFile().mkdirs();
-
             dbOus = new FileOutputStream(dbFileTarget);
-
             dbIs = context.getAssets().open(dbName);
 
             byte[] buffer = new byte[1024];
@@ -186,5 +184,7 @@ public final class SetsLoader {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+
+        return dbFileTarget.exists();
     }
 }

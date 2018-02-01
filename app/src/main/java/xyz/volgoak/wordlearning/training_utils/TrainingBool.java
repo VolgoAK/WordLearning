@@ -35,10 +35,27 @@ public class TrainingBool extends Training {
         } else return null;
     }
 
+    /**
+     * Returns a word which will be next in a training.
+     * Warning, this word need for place holder view. Method check answer
+     * will return answer for previous word. Kind of stupid, yes?
+     * @return PlayWord which will be next in a training
+     */
     public PlayWord nextWord() {
         position++;
-        if (playWords.size() >= position + 1) {
+        if (playWords.size() >= position + 2) {
             return playWords.get(position + 1);
+        } else return null;
+    }
+
+    /**
+     * Goes to next position and returns play word at that position
+     * @return
+     */
+    public PlayWord getNextPlayWord() {
+        position ++;
+        if (playWords.size() > position) {
+            return playWords.get(position);
         } else return null;
     }
 

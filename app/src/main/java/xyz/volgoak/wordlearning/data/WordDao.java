@@ -36,7 +36,8 @@ public interface WordDao {
     @Query("SELECT * FROM words_table WHERE STATUS=" + Words.IN_DICTIONARY)
     List<Word> getDictionaryWords();
 
-    @Query("SELECT * FROM words_table WHERE _id != :id ORDER BY RANDOM() LIMIT :wordsLimit ")
+    @Query("SELECT * FROM words_table WHERE _id != :id AND STATUS = "+Words.IN_DICTIONARY
+            + " ORDER BY RANDOM() LIMIT :wordsLimit ")
     List<Word> getVariants(long id, int wordsLimit);
 
     @Query("SELECT * FROM words_table WHERE _id != :id AND _id IN "

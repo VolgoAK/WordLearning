@@ -3,6 +3,7 @@ package xyz.volgoak.wordlearning.recycler;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ImageButton;
@@ -13,6 +14,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.crashlytics.android.Crashlytics;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -107,8 +109,11 @@ import xyz.volgoak.wordlearning.update.ImageDownloader;
                     .into(civ);
         } else {
             // TODO: 1/31/18 load new image
-            // TODO: 1/31/18 how to load with new glide?
-            Crashlytics.log(1, "Image fail", set.getImageUrl());
+            Bundle failEvent = new Bundle();
+            failEvent.putString("image", set.getImageUrl());
+            FirebaseAnalytics.getInstance(mContext).logEvent("Image_fail", failEvent);
+
+            ((SetsRecyclerAdapter) mAdapter).downloadImage(set.getImageUrl());
 
             Glide.with(mContext).load(R.drawable.button_back).into(civ);
         }
