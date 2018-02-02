@@ -32,13 +32,15 @@ public class DbUpdateManager {
     private static long ONE_HOUR_WINDOW = 60 * 60;
     private static long MILLIS_IN_ONE_MINUT = 60;
 
+    // TODO: 2/2/18 Inject image downloader
+
     public static void manageDbState(Context context, DataProvider provider) {
 
         //load default database if not loaded yet
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         boolean baseLoaded = preferences.getBoolean(PreferenceContract.BASE_CREATED, false);
         if (!baseLoaded) {
-            if(Config.IMPORT_PREBUILT_DB) {
+            if (Config.IMPORT_PREBUILT_DB) {
                 baseLoaded = SetsLoader.importDbFromAsset(context, DatabaseContract.DB_NAME);
             } else {
                 baseLoaded = true;
@@ -51,10 +53,10 @@ public class DbUpdateManager {
             SetsLoader.exportDbToFile(context, DatabaseContract.DB_NAME);
         }
 
-        if(!Config.SCHEDULE_UPDATE) return;
+        if (!Config.SCHEDULE_UPDATE) return;
         //check auth and download images and new sets
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user != null ) {
+        if (user != null) {
             Log.d(TAG, "manageDbState: " + user.toString());
             scheduleUpdateTasks(context);
         } else {
@@ -62,7 +64,7 @@ public class DbUpdateManager {
             FirebaseAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
                 @Override
                 public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                    if(firebaseAuth.getCurrentUser() != null) {
+                    if (firebaseAuth.getCurrentUser() != null) {
                         scheduleUpdateTasks(context);
                         firebaseAuth.removeAuthStateListener(this);
                     }
@@ -74,7 +76,7 @@ public class DbUpdateManager {
     // Firebase downloads and update tasks
     private static void scheduleUpdateTasks(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        if(! preferences.getBoolean(PreferenceContract.IMAGES_LOADED, false)) {
+        if (!preferences.getBoolean(PreferenceContract.IMAGES_LOADED, false)) {
             new ImageDownloader().downloadImages();
         }
 

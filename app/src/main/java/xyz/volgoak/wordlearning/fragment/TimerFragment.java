@@ -5,14 +5,10 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.media.AudioManager;
-import android.media.SoundPool;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +16,12 @@ import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 
+import javax.inject.Inject;
+
 import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.utils.AppearingAnimator;
+import xyz.volgoak.wordlearning.utils.AudioManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,8 +40,8 @@ public class TimerFragment extends Fragment {
 
     private TimerListener timerListener;
 
-    private SoundPool soundPool;
-    private int timeSound;
+    @Inject
+    AudioManager audioManager;
 
     public TimerFragment() {
         // Required empty public constructor
@@ -51,7 +51,7 @@ public class TimerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        WordsApp.getsComponent().inject(this);
         View root = inflater.inflate(R.layout.fragment_timer, container, false);
         btOne = root.findViewById(R.id.bt_one_timer);
         btTwo = root.findViewById(R.id.bt_two_timer);
@@ -60,25 +60,8 @@ public class TimerFragment extends Fragment {
             if (!timerStarted) runTimerBounce();
             timerStarted = true;
         });
+
         return root;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            soundPool = new SoundPool.Builder().setMaxStreams(2).build();
-        } else {
-            soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 1);
-        }
-
-        timeSound = soundPool.load(getContext(), R.raw.tick, 1);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        soundPool.release();
     }
 
     @Override
@@ -96,7 +79,7 @@ public class TimerFragment extends Fragment {
     private void runTimerBounce() {
 
         btTwo.setText(String.valueOf(time));
-        soundPool.play(timeSound, 0.8f, 0.8f, 1, 0, 1);
+        audioManager.play(AudioManager.Sound.TICK_SOUND);
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -104,7 +87,7 @@ public class TimerFragment extends Fragment {
             public void run() {
                 if (paused) return;
 
-                soundPool.play(timeSound, 0.8f, 0.8f, 1, 0, 1);
+                audioManager.play(AudioManager.Sound.TICK_SOUND);
 
                 btTwo.setAlpha(1.0f);
 
@@ -149,7 +132,7 @@ public class TimerFragment extends Fragment {
             public void run() {
                 if (paused) return;
 
-                soundPool.play(timeSound, 0.8f, 0.8f, 1, 0, 1);
+//                soundPool.play(timeSound, 0.8f, 0.8f, 1, 0, 1);
 
                 Button in = (time % 2 == 0) ? btTwo : btOne;
                 Button out = (time % 2 == 0) ? btOne : btTwo;

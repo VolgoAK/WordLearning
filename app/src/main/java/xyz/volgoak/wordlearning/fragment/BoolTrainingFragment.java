@@ -7,9 +7,6 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.media.AudioManager;
-import android.media.SoundPool;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -33,6 +30,7 @@ import xyz.volgoak.wordlearning.databinding.FragmentBoolTrainingBinding;
 import xyz.volgoak.wordlearning.training_utils.PlayWord;
 import xyz.volgoak.wordlearning.training_utils.TrainingBool;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
+import xyz.volgoak.wordlearning.utils.AudioManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +44,8 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
 
     @Inject
     DataProvider dataProvider;
+    @Inject
+    AudioManager audioManager;
     private FragmentBoolTrainingBinding dataBinding;
     private TrainingBool trainingBool;
 
@@ -53,10 +53,6 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
     private boolean paused = false;
 
     private TrainingFragment.ResultReceiver resultReceiver;
-
-    private SoundPool soundPool;
-    private int wrongSound;
-    private int correctSound;
 
     public static BoolTrainingFragment newInstance(long setId) {
 
@@ -107,19 +103,6 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            soundPool = new SoundPool.Builder().setMaxStreams(2).build();
-        } else {
-            soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 1);
-        }
-
-        correctSound = soundPool.load(getContext(), R.raw.correct, 1);
-        wrongSound = soundPool.load(getContext(), R.raw.wrong, 1);
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
 
@@ -155,7 +138,7 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
     @Override
     public void onStop() {
         super.onStop();
-        soundPool.release();
+        audioManager.release();
         EventBus.getDefault().removeStickyEvent(IntegerEvent.class);
     }
 
@@ -190,8 +173,7 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
     private void manageAnswer(boolean correct) {
         EventBus.getDefault().postSticky(new IntegerEvent(trainingBool.getStars()));
 
-        int sound = correct ? correctSound : wrongSound;
-        soundPool.play(sound, 1, 1, 1, 0, 1);
+        audioManager.play(correct ? AudioManager.Sound.CORRECT_SOUND : AudioManager.Sound.WRONG_SOUND);
         dataBinding.tvPointsBool.setText(String.valueOf(trainingBool.getScores()));
 
         if (correct) animateScores();

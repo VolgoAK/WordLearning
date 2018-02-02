@@ -11,4 +11,6 @@ public abstract class PreferenceContract {
     public static final String LAST_VERSION = "last_app_version";
 
     public static final String IMAGES_LOADED = "images_loaded";
+
+    public static final String SOUNDS_ENABLED = "sounds_enabled_pref";
 }
