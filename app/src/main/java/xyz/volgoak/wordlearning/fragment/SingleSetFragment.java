@@ -211,22 +211,28 @@ public class SingleSetFragment extends Fragment {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.start_training_dialog);
 
-        Toolbar titleToolbar = (Toolbar) dialog.findViewById(R.id.dialog_toolbar);
+        Toolbar titleToolbar = dialog.findViewById(R.id.dialog_toolbar);
         titleToolbar.setTitle(R.string.training);
         titleToolbar.setNavigationIcon(R.drawable.ic_training_24dp);
-//        titleToolbar.setTitleMarginStart(8);
 
-        CardView wtCard = (CardView) dialog.findViewById(R.id.cv_word_trans_dialog);
+        CardView wtCard = dialog.findViewById(R.id.cv_word_trans_dialog);
         wtCard.setOnClickListener((v) -> {
             mFragmentListener.startTraining(TrainingFabric.WORD_TRANSLATION, mSetId);
             dialog.dismiss();
         });
 
-        CardView twCard = (CardView) dialog.findViewById(R.id.cv_trans_word_dialog);
+        CardView twCard = dialog.findViewById(R.id.cv_trans_word_dialog);
         twCard.setOnClickListener((v) -> {
             mFragmentListener.startTraining(TrainingFabric.TRANSLATION_WORD, mSetId);
             dialog.dismiss();
         });
+
+        CardView boolCard = dialog.findViewById(R.id.cv_bool_dialog);
+        boolCard.setOnClickListener((v) -> {
+            mFragmentListener.startTraining(TrainingFabric.BOOL_TRAINING, mSetId);
+            dialog.dismiss();
+        });
+
         dialog.show();
     }
 

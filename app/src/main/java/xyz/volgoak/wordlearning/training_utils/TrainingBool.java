@@ -3,6 +3,7 @@ package xyz.volgoak.wordlearning.training_utils;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -43,9 +44,15 @@ public class TrainingBool extends Training {
      */
     public PlayWord nextWord() {
         position++;
-        if (playWords.size() >= position + 2) {
-            return playWords.get(position + 1);
-        } else return null;
+        if (playWords.size() <= position + 2) {
+            Log.d(TAG, "nextWord: add new words " + position);
+            List<PlayWord> nextWords = new ArrayList<>(playWords);
+            Collections.shuffle(nextWords);
+            playWords.addAll(nextWords);
+            Log.d(TAG, "nextWord: new list size " + playWords.size());
+        }
+
+        return playWords.get(position + 1);
     }
 
     /**

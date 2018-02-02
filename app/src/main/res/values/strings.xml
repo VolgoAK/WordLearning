@@ -88,5 +88,7 @@
 
     <string name="correct">Correct</string>
     <string name="wrong">Wrong</string>
+    <string name="rate_us">Rate us</string>
+    <string name="settings">Settings</string>
 
 </resources>

@@ -4,27 +4,35 @@
     <item android:id="@+id/navigation_menu_to_home"
         android:orderInCategory="50"
         android:title="@string/to_home"
-        android:icon="@drawable/ic_home_nav"/>
+        android:icon="@drawable/ic_home_black_24dp" />
 
-    <item android:id="@+id/navigation_menu_word_trans"
+    <item
+        android:id="@+id/navigation_menu_training"
         android:orderInCategory="100"
-        android:title="@string/word_translation"
-        android:icon="@drawable/ic_tw_nav"/>
-
-    <item android:id="@+id/navigation_menu_trans_word"
-        android:orderInCategory="200"
-        android:title="@string/translation_word"
-        android:icon="@drawable/ic_tw_nav"/>
+        android:title="@string/training"
+        android:icon="@drawable/ic_training_24dp" />
 
     <item android:id="@+id/navigation_menu_redactor"
         android:orderInCategory="300"
         android:title="@string/start_redactor"
-        android:icon="@drawable/ic_dictionary_nav"/>
+        android:icon="@drawable/ic_dictionary_white_24dp" />
 
     <item android:id="@+id/navigation_menu_sets"
         android:orderInCategory="400"
         android:title="@string/sets"
-        android:icon="@drawable/ic_sets_nav"/>
+        android:icon="@drawable/ic_sets_white_24dp" />
+
+    <item
+        android:id="@+id/navigation_menu_rate"
+        android:orderInCategory="500"
+        android:title="@string/rate_us"
+        android:icon="@drawable/ic_star_24dp" />
+
+    <item
+        android:id="@+id/navigation_menu_settings"
+        android:orderInCategory="600"
+        android:title="@string/settings"
+        android:icon="@drawable/ic_settings_black_24dp" />
 
 
 </menu>

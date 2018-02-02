@@ -70,7 +70,7 @@ public class TrainingActivity extends AppCompatActivity implements TrainingFragm
     public void onTimerFinished() {
         Fragment trainingFragment;
         if(trainingType == TrainingFabric.BOOL_TRAINING) {
-            trainingFragment = new BoolTrainingFragment();
+            trainingFragment = BoolTrainingFragment.newInstance(setId);
         } else {
             trainingFragment = TrainingFragment.getWordTrainingFragment(trainingType, setId);
         }

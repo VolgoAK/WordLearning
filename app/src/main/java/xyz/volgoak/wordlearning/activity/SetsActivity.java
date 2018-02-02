@@ -57,14 +57,10 @@ public class SetsActivity extends NavigationActivity implements FragmentListener
                 startDictionary();
                 break;
             case R.id.navigation_menu_to_home:
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                finish();
                 break;
-            case R.id.navigation_menu_trans_word:
-                startTraining(TrainingFabric.TRANSLATION_WORD);
-                break;
-            case R.id.navigation_menu_word_trans:
-                startTraining(TrainingFabric.WORD_TRANSLATION);
+            case R.id.navigation_menu_training:
+                selectTraining();
                 break;
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
@@ -127,6 +123,8 @@ public class SetsActivity extends NavigationActivity implements FragmentListener
 
     @Override
     public void selectTraining() {
-
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(MainActivity.EXTRA_MODE, MainActivity.SELECT_TRAINING);
+        startActivity(intent);
     }
 }

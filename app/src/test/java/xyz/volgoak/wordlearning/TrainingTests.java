@@ -53,14 +53,17 @@ public class TrainingTests {
     @Test
     public void boolTrainingTest() {
         boolTrainingCorrectTest();
-        boolTrainingInCorrectTest();
-        bollTrainingCountTest();
+        boolTrainingWrongTest();
     }
 
+    @Test
     public void boolTrainingCorrectTest() {
         TrainingBool trainingBool = TrainingFabric.getBoolTraining(-1, provider);
-        PlayWord pw;
-        while ((pw = trainingBool.getNextPlayWord()) != null) {
+        PlayWord pw = trainingBool.getInitialWords().get(1);
+        trainingBool.checkAnswer(false);
+        int i = 0;
+        while (i < 300) {
+            PlayWord next = trainingBool.nextWord();
             Word word = provider.getWordById(pw.getId());
             assertTrue(pw.getWord().equals(word.getWord()));
 
@@ -68,15 +71,21 @@ public class TrainingTests {
             boolean answer = vars[0].equals(word.getTranslation());
             System.out.println(pw.getWord() + " " + pw.getVars()[0] + " answer " + answer);
             assertTrue(trainingBool.checkAnswer(answer));
+            pw = next;
+            i++;
         }
     }
 
-
-    public void boolTrainingInCorrectTest() {
+    @Test
+    public void boolTrainingWrongTest() {
         long time = System.currentTimeMillis();
         TrainingBool trainingBool = TrainingFabric.getBoolTraining(-1, provider);
-        PlayWord pw;
-        while ((pw = trainingBool.getNextPlayWord()) != null) {
+        PlayWord pw = trainingBool.getInitialWords().get(1);
+        trainingBool.checkAnswer(false);
+
+        int i = 0;
+        while (i < 200) {
+            PlayWord next = trainingBool.nextWord();
             Word word = provider.getWordById(pw.getId());
             assertTrue(pw.getWord().equals(word.getWord()));
 
@@ -84,19 +93,12 @@ public class TrainingTests {
             boolean answer = vars[1].equals(word.getTranslation());
             System.out.println(pw.getWord() + " " + pw.getVars()[0] + " answer " + answer);
             assertFalse(trainingBool.checkAnswer(answer));
+            pw = next;
+            i++;
         }
 
         assertEquals(0, trainingBool.getScores());
-        System.out.println("Training correct test finished in " + (System.currentTimeMillis() - time));
+        System.out.println("Training wrong test finished in " + (System.currentTimeMillis() - time));
     }
 
-
-    public void bollTrainingCountTest() {
-        TrainingBool trainingBool = TrainingFabric.getBoolTraining(-1, provider);
-        List<Word> words = provider.getDictionaryWords();
-        int counter = 0;
-        while (trainingBool.nextWord() != null) counter++;
-
-        assertEquals(words.size() - 2, counter);
-    }
 }

@@ -87,6 +87,7 @@
         <item name="android:layout_height">@dimen/menu_image_size</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_margin">@dimen/menu_image_margin</item>
+        <item name="android:padding">3dp</item>
     </style>
 
     <style name="CyvDialog" parent="Cyv_menu">

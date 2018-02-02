@@ -42,6 +42,7 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
     public static final String TAG = BoolTrainingFragment.class.getSimpleName();
     public static final String SAVED_TRAINING = "saved_training";
     public static final String SAVED_TIME = "saved_time";
+    public static final String EXTRA_SET_ID = "extra_set_id";
 
     @Inject
     DataProvider dataProvider;
@@ -57,12 +58,22 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
     private int wrongSound;
     private int correctSound;
 
+    public static BoolTrainingFragment newInstance(long setId) {
+
+        Bundle args = new Bundle();
+        args.putLong(EXTRA_SET_ID, setId);
+
+        BoolTrainingFragment fragment = new BoolTrainingFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     public BoolTrainingFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         WordsApp.getsComponent().inject(this);
         dataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_bool_training, container, false);
@@ -71,7 +82,8 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
             trainingBool = (TrainingBool) savedInstanceState.getSerializable(SAVED_TRAINING);
             timer = savedInstanceState.getInt(SAVED_TIME);
         } else {
-            trainingBool = TrainingFabric.getBoolTraining(-1, dataProvider);
+            long id = getArguments().getLong(EXTRA_SET_ID, -1);
+            trainingBool = TrainingFabric.getBoolTraining(id, dataProvider);
         }
 
         for (PlayWord pw : trainingBool.getInitialWords()) {

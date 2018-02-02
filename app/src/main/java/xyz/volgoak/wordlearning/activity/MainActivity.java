@@ -16,7 +16,6 @@ import xyz.volgoak.wordlearning.fragment.BoolTrainingFragment;
 import xyz.volgoak.wordlearning.fragment.RedactorFragment;
 import xyz.volgoak.wordlearning.fragment.StartFragment;
 import xyz.volgoak.wordlearning.fragment.TrainingSelectFragment;
-import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
 /**
  * Created by Alexander Karachev on 07.05.2017.
@@ -27,6 +26,7 @@ public class MainActivity extends NavigationActivity implements FragmentListener
     public static final String TAG = "MainActivity";
     public static final String EXTRA_MODE = "extra_mode";
     public static final String START_DICTIONARY = "dictionary";
+    public static final String SELECT_TRAINING = "select_training";
 
     private boolean exitPressed;
 
@@ -41,6 +41,8 @@ public class MainActivity extends NavigationActivity implements FragmentListener
         if (extraTask != null) {
             if (extraTask.equals(START_DICTIONARY)) {
                 startDictionary();
+            } else if (extraTask.equals(SELECT_TRAINING)) {
+                selectTraining();
             }
         } else if (savedInstanceState == null)
             startHomeFragment();
@@ -81,7 +83,7 @@ public class MainActivity extends NavigationActivity implements FragmentListener
 
             case R.id.item_cards:
                 Fragment fragment = new BoolTrainingFragment();
-                startFragment(fragment, true);
+                startFragment(fragment);
                 return true;
             /*case R.id.item_update_main :
                 SetsLoader.checkForDbUpdate(this);
@@ -97,11 +99,8 @@ public class MainActivity extends NavigationActivity implements FragmentListener
             case R.id.navigation_menu_to_home:
                 startHomeFragment();
                 break;
-            case R.id.navigation_menu_trans_word:
-                startTraining(TrainingFabric.TRANSLATION_WORD);
-                break;
-            case R.id.navigation_menu_word_trans:
-                startTraining(TrainingFabric.WORD_TRANSLATION);
+            case R.id.navigation_menu_training:
+                selectTraining();
                 break;
             case R.id.navigation_menu_redactor:
                 startDictionary();
@@ -116,12 +115,12 @@ public class MainActivity extends NavigationActivity implements FragmentListener
 
     public void startHomeFragment() {
         StartFragment fragment = new StartFragment();
-        startFragment(fragment, false);
+        startFragment(fragment);
     }
 
     public void startDictionary() {
         RedactorFragment redactorFragment = new RedactorFragment();
-        startFragment(redactorFragment, true);
+        startFragment(redactorFragment);
     }
 
     @Override
@@ -146,12 +145,14 @@ public class MainActivity extends NavigationActivity implements FragmentListener
     @Override
     public void selectTraining() {
         TrainingSelectFragment fragment = new TrainingSelectFragment();
-        startFragment(fragment, true);
+        startFragment(fragment);
     }
 
-    public void startFragment(Fragment fragment, boolean addToBackStack) {
+    public void startFragment(Fragment fragment) {
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        boolean addToBackStack = false;
         if (currentFragment != null) {
+            addToBackStack = true;
             Class<?> klass = currentFragment.getClass();
             if (klass.isInstance(fragment)) return;
         }

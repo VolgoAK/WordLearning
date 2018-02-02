@@ -54,7 +54,8 @@
 
         <ImageButton
             android:id="@+id/ibt_sound_tf"
-            android:src="@drawable/ic_sound"
+            app:srcCompat="@drawable/ic_sound_gray_24dp"
+            android:scaleType="fitCenter"
             android:background="@null"
             app:layout_constraintRight_toRightOf="@id/iv_tf"
             android:layout_marginEnd="@dimen/views_horizontal_margin"
@@ -63,8 +64,8 @@
             app:layout_constraintBottom_toBottomOf="@id/tv_word_tf"
             android:onClick="@{() -> fragment.pronounceWord()}"
             android:visibility="@{fragment.mTrainingType == TrainingFabric.WORD_TRANSLATION ? View.VISIBLE : View.GONE}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="@dimen/menu_image_size"
+            android:layout_height="@dimen/menu_image_size" />
 
         <Button
             android:id="@+id/bt_var1_tf"

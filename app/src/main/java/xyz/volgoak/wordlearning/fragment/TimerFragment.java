@@ -95,8 +95,11 @@ public class TimerFragment extends Fragment {
 
     private void runTimerBounce() {
 
+        btTwo.setText(String.valueOf(time));
+        soundPool.play(timeSound, 0.8f, 0.8f, 1, 0, 1);
+
         Handler handler = new Handler();
-        handler.post(new Runnable() {
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (paused) return;
@@ -105,9 +108,9 @@ public class TimerFragment extends Fragment {
 
                 btTwo.setAlpha(1.0f);
 
-                btTwo.setText(String.valueOf(time + 1));
-                btOne.setText("" + time);
-                if (time == 0) {
+                btTwo.setText(String.valueOf(time));
+                btOne.setText(String.valueOf(time - 1));
+                if (time == 1) {
                     btOne.setText(R.string.go);
                     btOne.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.green_circle));
                 }
@@ -125,18 +128,18 @@ public class TimerFragment extends Fragment {
                 });
 
                 animator.setInterpolator(new AccelerateInterpolator());
-                animator.setDuration(500);
+                animator.setDuration(200);
                 animator.start();
 
                 time--;
 
-                if (time < 0) {
+                if (time < 1) {
                     handler.postDelayed(() -> timerListener.onTimerFinished(), 1000);
                 } else {
                     handler.postDelayed(this, 1000);
                 }
             }
-        });
+        }, 1000);
     }
 
     private void runRightToLeft() {

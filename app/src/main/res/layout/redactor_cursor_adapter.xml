@@ -96,7 +96,7 @@
         android:id="@+id/iv_status_word_controller"
         android:layout_width="@dimen/state_image_size"
         android:layout_height="@dimen/state_image_size"
-        android:src="@drawable/ic_added"
+        app:srcCompat="@drawable/ic_added_green_50dp"
         app:layout_constraintTop_toTopOf="@id/iv_progress_wt_adapter"
         app:layout_constraintBottom_toBottomOf="@id/iv_progress_wt_adapter"
         app:layout_constraintRight_toLeftOf="@id/iv_progress_wt_adapter"/>
@@ -114,15 +114,16 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ImageButton android:id="@+id/adapter_button"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/menu_image_size"
+        android:layout_width="@dimen/menu_image_size"
         android:background="@null"
-        android:src="@drawable/ic_sound"
+        app:srcCompat="@drawable/ic_sound_gray_24dp"
+        android:scaleType="fitCenter"
+        android:layout_marginEnd="@dimen/views_horizontal_margin"
+        android:layout_marginRight="@dimen/views_horizontal_margin"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginEnd="@dimen/views_horizontal_margin"
-        android:layout_marginRight="@dimen/views_horizontal_margin"
-        android:layout_width="wrap_content"
         tools:layout_editor_absoluteY="8dp" />
 
 
