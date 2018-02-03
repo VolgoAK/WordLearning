@@ -34,6 +34,7 @@ public class AudioManager {
     @Inject
     Context context;
     private SoundPool soundPool;
+    private float volume = 0.7f;
 
     public AudioManager() {
         WordsApp.getsComponent().inject(this);
@@ -48,10 +49,10 @@ public class AudioManager {
        if(sound.soundId == -1) {
            sound.soundId = soundPool.load(context, sound.soundSource, 1);
            soundPool.setOnLoadCompleteListener((pool, id, status) -> {
-               if(status == 0) pool.play(id, 1, 1, 1, 0, 1);
+               if(status == 0) pool.play(id, volume, volume, 1, 0, 1);
            });
        } else {
-           soundPool.play(sound.soundId, 1, 1, 1, 0, 1);
+           soundPool.play(sound.soundId, volume, volume, 1, 0, 1);
        }
     }
 
@@ -64,8 +65,11 @@ public class AudioManager {
     }
 
     public void release() {
-        soundPool.release();
-        soundPool = null;
+        if(soundPool != null) {
+            soundPool.release();
+            soundPool = null;
+        }
+
         for(Sound s: Sound.values()) {
             s.soundId = -1;
         }

@@ -122,7 +122,8 @@ public class SingleSetFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        mRecyclerAdapter.changeData(mDataProvider.getWordsBySetId(mSetId));
+        mWords = mDataProvider.getWordsBySetId(mSetId);
+        mRecyclerAdapter.changeData(mWords);
         if (mSingleFragMode) {
             mBinding.setToolbar.setNavigationIcon(R.drawable.ic_back_toolbar);
             mBinding.setToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -197,7 +198,7 @@ public class SingleSetFragment extends Fragment {
     }
 
     private void prepareSetStatusFabs() {
-        mBinding.setResetFab.setVisibility(mSetInDictionary ? View.VISIBLE : View.GONE);
+        mBinding.setResetFab.setVisibility(mSetInDictionary ? View.VISIBLE : View.INVISIBLE);
         int addDrawableId = mSetInDictionary ? R.drawable.ic_remove_white_24dp : R.drawable.ic_add_white_24dp;
         mBinding.setAddFab.setImageResource(addDrawableId);
     }
@@ -288,7 +289,7 @@ public class SingleSetFragment extends Fragment {
         Set set = mDataProvider.getSetById(mSetId);
         set.setStatus(newStatus);
 
-        mDataProvider.updateSets(set);
+        mDataProvider.updateSetStatus(set);
         prepareSetStatusFabs();
         manageTrainingStatusMenu();
 
@@ -296,7 +297,8 @@ public class SingleSetFragment extends Fragment {
         String message = getString(messageId, mSetName);
         Snackbar.make(getView().findViewById(R.id.coordinator_setact), message, BaseTransientBottomBar.LENGTH_LONG).show();
 
-        mRecyclerAdapter.changeData(mDataProvider.getWordsBySetId(mSetId));
+        mWords = mDataProvider.getWordsBySetId(mSetId);
+        mRecyclerAdapter.changeData(mWords);
     }
 
     public void resetSetProgress() {
@@ -309,12 +311,14 @@ public class SingleSetFragment extends Fragment {
                     word.resetProgress();
                 }
                 mDataProvider.updateWords(words.toArray(new Word[words.size()]));
-                mRecyclerAdapter.changeData(mDataProvider.getWordsBySetId(mSetId));
+                mWords = mDataProvider.getWordsBySetId(mSetId);
+                mRecyclerAdapter.changeData(mWords);
             }
         };
 
         Snackbar.make(getView().findViewById(R.id.coordinator_setact), R.string.reset_progress_question, BaseTransientBottomBar.LENGTH_LONG)
                 .setAction(R.string.reset, snackListener).show();
+
     }
 
     public void changeWordsStatus(List<Integer> positions, int newStatus) {
@@ -327,6 +331,7 @@ public class SingleSetFragment extends Fragment {
         }
 
         mDataProvider.updateWords(wordsArray);
+        mRecyclerAdapter.notifyDataSetChanged();
     }
 
     public void resetWordsProgress(List<Integer> positions) {
@@ -339,10 +344,7 @@ public class SingleSetFragment extends Fragment {
         }
 
         mDataProvider.updateWords(wordsArray);
-    }
-
-    public void updateAdapterCursor() {
-        mRecyclerAdapter.changeData(mDataProvider.getWordsBySetId(mSetId));
+        mRecyclerAdapter.notifyDataSetChanged();
     }
 
     class WordsActionModeCallback implements ActionMode.Callback {

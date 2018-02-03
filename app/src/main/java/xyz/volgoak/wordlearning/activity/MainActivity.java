@@ -10,9 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import xyz.volgoak.wordlearning.AppRater;
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
-import xyz.volgoak.wordlearning.fragment.BoolTrainingFragment;
 import xyz.volgoak.wordlearning.fragment.RedactorFragment;
 import xyz.volgoak.wordlearning.fragment.StartFragment;
 import xyz.volgoak.wordlearning.fragment.TrainingSelectFragment;
@@ -51,7 +51,7 @@ public class MainActivity extends NavigationActivity implements FragmentListener
     @Override
     protected void onStart() {
         super.onStart();
-
+        AppRater.app_launched(this);
     }
 
     @Override
@@ -76,18 +76,10 @@ public class MainActivity extends NavigationActivity implements FragmentListener
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.item_about_main:
-                Intent intent = new Intent(this, AboutActivity.class);
+            case R.id.menu_main_settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
-
-            case R.id.item_cards:
-                Fragment fragment = new BoolTrainingFragment();
-                startFragment(fragment);
-                return true;
-            /*case R.id.item_update_main :
-                SetsLoader.checkForDbUpdate(this);
-                return true;*/
         }
         return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
@@ -107,6 +99,13 @@ public class MainActivity extends NavigationActivity implements FragmentListener
                 break;
             case R.id.navigation_menu_sets:
                 startSets();
+                break;
+            case R.id.navigation_menu_rate:
+                AppRater.rateApp(this);
+                break;
+            case R.id.navigation_menu_settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
                 break;
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);

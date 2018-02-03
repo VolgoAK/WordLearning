@@ -1,38 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/navigation_menu_to_home"
+    <item
+        android:id="@+id/navigation_menu_to_home"
+        android:icon="@drawable/ic_home_black_24dp"
         android:orderInCategory="50"
-        android:title="@string/to_home"
-        android:icon="@drawable/ic_home_black_24dp" />
+        android:title="@string/to_home" />
 
     <item
         android:id="@+id/navigation_menu_training"
+        android:icon="@drawable/ic_training_24dp"
         android:orderInCategory="100"
-        android:title="@string/training"
-        android:icon="@drawable/ic_training_24dp" />
+        android:title="@string/training" />
 
-    <item android:id="@+id/navigation_menu_redactor"
+    <item
+        android:id="@+id/navigation_menu_redactor"
+        android:icon="@drawable/ic_dictionary_white_24dp"
         android:orderInCategory="300"
-        android:title="@string/start_redactor"
-        android:icon="@drawable/ic_dictionary_white_24dp" />
+        android:title="@string/start_redactor" />
 
-    <item android:id="@+id/navigation_menu_sets"
+    <item
+        android:id="@+id/navigation_menu_sets"
+        android:icon="@drawable/ic_sets_white_24dp"
         android:orderInCategory="400"
-        android:title="@string/sets"
-        android:icon="@drawable/ic_sets_white_24dp" />
+        android:title="@string/sets" />
 
-    <item
-        android:id="@+id/navigation_menu_rate"
-        android:orderInCategory="500"
-        android:title="@string/rate_us"
-        android:icon="@drawable/ic_star_24dp" />
+    <group
+        android:id="@+id/navigation_group_one"
+        android:orderInCategory="500">
 
-    <item
-        android:id="@+id/navigation_menu_settings"
-        android:orderInCategory="600"
-        android:title="@string/settings"
-        android:icon="@drawable/ic_settings_black_24dp" />
+        <item
+            android:id="@+id/navigation_menu_rate"
+            android:icon="@drawable/ic_star_24dp"
+            android:orderInCategory="501"
+            android:title="@string/rate_us" />
+
+        <item
+            android:id="@+id/navigation_menu_settings"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:orderInCategory="600"
+            android:title="@string/settings" />
+    </group>
 
 
 </menu>

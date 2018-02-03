@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="@string/preference_sound_key"
+        android:title="@string/enable_sounds"
+        android:summary="@string/enable_sounds_summary"/>
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="@string/preference_auto_pronoun"
+        android:title="@string/auto_play_pronoun"
+        android:summary="@string/pronun_auto_summary"/>
+
+
+    <Preference
+        android:key="@string/preference_license_key"
+        android:title="@string/open_source"
+        android:summary="@string/licenses_summary"/>
+
+    <Preference
+        android:key="@string/preference_content"
+        android:title="@string/content_licenses"
+        android:summary="@string/content_license_title"/>
+
+    <Preference
+        android:key="@string/preference_rate_key"
+        android:title="@string/rate_us"
+        android:summary="@string/rate_us_summary"/>
+</PreferenceScreen>

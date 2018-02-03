@@ -16,7 +16,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //create dbAdapter for load database if it's empty
-        FirebaseAuth.getInstance().signInAnonymously();
         // TODO: 1/7/18 init ot create db from here
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

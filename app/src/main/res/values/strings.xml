@@ -90,5 +90,21 @@
     <string name="wrong">Wrong</string>
     <string name="rate_us">Rate us</string>
     <string name="settings">Settings</string>
+    <string name="enable_sounds">Enable sounds</string>
+    <string name="preference_sound_key">sounds_enabled_pref</string>
+    <string name="preference_license_key">preference_license</string>
+    <string name="licenses_summary">Opensourse libraries used in this project.</string>
+    <string name="preference_content">preference_content_key</string>
+    <string name="content_license_title">Images and sounds used in project.</string>
+    <string name="content_licenses">Content licenses</string>
+    <string name="preference_auto_pronoun">auto_play_pronoun_pref</string>
+    <string name="auto_play_pronoun">Play pronunciation automatically</string>
+    <string name="rate_us_summary">Rate WordLearning if you like it.</string>
+    <string name="rate_us_key">rate_us_pref_key</string>
+    <string name="preference_rate_key">preference_rate</string>
+    <string name="never">never</string>
+    <string name="remind_me_later">Later</string>
+    <string name="enable_sounds_summary">on/off funny play sounds</string>
+    <string name="pronun_auto_summary">on/off auto audio pronuciation when word appears.</string>
 
 </resources>

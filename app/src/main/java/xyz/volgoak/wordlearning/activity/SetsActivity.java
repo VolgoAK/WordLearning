@@ -8,11 +8,11 @@ import android.support.v4.view.GravityCompat;
 import android.view.MenuItem;
 import android.view.View;
 
+import xyz.volgoak.wordlearning.AppRater;
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.fragment.SingleSetFragment;
 import xyz.volgoak.wordlearning.fragment.WordSetsFragment;
-import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
 public class SetsActivity extends NavigationActivity implements FragmentListener, WordSetsFragment.SetsFragmentListener {
 
@@ -61,6 +61,13 @@ public class SetsActivity extends NavigationActivity implements FragmentListener
                 break;
             case R.id.navigation_menu_training:
                 selectTraining();
+                break;
+            case R.id.navigation_menu_rate:
+                AppRater.rateApp(this);
+                break;
+            case R.id.navigation_menu_settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
                 break;
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);

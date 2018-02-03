@@ -12,6 +12,7 @@ import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +34,7 @@ import xyz.volgoak.wordlearning.training_utils.Training;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 import xyz.volgoak.wordlearning.training_utils.TrainingWord;
 import xyz.volgoak.wordlearning.utils.MetallBounceInterpoltor;
+import xyz.volgoak.wordlearning.utils.PreferenceContract;
 import xyz.volgoak.wordlearning.utils.WordSpeaker;
 
 /**
@@ -213,7 +215,10 @@ public class TrainingFragment extends Fragment {
         //hide the next button
         hideShowNextButton(false);
 
-        pronounceWord();
+        if(PreferenceManager.getDefaultSharedPreferences(getContext())
+                .getBoolean(PreferenceContract.AUTO_PLAY_PRONOUN, true)){
+            pronounceWord();
+        }
     }
 
     public void nextWord(){

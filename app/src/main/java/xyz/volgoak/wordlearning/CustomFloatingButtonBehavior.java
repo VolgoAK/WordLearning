@@ -6,6 +6,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -13,6 +14,9 @@ import android.view.View;
  */
 
 public class CustomFloatingButtonBehavior extends CoordinatorLayout.Behavior<FloatingActionButton>{
+
+    public static final String TAG = CustomFloatingButtonBehavior.class.getSimpleName();
+
     private Context mContext;
 
     private int mStartX;
@@ -24,6 +28,8 @@ public class CustomFloatingButtonBehavior extends CoordinatorLayout.Behavior<Flo
     private int mMaxSize;
     private int mMinSize;
     private int mMargin;
+
+    private boolean measured;
 
     public CustomFloatingButtonBehavior(Context context, AttributeSet attributeSet){
         super(context, attributeSet);
@@ -48,6 +54,7 @@ public class CustomFloatingButtonBehavior extends CoordinatorLayout.Behavior<Flo
 
     @Override
     public boolean onDependentViewChanged(CoordinatorLayout parent, FloatingActionButton child, View dependency) {
+        Log.d(TAG, "onDependentViewChanged: " + this);
         shouldInitialize(child, dependency);
 
         float dependencyBottom = dependency.getBottom();
@@ -66,6 +73,16 @@ public class CustomFloatingButtonBehavior extends CoordinatorLayout.Behavior<Flo
         child.setY(yPos);
 
         return true;
+    }
+
+    @Override
+    public boolean onMeasureChild(CoordinatorLayout parent, FloatingActionButton child, int parentWidthMeasureSpec, int widthUsed, int parentHeightMeasureSpec, int heightUsed) {
+        Log.d(TAG, "onMeasureChild: " + this);
+        if(!measured) {
+            measured = true;
+            return true;
+        }
+        return super.onMeasureChild(parent, child, parentWidthMeasureSpec, widthUsed, parentHeightMeasureSpec, heightUsed);
     }
 
     private void shouldInitialize(FloatingActionButton child, View dependency){

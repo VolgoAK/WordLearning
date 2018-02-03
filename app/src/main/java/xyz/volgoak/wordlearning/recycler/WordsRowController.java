@@ -3,6 +3,7 @@ package xyz.volgoak.wordlearning.recycler;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
@@ -20,6 +21,8 @@ import xyz.volgoak.wordlearning.utils.WordSpeaker;
  */
 
 class WordsRowController extends NewRowController {
+    
+    public static final String TAG = WordsRowController.class.getSimpleName();
 
     private static boolean isDrawableInit = false;
     private static Drawable[] sProgresIcons = new Drawable[5];
@@ -51,6 +54,7 @@ class WordsRowController extends NewRowController {
 
     @Override
     public void bindController(DataEntity dataEntity) {
+        Log.d(TAG, "bindController: ");
         Word word = (Word) dataEntity;
 
         wordText.setText(word.getWord());
