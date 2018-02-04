@@ -49,6 +49,12 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             AppRater.rateApp(getContext());
             return true;
         });
+
+        Preference contentPref = findPreference(getString(R.string.preference_content_key));
+        contentPref.setOnPreferenceClickListener(preference -> {
+            fragmentListener.showContentLicens();
+            return true;
+        });
     }
 
     @Override
@@ -61,5 +67,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     public interface PreferenceFragmentListener {
         void showOpensourceLicense();
+        void showContentLicens();
     }
 }

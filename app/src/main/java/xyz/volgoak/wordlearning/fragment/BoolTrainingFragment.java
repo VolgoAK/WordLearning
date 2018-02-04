@@ -28,6 +28,7 @@ import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.databinding.FragmentBoolTrainingBinding;
 import xyz.volgoak.wordlearning.training_utils.PlayWord;
+import xyz.volgoak.wordlearning.training_utils.Results;
 import xyz.volgoak.wordlearning.training_utils.TrainingBool;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 import xyz.volgoak.wordlearning.utils.AudioManager;
@@ -51,6 +52,7 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
 
     private int timer = 60;
     private boolean paused = false;
+    private long setId;
 
     private TrainingFragment.ResultReceiver resultReceiver;
 
@@ -78,8 +80,8 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
             trainingBool = (TrainingBool) savedInstanceState.getSerializable(SAVED_TRAINING);
             timer = savedInstanceState.getInt(SAVED_TIME);
         } else {
-            long id = getArguments().getLong(EXTRA_SET_ID, -1);
-            trainingBool = TrainingFabric.getBoolTraining(id, dataProvider);
+            setId = getArguments().getLong(EXTRA_SET_ID, -1);
+            trainingBool = TrainingFabric.getBoolTraining(setId, dataProvider);
         }
 
         for (PlayWord pw : trainingBool.getInitialWords()) {
@@ -205,6 +207,8 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
 
 
     public void finishTraining() {
-        resultReceiver.showResults(trainingBool.getResults());
+        Results results = trainingBool.getResults();
+        results.setId = setId;
+        resultReceiver.showResults(results);
     }
 }

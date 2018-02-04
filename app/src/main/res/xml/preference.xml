@@ -20,7 +20,7 @@
         android:summary="@string/licenses_summary"/>
 
     <Preference
-        android:key="@string/preference_content"
+        android:key="@string/preference_content_key"
         android:title="@string/content_licenses"
         android:summary="@string/content_license_title"/>
 

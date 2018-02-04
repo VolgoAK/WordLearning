@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="content_license_title">
+        <item>Sounds</item>
+        <item>Sounds</item>
+        <item>Pictures</item>
+    </string-array>
+
+    <string-array name="content_license_summary">
+        <item>NoiseForFun.com - Original Designed Sound Effects for Free Download</item>
+        <item>ZapSplat.com - Cool sound library with lot of cool stuff</item>
+        <item>Pixabay.com - more than 1.3 million beautiful free images</item>
+    </string-array>
+
+    <string-array name="content_license_link">
+        <item>http://www.noiseforfun.com/</item>
+        <item>https://www.zapsplat.com/</item>
+        <item>https://pixabay.com/</item>
+    </string-array>
+</resources>

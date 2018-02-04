@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.fragment.ContentLicenseFragment;
 import xyz.volgoak.wordlearning.fragment.SettingsFragment;
 
 public class SettingsActivity extends AppCompatActivity implements SettingsFragment.PreferenceFragmentListener {
@@ -39,6 +40,14 @@ public class SettingsActivity extends AppCompatActivity implements SettingsFragm
     public void showOpensourceLicense() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(android.R.id.content, buildLicenseFragment());
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    @Override
+    public void showContentLicens() {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(android.R.id.content, new ContentLicenseFragment());
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }

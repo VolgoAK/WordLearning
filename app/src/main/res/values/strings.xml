@@ -94,7 +94,7 @@
     <string name="preference_sound_key">sounds_enabled_pref</string>
     <string name="preference_license_key">preference_license</string>
     <string name="licenses_summary">Opensourse libraries used in this project.</string>
-    <string name="preference_content">preference_content_key</string>
+    <string name="preference_content_key">preference_content_key</string>
     <string name="content_license_title">Images and sounds used in project.</string>
     <string name="content_licenses">Content licenses</string>
     <string name="preference_auto_pronoun">auto_play_pronoun_pref</string>
