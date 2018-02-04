@@ -38,8 +38,7 @@ public class Word implements DataEntity {
     private int status;
 
     private long addedTime;
-    private long lastTrainedWt;
-    private long lastTrainedTw;
+    private long lastTrained;
 
     @Ignore
     public Word(String word) {
@@ -133,24 +132,16 @@ public class Word implements DataEntity {
         return addedTime;
     }
 
+    public long getLastTrained() {
+        return lastTrained;
+    }
+
+    public void setLastTrained(long lastTrained) {
+        this.lastTrained = lastTrained;
+    }
+
     public void setAddedTime(long addedTime) {
         this.addedTime = addedTime;
-    }
-
-    public long getLastTrainedWt() {
-        return lastTrainedWt;
-    }
-
-    public void setLastTrainedWt(long lastTrainedWt) {
-        this.lastTrainedWt = lastTrainedWt;
-    }
-
-    public long getLastTrainedTw() {
-        return lastTrainedTw;
-    }
-
-    public void setLastTrainedTw(long lastTrainedTw) {
-        this.lastTrainedTw = lastTrainedTw;
     }
 
     public void resetProgress() {

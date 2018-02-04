@@ -71,16 +71,9 @@ public class ResultBoolFragment extends Fragment {
         dataBinding.tvRecord.setText(getString(R.string.record_format, hightScores));
 
         //bind listeners
-        dataBinding.resultStartRedactor.setOnClickListener((v) -> fragmentListener.startDictionary());
-
-        dataBinding.resultStartTw.setOnClickListener((v) ->
-                fragmentListener.startTraining(TrainingFabric.TRANSLATION_WORD, results.setId));
-
-        dataBinding.resultStartWt.setOnClickListener((v) ->
-                fragmentListener.startTraining(TrainingFabric.WORD_TRANSLATION, results.setId));
-
-        dataBinding.resultStartRw.setOnClickListener((v) ->
-                fragmentListener.startTraining(TrainingFabric.BOOL_TRAINING, results.setId));
+        dataBinding.cvAgainResult.setOnClickListener((v) -> fragmentListener.startTraining(results.trainedType, results.setId));
+        dataBinding.cvDictionaryResult.setOnClickListener((v) -> fragmentListener.startDictionary());
+        dataBinding.cvSetsResult.setOnClickListener((v) -> fragmentListener.startSets());
     }
 
     @Override

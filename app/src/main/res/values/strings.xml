@@ -106,5 +106,7 @@
     <string name="remind_me_later">Later</string>
     <string name="enable_sounds_summary">on/off funny play sounds</string>
     <string name="pronun_auto_summary">on/off auto audio pronuciation when word appears.</string>
+    <string name="one_more_time">One more time</string>
+    <string name="repeat">Repeat</string>
 
 </resources>

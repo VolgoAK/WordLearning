@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -74,11 +75,7 @@ public class RedactorFragment extends Fragment{
         mBinding.rvRedactor.setLayoutManager(layoutManager);
 
         mWords = mDataProvider.getDictionaryWords();
-        for(Word word : mWords) {
-            Log.d(TAG, "onStart: " + word);
-        }
-
-        Log.d(TAG, "onStart: words " + mWords.size());
+        Collections.sort(mWords, (one, two) -> Long.compare(two.getAddedTime(), one.getAddedTime()));
 
         mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), mWords, mBinding.rvRedactor);
         mBinding.rvRedactor.setAdapter(mRecyclerAdapter);

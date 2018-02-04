@@ -115,8 +115,11 @@ public class DataProvider {
     public void updateSetStatus(Set set) {
         setsDao.updateSets(set);
         List<Word> words = wordDao.getWordsBySetId(set.getId());
+        long time = System.currentTimeMillis();
+        boolean updateTime = set.getStatus() == DatabaseContract.Sets.IN_DICTIONARY;
         for(Word word : words) {
             word.setStatus(set.getStatus());
+            if(updateTime) word.setAddedTime(time);
         }
         Word[] wordsArray = words.toArray(new Word[0]);
         wordDao.udateWords(wordsArray);

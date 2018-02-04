@@ -3,12 +3,11 @@ package xyz.volgoak.wordlearning.fragment;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import javax.inject.Inject;
 
@@ -16,12 +15,9 @@ import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.data.DataProvider;
-import xyz.volgoak.wordlearning.data.DatabaseContract;
-import xyz.volgoak.wordlearning.databinding.FragmentRedactorBinding;
 import xyz.volgoak.wordlearning.databinding.FragmentResultsBinding;
 import xyz.volgoak.wordlearning.entities.Word;
 import xyz.volgoak.wordlearning.training_utils.Results;
-import xyz.volgoak.wordlearning.training_utils.Training;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 
 /**
@@ -32,8 +28,8 @@ public class ResultsFragment extends Fragment {
 
     public static final String TAG = "ResultFragment";
 
-    private Results mResults;
-    private FragmentListener mListener;
+    private Results results;
+    private FragmentListener fragmentListener;
     @Inject
     DataProvider mProvider;
 
@@ -45,13 +41,13 @@ public class ResultsFragment extends Fragment {
 
     public static ResultsFragment getResultFragment(Results results){
         ResultsFragment fragment = new ResultsFragment();
-        fragment.mResults = results;
+        fragment.results = results;
         return fragment;
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         WordsApp.getsComponent().inject(this);
@@ -63,14 +59,14 @@ public class ResultsFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if(context instanceof FragmentListener){
-            mListener = (FragmentListener) context;
+            fragmentListener = (FragmentListener) context;
         }else throw new RuntimeException(context.toString() + " must implement FragmentListener");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        fragmentListener = null;
     }
 
     @Override
@@ -79,24 +75,19 @@ public class ResultsFragment extends Fragment {
 
         manageFeedBack();
 
-        mDataBinding.resultStartRedactor.setOnClickListener((v) -> mListener.startDictionary());
-
-        mDataBinding.resultStartTw.setOnClickListener(
-                (v) -> mListener.startTraining(TrainingFabric.WORD_TRANSLATION, mResults.setId));
-
-        mDataBinding.resultStartWt.setOnClickListener(
-                (v) -> mListener.startTraining(TrainingFabric.TRANSLATION_WORD, mResults.setId));
-
+        mDataBinding.cvDictionaryResult.setOnClickListener((v) -> fragmentListener.startDictionary());
+        mDataBinding.cvSetsResult.setOnClickListener((v) -> fragmentListener.startSets());
+        mDataBinding.cvAgainResult.setOnClickListener((v) -> fragmentListener.startTraining(results.trainedType, results.setId));
 
         updateWordsStatus();
     }
 
     private void manageFeedBack() {
-        String results = getString(R.string.correct_answers) + "  " + mResults.correctAnswers + "/" + mResults.wordCount;
+        String results = getString(R.string.correct_answers) + "  " + this.results.correctAnswers + "/" + this.results.wordCount;
         mDataBinding.tvResultResfrag.setText(results);
 
         String opinion;
-        double percentage = mResults.correctAnswers * 1.0/ mResults.wordCount;
+        double percentage = this.results.correctAnswers * 1.0/ this.results.wordCount;
 
         if(percentage == 1){
             opinion = getString(R.string.perfect_result);
@@ -110,18 +101,25 @@ public class ResultsFragment extends Fragment {
     }
 
     private void updateWordsStatus(){
-        if(mResults.idsForUpdate.size() == 0) return;
+        if(results.idsForUpdate.size() == 0) return;
 
+        long trainedTime = System.currentTimeMillis();
         Updater updater;
-        if(mResults.trainedType == TrainingFabric.TRANSLATION_WORD) {
-            updater = (w) -> w.setTrainedTw(w.getTrainedTw() + 1);
-        }else if (mResults.trainedType == TrainingFabric.WORD_TRANSLATION) {
-            updater = (w) -> w.setTrainedWt(w.getTrainedWt() + 1);
+        if(results.trainedType == TrainingFabric.TRANSLATION_WORD) {
+            updater = (w) -> {
+                w.setTrainedTw(w.getTrainedTw() + 1);
+                w.setLastTrained(trainedTime);
+            };
+        }else if (results.trainedType == TrainingFabric.WORD_TRANSLATION) {
+            updater = (w) -> {
+                w.setTrainedWt(w.getTrainedWt() + 1);
+                w.setLastTrained(trainedTime);
+            };
         } else return;
 
-        Word[] words = new Word[mResults.idsForUpdate.size()];
-        for(int i = 0; i < mResults.idsForUpdate.size(); i++) {
-            Word word = mProvider.getWordById(mResults.idsForUpdate.get(i));
+        Word[] words = new Word[results.idsForUpdate.size()];
+        for(int i = 0; i < results.idsForUpdate.size(); i++) {
+            Word word = mProvider.getWordById(results.idsForUpdate.get(i));
             updater.updateWord(word);
             words[i] = word;
         }

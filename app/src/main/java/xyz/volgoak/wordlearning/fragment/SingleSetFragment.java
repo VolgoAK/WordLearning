@@ -323,10 +323,12 @@ public class SingleSetFragment extends Fragment {
 
     public void changeWordsStatus(List<Integer> positions, int newStatus) {
         if (positions.size() == 0) return;
+        long time = System.currentTimeMillis();
         Word[] wordsArray = new Word[positions.size()];
         for (int a = 0; a < positions.size(); a++) {
             Word word = mWords.get(positions.get(a));
             word.setStatus(newStatus);
+            if(newStatus == DatabaseContract.Words.IN_DICTIONARY) word.setAddedTime(time);
             wordsArray[a] = word;
         }
 

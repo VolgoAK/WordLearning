@@ -85,39 +85,95 @@
                     tools:text="Record : 1000"/>
 
 
-                <Button
-                    android:id="@+id/result_start_redactor"
-                    style="@style/MenuButton"
-                    android:layout_centerVertical="true"
-                    android:text="@string/start_redactor"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_again_result"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_result" />
+                    app:layout_constraintTop_toBottomOf="@+id/iv_result"
+                    style="@style/MenuCards">
 
-                <Button
-                    android:id="@+id/result_start_wt"
-                    style="@style/MenuButton"
-                    android:layout_below="@+id/result_start_redactor"
-                    android:text="@string/word_translation"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/result_start_redactor" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:descendantFocusability="blocksDescendants"
+                        android:background="?selectableItemBackgroundBorderless">
 
-                <Button
-                    android:id="@+id/result_start_tw"
-                    style="@style/MenuButton"
-                    android:text="@string/translation_word"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/result_start_wt" />
+                        <TextView
+                            style="@style/CardsText"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/repeat" />
 
-                <Button
-                    android:id="@+id/result_start_rw"
-                    style="@style/MenuButton"
-                    android:text="@string/right_wrong"
+                        <ImageView
+                            style="@style/Cyv_menu"
+                            android:background="@drawable/yellow_circle"
+                            app:srcCompat="@drawable/ic_training_24dp"
+                            android:scaleType="fitCenter"/>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_dictionary_result"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/result_start_tw" />
+                    app:layout_constraintTop_toBottomOf="@+id/cv_again_result"
+                    style="@style/MenuCards">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:descendantFocusability="blocksDescendants"
+                        android:background="?selectableItemBackgroundBorderless">
+
+                        <TextView
+                            style="@style/CardsText"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/redactor" />
+
+                        <ImageView
+                            style="@style/Cyv_menu"
+                            android:background="@drawable/yellow_circle"
+                            app:srcCompat="@drawable/ic_dictionary_white_24dp"
+                            android:scaleType="fitCenter"/>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_sets_result"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cv_dictionary_result"
+                    style="@style/MenuCards">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:descendantFocusability="blocksDescendants"
+                        android:background="?selectableItemBackgroundBorderless">
+
+                        <TextView
+                            style="@style/CardsText"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/sets" />
+
+                        <ImageView
+                            style="@style/Cyv_menu"
+                            android:background="@drawable/yellow_circle"
+                            app:srcCompat="@drawable/ic_sets_white_24dp"
+                            android:scaleType="fitCenter"/>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
 
             </android.support.constraint.ConstraintLayout>
         </ScrollView>
