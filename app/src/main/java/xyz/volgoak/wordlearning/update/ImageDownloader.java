@@ -43,6 +43,7 @@ public class ImageDownloader {
     }
 
     public void downloadImages() {
+        Log.d(TAG, "downloadImages: ");
         checkOrCreateDirs();
         File photosFile = new File(mImagesDir, StorageContract.PHOTOS_ARCHIVE);
         StorageReference imagesReference = FirebaseStorage.getInstance().getReference(FirebaseContract.IMAGES_FOLDER);
@@ -82,12 +83,13 @@ public class ImageDownloader {
     }
 
     private void downloadImage(final String imageName) {
+        checkOrCreateDirs();
         StorageReference imageDirRef = FirebaseStorage.getInstance().getReference(FirebaseContract.IMAGES_FOLDER);
         StorageReference imageRef = imageDirRef.child(imageName);
+        File imageFile = new File(mImagesDir, imageName);
         imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
-                File imageFile = new File(mImagesDir, imageName);
                 try {
                     FileOutputStream fous = new FileOutputStream(imageFile);
                     fous.write(bytes);

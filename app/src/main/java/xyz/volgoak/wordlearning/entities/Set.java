@@ -19,7 +19,7 @@ import xyz.volgoak.wordlearning.data.DatabaseContract.*;
 public class Set implements DataEntity {
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = Sets._ID)
+    @ColumnInfo(name = Sets._ID, index = true)
     private long id;
 
     @Expose
@@ -42,7 +42,7 @@ public class Set implements DataEntity {
     private int visibitity;
 
     @Expose
-    @ColumnInfo(name = Sets.COLUMN_THEME_CODES)
+    @ColumnInfo(name = Sets.COLUMN_THEME_CODES, index = true)
     private String themeCodes;
     @Expose
     @Ignore

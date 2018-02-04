@@ -36,6 +36,11 @@ import xyz.volgoak.wordlearning.entities.Word;
  * Created by Alexander Karachev on 07.05.2017.
  */
 
+/**
+ * This class is using only for creating sqlite database on debug devices.
+ * It isn' well optimized  and shouldn't be.
+ * !!!Run this shit only on debug devices and never use it in production!!!
+ */
 public final class SetsLoader {
 
     public static final String TAG = "SetsLoader";
@@ -120,6 +125,8 @@ public final class SetsLoader {
                 if(dictionaryWord != null) {
                     wordId = dictionaryWord.getId();
                 } else {
+                    word.setTranslation(capitalize(word.getTranslation()));
+                    word.setWord(capitalize(word.getWord()));
                     wordId = provider.insertWord(word);
                 }
                 Link link = new Link();

@@ -19,9 +19,9 @@ public class Link implements DataEntity {
     @ColumnInfo(name = WordLinks._ID)
     @PrimaryKey(autoGenerate = true)
     private long id;
-    @ColumnInfo(name = WordLinks.COLUMN_WORD_ID)
+    @ColumnInfo(name = WordLinks.COLUMN_WORD_ID, index = true)
     private long wordId;
-    @ColumnInfo(name = WordLinks.COLUMN_SET_ID)
+    @ColumnInfo(name = WordLinks.COLUMN_SET_ID, index = true)
     private long idOfSet;
 
     @Override

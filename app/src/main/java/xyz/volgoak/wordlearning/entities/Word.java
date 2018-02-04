@@ -16,7 +16,7 @@ import xyz.volgoak.wordlearning.data.DatabaseContract.Words;
 @Entity(tableName = Words.TABLE_NAME)
 public class Word implements DataEntity {
 
-    @ColumnInfo(name = Words._ID)
+    @ColumnInfo(name = Words._ID, index = true)
     @PrimaryKey(autoGenerate = true)
     private long id;
     @Expose
@@ -36,6 +36,10 @@ public class Word implements DataEntity {
     private int studied;
     @ColumnInfo(name = Words.COLUMN_STATUS)
     private int status;
+
+    private long addedTime;
+    private long lastTrainedWt;
+    private long lastTrainedTw;
 
     @Ignore
     public Word(String word) {
@@ -123,6 +127,30 @@ public class Word implements DataEntity {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public long getAddedTime() {
+        return addedTime;
+    }
+
+    public void setAddedTime(long addedTime) {
+        this.addedTime = addedTime;
+    }
+
+    public long getLastTrainedWt() {
+        return lastTrainedWt;
+    }
+
+    public void setLastTrainedWt(long lastTrainedWt) {
+        this.lastTrainedWt = lastTrainedWt;
+    }
+
+    public long getLastTrainedTw() {
+        return lastTrainedTw;
+    }
+
+    public void setLastTrainedTw(long lastTrainedTw) {
+        this.lastTrainedTw = lastTrainedTw;
     }
 
     public void resetProgress() {

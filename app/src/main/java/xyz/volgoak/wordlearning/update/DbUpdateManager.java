@@ -75,8 +75,10 @@ public class DbUpdateManager {
 
     // Firebase downloads and update tasks
     private static void scheduleUpdateTasks(Context context) {
+        Log.d(TAG, "scheduleUpdateTasks: ");
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         if (!preferences.getBoolean(PreferenceContract.IMAGES_LOADED, false)) {
+            Log.d(TAG, "scheduleUpdateTasks: downlod images");
             new ImageDownloader().downloadImages();
         }
 
