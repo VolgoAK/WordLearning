@@ -51,7 +51,7 @@
     <string name="words_in_dictionary">Добавлено в словарь %1$d </string>
 
     <!-- messages -->
-    <string name="sets_index_file_ru_en">sets_index.xml</string>
+    <string name="sets_index_file_ru_en">sets_index.json</string>
 
     <string name="training">Тренировка</string>
     <string name="start_training">Начать тренировку</string>

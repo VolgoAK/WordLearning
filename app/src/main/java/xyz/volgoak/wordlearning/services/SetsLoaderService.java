@@ -39,13 +39,12 @@ public class SetsLoaderService extends GcmTaskService {
 
     @Override
     public int onRunTask(TaskParams taskParams) {
-//        Log.d(TAG, "onRunTask");
         switch (taskParams.getTag()) {
             case TASK_CHECK_UPDATE_SETS:
                 checkUpdate();
                 return GcmNetworkManager.RESULT_SUCCESS;
             case TASK_LOAD_IMAGES:
-//                checkImages();
+
                 return GcmNetworkManager.RESULT_SUCCESS;
             default:
                 return GcmNetworkManager.RESULT_FAILURE;
@@ -56,24 +55,18 @@ public class SetsLoaderService extends GcmTaskService {
         Log.d(TAG, "checkUpdate: ");
         FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signInAnonymously();
-//        Thread.currentThread().join();
-        FirebaseDownloadHelper downloadHelper = new FirebaseDownloadHelper(this);
-        SetsUpdatingInfo info = downloadHelper.checkForDbUpdate(this);
-        Log.d(TAG, " sets loaded " + info.getSetsAdded() + "words loaded " + info.getWordsAdded());
-        //bad code replace with something
 
-//        checkImages();
+        FirebaseDownloadHelper downloadHelper = new FirebaseDownloadHelper();
+        SetsUpdatingInfo info = downloadHelper.checkForDbUpdate(this);
+
+        // TODO: 2/6/18 Load images after set downloaded
+
         if (info.getWordsAdded() > 0) {
 
 
             createUpdateNotification(info);
         }
     }
-
-    /*private void checkImages() {
-        WordsApp.getsComponent().inject(this);
-        downloader.checkImages();
-    }*/
     
     private void createUpdateNotification(SetsUpdatingInfo info) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
@@ -98,13 +91,5 @@ public class SetsLoaderService extends GcmTaskService {
         Resources res = this.getResources();
         Bitmap bitmap = BitmapFactory.decodeResource(res, R.mipmap.ic_launcher);
         return bitmap;
-    }
-
-
-    class TaskLoadSetsAndImages implements Runnable {
-        @Override
-        public void run() {
-
-        }
     }
 }

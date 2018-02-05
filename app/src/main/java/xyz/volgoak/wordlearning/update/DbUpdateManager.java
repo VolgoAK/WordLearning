@@ -42,10 +42,11 @@ public class DbUpdateManager {
         if (!baseLoaded) {
             if (Config.IMPORT_PREBUILT_DB) {
                 baseLoaded = SetsLoader.importDbFromAsset(context, DatabaseContract.DB_NAME);
-            } else {
+            } else  if(Config.IMPORT_JSON_DB) {
                 baseLoaded = true;
                 SetsLoader.insertTestBase(provider, context);
             }
+
             preferences.edit().putBoolean(PreferenceContract.BASE_CREATED, baseLoaded).apply();
         }
 
@@ -78,7 +79,7 @@ public class DbUpdateManager {
         Log.d(TAG, "scheduleUpdateTasks: ");
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         if (!preferences.getBoolean(PreferenceContract.IMAGES_LOADED, false)) {
-            Log.d(TAG, "scheduleUpdateTasks: downlod images");
+            Log.d(TAG, "scheduleUpdateTasks: download images");
             new ImageDownloader().downloadImages();
         }
 

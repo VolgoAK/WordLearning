@@ -34,7 +34,7 @@ public class AudioManager {
     @Inject
     Context context;
     private SoundPool soundPool;
-    private float volume = 0.7f;
+    private float volume = 0.5f;
 
     public AudioManager() {
         WordsApp.getsComponent().inject(this);

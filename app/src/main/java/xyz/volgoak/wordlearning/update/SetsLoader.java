@@ -4,13 +4,10 @@ import android.content.Context;
 import android.os.Environment;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
-
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -18,10 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.channels.FileChannel;
 import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
@@ -44,7 +37,6 @@ import xyz.volgoak.wordlearning.entities.Word;
 public final class SetsLoader {
 
     public static final String TAG = "SetsLoader";
-    public static final String DATA_SET_NODE = "Data_set";
     public static final String DATA_ID_ATTR = "data_id";
     public static final String DATA_SOURCE_ATTR = "source";
 
@@ -71,58 +63,51 @@ public final class SetsLoader {
 
         try {
             InputStream inputStream = context.getAssets().open("my.json");
-            int syze = inputStream.available();
-            byte[] buffer = new byte[syze];
+            int size = inputStream.available();
+            byte[] buffer = new byte[size];
             inputStream.read(buffer);
 
             String json = new String(buffer);
-
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            gsonBuilder.excludeFieldsWithoutExposeAnnotation();
-            gsonBuilder.disableHtmlEscaping();
-            gsonBuilder.setPrettyPrinting();
-            Gson gson = gsonBuilder.create();
-
-            Dictionary dictionary = gson.fromJson(json, Dictionary.class);
-
-            insertSetsIntoDb(dataProvider, dictionary);
-
-        }catch (IOException ex) {
+            createAndInsertDictionary(dataProvider, json);
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
-    static Document prepareDocument(byte[] bytes)
-            throws SAXException, IOException, ParserConfigurationException {
-        return prepareDocument(new ByteArrayInputStream(bytes));
+    static SetsUpdatingInfo createAndInsertDictionary(DataProvider provider, String dictionaryString) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.excludeFieldsWithoutExposeAnnotation();
+        gsonBuilder.disableHtmlEscaping();
+        gsonBuilder.setPrettyPrinting();
+        Gson gson = gsonBuilder.create();
+
+        Dictionary dictionary = gson.fromJson(dictionaryString, Dictionary.class);
+
+        return insertSetsIntoDb(provider, dictionary);
     }
 
-    static Document prepareDocument(InputStream is)
-            throws SAXException, IOException, ParserConfigurationException {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document doc = builder.parse(is);
-
-        return doc;
-    }
-
-    static SetsUpdatingInfo insertSetsIntoDb(DataProvider provider, Dictionary dictionary) {
+    public static SetsUpdatingInfo insertSetsIntoDb(DataProvider provider, Dictionary dictionary) {
+        SetsUpdatingInfo info = new SetsUpdatingInfo();
         List<Theme> themes = dictionary.getThemes();
-        Theme[] themesArray = new Theme[themes.size()];
-        provider.insertThemes(themes.toArray(themesArray));
+
+        if (themes != null && themes.size() != 0) {
+            Theme[] themesArray = new Theme[themes.size()];
+            provider.insertThemes(themes.toArray(themesArray));
+        }
 
         List<Set> sets = dictionary.getSets();
-        for(Set set : sets) {
+        for (Set set : sets) {
             set.setVisibitity(DatabaseContract.Sets.VISIBLE);
 
-            // TODO: 1/7/18 manage links
             long setId = provider.insertSet(set);
+            info.onSetAdded(setId);
             List<Word> words = set.getWords();
 
-            for(Word word : words) {
+            for (Word word : words) {
+                info.incrementWordsAdded();
                 Word dictionaryWord = provider.getWord(word.getWord(), word.getTranslation());
                 long wordId;
-                if(dictionaryWord != null) {
+                if (dictionaryWord != null) {
                     wordId = dictionaryWord.getId();
                 } else {
                     word.setTranslation(capitalize(word.getTranslation()));
@@ -136,7 +121,7 @@ public final class SetsLoader {
             }
         }
 
-        return new SetsUpdatingInfo();
+        return info;
     }
 
     private static String capitalize(String string) {
@@ -148,8 +133,8 @@ public final class SetsLoader {
     public static void exportDbToFile(Context context, String dbName) {
         File sd = Environment.getExternalStorageDirectory();
         File data = Environment.getDataDirectory();
-        FileChannel source=null;
-        FileChannel destination=null;
+        FileChannel source = null;
+        FileChannel destination = null;
         String currentDBPath = context.getDatabasePath(dbName).toString();
         String backupDBPath = dbName;
         File currentDB = new File(currentDBPath);
@@ -161,7 +146,7 @@ public final class SetsLoader {
             source.close();
             destination.close();
             Toast.makeText(context, "DB Exported!", Toast.LENGTH_LONG).show();
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -190,6 +175,7 @@ public final class SetsLoader {
 
         } catch (IOException ex) {
             ex.printStackTrace();
+            Crashlytics.logException(ex);
         }
 
         return dbFileTarget.exists();
