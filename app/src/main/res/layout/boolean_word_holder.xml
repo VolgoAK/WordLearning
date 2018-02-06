@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="@dimen/button_corner_radius"
-    android:layout_width="@dimen/stats_card_width"
-    android:layout_height="@dimen/stats_card_height">
+    android:layout_width="@dimen/bool_word_card_width"
+    android:layout_height="@dimen/bool_word_card_height">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

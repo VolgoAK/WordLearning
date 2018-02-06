@@ -88,7 +88,7 @@
         <Button
             android:id="@+id/bt_bool_right"
             android:layout_width="@dimen/bool_bt_width"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/bool_bt_height"
             android:layout_marginLeft="@dimen/views_small_margin"
             android:layout_marginTop="@dimen/bool_bt_top_margin"
             android:background="@drawable/green_button"
@@ -100,7 +100,7 @@
         <Button
             android:id="@+id/bt_bool_wrong"
             android:layout_width="@dimen/bool_bt_width"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/bool_bt_height"
             android:layout_marginRight="@dimen/views_small_margin"
             android:background="@drawable/orange_button"
             android:text="@string/wrong"

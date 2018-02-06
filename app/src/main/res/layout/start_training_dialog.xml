@@ -36,8 +36,9 @@
                 android:gravity="center"
                 android:text="@string/word_translation" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 style="@style/CyvDialog"
+                android:background="@drawable/yellow_circle"
                 android:src="@drawable/ic_wt"/>
         </LinearLayout>
 
@@ -67,8 +68,9 @@
             android:layout_weight="1"
             android:text="@string/translation_word" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             style="@style/CyvDialog"
+            android:background="@drawable/yellow_circle"
             android:src="@drawable/ic_tw"/>
     </LinearLayout>
 

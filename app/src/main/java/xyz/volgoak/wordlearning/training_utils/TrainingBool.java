@@ -14,9 +14,9 @@ public class TrainingBool extends Training {
 
     public static final String TAG = TrainingBool.class.getSimpleName();
 
-    public static final int ONE_STAR = 1;
-    public static final int TWO_STAR = 3;
-    public static final int THREE_STAR = 6;
+    public static final int ONE_STAR = 2;
+    public static final int TWO_STAR = 4;
+    public static final int THREE_STAR = 8;
 
     private int position = 0;
     private int scores = 0;
@@ -53,17 +53,6 @@ public class TrainingBool extends Training {
         }
 
         return playWords.get(position + 1);
-    }
-
-    /**
-     * Goes to next position and returns play word at that position
-     * @return
-     */
-    public PlayWord getNextPlayWord() {
-        position ++;
-        if (playWords.size() > position) {
-            return playWords.get(position);
-        } else return null;
     }
 
     public boolean checkAnswer(boolean correct) {

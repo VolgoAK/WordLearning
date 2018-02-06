@@ -17,6 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mindorks.placeholderview.SwipeDecor;
+
 import org.greenrobot.eventbus.EventBus;
 
 import javax.inject.Inject;
@@ -107,6 +109,7 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
     @Override
     public void onResume() {
         super.onResume();
+        paused = false;
 
         Handler handler = new Handler();
         handler.post(new Runnable() {
