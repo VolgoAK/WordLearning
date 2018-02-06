@@ -8,7 +8,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import xyz.volgoak.wordlearning.WordsApp;
-import xyz.volgoak.wordlearning.utils.AudioManager;
+import xyz.volgoak.wordlearning.utils.SoundsManager;
 
 /**
  * Created by alex on 1/8/18.
@@ -18,7 +18,7 @@ import xyz.volgoak.wordlearning.utils.AudioManager;
 public class AppModule {
 
     Application application;
-    AudioManager audioManager;
+    SoundsManager soundsManager;
 
     public AppModule(WordsApp app) {
         application = app;
@@ -32,8 +32,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public AudioManager getAudioManager() {
-        if (audioManager == null) audioManager = new AudioManager();
-        return audioManager;
+    public SoundsManager getSoundsManager() {
+        if (soundsManager == null) soundsManager = new SoundsManager();
+        return soundsManager;
     }
 }

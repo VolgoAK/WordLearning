@@ -21,7 +21,7 @@ import javax.inject.Inject;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.utils.AppearingAnimator;
-import xyz.volgoak.wordlearning.utils.AudioManager;
+import xyz.volgoak.wordlearning.utils.SoundsManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,7 +41,7 @@ public class TimerFragment extends Fragment {
     private TimerListener timerListener;
 
     @Inject
-    AudioManager audioManager;
+    SoundsManager soundsManager;
 
     public TimerFragment() {
         // Required empty public constructor
@@ -79,7 +79,7 @@ public class TimerFragment extends Fragment {
     private void runTimerBounce() {
 
         btTwo.setText(String.valueOf(time));
-        audioManager.play(AudioManager.Sound.TICK_SOUND);
+        soundsManager.play(SoundsManager.Sound.TICK_SOUND);
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -87,7 +87,7 @@ public class TimerFragment extends Fragment {
             public void run() {
                 if (paused) return;
 
-                audioManager.play(AudioManager.Sound.TICK_SOUND);
+                soundsManager.play(SoundsManager.Sound.TICK_SOUND);
 
                 btTwo.setAlpha(1.0f);
 

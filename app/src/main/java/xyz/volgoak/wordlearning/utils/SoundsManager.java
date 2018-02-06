@@ -1,6 +1,7 @@
 package xyz.volgoak.wordlearning.utils;
 
 import android.content.Context;
+import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
 import android.preference.PreferenceManager;
@@ -14,7 +15,7 @@ import xyz.volgoak.wordlearning.WordsApp;
  * Created by alex on 2/2/18.
  */
 
-public class AudioManager {
+public class SoundsManager {
 
     public enum Sound {
         TICK_SOUND(R.raw.tick),
@@ -29,14 +30,14 @@ public class AudioManager {
         }
     }
 
-    public static final String TAG = AudioManager.class.getSimpleName();
+    public static final String TAG = SoundsManager.class.getSimpleName();
 
     @Inject
     Context context;
     private SoundPool soundPool;
-    private float volume = 0.001f;
+    private float volume = 0.05f;
 
-    public AudioManager() {
+    public SoundsManager() {
         WordsApp.getsComponent().inject(this);
     }
 

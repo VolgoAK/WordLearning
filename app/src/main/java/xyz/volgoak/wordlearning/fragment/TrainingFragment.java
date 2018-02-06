@@ -33,7 +33,7 @@ import xyz.volgoak.wordlearning.training_utils.Results;
 import xyz.volgoak.wordlearning.training_utils.Training;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 import xyz.volgoak.wordlearning.training_utils.TrainingWord;
-import xyz.volgoak.wordlearning.utils.AudioManager;
+import xyz.volgoak.wordlearning.utils.SoundsManager;
 import xyz.volgoak.wordlearning.utils.MetallBounceInterpoltor;
 import xyz.volgoak.wordlearning.utils.PreferenceContract;
 import xyz.volgoak.wordlearning.utils.WordSpeaker;
@@ -63,7 +63,7 @@ public class TrainingFragment extends Fragment {
     @Inject
     DataProvider mDataProvider;
     @Inject
-    AudioManager audioManager;
+    SoundsManager soundsManager;
 
     private FragmentTrainingBinding mBinding;
 
@@ -266,7 +266,7 @@ public class TrainingFragment extends Fragment {
 
         hideShowNextButton(true);
 
-        audioManager.play(correct ? AudioManager.Sound.CORRECT_SOUND : AudioManager.Sound.WRONG_SOUND);
+        soundsManager.play(correct ? SoundsManager.Sound.CORRECT_SOUND : SoundsManager.Sound.WRONG_SOUND);
     }
 
     private void hideShowNextButton(boolean show){

@@ -13,12 +13,11 @@ import xyz.volgoak.wordlearning.fragment.TimerFragment;
 import xyz.volgoak.wordlearning.fragment.TrainingFragment;
 import xyz.volgoak.wordlearning.fragment.WordCardsFragment;
 import xyz.volgoak.wordlearning.fragment.WordSetsFragment;
-import xyz.volgoak.wordlearning.recycler.RecyclerAdapter;
 import xyz.volgoak.wordlearning.recycler.SetsRecyclerAdapter;
 import xyz.volgoak.wordlearning.services.SetsLoaderService;
 import xyz.volgoak.wordlearning.update.FirebaseDownloadHelper;
 import xyz.volgoak.wordlearning.update.ImageDownloader;
-import xyz.volgoak.wordlearning.utils.AudioManager;
+import xyz.volgoak.wordlearning.utils.SoundsManager;
 
 /**
  * Created by alex on 1/7/18.
@@ -42,5 +41,5 @@ public interface DbComponent {
     void inject(ImageDownloader downloader);
     void inject(SetsLoaderService service);
     void inject(SetsRecyclerAdapter adapter);
-    void inject(AudioManager manager);
+    void inject(SoundsManager manager);
 }

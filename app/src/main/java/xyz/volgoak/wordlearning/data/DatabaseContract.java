@@ -8,8 +8,7 @@ import android.provider.BaseColumns;
  */
 
 public final class DatabaseContract {
-    //db version at release was 15
-    public final static int DB_VERSION = 15;
+
     public final static String DB_NAME = "NEW_WORDS_DATABASE";
 
 

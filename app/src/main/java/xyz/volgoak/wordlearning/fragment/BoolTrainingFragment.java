@@ -17,8 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mindorks.placeholderview.SwipeDecor;
-
 import org.greenrobot.eventbus.EventBus;
 
 import javax.inject.Inject;
@@ -33,7 +31,7 @@ import xyz.volgoak.wordlearning.training_utils.PlayWord;
 import xyz.volgoak.wordlearning.training_utils.Results;
 import xyz.volgoak.wordlearning.training_utils.TrainingBool;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
-import xyz.volgoak.wordlearning.utils.AudioManager;
+import xyz.volgoak.wordlearning.utils.SoundsManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,7 +46,7 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
     @Inject
     DataProvider dataProvider;
     @Inject
-    AudioManager audioManager;
+    SoundsManager soundsManager;
     private FragmentBoolTrainingBinding dataBinding;
     private TrainingBool trainingBool;
 
@@ -143,7 +141,7 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
     @Override
     public void onStop() {
         super.onStop();
-        audioManager.release();
+        soundsManager.release();
         EventBus.getDefault().removeStickyEvent(IntegerEvent.class);
     }
 
@@ -178,7 +176,7 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
     private void manageAnswer(boolean correct) {
         EventBus.getDefault().postSticky(new IntegerEvent(trainingBool.getStars()));
 
-        audioManager.play(correct ? AudioManager.Sound.CORRECT_SOUND : AudioManager.Sound.WRONG_SOUND);
+        soundsManager.play(correct ? SoundsManager.Sound.CORRECT_SOUND : SoundsManager.Sound.WRONG_SOUND);
         dataBinding.tvPointsBool.setText(String.valueOf(trainingBool.getScores()));
 
         if (correct) animateScores();
