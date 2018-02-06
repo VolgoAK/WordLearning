@@ -36,3 +36,14 @@
     public static *** d(...);
     public static *** v(...);
 }
+
+-keepattributes *Annotation*
+  -keepclassmembers class ** {
+    @com.mindorks.placeholderview.annotations.** <methods>;
+  }
+
+  -keepattributes *Annotation*
+  -keepclassmembers class ** {
+      @org.greenrobot.eventbus.Subscribe <methods>;
+  }
+  -keep enum org.greenrobot.eventbus.ThreadMode { *; }
