@@ -14,7 +14,7 @@
     },
     {
       "code": "004",
-      "name": "Вещи"
+      "name": "Вещи и предметы"
     },
     {
       "code": "005",
@@ -4589,6 +4589,683 @@
           "translation": "роза",
           "word": "rose",
           "transcription": "rəʊz"
+        }
+      ]
+    },{
+      "name": "Топ 100 глаголов часть 1",
+      "description": "Самые распространенные глаголы английского языка",
+      "themeCodes": "005",
+      "imageUrl": "run.jpg",
+      "words": [
+        {
+          "translation": "быть",
+          "word": "be",
+          "transcription": "biː"
+        },
+        {
+          "translation": "иметь",
+          "word": "have",
+          "transcription": "hæv"
+        },
+        {
+          "translation": "делать",
+          "word": "do",
+          "transcription": "duː"
+        },
+        {
+          "translation": "говорить",
+          "word": "say",
+          "transcription": "seɪ"
+        },
+        {
+          "translation": "идти",
+          "word": "go",
+          "transcription": "gəʊ"
+        },
+        {
+          "translation": "получать",
+          "word": "receive",
+          "transcription": "rɪˈsiːv"
+        },
+        {
+          "translation": "знать",
+          "word": "know",
+          "transcription": "nəʊ"
+        },
+        {
+          "translation": "думать",
+          "word": "think",
+          "transcription": "θɪŋk"
+        },
+        {
+          "translation": "брать",
+          "word": "take",
+          "transcription": "teɪk"
+        },
+        {
+          "translation": "видеть",
+          "word": "see",
+          "transcription": "siː"
+        },
+        {
+          "translation": "приходить",
+          "word": "come",
+          "transcription": "kʌm"
+        },
+        {
+          "translation": "хотеть",
+          "word": "want",
+          "transcription": "wɔnt"
+        },
+        {
+          "translation": "использовать",
+          "word": "use",
+          "transcription": "juːs"
+        },
+        {
+          "translation": "находить",
+          "word": "find",
+          "transcription": "faɪnd"
+        },
+        {
+          "translation": "давать ",
+          "word": "give",
+          "transcription": "gɪv"
+        },
+        {
+          "translation": "рассказывать",
+          "word": "tell",
+          "transcription": "tel"
+        },
+        {
+          "translation": "работать",
+          "word": "work",
+          "transcription": "wɜːk"
+        },
+        {
+          "translation": "звонить",
+          "word": "call",
+          "transcription": "kɔːl"
+        },
+        {
+          "translation": "пытаться",
+          "word": "try",
+          "transcription": "traɪ"
+        },
+        {
+          "translation": "просить",
+          "word": "ask",
+          "transcription": "ɑːsk"
+        },
+        {
+          "translation": "нуждаться",
+          "word": "need",
+          "transcription": "niːd"
+        },
+        {
+          "translation": "чувствовать",
+          "word": "feel",
+          "transcription": "fiːl"
+        },
+        {
+          "translation": "становиться",
+          "word": "become",
+          "transcription": "bɪˈkʌm"
+        },
+        {
+          "translation": "оставлять",
+          "word": "leave",
+          "transcription": "liːv"
+        },
+        {
+          "translation": "класть",
+          "word": "put",
+          "transcription": "pʊt"
+        },
+        {
+          "translation": "значить",
+          "word": "mean",
+          "transcription": "miːn"
+        },
+        {
+          "translation": "хранить",
+          "word": "store",
+          "transcription": "stɔː"
+        },
+        {
+          "translation": "позволять",
+          "word": "allow",
+          "transcription": "əˈlaʊ"
+        },
+        {
+          "translation": "начинать",
+          "word": "begin",
+          "transcription": "bɪˈgɪn"
+        },
+        {
+          "translation": "казаться",
+          "word": "seem",
+          "transcription": "siːm"
+        },
+        {
+          "translation": "помогать",
+          "word": "help",
+          "transcription": "help"
+        },
+        {
+          "translation": "показывать",
+          "word": "show",
+          "transcription": "ʃəʊ"
+        },
+        {
+          "translation": "слышать",
+          "word": "hear",
+          "transcription": "hɪə"
+        },
+        {
+          "translation": "играть",
+          "word": "play",
+          "transcription": "pleɪ"
+        },
+        {
+          "translation": "бежать",
+          "word": "run"
+        },
+        {
+          "translation": "двигаться",
+          "word": "move",
+          "transcription": "muːv"
+        },
+        {
+          "translation": "жить",
+          "word": "live",
+          "transcription": "lɪv"
+        },
+        {
+          "translation": "верить",
+          "word": "believe",
+          "transcription": "bɪˈliːv"
+        },
+        {
+          "translation": "случаться",
+          "word": "happen",
+          "transcription": "ˈhæpən"
+        },
+        {
+          "translation": "писать",
+          "word": "write",
+          "transcription": "raɪt"
+        },
+        {
+          "translation": "сидеть",
+          "word": "sit",
+          "transcription": "sɪt"
+        },
+        {
+          "translation": "стоять",
+          "word": "stand",
+          "transcription": "stænd"
+        },
+        {
+          "translation": "терять",
+          "word": "lose",
+          "transcription": "luːz"
+        },
+        {
+          "translation": "платить",
+          "word": "pay",
+          "transcription": "peɪ"
+        },
+        {
+          "translation": "встречать",
+          "word": "meet",
+          "transcription": "miːt"
+        },
+        {
+          "translation": "включать",
+          "word": "include",
+          "transcription": "ɪnˈkluːd"
+        },
+        {
+          "translation": "продолжать",
+          "word": "continue",
+          "transcription": "kənˈtɪnjuː"
+        }
+      ]
+    },{
+      "name": "Топ 100 глаголов часть 2",
+      "description": "Самые распространенные глаголы английского языка, продолжение",
+      "themesCodes": "005",
+      "imageUrl": "nature.jpg",
+      "words": [
+        {
+          "translation": "устанавливать",
+          "word": "install",
+          "transcription": "ɪnˈstɔːl"
+        },
+        {
+          "translation": "учить",
+          "word": "teach",
+          "transcription": "tiːʧ"
+        },
+        {
+          "translation": "менять",
+          "word": "change",
+          "transcription": "ʧeɪnʤ"
+        },
+        {
+          "translation": "вести",
+          "word": "lead",
+          "transcription": "liːd"
+        },
+        {
+          "translation": "понимать",
+          "word": "understand",
+          "transcription": "ʌndəˈstænd"
+        },
+        {
+          "translation": "смотреть",
+          "word": "look",
+          "transcription": "lʊk"
+        },
+        {
+          "translation": "следовать",
+          "word": "follow",
+          "transcription": "ˈfɔləʊ"
+        },
+        {
+          "translation": "останавливать",
+          "word": "stop",
+          "transcription": "stɔp"
+        },
+        {
+          "translation": "создавать",
+          "word": "create",
+          "transcription": "kriːˈeɪt"
+        },
+        {
+          "translation": "говорить",
+          "word": "say",
+          "transcription": "seɪ"
+        },
+        {
+          "translation": "читать",
+          "word": "read",
+          "transcription": "riːd"
+        },
+        {
+          "translation": "тратить",
+          "word": "spend",
+          "transcription": "spend"
+        },
+        {
+          "translation": "расти",
+          "word": "grow",
+          "transcription": "grəʊ"
+        },
+        {
+          "translation": "открывать",
+          "word": "open",
+          "transcription": "ˈəʊpən"
+        },
+        {
+          "translation": "идти",
+          "word": "go",
+          "transcription": "gəʊ"
+        },
+        {
+          "translation": "побеждать",
+          "word": "win",
+          "transcription": "wɪn"
+        },
+        {
+          "translation": "учиться",
+          "word": "learn",
+          "transcription": "lɜːrn"
+        },
+        {
+          "translation": "предлагать",
+          "word": "offer",
+          "transcription": "ˈɔfə"
+        },
+        {
+          "translation": "помнить",
+          "word": "remember",
+          "transcription": "rɪˈmembə"
+        },
+        {
+          "translation": "появляться",
+          "word": "appear",
+          "transcription": "əˈpɪə"
+        },
+        {
+          "translation": "покупать",
+          "word": "buy",
+          "transcription": "baɪ"
+        },
+        {
+          "translation": "служить",
+          "word": "serve",
+          "transcription": "sɜːv"
+        },
+        {
+          "translation": "умирать",
+          "word": "die",
+          "transcription": "daɪ"
+        },
+        {
+          "translation": "посылать",
+          "word": "send",
+          "transcription": "send"
+        },
+        {
+          "translation": "строить",
+          "word": "build",
+          "transcription": "bɪld"
+        },
+        {
+          "translation": "оставаться",
+          "word": "remain",
+          "transcription": "rɪˈmeɪn"
+        },
+        {
+          "translation": "падать",
+          "word": "fall",
+          "transcription": "fɔːl"
+        },
+        {
+          "translation": "резать",
+          "word": "cut",
+          "transcription": "kʌt"
+        },
+        {
+          "translation": "достигать",
+          "word": "reach",
+          "transcription": "riːʧ"
+        },
+        {
+          "translation": "убивать",
+          "word": "kill",
+          "transcription": "kɪl"
+        },
+        {
+          "translation": "поднимать",
+          "word": "raise",
+          "transcription": "reɪz"
+        },
+        {
+          "translation": "миновать",
+          "word": "pass",
+          "transcription": "pɑːs"
+        },
+        {
+          "translation": "продавать",
+          "word": "sell",
+          "transcription": "sel"
+        },
+        {
+          "translation": "решать",
+          "word": "decide",
+          "transcription": "dɪˈsaɪd"
+        },
+        {
+          "translation": "возвращаться",
+          "word": "return",
+          "transcription": "rɪˈtɜːn"
+        },
+        {
+          "translation": "объяснять",
+          "word": "explain",
+          "transcription": "ɪksˈpleɪn"
+        },
+        {
+          "translation": "надеяться",
+          "word": "hope",
+          "transcription": "həʊp"
+        },
+        {
+          "translation": "развивать",
+          "word": "develop",
+          "transcription": "dɪˈveləp"
+        },
+        {
+          "translation": "нести",
+          "word": "carry",
+          "transcription": "ˈkærɪ"
+        },
+        {
+          "translation": "ломать",
+          "word": "break",
+          "transcription": "breɪk"
+        },
+        {
+          "translation": "получать",
+          "word": "receive",
+          "transcription": "rɪˈsiːv"
+        },
+        {
+          "translation": "соглашаться",
+          "word": "agree",
+          "transcription": "əˈgriː"
+        },
+        {
+          "translation": "поддерживать",
+          "word": "support",
+          "transcription": "səˈpɔːt"
+        },
+        {
+          "translation": "бить",
+          "word": "beat",
+          "transcription": "biːt"
+        },
+        {
+          "translation": "производить",
+          "word": "produce",
+          "transcription": "ˈprɔdjuːs"
+        },
+        {
+          "translation": "есть",
+          "word": "eat",
+          "transcription": "iːt"
+        },
+        {
+          "translation": "покрывать",
+          "word": "cover",
+          "transcription": "ˈkʌvə"
+        },
+        {
+          "translation": "ловить",
+          "word": "catch",
+          "transcription": "kæʧ"
+        },
+        {
+          "translation": "рисовать",
+          "word": "draw",
+          "transcription": "drɔː"
+        },
+        {
+          "translation": "выбирать",
+          "word": "choose",
+          "transcription": "ʧuːz"
+        }
+      ]
+    },{
+      "name": "Злаки и крупы",
+      "description": "Название круп и бобовых на английском",
+      "themesCodes": "005",
+      "imageUrl": "wheat.jpg",
+      "words": [
+        {
+          "translation": "рис",
+          "word": "rice",
+          "transcription": "raɪs"
+        },
+        {
+          "translation": "пшеница",
+          "word": "wheat",
+          "transcription": "wiːt"
+        },
+        {
+          "translation": "рожь",
+          "word": "rye",
+          "transcription": "raɪ"
+        },
+        {
+          "translation": "овес",
+          "word": "oat",
+          "transcription": "əʊt"
+        },
+        {
+          "translation": "гречиха",
+          "word": "buckwheat",
+          "transcription": "ˈbʌkwiːt"
+        },
+        {
+          "translation": "горох",
+          "word": "pea",
+          "transcription": "piː"
+        },
+        {
+          "translation": "фасоль",
+          "word": "bean",
+          "transcription": "biːn"
+        },
+        {
+          "translation": "чечевица",
+          "word": "lentil",
+          "transcription": "ˈlentɪl"
+        },
+        {
+          "translation": "соя",
+          "word": "soy",
+          "transcription": "sɔɪ"
+        },
+        {
+          "translation": "ячмень",
+          "word": "barley",
+          "transcription": "ˈbɑːlɪ"
+        },
+        {
+          "translation": "солод",
+          "word": "malt",
+          "transcription": "mɔːlt"
+        },
+        {
+          "translation": "пшено",
+          "word": "millet",
+          "transcription": "ˈmɪl.ɪt"
+        }
+      ]
+    },{
+      "name": "Оружие",
+      "description": "Оружие и боевая техника",
+      "themesCodes": "004,007",
+      "imageUrl": "gun.jpg",
+      "words": [
+        {
+          "translation": "пистолет",
+          "word": "pistol",
+          "transcription": "ˈpɪs.təl"
+        },
+        {
+          "translation": "пулемет",
+          "word": "machinegun",
+          "transcription": "məˈʃiːngʌn"
+        },
+        {
+          "translation": "винтовка",
+          "word": "rifle",
+          "transcription": "raɪfl"
+        },
+        {
+          "translation": "гранатомет",
+          "word": "grenade launcher",
+          "transcription": "grɪˈneɪd ˈlɔːnʧə"
+        },
+        {
+          "translation": "граната",
+          "word": "grenade",
+          "transcription": "grɪˈneɪd"
+        },
+        {
+          "translation": "миномет",
+          "word": "mortar",
+          "transcription": "ˈmɔːtə"
+        },
+        {
+          "translation": "нож",
+          "word": "knife",
+          "transcription": "naɪf"
+        },
+        {
+          "translation": "кинжал",
+          "word": "dagger",
+          "transcription": "ˈdægə"
+        },
+        {
+          "translation": "штык",
+          "word": "bayonet",
+          "transcription": "ˈbeɪ.ə.nət"
+        },
+        {
+          "translation": "боеприпасы",
+          "word": "ammunition",
+          "transcription": "ˌæm.jʊˈnɪʃ.ən"
+        },
+        {
+          "translation": "пуля",
+          "word": "bullet",
+          "transcription": "ˈbʊlɪt"
+        },
+        {
+          "translation": "стрела",
+          "word": "arrow",
+          "transcription": "ˈæroʊ"
+        },
+        {
+          "translation": "лук (оружие)",
+          "word": "bow",
+          "transcription": "baʊ"
+        },
+        {
+          "translation": "кортик",
+          "word": "Dirk",
+          "transcription": "dɜːk"
+        },
+        {
+          "translation": "боевой топор",
+          "word": "battle axe",
+          "transcription": "bætl æks"
+        },
+        {
+          "translation": "меч",
+          "word": "sword",
+          "transcription": "sɔːd"
+        },
+        {
+          "translation": "сабля",
+          "word": "saber",
+          "transcription": "ˈseɪ.bər"
+        },
+        {
+          "translation": "рапира",
+          "word": "rapier",
+          "transcription": "ˈreɪpjə"
+        },
+        {
+          "translation": "танк",
+          "word": "tank",
+          "transcription": "tæŋk"
+        },
+        {
+          "translation": "истребитель",
+          "word": "fighter",
+          "transcription": "ˈfaɪtə"
+        },
+        {
+          "translation": "бомбардировщик",
+          "word": "bomber",
+          "transcription": "ˈbɔmə"
         }
       ]
     }
