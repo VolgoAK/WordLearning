@@ -6,7 +6,7 @@ package xyz.volgoak.wordlearning;
 
 public class Config {
     public static final boolean EXPORT_DB = false;
-    public static final boolean IMPORT_PREBUILT_DB = false;
+    public static final boolean IMPORT_PREBUILT_DB = true;
     public static final boolean IMPORT_JSON_DB = false;
-    public static final boolean SCHEDULE_UPDATE = false;
+    public static final boolean SCHEDULE_UPDATE = true;
 }

@@ -49,7 +49,7 @@ public class DbExporter {
     public static void importDb(Context context) {
         AssetManager assetManager = context.getAssets();
         try {
-            InputStream inputStream = assetManager.open("WORDS_DATABASE.sqlite3");
+            InputStream inputStream = assetManager.open(DatabaseContract.DB_NAME + ".sqlite3");
             File file = new File(Environment.getDataDirectory()
                     + "/data/"+ "xyz.volgoak.wordlearning" +"/databases/"+ DatabaseContract.DB_NAME);
             file.createNewFile();

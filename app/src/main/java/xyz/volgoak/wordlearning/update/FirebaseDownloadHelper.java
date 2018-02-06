@@ -66,6 +66,8 @@ public class FirebaseDownloadHelper {
         JSONObject object = new JSONObject(updateIndex);
         JSONArray updatesArray = object.getJSONArray("updates");
 
+        if(updatesArray.length() == 0) return null;
+
         for (int a = 0; a < updatesArray.length(); a++) {
             JSONObject updateFile = updatesArray.getJSONObject(a);
 

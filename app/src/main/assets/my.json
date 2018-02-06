@@ -24,10 +24,105 @@
       "code": "006",
       "name": "Искусство"
     },
-    { "code": "007",
-      "name": "Техника"}
+    {
+      "code": "007",
+      "name": "Техника"
+    }
   ],
   "sets": [
+    {
+      "name": "Птицы",
+      "description": "Пернатые создания, летающие и не очень.",
+      "themeCodes": "003",
+      "imageUrl": "peacock.jpg",
+      "words": [
+        {
+          "translation": "голубь",
+          "word": "pigeon",
+          "transcription": "ˈpɪʤɪn"
+        },
+        {
+          "translation": "грач",
+          "word": "rook",
+          "transcription": "rʊk"
+        },
+        {
+          "translation": "попугай",
+          "word": "parrot",
+          "transcription": "ˈpærət"
+        },
+        {
+          "translation": "воробей",
+          "word": "sparrow",
+          "transcription": "ˈspærəʊ"
+        },
+        {
+          "translation": "ворона",
+          "word": "crow",
+          "transcription": "krəʊ"
+        },
+        {
+          "translation": "павлин",
+          "word": "peacock",
+          "transcription": "ˈpiːkɔk"
+        },
+        {
+          "translation": "сойка",
+          "word": "Jay",
+          "transcription": "ʤeɪ"
+        },
+        {
+          "translation": "колибри",
+          "word": "hummingbird",
+          "transcription": "ˈhʌmɪŋbɜːd"
+        },
+        {
+          "translation": "фламинго",
+          "word": "flamingo",
+          "transcription": "fləˈmɪŋgəʊ"
+        },
+        {
+          "translation": "пингвин",
+          "word": "penguin",
+          "transcription": "ˈpeŋgwɪn"
+        },
+        {
+          "translation": "сова",
+          "word": "owl",
+          "transcription": "aʊl"
+        },
+        {
+          "translation": "зяблик",
+          "word": "finch",
+          "transcription": "fɪnʧ"
+        },
+        {
+          "translation": "орёл",
+          "word": "eagle",
+          "transcription": "iːgl"
+        },
+        {
+          "translation": "страус",
+          "word": "ostrich",
+          "transcription": "ˈɔstrɪʧ"
+        },
+        {
+          "translation": "альбатрос",
+          "word": "albatross",
+          "transcription": "ˈælbətrɔs"
+        },
+        {
+          "translation": "сокол",
+          "word": "falcon",
+          "transcription": "ˈfɒl.kən"
+        },
+        {
+          "translation": "утка",
+          "word": "duck",
+          "transcription": "dʌk"
+        }
+      ]
+    },
     {
       "description": "Обитатели морских глубин",
       "imageUrl": "sea.jpg",
@@ -93,6 +188,2546 @@
           "transcription": "ˈwɔːlrəs",
           "translation": "Морж",
           "word": "Walrus"
+        }
+      ]
+    },
+    {
+      "description": "Животные дома и на ферме",
+      "imageUrl": "pets.jpg",
+      "name": "Домашние животные",
+      "themeCodes": "003",
+      "words": [
+        {
+          "transcription": "bʊl",
+          "translation": "Бык",
+          "word": "Bull"
+        },
+        {
+          "transcription": "kɑːf",
+          "translation": "Теленок",
+          "word": "Calf"
+        },
+        {
+          "transcription": "kəˈnɛərɪ",
+          "translation": "Канарейка",
+          "word": "Canary"
+        },
+        {
+          "transcription": "kæt",
+          "translation": "Кошка",
+          "word": "Cat"
+        },
+        {
+          "transcription": "ˈʧɪkɪn",
+          "translation": "Курица",
+          "word": "Chicken"
+        },
+        {
+          "transcription": "kɔk",
+          "translation": "Петух",
+          "word": "Cock"
+        },
+        {
+          "transcription": "kaʊ",
+          "translation": "Корова",
+          "word": "Cow"
+        },
+        {
+          "transcription": "dɔg",
+          "translation": "Собака",
+          "word": "Dog"
+        },
+        {
+          "transcription": "dʌk",
+          "translation": "Утка",
+          "word": "Duck"
+        },
+        {
+          "transcription": "fəʊl",
+          "translation": "Жеребенок",
+          "word": "Foal"
+        },
+        {
+          "transcription": "gəʊt",
+          "translation": "Козел",
+          "word": "Goat"
+        },
+        {
+          "transcription": "guːs",
+          "translation": "Гусь",
+          "word": "Goose"
+        },
+        {
+          "transcription": "ˈhæmstə",
+          "translation": "Хомяк",
+          "word": "Hamster"
+        },
+        {
+          "transcription": "hɔːs",
+          "translation": "Лошадь",
+          "word": "Horse"
+        },
+        {
+          "transcription": "kɪtn",
+          "translation": "Котенок",
+          "word": "Kitten"
+        },
+        {
+          "transcription": "læm",
+          "translation": "Ягненок",
+          "word": "Lamb"
+        },
+        {
+          "transcription": "ˈpærət",
+          "translation": "Попугай",
+          "word": "Parrot"
+        },
+        {
+          "transcription": "pɪg",
+          "translation": "Свинья",
+          "word": "Pig"
+        },
+        {
+          "transcription": "",
+          "translation": "Поросенок",
+          "word": "Piglet"
+        },
+        {
+          "transcription": "ˈpʌpɪ",
+          "translation": "Щенок",
+          "word": "Puppy"
+        },
+        {
+          "transcription": "ˈræbɪt",
+          "translation": "Кролик",
+          "word": "Rabbit"
+        },
+        {
+          "transcription": "ræm",
+          "translation": "Баран",
+          "word": "Ram"
+        },
+        {
+          "transcription": "ʃiːp",
+          "translation": "Овца",
+          "word": "Sheep"
+        },
+        {
+          "transcription": "ˈtɜːkɪ",
+          "translation": "Индейка",
+          "word": "Turkey"
+        }
+      ]
+    },
+    {
+      "description": "Животные в дикой природе",
+      "imageUrl": "beasts.jpg",
+      "name": "Дикие животные",
+      "themeCodes": "003",
+      "words": [
+        {
+          "transcription": "ˈæntɪləʊp",
+          "translation": "Антилопа",
+          "word": "Antelope"
+        },
+        {
+          "transcription": "bɛə",
+          "translation": "Медведь",
+          "word": "Bear"
+        },
+        {
+          "transcription": "ˈkæməl",
+          "translation": "Верблюд",
+          "word": "Camel"
+        },
+        {
+          "transcription": "dɪə",
+          "translation": "Олень",
+          "word": "Deer"
+        },
+        {
+          "transcription": "ˈelɪfənt",
+          "translation": "Слон",
+          "word": "Elephant"
+        },
+        {
+          "transcription": "elk",
+          "translation": "Лось",
+          "word": "Elk"
+        },
+        {
+          "transcription": "ˈferɪt",
+          "translation": "Хорек",
+          "word": "Ferret"
+        },
+        {
+          "transcription": "fɔks",
+          "translation": "Лиса",
+          "word": "Fox"
+        },
+        {
+          "transcription": "ʤɪˈrɑːf",
+          "translation": "Жираф",
+          "word": "Giraffe"
+        },
+        {
+          "transcription": "hɛə",
+          "translation": "Заяц",
+          "word": "Hare"
+        },
+        {
+          "transcription": "ˈheʤhɔg",
+          "translation": "Еж",
+          "word": "Hedgehog"
+        },
+        {
+          "transcription": "ˈlepəd",
+          "translation": "Леопард",
+          "word": "Leopard"
+        },
+        {
+          "transcription": "ˈlaɪən",
+          "translation": "Лев",
+          "word": "Lion"
+        },
+        {
+          "transcription": "lɪŋks",
+          "translation": "Рысь",
+          "word": "Lynx"
+        },
+        {
+          "transcription": "ˈmʌŋkɪ",
+          "translation": "Обезьяна",
+          "word": "Monkey"
+        },
+        {
+          "transcription": "maʊs",
+          "translation": "Мышь",
+          "word": "Mouse"
+        },
+        {
+          "transcription": "rəˈkuːn",
+          "translation": "Енот",
+          "word": "Raccoon"
+        },
+        {
+          "transcription": "ræt",
+          "translation": "Крыса",
+          "word": "Rat"
+        },
+        {
+          "transcription": "raɪˈnɔsərəs",
+          "translation": "Носорог",
+          "word": "Rhinoceros"
+        },
+        {
+          "transcription": "ˈskwɪrəl",
+          "translation": "Белка",
+          "word": "Squirrel"
+        },
+        {
+          "transcription": "ˈtaɪgə",
+          "translation": "Тигр",
+          "word": "Tiger"
+        },
+        {
+          "transcription": "wʊlf",
+          "translation": "Волк",
+          "word": "Wolf"
+        },
+        {
+          "transcription": "ˈziːbrə",
+          "translation": "Зебра",
+          "word": "Zebra"
+        }
+      ]
+    },
+    {
+      "description": "Морские и речные виды рыбы",
+      "imageUrl": "fishes.jpg",
+      "name": "Рыбы",
+      "themeCodes": "003",
+      "words": [
+        {
+          "transcription": "briːm",
+          "translation": "Лещ",
+          "word": "Bream"
+        },
+        {
+          "transcription": "kɑːp",
+          "translation": "Карп",
+          "word": "Carp"
+        },
+        {
+          "transcription": "",
+          "translation": "Сом",
+          "word": "Catfish"
+        },
+        {
+          "transcription": "kɔd",
+          "translation": "Треска",
+          "word": "Cod"
+        },
+        {
+          "transcription": "kruːʃn",
+          "translation": "Карась",
+          "word": "Crucian"
+        },
+        {
+          "transcription": "fɪʃ",
+          "translation": "Рыба",
+          "word": "Fish"
+        },
+        {
+          "transcription": "ˈherɪŋ",
+          "translation": "Сельдь",
+          "word": "Herring"
+        },
+        {
+          "transcription": "ˈmækrəl",
+          "translation": "Скумбрия",
+          "word": "Mackerel"
+        },
+        {
+          "transcription": "pɜːʧ",
+          "translation": "Окунь",
+          "word": "Perch"
+        },
+        {
+          "transcription": "paɪk",
+          "translation": "Щука",
+          "word": "Pike"
+        },
+        {
+          "transcription": "ˈsæmən",
+          "translation": "Лосось",
+          "word": "Salmon"
+        },
+        {
+          "transcription": "ˈstɜːʤən",
+          "translation": "Осетр",
+          "word": "Sturgeon"
+        },
+        {
+          "transcription": "traʊt",
+          "translation": "Форель",
+          "word": "Trout"
+        }
+      ]
+    },
+    {
+      "description": "Насекомые, летающие и ползающие",
+      "imageUrl": "insects.jpg",
+      "name": "Насекомые",
+      "themeCodes": "003",
+      "words": [
+        {
+          "transcription": "ænt",
+          "translation": "Муравей",
+          "word": "Ant"
+        },
+        {
+          "transcription": "biː",
+          "translation": "Пчела",
+          "word": "Bee"
+        },
+        {
+          "transcription": "biːtl",
+          "translation": "Жук",
+          "word": "Beetle"
+        },
+        {
+          "transcription": "bʌg",
+          "translation": "Клоп",
+          "word": "Bug"
+        },
+        {
+          "transcription": "ˈbʌtəflaɪ",
+          "translation": "Бабочка",
+          "word": "Butterfly"
+        },
+        {
+          "transcription": "ˈkætəpɪlə",
+          "translation": "Гусеница",
+          "word": "Caterpillar"
+        },
+        {
+          "transcription": "ˈkɔkrəʊʧ",
+          "translation": "Таракан",
+          "word": "Cockroach"
+        },
+        {
+          "transcription": "ˈdrægənflaɪ",
+          "translation": "Стрекоза",
+          "word": "Dragonfly"
+        },
+        {
+          "transcription": "flaɪ",
+          "translation": "Муха",
+          "word": "Fly"
+        },
+        {
+          "transcription": "ˈgrɑːshɔpə",
+          "translation": "Кузнечик",
+          "word": "Grasshopper"
+        },
+        {
+          "transcription": "ˈɪnsekt",
+          "translation": "Насекомое",
+          "word": "Insect"
+        },
+        {
+          "transcription": "ˈleɪdɪbʌg",
+          "translation": "Божья коровка",
+          "word": "Ladybug"
+        },
+        {
+          "transcription": "maɪt",
+          "translation": "Клещ",
+          "word": "Mite"
+        },
+        {
+          "transcription": "mɔːl",
+          "translation": "Моль",
+          "word": "Mol"
+        },
+        {
+          "transcription": "məsˈkiːtəʊ",
+          "translation": "Комар",
+          "word": "Mosquito"
+        },
+        {
+          "transcription": "ˈspaɪdə",
+          "translation": "Паук",
+          "word": "Spider"
+        },
+        {
+          "transcription": "wɔsp",
+          "translation": "Оса",
+          "word": "Wasp"
+        }
+      ]
+    },
+    {
+      "name": "Топ 100 существительных (1)",
+      "description": "Подборка из ста, самых важных существительных. Часть 1",
+      "themeCodes": "005",
+      "imageUrl": "top.jpg",
+      "words": [
+        {
+          "translation": "слово",
+          "word": "word",
+          "transcription": "wɜːd"
+        },
+        {
+          "translation": "письмо",
+          "word": "letter",
+          "transcription": "ˈletə"
+        },
+        {
+          "translation": "число",
+          "word": "number",
+          "transcription": "ˈnʌmbə"
+        },
+        {
+          "translation": "человек",
+          "word": "human",
+          "transcription": "ˈhjuːmən"
+        },
+        {
+          "translation": "ручка",
+          "word": "pen",
+          "transcription": "pen"
+        },
+        {
+          "translation": "класс",
+          "word": "class",
+          "transcription": "klɑːs"
+        },
+        {
+          "translation": "люди",
+          "word": "people",
+          "transcription": "piːpl"
+        },
+        {
+          "translation": "звук",
+          "word": "sound",
+          "transcription": "saʊnd"
+        },
+        {
+          "translation": "вода",
+          "word": "water",
+          "transcription": "ˈwɔːtə"
+        },
+        {
+          "translation": "сторона",
+          "word": "side",
+          "transcription": "saɪd"
+        },
+        {
+          "translation": "место",
+          "word": "place",
+          "transcription": "pleɪs"
+        },
+        {
+          "translation": "мужчина",
+          "word": "man",
+          "transcription": "mæn"
+        },
+        {
+          "translation": "женщина",
+          "word": "woman",
+          "transcription": "ˈwʊmən"
+        },
+        {
+          "translation": "мальчик",
+          "word": "boy",
+          "transcription": "bɔɪ"
+        },
+        {
+          "translation": "год",
+          "word": "year",
+          "transcription": "jɜː"
+        },
+        {
+          "translation": "день",
+          "word": "day",
+          "transcription": "deɪ"
+        },
+        {
+          "translation": "неделя",
+          "word": "week",
+          "transcription": "wiːk"
+        },
+        {
+          "translation": "месяц",
+          "word": "month",
+          "transcription": "mʌnθ"
+        },
+        {
+          "translation": "имя",
+          "word": "name",
+          "transcription": "neɪm"
+        },
+        {
+          "translation": "предложение",
+          "word": "sentence",
+          "transcription": "ˈsentəns"
+        },
+        {
+          "translation": "линия",
+          "word": "line",
+          "transcription": "laɪn"
+        },
+        {
+          "translation": "воздух",
+          "word": "air",
+          "transcription": "ɛə"
+        },
+        {
+          "translation": "земля",
+          "word": "land",
+          "transcription": "lænd"
+        },
+        {
+          "translation": "дом",
+          "word": "house",
+          "transcription": "haʊs"
+        },
+        {
+          "translation": "рука",
+          "word": "hand",
+          "transcription": "hænd"
+        },
+        {
+          "translation": "рисунок",
+          "word": "drawing",
+          "transcription": "ˈdrɔːɪŋ "
+        },
+        {
+          "translation": "животное ",
+          "word": "animal",
+          "transcription": "ˈænɪməl"
+        },
+        {
+          "translation": "мама",
+          "word": "mother",
+          "transcription": "ˈmʌðə"
+        },
+        {
+          "translation": "папа",
+          "word": "father",
+          "transcription": "ˈfɑːðər"
+        },
+        {
+          "translation": "брат",
+          "word": "brother",
+          "transcription": "ˈbrʌðə"
+        },
+        {
+          "translation": "сестра",
+          "word": "sister",
+          "transcription": "ˈsɪstə"
+        },
+        {
+          "translation": "мир",
+          "word": "world",
+          "transcription": "wɜːld"
+        },
+        {
+          "translation": "голова",
+          "word": "head",
+          "transcription": "hed"
+        },
+        {
+          "translation": "страница",
+          "word": "page",
+          "transcription": "peɪʤ"
+        },
+        {
+          "translation": "страна ",
+          "word": "country",
+          "transcription": "ˈkʌntrɪ"
+        },
+        {
+          "translation": "вопрос",
+          "word": "question",
+          "transcription": "ˈkwesʧən"
+        },
+        {
+          "translation": "ответ",
+          "word": "answer",
+          "transcription": "ˈɑːnsə"
+        },
+        {
+          "translation": "школа",
+          "word": "school",
+          "transcription": "skuːl"
+        },
+        {
+          "translation": "растение",
+          "word": "plant",
+          "transcription": "plɑːnt"
+        },
+        {
+          "translation": "еда",
+          "word": "food",
+          "transcription": "fuːd"
+        },
+        {
+          "translation": "солнце",
+          "word": "sun",
+          "transcription": "sʌn"
+        },
+        {
+          "translation": "состояние",
+          "word": "state",
+          "transcription": "steɪt"
+        },
+        {
+          "translation": "глаз",
+          "word": "eye",
+          "transcription": "aɪ"
+        },
+        {
+          "translation": "город",
+          "word": "city",
+          "transcription": "ˈsɪtɪ"
+        },
+        {
+          "translation": "дерево",
+          "word": "tree",
+          "transcription": "triː"
+        },
+        {
+          "translation": "ферма",
+          "word": "farm",
+          "transcription": "fɑːm"
+        },
+        {
+          "translation": "история",
+          "word": "history",
+          "transcription": "ˈhɪstərɪ"
+        },
+        {
+          "translation": "море",
+          "word": "sea",
+          "transcription": "siː"
+        },
+        {
+          "translation": "ночь",
+          "word": "night",
+          "transcription": "naɪt"
+        },
+        {
+          "translation": "день",
+          "word": "day",
+          "transcription": "deɪ"
+        },
+        {
+          "translation": "жизнь",
+          "word": "life",
+          "transcription": "laɪf"
+        },
+        {
+          "translation": "север",
+          "word": "North",
+          "transcription": "nɔːθ"
+        },
+        {
+          "translation": "юг",
+          "word": "South",
+          "transcription": "saʊθ"
+        },
+        {
+          "translation": "восток",
+          "word": "eastern",
+          "transcription": "ˈiːstən"
+        },
+        {
+          "translation": "запад",
+          "word": "West",
+          "transcription": "west"
+        },
+        {
+          "translation": "ребенок",
+          "word": "child",
+          "transcription": "ʧaɪld"
+        },
+        {
+          "translation": "дети",
+          "word": "children",
+          "transcription": "ˈʧɪldrən"
+        }
+      ]
+    },
+    {
+      "name": "Топ 100 существительных (2)",
+      "description": "Подборка из ста, самых важных существительных. Часть 2",
+      "themeCodes": "005",
+      "imageUrl": "turtle.jpg",
+      "words": [
+        {
+          "translation": "пример",
+          "word": "example",
+          "transcription": "ɪgˈzɑːmpl"
+        },
+        {
+          "translation": "бумага",
+          "word": "paper",
+          "transcription": "ˈpeɪpə"
+        },
+        {
+          "translation": "музыка",
+          "word": "music",
+          "transcription": "ˈmjuːzɪk"
+        },
+        {
+          "translation": "река",
+          "word": "river",
+          "transcription": "ˈrɪvə"
+        },
+        {
+          "translation": "машина",
+          "word": "machine",
+          "transcription": "məˈʃiːn"
+        },
+        {
+          "translation": "нога",
+          "word": "foot",
+          "transcription": "fʊt"
+        },
+        {
+          "translation": "книга",
+          "word": "book",
+          "transcription": "bʊk"
+        },
+        {
+          "translation": "наука",
+          "word": "science",
+          "transcription": "ˈsaɪəns"
+        },
+        {
+          "translation": "комната",
+          "word": "room",
+          "transcription": "ruːm"
+        },
+        {
+          "translation": "друг",
+          "word": "friend",
+          "transcription": "frend"
+        },
+        {
+          "translation": "идея",
+          "word": "idea",
+          "transcription": "aɪˈdɪə"
+        },
+        {
+          "translation": "рыба",
+          "word": "fish",
+          "transcription": "fɪʃ"
+        },
+        {
+          "translation": "гора",
+          "word": "mountain",
+          "transcription": "ˈmaʊntɪn"
+        },
+        {
+          "translation": "лошадь",
+          "word": "horse",
+          "transcription": "hɔːs"
+        },
+        {
+          "translation": "часы",
+          "word": "clock",
+          "transcription": "klɔk"
+        },
+        {
+          "translation": "цвет",
+          "word": "color",
+          "transcription": "ˈkʌlə"
+        },
+        {
+          "translation": "лицо",
+          "word": "face",
+          "transcription": "feɪs"
+        },
+        {
+          "translation": "дерево",
+          "word": "tree",
+          "transcription": "triː"
+        },
+        {
+          "translation": "птица",
+          "word": "bird",
+          "transcription": "bɜːd"
+        },
+        {
+          "translation": "тело",
+          "word": "body",
+          "transcription": "ˈbɔdɪ"
+        },
+        {
+          "translation": "собака",
+          "word": "dog",
+          "transcription": "dɔg"
+        },
+        {
+          "translation": "семья",
+          "word": "family",
+          "transcription": "ˈfæmɪlɪ"
+        },
+        {
+          "translation": "песня",
+          "word": "song",
+          "transcription": "sɔŋ"
+        },
+        {
+          "translation": "дверь",
+          "word": "door",
+          "transcription": "dɔː"
+        },
+        {
+          "translation": "ветер",
+          "word": "wind",
+          "transcription": "wɪnd"
+        },
+        {
+          "translation": "корабль",
+          "word": "ship",
+          "transcription": "ʃɪp"
+        },
+        {
+          "translation": "скала",
+          "word": "rock",
+          "transcription": "rɔk"
+        },
+        {
+          "translation": "заказ",
+          "word": "order",
+          "transcription": "ˈɔːdə"
+        },
+        {
+          "translation": "огонь",
+          "word": "fire",
+          "transcription": "ˈfaɪə"
+        },
+        {
+          "translation": "проблема",
+          "word": "problem",
+          "transcription": "ˈprɔbləm"
+        },
+        {
+          "translation": "кусок",
+          "word": "piece",
+          "transcription": "piːs"
+        },
+        {
+          "translation": "вершина",
+          "word": "top",
+          "transcription": "tɔp"
+        },
+        {
+          "translation": "дно",
+          "word": "bottom",
+          "transcription": "ˈbɔtəm"
+        },
+        {
+          "translation": "пространство",
+          "word": "space",
+          "transcription": "speɪs"
+        },
+        {
+          "translation": "король",
+          "word": "king",
+          "transcription": "kɪŋ"
+        },
+        {
+          "translation": "деньги",
+          "word": "money",
+          "transcription": "ˈmʌnɪ"
+        },
+        {
+          "translation": "кино",
+          "word": "cinema",
+          "transcription": "ˈsɪnəmə"
+        },
+        {
+          "translation": "работа",
+          "word": "work",
+          "transcription": "wɜːk"
+        },
+        {
+          "translation": "лес",
+          "word": "forest",
+          "transcription": "ˈfɔrɪst"
+        },
+        {
+          "translation": "дорога",
+          "word": "road",
+          "transcription": "rəʊd"
+        },
+        {
+          "translation": "дело",
+          "word": "business",
+          "transcription": "ˈbɪznəs"
+        },
+        {
+          "translation": "муж",
+          "word": "husband",
+          "transcription": "ˈhʌzbənd"
+        },
+        {
+          "translation": "жена",
+          "word": "wife",
+          "transcription": "waɪf"
+        }
+      ]
+    },
+    {
+      "name": "Топ 100 глаголов часть 1",
+      "description": "Самые распространенные глаголы английского языка",
+      "themeCodes": "005",
+      "imageUrl": "run.jpg",
+      "words": [
+        {
+          "translation": "быть",
+          "word": "be",
+          "transcription": "biː"
+        },
+        {
+          "translation": "иметь",
+          "word": "have",
+          "transcription": "hæv"
+        },
+        {
+          "translation": "делать",
+          "word": "do",
+          "transcription": "duː"
+        },
+        {
+          "translation": "говорить",
+          "word": "say",
+          "transcription": "seɪ"
+        },
+        {
+          "translation": "идти",
+          "word": "go",
+          "transcription": "gəʊ"
+        },
+        {
+          "translation": "получать",
+          "word": "receive",
+          "transcription": "rɪˈsiːv"
+        },
+        {
+          "translation": "знать",
+          "word": "know",
+          "transcription": "nəʊ"
+        },
+        {
+          "translation": "думать",
+          "word": "think",
+          "transcription": "θɪŋk"
+        },
+        {
+          "translation": "брать",
+          "word": "take",
+          "transcription": "teɪk"
+        },
+        {
+          "translation": "видеть",
+          "word": "see",
+          "transcription": "siː"
+        },
+        {
+          "translation": "приходить",
+          "word": "come",
+          "transcription": "kʌm"
+        },
+        {
+          "translation": "хотеть",
+          "word": "want",
+          "transcription": "wɔnt"
+        },
+        {
+          "translation": "использовать",
+          "word": "use",
+          "transcription": "juːs"
+        },
+        {
+          "translation": "находить",
+          "word": "find",
+          "transcription": "faɪnd"
+        },
+        {
+          "translation": "давать ",
+          "word": "give",
+          "transcription": "gɪv"
+        },
+        {
+          "translation": "рассказывать",
+          "word": "tell",
+          "transcription": "tel"
+        },
+        {
+          "translation": "работать",
+          "word": "work",
+          "transcription": "wɜːk"
+        },
+        {
+          "translation": "звонить",
+          "word": "call",
+          "transcription": "kɔːl"
+        },
+        {
+          "translation": "пытаться",
+          "word": "try",
+          "transcription": "traɪ"
+        },
+        {
+          "translation": "просить",
+          "word": "ask",
+          "transcription": "ɑːsk"
+        },
+        {
+          "translation": "нуждаться",
+          "word": "need",
+          "transcription": "niːd"
+        },
+        {
+          "translation": "чувствовать",
+          "word": "feel",
+          "transcription": "fiːl"
+        },
+        {
+          "translation": "становиться",
+          "word": "become",
+          "transcription": "bɪˈkʌm"
+        },
+        {
+          "translation": "оставлять",
+          "word": "leave",
+          "transcription": "liːv"
+        },
+        {
+          "translation": "класть",
+          "word": "put",
+          "transcription": "pʊt"
+        },
+        {
+          "translation": "значить",
+          "word": "mean",
+          "transcription": "miːn"
+        },
+        {
+          "translation": "хранить",
+          "word": "store",
+          "transcription": "stɔː"
+        },
+        {
+          "translation": "позволять",
+          "word": "allow",
+          "transcription": "əˈlaʊ"
+        },
+        {
+          "translation": "начинать",
+          "word": "begin",
+          "transcription": "bɪˈgɪn"
+        },
+        {
+          "translation": "казаться",
+          "word": "seem",
+          "transcription": "siːm"
+        },
+        {
+          "translation": "помогать",
+          "word": "help",
+          "transcription": "help"
+        },
+        {
+          "translation": "показывать",
+          "word": "show",
+          "transcription": "ʃəʊ"
+        },
+        {
+          "translation": "слышать",
+          "word": "hear",
+          "transcription": "hɪə"
+        },
+        {
+          "translation": "играть",
+          "word": "play",
+          "transcription": "pleɪ"
+        },
+        {
+          "translation": "бежать",
+          "word": "run"
+        },
+        {
+          "translation": "двигаться",
+          "word": "move",
+          "transcription": "muːv"
+        },
+        {
+          "translation": "жить",
+          "word": "live",
+          "transcription": "lɪv"
+        },
+        {
+          "translation": "верить",
+          "word": "believe",
+          "transcription": "bɪˈliːv"
+        },
+        {
+          "translation": "случаться",
+          "word": "happen",
+          "transcription": "ˈhæpən"
+        },
+        {
+          "translation": "писать",
+          "word": "write",
+          "transcription": "raɪt"
+        },
+        {
+          "translation": "сидеть",
+          "word": "sit",
+          "transcription": "sɪt"
+        },
+        {
+          "translation": "стоять",
+          "word": "stand",
+          "transcription": "stænd"
+        },
+        {
+          "translation": "терять",
+          "word": "lose",
+          "transcription": "luːz"
+        },
+        {
+          "translation": "платить",
+          "word": "pay",
+          "transcription": "peɪ"
+        },
+        {
+          "translation": "встречать",
+          "word": "meet",
+          "transcription": "miːt"
+        },
+        {
+          "translation": "включать",
+          "word": "include",
+          "transcription": "ɪnˈkluːd"
+        },
+        {
+          "translation": "продолжать",
+          "word": "continue",
+          "transcription": "kənˈtɪnjuː"
+        }
+      ]
+    },
+    {
+      "name": "Топ 100 глаголов часть 2",
+      "description": "Самые распространенные глаголы английского языка, продолжение",
+      "themeCodes": "005",
+      "imageUrl": "nature.jpg",
+      "words": [
+        {
+          "translation": "устанавливать",
+          "word": "install",
+          "transcription": "ɪnˈstɔːl"
+        },
+        {
+          "translation": "учить",
+          "word": "teach",
+          "transcription": "tiːʧ"
+        },
+        {
+          "translation": "менять",
+          "word": "change",
+          "transcription": "ʧeɪnʤ"
+        },
+        {
+          "translation": "вести",
+          "word": "lead",
+          "transcription": "liːd"
+        },
+        {
+          "translation": "понимать",
+          "word": "understand",
+          "transcription": "ʌndəˈstænd"
+        },
+        {
+          "translation": "смотреть",
+          "word": "look",
+          "transcription": "lʊk"
+        },
+        {
+          "translation": "следовать",
+          "word": "follow",
+          "transcription": "ˈfɔləʊ"
+        },
+        {
+          "translation": "останавливать",
+          "word": "stop",
+          "transcription": "stɔp"
+        },
+        {
+          "translation": "создавать",
+          "word": "create",
+          "transcription": "kriːˈeɪt"
+        },
+        {
+          "translation": "говорить",
+          "word": "say",
+          "transcription": "seɪ"
+        },
+        {
+          "translation": "читать",
+          "word": "read",
+          "transcription": "riːd"
+        },
+        {
+          "translation": "тратить",
+          "word": "spend",
+          "transcription": "spend"
+        },
+        {
+          "translation": "расти",
+          "word": "grow",
+          "transcription": "grəʊ"
+        },
+        {
+          "translation": "открывать",
+          "word": "open",
+          "transcription": "ˈəʊpən"
+        },
+        {
+          "translation": "идти",
+          "word": "go",
+          "transcription": "gəʊ"
+        },
+        {
+          "translation": "побеждать",
+          "word": "win",
+          "transcription": "wɪn"
+        },
+        {
+          "translation": "учиться",
+          "word": "learn",
+          "transcription": "lɜːrn"
+        },
+        {
+          "translation": "предлагать",
+          "word": "offer",
+          "transcription": "ˈɔfə"
+        },
+        {
+          "translation": "помнить",
+          "word": "remember",
+          "transcription": "rɪˈmembə"
+        },
+        {
+          "translation": "появляться",
+          "word": "appear",
+          "transcription": "əˈpɪə"
+        },
+        {
+          "translation": "покупать",
+          "word": "buy",
+          "transcription": "baɪ"
+        },
+        {
+          "translation": "служить",
+          "word": "serve",
+          "transcription": "sɜːv"
+        },
+        {
+          "translation": "умирать",
+          "word": "die",
+          "transcription": "daɪ"
+        },
+        {
+          "translation": "посылать",
+          "word": "send",
+          "transcription": "send"
+        },
+        {
+          "translation": "строить",
+          "word": "build",
+          "transcription": "bɪld"
+        },
+        {
+          "translation": "оставаться",
+          "word": "remain",
+          "transcription": "rɪˈmeɪn"
+        },
+        {
+          "translation": "падать",
+          "word": "fall",
+          "transcription": "fɔːl"
+        },
+        {
+          "translation": "резать",
+          "word": "cut",
+          "transcription": "kʌt"
+        },
+        {
+          "translation": "достигать",
+          "word": "reach",
+          "transcription": "riːʧ"
+        },
+        {
+          "translation": "убивать",
+          "word": "kill",
+          "transcription": "kɪl"
+        },
+        {
+          "translation": "поднимать",
+          "word": "raise",
+          "transcription": "reɪz"
+        },
+        {
+          "translation": "миновать",
+          "word": "pass",
+          "transcription": "pɑːs"
+        },
+        {
+          "translation": "продавать",
+          "word": "sell",
+          "transcription": "sel"
+        },
+        {
+          "translation": "решать",
+          "word": "decide",
+          "transcription": "dɪˈsaɪd"
+        },
+        {
+          "translation": "возвращаться",
+          "word": "return",
+          "transcription": "rɪˈtɜːn"
+        },
+        {
+          "translation": "объяснять",
+          "word": "explain",
+          "transcription": "ɪksˈpleɪn"
+        },
+        {
+          "translation": "надеяться",
+          "word": "hope",
+          "transcription": "həʊp"
+        },
+        {
+          "translation": "развивать",
+          "word": "develop",
+          "transcription": "dɪˈveləp"
+        },
+        {
+          "translation": "нести",
+          "word": "carry",
+          "transcription": "ˈkærɪ"
+        },
+        {
+          "translation": "ломать",
+          "word": "break",
+          "transcription": "breɪk"
+        },
+        {
+          "translation": "получать",
+          "word": "receive",
+          "transcription": "rɪˈsiːv"
+        },
+        {
+          "translation": "соглашаться",
+          "word": "agree",
+          "transcription": "əˈgriː"
+        },
+        {
+          "translation": "поддерживать",
+          "word": "support",
+          "transcription": "səˈpɔːt"
+        },
+        {
+          "translation": "бить",
+          "word": "beat",
+          "transcription": "biːt"
+        },
+        {
+          "translation": "производить",
+          "word": "produce",
+          "transcription": "ˈprɔdjuːs"
+        },
+        {
+          "translation": "есть",
+          "word": "eat",
+          "transcription": "iːt"
+        },
+        {
+          "translation": "покрывать",
+          "word": "cover",
+          "transcription": "ˈkʌvə"
+        },
+        {
+          "translation": "ловить",
+          "word": "catch",
+          "transcription": "kæʧ"
+        },
+        {
+          "translation": "рисовать",
+          "word": "draw",
+          "transcription": "drɔː"
+        },
+        {
+          "translation": "выбирать",
+          "word": "choose",
+          "transcription": "ʧuːz"
+        }
+      ]
+    },
+    {
+      "name": "Злаки и крупы",
+      "description": "Название круп и бобовых на английском",
+      "themeCodes": "005",
+      "imageUrl": "wheat.jpg",
+      "words": [
+        {
+          "translation": "рис",
+          "word": "rice",
+          "transcription": "raɪs"
+        },
+        {
+          "translation": "пшеница",
+          "word": "wheat",
+          "transcription": "wiːt"
+        },
+        {
+          "translation": "рожь",
+          "word": "rye",
+          "transcription": "raɪ"
+        },
+        {
+          "translation": "овес",
+          "word": "oat",
+          "transcription": "əʊt"
+        },
+        {
+          "translation": "гречиха",
+          "word": "buckwheat",
+          "transcription": "ˈbʌkwiːt"
+        },
+        {
+          "translation": "горох",
+          "word": "pea",
+          "transcription": "piː"
+        },
+        {
+          "translation": "фасоль",
+          "word": "bean",
+          "transcription": "biːn"
+        },
+        {
+          "translation": "чечевица",
+          "word": "lentil",
+          "transcription": "ˈlentɪl"
+        },
+        {
+          "translation": "соя",
+          "word": "soy",
+          "transcription": "sɔɪ"
+        },
+        {
+          "translation": "ячмень",
+          "word": "barley",
+          "transcription": "ˈbɑːlɪ"
+        },
+        {
+          "translation": "солод",
+          "word": "malt",
+          "transcription": "mɔːlt"
+        },
+        {
+          "translation": "пшено",
+          "word": "millet",
+          "transcription": "ˈmɪl.ɪt"
+        }
+      ]
+    },
+    {
+      "name": "Характер и качества",
+      "description": "Слова, характеризующие человека как личность",
+      "themeCodes": "005, 001",
+      "imageUrl": "characters.jpg",
+      "words": [
+        {
+          "translation": "активный ",
+          "word": "active",
+          "transcription": "ˈæktɪv"
+        },
+        {
+          "translation": "амбициозный",
+          "word": "ambitious",
+          "transcription": "æmˈbɪʃəs"
+        },
+        {
+          "translation": "безумный",
+          "word": "crazy",
+          "transcription": "ˈkreɪzi"
+        },
+        {
+          "translation": "бешеный",
+          "word": "mad",
+          "transcription": "mæd"
+        },
+        {
+          "translation": "гордый",
+          "word": "proud",
+          "transcription": "praʊd"
+        },
+        {
+          "translation": "добрый",
+          "word": "good",
+          "transcription": "gʊd"
+        },
+        {
+          "translation": "жадный",
+          "word": "greedy",
+          "transcription": "ˈgriːdɪ"
+        },
+        {
+          "translation": "жестокий",
+          "word": "cruel",
+          "transcription": "krʊəl"
+        },
+        {
+          "translation": "завистливый",
+          "word": "envious",
+          "transcription": "ˈenvɪəs"
+        },
+        {
+          "translation": "высокомерный",
+          "word": "arrogant",
+          "transcription": "ˈærəʊgənt"
+        },
+        {
+          "translation": "злой",
+          "word": "evil",
+          "transcription": "iːvl"
+        },
+        {
+          "translation": "ленивый",
+          "word": "lazy",
+          "transcription": "ˈleɪzɪ"
+        },
+        {
+          "translation": "любопытный",
+          "word": "curious",
+          "transcription": "ˈkjʊərɪəs"
+        },
+        {
+          "translation": "наивный",
+          "word": "naive",
+          "transcription": "nɑːˈiːv"
+        },
+        {
+          "translation": "оптимист",
+          "word": "optimist",
+          "transcription": "ˈɔptɪmɪst"
+        },
+        {
+          "translation": "остроумный",
+          "word": "witty",
+          "transcription": "ˈwɪtɪ"
+        },
+        {
+          "translation": "ответственный",
+          "word": "responsible",
+          "transcription": "rɪsˈpɔnsəbl"
+        },
+        {
+          "translation": "пессимист",
+          "word": "pessimist",
+          "transcription": "ˈpesɪmɪst"
+        },
+        {
+          "translation": "умный",
+          "word": "smart",
+          "transcription": "smɑːt"
+        },
+        {
+          "translation": "реалист",
+          "word": "realist",
+          "transcription": "ˈrɪəlɪst"
+        },
+        {
+          "translation": "серьезный",
+          "word": "serious",
+          "transcription": "ˈsɪərɪəs"
+        },
+        {
+          "translation": "скромный",
+          "word": "modest",
+          "transcription": "ˈmɔdɪst"
+        },
+        {
+          "translation": "смелый",
+          "word": "brave",
+          "transcription": "breɪv "
+        },
+        {
+          "translation": "талантливый",
+          "word": "talented",
+          "transcription": "ˈtæləntɪd"
+        },
+        {
+          "translation": "глупый",
+          "word": "stupid",
+          "transcription": "ˈstjuːpɪd"
+        },
+        {
+          "translation": "щедрый",
+          "word": "generous",
+          "transcription": "ˈʤenərəs"
+        },
+        {
+          "translation": "скупой ",
+          "word": "stingy",
+          "transcription": "ˈstɪnʤɪ"
+        },
+        {
+          "translation": "веселый ",
+          "word": "cheerful",
+          "transcription": "ˈʧɪəfʊl"
+        },
+        {
+          "translation": "грустный",
+          "word": "sad",
+          "transcription": "sæd"
+        },
+        {
+          "translation": "застенчивый",
+          "word": "shy",
+          "transcription": "ʃaɪ"
+        }
+      ]
+    },
+    {
+      "name": "цветы и травы",
+      "description": "Мелкие растения в поле, саду и на подоконнике",
+      "themeCodes": "003",
+      "imageUrl": "flowers3.jpg",
+      "words": [
+        {
+          "translation": "алоэ",
+          "word": "aloe",
+          "transcription": "ˈæləʊ"
+        },
+        {
+          "translation": "анютины глазки",
+          "word": "pansy",
+          "transcription": "ˈpænzɪ"
+        },
+        {
+          "translation": "астра",
+          "word": "astra",
+          "transcription": "ˈæstrə"
+        },
+        {
+          "translation": "бегония",
+          "word": "begonia",
+          "transcription": "bɪˈgəʊnɪə"
+        },
+        {
+          "translation": "подсолнух",
+          "word": "sunflower",
+          "transcription": "ˈsʌnflaʊə"
+        },
+        {
+          "translation": "василёк",
+          "word": "cornflower",
+          "transcription": "ˈkɔːnflaʊə"
+        },
+        {
+          "translation": "вьюнок",
+          "word": "bindweed",
+          "transcription": "ˈbaɪndwiːd"
+        },
+        {
+          "translation": "гвоздика",
+          "word": "carnation",
+          "transcription": "kɑːˈneɪʃn"
+        },
+        {
+          "translation": "гладиолус",
+          "word": "gladiolus",
+          "transcription": "glædɪˈəʊləs"
+        },
+        {
+          "translation": "камыш",
+          "word": "reed",
+          "transcription": "riːd"
+        },
+        {
+          "translation": "колокольчик",
+          "word": "bellflowers"
+        },
+        {
+          "translation": "крапива",
+          "word": "nettle",
+          "transcription": "netl"
+        },
+        {
+          "translation": "кувшинка",
+          "word": "nenuphar"
+        },
+        {
+          "translation": "лаванда",
+          "word": "lavender",
+          "transcription": "ˈlævɪndə"
+        },
+        {
+          "translation": "ландыш",
+          "word": "lily of the valley"
+        },
+        {
+          "translation": "мак",
+          "word": "poppy",
+          "transcription": "ˈpɔpɪ"
+        },
+        {
+          "translation": "маргаритка",
+          "word": "daisy",
+          "transcription": "ˈdeɪzɪ"
+        },
+        {
+          "translation": "мимоза",
+          "word": "mimosa",
+          "transcription": "mɪˈməʊzə"
+        },
+        {
+          "translation": "одуванчик",
+          "word": "dandelion",
+          "transcription": "ˈdændɪlaɪən"
+        },
+        {
+          "translation": "орхидея",
+          "word": "orchid",
+          "transcription": "ˈɔːkɪd"
+        },
+        {
+          "translation": "пион",
+          "word": "peony",
+          "transcription": "ˈpɪənɪ"
+        },
+        {
+          "translation": "подорожник",
+          "word": "plantain",
+          "transcription": "ˈplæntɪn"
+        },
+        {
+          "translation": "лопух",
+          "word": "burdock",
+          "transcription": "ˈbɜːdɔk"
+        },
+        {
+          "translation": "ромашка",
+          "word": "chamomile",
+          "transcription": "ˈkæməmaɪl"
+        },
+        {
+          "translation": "фиалка",
+          "word": "violet",
+          "transcription": "ˈvaɪəlɪt"
+        },
+        {
+          "translation": "шалфей",
+          "word": "sage",
+          "transcription": "seɪʤ"
+        },
+        {
+          "translation": "тюльпан",
+          "word": "Tulip",
+          "transcription": "ˈtjuːlɪp"
+        },
+        {
+          "translation": "роза",
+          "word": "rose",
+          "transcription": "rəʊz"
+        }
+      ]
+    },
+    {
+      "name": "Бытовая техника",
+      "description": "Бытовая техника, которая есть в каждом доме",
+      "themeCodes": "002, 004",
+      "imageUrl": "tech.jpg",
+      "words": [
+        {
+          "translation": "телефон",
+          "word": "phone",
+          "transcription": "fəʊn"
+        },
+        {
+          "translation": "компьютер",
+          "word": "computer",
+          "transcription": "kəmˈpjuːtə"
+        },
+        {
+          "translation": "весы",
+          "word": "scale",
+          "transcription": "skeɪl"
+        },
+        {
+          "translation": "холодильник",
+          "word": "refrigerator",
+          "transcription": "rɪˈfrɪʤəreɪtə"
+        },
+        {
+          "translation": "телевизор",
+          "word": "TV",
+          "transcription": "ˌtiː ˈviː"
+        },
+        {
+          "translation": "микроволновая печь",
+          "word": "microwave",
+          "transcription": "ˈmaɪkrəʊweɪv"
+        },
+        {
+          "translation": "стиральная машина",
+          "word": "washing machine",
+          "transcription": "ˈwɔʃɪŋ məˈʃiːn"
+        },
+        {
+          "translation": "планшет",
+          "word": "tablet",
+          "transcription": "ˈtæblɪt"
+        },
+        {
+          "translation": "ноутбук",
+          "word": "laptop",
+          "transcription": "ˈlæptɒp"
+        },
+        {
+          "translation": "фотоаппарат",
+          "word": "camera",
+          "transcription": "ˈkæmərə"
+        },
+        {
+          "translation": "лампочка",
+          "word": "bulb",
+          "transcription": "bʌlb"
+        },
+        {
+          "translation": "люстра",
+          "word": "chandelier",
+          "transcription": "ʃændɪˈlɪə"
+        },
+        {
+          "translation": "пылесос",
+          "word": "Hoover",
+          "transcription": "ˈhuːvə"
+        },
+        {
+          "translation": "кофеварка",
+          "word": "coffee maker",
+          "transcription": "ˈkɔfɪ ˈmeɪkə"
+        },
+        {
+          "translation": "миксер",
+          "word": "mixer",
+          "transcription": "ˈmɪksə"
+        },
+        {
+          "translation": "кухонный комбайн",
+          "word": "food processor",
+          "transcription": "fuːd ˈprəʊsesər"
+        },
+        {
+          "translation": "выключатель",
+          "word": "switch",
+          "transcription": "swɪʧ"
+        }
+      ]
+    },
+    {
+      "name": "Дом - строение",
+      "description": "Основные части строений",
+      "themeCodes": "002",
+      "imageUrl": "home.jpg",
+      "words": [
+        {
+          "translation": "Стена",
+          "word": "wall",
+          "transcription": "wɔːl"
+        },
+        {
+          "translation": "Пол",
+          "word": "floor",
+          "transcription": "flɔː"
+        },
+        {
+          "translation": "Потолок",
+          "word": "ceiling",
+          "transcription": "ˈsiːlɪŋ"
+        },
+        {
+          "translation": "Крыша",
+          "word": "roof",
+          "transcription": "ruːf"
+        },
+        {
+          "translation": "Чердак",
+          "word": "loft",
+          "transcription": " lɑːft"
+        },
+        {
+          "translation": "окно",
+          "word": "window",
+          "transcription": "ˈwɪndəʊ"
+        },
+        {
+          "translation": "дверь",
+          "word": "door",
+          "transcription": "dɔː"
+        },
+        {
+          "translation": "плинтус",
+          "word": "plinth",
+          "transcription": "plɪnθ"
+        },
+        {
+          "translation": "лестница",
+          "word": "stairs",
+          "transcription": "ster"
+        },
+        {
+          "translation": "крыльцо ",
+          "word": "porch",
+          "transcription": "pɔːʧ"
+        },
+        {
+          "translation": "квартира",
+          "word": "apartment",
+          "transcription": "əˈpɑːtmənt"
+        },
+        {
+          "translation": "подъезд",
+          "word": "entrance",
+          "transcription": "ˈentrəns"
+        },
+        {
+          "translation": "балкон",
+          "word": "balcony",
+          "transcription": "ˈbælkənɪ"
+        },
+        {
+          "translation": "туалет",
+          "word": "toilet",
+          "transcription": "ˈtɔɪlɪt"
+        },
+        {
+          "translation": "ванная комната",
+          "word": "bathroom",
+          "transcription": "ˈbɑːθruːm"
+        },
+        {
+          "translation": "кухня",
+          "word": "kitchen",
+          "transcription": "ˈkɪʧɪn"
+        },
+        {
+          "translation": "спальня",
+          "word": "bedroom",
+          "transcription": "ˈbedrʊm"
+        },
+        {
+          "translation": "гостинная",
+          "word": "living room",
+          "transcription": "ˈlɪvɪŋ ruːm"
+        },
+        {
+          "translation": "детская комната",
+          "word": "children room",
+          "transcription": "ˈʧɪldrən ruːm"
+        },
+        {
+          "translation": "погреб",
+          "word": "cellar",
+          "transcription": "ˈselə"
+        },
+        {
+          "translation": "коридор",
+          "word": "corridor",
+          "transcription": "ˈkɔrɪdɔː"
+        },
+        {
+          "word": "hallway",
+          "translation": "прихожая",
+          "transcription": "ˈhɔːl.weɪ"
+        },
+        {
+          "translation": "лоджия",
+          "word": "loggia",
+          "transcription": "ˈlɒʤɪə"
+        },
+        {
+          "translation": "порог",
+          "word": "threshold",
+          "transcription": "ˈθreʃhəʊld"
+        }
+      ]
+    },
+    {
+      "name": "Драгоценности",
+      "description": "Драгоценные камни и металлы",
+      "themeCodes": "004",
+      "imageUrl": "gems.jpg",
+      "words": [
+        {
+          "translation": "платина",
+          "word": "platinum",
+          "transcription": "ˈplæt.nəm "
+        },
+        {
+          "translation": "золото",
+          "word": "gold",
+          "transcription": "gəʊld"
+        },
+        {
+          "translation": "серебро",
+          "word": "silver",
+          "transcription": "ˈsɪlvə"
+        },
+        {
+          "translation": "алмаз",
+          "word": "diamond",
+          "transcription": "ˈdaɪəmənd"
+        },
+        {
+          "translation": "гранат (камень)",
+          "word": "garnet",
+          "transcription": "ˈɡɑː.nɪt"
+        },
+        {
+          "translation": "нефрит",
+          "word": "jade",
+          "transcription": "ʤeɪd"
+        },
+        {
+          "translation": "изумруд",
+          "word": "emerald",
+          "transcription": "ˈemərəld"
+        },
+        {
+          "translation": "жемчуг",
+          "word": "pearl",
+          "transcription": "pɜːl"
+        },
+        {
+          "translation": "опал",
+          "word": "opal",
+          "transcription": "ˈəʊpəl"
+        },
+        {
+          "translation": "оникс",
+          "word": "onyx",
+          "transcription": "ˈɔnɪks"
+        },
+        {
+          "translation": "агат",
+          "word": "agate",
+          "transcription": "ˈægət"
+        },
+        {
+          "translation": "циркон",
+          "word": "zircon",
+          "transcription": "ˈzɜːkɔn"
+        },
+        {
+          "translation": "кварц",
+          "word": "quartz",
+          "transcription": "kwɔːts"
+        },
+        {
+          "translation": "сапфир",
+          "word": "sapphire",
+          "transcription": "ˈsæfaɪə"
+        },
+        {
+          "translation": "малахит",
+          "word": "malachite",
+          "transcription": "ˈmæləkaɪt"
+        }
+      ]
+    },
+    {
+      "name": "Инструменты",
+      "description": "Столярные, слесарные и прочие орудия труда",
+      "themeCodes": "004, 007",
+      "imageUrl": "axe.jpg",
+      "words": [
+        {
+          "translation": "Молоток",
+          "word": "hammer",
+          "transcription": "ˈhæmə"
+        },
+        {
+          "translation": "Топор",
+          "word": "axe",
+          "transcription": "æks"
+        },
+        {
+          "translation": "Отвертка",
+          "word": "screwdriver",
+          "transcription": "ˈskruːdraɪvə"
+        },
+        {
+          "translation": "Пила",
+          "word": "saw",
+          "transcription": "sɑː"
+        },
+        {
+          "translation": "гайка",
+          "word": "nut",
+          "transcription": "nʌt"
+        },
+        {
+          "translation": "иголка",
+          "word": "needle",
+          "transcription": "niːdl"
+        },
+        {
+          "translation": "дисковая пила",
+          "word": "circular saw",
+          "transcription": "ˈsɜːkjʊlə sɔː"
+        },
+        {
+          "translation": "Дрель",
+          "word": "drill",
+          "transcription": "drɪl"
+        },
+        {
+          "translation": "инструмент",
+          "word": "tool",
+          "transcription": "tuːl"
+        },
+        {
+          "translation": "плоскогубцы",
+          "word": "pliers",
+          "transcription": "ˈplaɪəz"
+        },
+        {
+          "translation": "напильник",
+          "word": "rasp",
+          "transcription": "ræsp"
+        },
+        {
+          "translation": "ножницы",
+          "word": "scissors",
+          "transcription": "ˈsɪzəz"
+        },
+        {
+          "translation": "шило",
+          "word": "awl",
+          "transcription": "ɔːl"
+        },
+        {
+          "translation": "лопата",
+          "word": "shovel",
+          "transcription": "ʃʌvl"
+        },
+        {
+          "translation": "грабли",
+          "word": "rake",
+          "transcription": "reɪk"
+        },
+        {
+          "translation": "тяпка",
+          "word": "hoe",
+          "transcription": "həʊ"
+        },
+        {
+          "translation": "паяльник",
+          "word": "soldering iron",
+          "transcription": "ˈsɒldərɪŋ ˈaɪən"
+        },
+        {
+          "translation": "гвоздь",
+          "word": "nail",
+          "transcription": "neɪl"
+        },
+        {
+          "translation": "винт",
+          "word": "screw",
+          "transcription": "skruː"
+        },
+        {
+          "translation": "болт",
+          "word": "bolt",
+          "transcription": "bəʊlt"
+        },
+        {
+          "translation": "нож",
+          "word": "knife",
+          "transcription": "naɪf"
+        },
+        {
+          "translation": "щипцы",
+          "word": "tongs",
+          "transcription": "tɔŋz"
+        },
+        {
+          "translation": "деревянный молоток",
+          "word": "mallet",
+          "transcription": "'mælɪt"
+        },
+        {
+          "translation": "зубило",
+          "word": "chisel",
+          "transcription": "'ʧɪz(ə)l"
+        }
+      ]
+    },
+    {
+      "name": "Кино и телевидение",
+      "description": "Жанры фильмов и типы телепередач",
+      "themeCodes": "006",
+      "imageUrl": "tv.jpg",
+      "words": [
+        {
+          "translation": "сериал",
+          "word": "series",
+          "transcription": "ˈsɪəriːz"
+        },
+        {
+          "translation": "трейлер",
+          "word": "trailer",
+          "transcription": "ˈtreɪlə"
+        },
+        {
+          "translation": "серия",
+          "word": "series",
+          "transcription": "ˈsɪəriːz"
+        },
+        {
+          "translation": "сезон",
+          "word": "season",
+          "transcription": "siːzn"
+        },
+        {
+          "translation": "новости",
+          "word": "news",
+          "transcription": "nuːz"
+        },
+        {
+          "translation": "реклама",
+          "word": "advertising",
+          "transcription": "ˈædvətaɪzɪŋ"
+        },
+        {
+          "translation": "мелодрама",
+          "word": "melodrama",
+          "transcription": "ˈmeləʊdrɑːmə"
+        },
+        {
+          "translation": "комедия",
+          "word": "comedy",
+          "transcription": "ˈkɔmɪdɪ"
+        },
+        {
+          "translation": "ужасы",
+          "word": "horrors",
+          "transcription": "ˈhɔːrərs"
+        },
+        {
+          "translation": "мультфильм",
+          "word": "cartoon",
+          "transcription": "kɑːˈtuːn"
+        },
+        {
+          "translation": "детектив",
+          "word": "detective",
+          "transcription": "dɪˈtektɪv"
+        },
+        {
+          "translation": "драма",
+          "word": "drama",
+          "transcription": "ˈdrɑːmə"
+        },
+        {
+          "translation": "триллер",
+          "word": "thriller",
+          "transcription": "ˈθrɪlə"
+        },
+        {
+          "translation": "трагедия",
+          "word": "tragedy",
+          "transcription": "ˈtræʤɪdɪ"
+        },
+        {
+          "translation": "вестерн",
+          "word": "Western",
+          "transcription": "ˈwestən"
+        },
+        {
+          "translation": "фильм",
+          "word": "film",
+          "transcription": "fɪlm"
+        },
+        {
+          "word": "musical",
+          "translation": "мьюзикл",
+          "transcription": "ˈmjuːzɪkl"
+        },
+        {
+          "translation": "сюжет",
+          "word": "plot",
+          "transcription": "plɔt"
+        },
+        {
+          "translation": "трюк",
+          "word": "stunt",
+          "transcription": "stʌnt"
+        },
+        {
+          "translation": "каскадер",
+          "word": "stuntman",
+          "transcription": "ˈstʌntmən"
+        },
+        {
+          "translation": "главная роль",
+          "word": "leading role",
+          "transcription": "ˈliːdɪŋ rəʊl"
+        }
+      ]
+    },
+    {
+      "name": "Напитки",
+      "description": "Горячие и прохладительные напитки",
+      "themeCodes": "002, 005",
+      "imageUrl": "drink.jpg",
+      "words": [
+        {
+          "translation": "сок",
+          "word": "juice",
+          "transcription": "ʤuːs"
+        },
+        {
+          "translation": "чай",
+          "word": "tea",
+          "transcription": "tiː"
+        },
+        {
+          "translation": "морс",
+          "word": "Morse",
+          "transcription": "mɔːs"
+        },
+        {
+          "translation": "кофе",
+          "word": "coffee",
+          "transcription": "ˈkɔfɪ"
+        },
+        {
+          "translation": "какао",
+          "word": "cocoa",
+          "transcription": "ˈkəʊkəʊ"
+        },
+        {
+          "translation": "горячий шоколад",
+          "word": "hot chocolate",
+          "transcription": "hɔt ˈʧɔkəlɪt"
+        },
+        {
+          "translation": "вода",
+          "word": "water",
+          "transcription": "ˈwɔːtə"
+        },
+        {
+          "translation": "молоко",
+          "word": "milk",
+          "transcription": "mɪlk"
+        },
+        {
+          "translation": "молочный коктейль",
+          "word": "milkshake",
+          "transcription": "ˈmɪlkʃeɪk"
+        },
+        {
+          "translation": "кефир",
+          "word": "kefir",
+          "transcription": "ˈkefə"
+        },
+        {
+          "translation": "кумыс",
+          "word": "koumiss",
+          "transcription": "ˈkuːmɪs"
+        },
+        {
+          "translation": "лимонад",
+          "word": "lemonade",
+          "transcription": "leməˈneɪd"
+        },
+        {
+          "translation": "квас",
+          "word": "kvass",
+          "transcription": "kvæs"
+        },
+        {
+          "translation": "кисель",
+          "word": "kissel",
+          "transcription": "ˈkɪsɪl"
+        }
+      ]
+    },
+    {
+      "name": "Оружие",
+      "description": "Оружие и боевая техника",
+      "themeCodes": "004,007",
+      "imageUrl": "gun.jpg",
+      "words": [
+        {
+          "translation": "пистолет",
+          "word": "pistol",
+          "transcription": "ˈpɪs.təl"
+        },
+        {
+          "translation": "пулемет",
+          "word": "machinegun",
+          "transcription": "məˈʃiːngʌn"
+        },
+        {
+          "translation": "винтовка",
+          "word": "rifle",
+          "transcription": "raɪfl"
+        },
+        {
+          "translation": "гранатомет",
+          "word": "grenade launcher",
+          "transcription": "grɪˈneɪd ˈlɔːnʧə"
+        },
+        {
+          "translation": "граната",
+          "word": "grenade",
+          "transcription": "grɪˈneɪd"
+        },
+        {
+          "translation": "миномет",
+          "word": "mortar",
+          "transcription": "ˈmɔːtə"
+        },
+        {
+          "translation": "нож",
+          "word": "knife",
+          "transcription": "naɪf"
+        },
+        {
+          "translation": "кинжал",
+          "word": "dagger",
+          "transcription": "ˈdægə"
+        },
+        {
+          "translation": "штык",
+          "word": "bayonet",
+          "transcription": "ˈbeɪ.ə.nət"
+        },
+        {
+          "translation": "боеприпасы",
+          "word": "ammunition",
+          "transcription": "ˌæm.jʊˈnɪʃ.ən"
+        },
+        {
+          "translation": "пуля",
+          "word": "bullet",
+          "transcription": "ˈbʊlɪt"
+        },
+        {
+          "translation": "стрела",
+          "word": "arrow",
+          "transcription": "ˈæroʊ"
+        },
+        {
+          "translation": "лук (оружие)",
+          "word": "bow",
+          "transcription": "baʊ"
+        },
+        {
+          "translation": "кортик",
+          "word": "Dirk",
+          "transcription": "dɜːk"
+        },
+        {
+          "translation": "боевой топор",
+          "word": "battle axe",
+          "transcription": "bætl æks"
+        },
+        {
+          "translation": "меч",
+          "word": "sword",
+          "transcription": "sɔːd"
+        },
+        {
+          "translation": "сабля",
+          "word": "saber",
+          "transcription": "ˈseɪ.bər"
+        },
+        {
+          "translation": "рапира",
+          "word": "rapier",
+          "transcription": "ˈreɪpjə"
+        },
+        {
+          "translation": "танк",
+          "word": "tank",
+          "transcription": "tæŋk"
+        },
+        {
+          "translation": "истребитель",
+          "word": "fighter",
+          "transcription": "ˈfaɪtə"
+        },
+        {
+          "translation": "бомбардировщик",
+          "word": "bomber",
+          "transcription": "ˈbɔmə"
         }
       ]
     },
@@ -618,423 +3253,6 @@
           "transcription": "ˈwɪləʊ",
           "translation": "Ива",
           "word": "Willow"
-        }
-      ]
-    },
-    {
-      "description": "Животные дома и на ферме",
-      "imageUrl": "pets.jpg",
-      "name": "Домашние животные",
-      "themeCodes": "003",
-      "words": [
-        {
-          "transcription": "bʊl",
-          "translation": "Бык",
-          "word": "Bull"
-        },
-        {
-          "transcription": "kɑːf",
-          "translation": "Теленок",
-          "word": "Calf"
-        },
-        {
-          "transcription": "kəˈnɛərɪ",
-          "translation": "Канарейка",
-          "word": "Canary"
-        },
-        {
-          "transcription": "kæt",
-          "translation": "Кошка",
-          "word": "Cat"
-        },
-        {
-          "transcription": "ˈʧɪkɪn",
-          "translation": "Курица",
-          "word": "Chicken"
-        },
-        {
-          "transcription": "kɔk",
-          "translation": "Петух",
-          "word": "Cock"
-        },
-        {
-          "transcription": "kaʊ",
-          "translation": "Корова",
-          "word": "Cow"
-        },
-        {
-          "transcription": "dɔg",
-          "translation": "Собака",
-          "word": "Dog"
-        },
-        {
-          "transcription": "dʌk",
-          "translation": "Утка",
-          "word": "Duck"
-        },
-        {
-          "transcription": "fəʊl",
-          "translation": "Жеребенок",
-          "word": "Foal"
-        },
-        {
-          "transcription": "gəʊt",
-          "translation": "Козел",
-          "word": "Goat"
-        },
-        {
-          "transcription": "guːs",
-          "translation": "Гусь",
-          "word": "Goose"
-        },
-        {
-          "transcription": "ˈhæmstə",
-          "translation": "Хомяк",
-          "word": "Hamster"
-        },
-        {
-          "transcription": "hɔːs",
-          "translation": "Лошадь",
-          "word": "Horse"
-        },
-        {
-          "transcription": "kɪtn",
-          "translation": "Котенок",
-          "word": "Kitten"
-        },
-        {
-          "transcription": "læm",
-          "translation": "Ягненок",
-          "word": "Lamb"
-        },
-        {
-          "transcription": "ˈpærət",
-          "translation": "Попугай",
-          "word": "Parrot"
-        },
-        {
-          "transcription": "pɪg",
-          "translation": "Свинья",
-          "word": "Pig"
-        },
-        {
-          "transcription": "",
-          "translation": "Поросенок",
-          "word": "Piglet"
-        },
-        {
-          "transcription": "ˈpʌpɪ",
-          "translation": "Щенок",
-          "word": "Puppy"
-        },
-        {
-          "transcription": "ˈræbɪt",
-          "translation": "Кролик",
-          "word": "Rabbit"
-        },
-        {
-          "transcription": "ræm",
-          "translation": "Баран",
-          "word": "Ram"
-        },
-        {
-          "transcription": "ʃiːp",
-          "translation": "Овца",
-          "word": "Sheep"
-        },
-        {
-          "transcription": "ˈtɜːkɪ",
-          "translation": "Индейка",
-          "word": "Turkey"
-        }
-      ]
-    },
-    {
-      "description": "Животные в дикой природе",
-      "imageUrl": "beasts.jpg",
-      "name": "Дикие животные",
-      "themeCodes": "003",
-      "words": [
-        {
-          "transcription": "ˈæntɪləʊp",
-          "translation": "Антилопа",
-          "word": "Antelope"
-        },
-        {
-          "transcription": "bɛə",
-          "translation": "Медведь",
-          "word": "Bear"
-        },
-        {
-          "transcription": "ˈkæməl",
-          "translation": "Верблюд",
-          "word": "Camel"
-        },
-        {
-          "transcription": "dɪə",
-          "translation": "Олень",
-          "word": "Deer"
-        },
-        {
-          "transcription": "ˈelɪfənt",
-          "translation": "Слон",
-          "word": "Elephant"
-        },
-        {
-          "transcription": "elk",
-          "translation": "Лось",
-          "word": "Elk"
-        },
-        {
-          "transcription": "ˈferɪt",
-          "translation": "Хорек",
-          "word": "Ferret"
-        },
-        {
-          "transcription": "fɔks",
-          "translation": "Лиса",
-          "word": "Fox"
-        },
-        {
-          "transcription": "ʤɪˈrɑːf",
-          "translation": "Жираф",
-          "word": "Giraffe"
-        },
-        {
-          "transcription": "hɛə",
-          "translation": "Заяц",
-          "word": "Hare"
-        },
-        {
-          "transcription": "ˈheʤhɔg",
-          "translation": "Еж",
-          "word": "Hedgehog"
-        },
-        {
-          "transcription": "ˈlepəd",
-          "translation": "Леопард",
-          "word": "Leopard"
-        },
-        {
-          "transcription": "ˈlaɪən",
-          "translation": "Лев",
-          "word": "Lion"
-        },
-        {
-          "transcription": "lɪŋks",
-          "translation": "Рысь",
-          "word": "Lynx"
-        },
-        {
-          "transcription": "ˈmʌŋkɪ",
-          "translation": "Обезьяна",
-          "word": "Monkey"
-        },
-        {
-          "transcription": "maʊs",
-          "translation": "Мышь",
-          "word": "Mouse"
-        },
-        {
-          "transcription": "rəˈkuːn",
-          "translation": "Енот",
-          "word": "Raccoon"
-        },
-        {
-          "transcription": "ræt",
-          "translation": "Крыса",
-          "word": "Rat"
-        },
-        {
-          "transcription": "raɪˈnɔsərəs",
-          "translation": "Носорог",
-          "word": "Rhinoceros"
-        },
-        {
-          "transcription": "ˈskwɪrəl",
-          "translation": "Белка",
-          "word": "Squirrel"
-        },
-        {
-          "transcription": "ˈtaɪgə",
-          "translation": "Тигр",
-          "word": "Tiger"
-        },
-        {
-          "transcription": "wʊlf",
-          "translation": "Волк",
-          "word": "Wolf"
-        },
-        {
-          "transcription": "ˈziːbrə",
-          "translation": "Зебра",
-          "word": "Zebra"
-        }
-      ]
-    },
-    {
-      "description": "Морские и речные виды рыбы",
-      "imageUrl": "fishes.jpg",
-      "name": "Рыбы",
-      "themeCodes": "003",
-      "words": [
-        {
-          "transcription": "briːm",
-          "translation": "Лещ",
-          "word": "Bream"
-        },
-        {
-          "transcription": "kɑːp",
-          "translation": "Карп",
-          "word": "Carp"
-        },
-        {
-          "transcription": "",
-          "translation": "Сом",
-          "word": "Catfish"
-        },
-        {
-          "transcription": "kɔd",
-          "translation": "Треска",
-          "word": "Cod"
-        },
-        {
-          "transcription": "kruːʃn",
-          "translation": "Карась",
-          "word": "Crucian"
-        },
-        {
-          "transcription": "fɪʃ",
-          "translation": "Рыба",
-          "word": "Fish"
-        },
-        {
-          "transcription": "ˈherɪŋ",
-          "translation": "Сельдь",
-          "word": "Herring"
-        },
-        {
-          "transcription": "ˈmækrəl",
-          "translation": "Скумбрия",
-          "word": "Mackerel"
-        },
-        {
-          "transcription": "pɜːʧ",
-          "translation": "Окунь",
-          "word": "Perch"
-        },
-        {
-          "transcription": "paɪk",
-          "translation": "Щука",
-          "word": "Pike"
-        },
-        {
-          "transcription": "ˈsæmən",
-          "translation": "Лосось",
-          "word": "Salmon"
-        },
-        {
-          "transcription": "ˈstɜːʤən",
-          "translation": "Осетр",
-          "word": "Sturgeon"
-        },
-        {
-          "transcription": "traʊt",
-          "translation": "Форель",
-          "word": "Trout"
-        }
-      ]
-    },
-    {
-      "description": "Насекомые, летающие и ползающие",
-      "imageUrl": "insects.jpg",
-      "name": "Насекомые",
-      "themeCodes": "003",
-      "words": [
-        {
-          "transcription": "ænt",
-          "translation": "Муравей",
-          "word": "Ant"
-        },
-        {
-          "transcription": "biː",
-          "translation": "Пчела",
-          "word": "Bee"
-        },
-        {
-          "transcription": "biːtl",
-          "translation": "Жук",
-          "word": "Beetle"
-        },
-        {
-          "transcription": "bʌg",
-          "translation": "Клоп",
-          "word": "Bug"
-        },
-        {
-          "transcription": "ˈbʌtəflaɪ",
-          "translation": "Бабочка",
-          "word": "Butterfly"
-        },
-        {
-          "transcription": "ˈkætəpɪlə",
-          "translation": "Гусеница",
-          "word": "Caterpillar"
-        },
-        {
-          "transcription": "ˈkɔkrəʊʧ",
-          "translation": "Таракан",
-          "word": "Cockroach"
-        },
-        {
-          "transcription": "ˈdrægənflaɪ",
-          "translation": "Стрекоза",
-          "word": "Dragonfly"
-        },
-        {
-          "transcription": "flaɪ",
-          "translation": "Муха",
-          "word": "Fly"
-        },
-        {
-          "transcription": "ˈgrɑːshɔpə",
-          "translation": "Кузнечик",
-          "word": "Grasshopper"
-        },
-        {
-          "transcription": "ˈɪnsekt",
-          "translation": "Насекомое",
-          "word": "Insect"
-        },
-        {
-          "transcription": "ˈleɪdɪbʌg",
-          "translation": "Божья коровка",
-          "word": "Ladybug"
-        },
-        {
-          "transcription": "maɪt",
-          "translation": "Клещ",
-          "word": "Mite"
-        },
-        {
-          "transcription": "mɔːl",
-          "translation": "Моль",
-          "word": "Mol"
-        },
-        {
-          "transcription": "məsˈkiːtəʊ",
-          "translation": "Комар",
-          "word": "Mosquito"
-        },
-        {
-          "transcription": "ˈspaɪdə",
-          "translation": "Паук",
-          "word": "Spider"
-        },
-        {
-          "transcription": "wɔsp",
-          "translation": "Оса",
-          "word": "Wasp"
         }
       ]
     },
@@ -2874,7 +5092,8 @@
           "word": "Violin"
         }
       ]
-    },{
+    },
+    {
       "name": "Аптечка",
       "description": "Лекарства и медицинские приборы",
       "themeCodes": "004",
@@ -2901,7 +5120,7 @@
           "transcription": "ˈɔɪntmənt"
         },
         {
-          "word":"pills",
+          "word": "pills",
           "translation": "таблетки",
           "transcription": "pɪls"
         },
@@ -2935,7 +5154,7 @@
           "transcription": "ˈæmpuːl"
         },
         {
-          "word":"sedative",
+          "word": "sedative",
           "translation": "успокаительное",
           "transcription": "ˈsed.ə.tɪv"
         },
@@ -2945,7 +5164,7 @@
           "transcription": "ˈɪnsjʊlɪn"
         },
         {
-          "word":"antibiotic",
+          "word": "antibiotic",
           "translation": "антибиотик",
           "transcription": "nʌl"
         },
@@ -2970,717 +5189,12 @@
           "transcription": "pɪˈpet"
         },
         {
-          "word":"tonometer",
+          "word": "tonometer",
           "translation": "танометр"
         }
       ]
-    },{
-      "name": "Бытовая техника",
-      "description": "Бытовая техника, которая есть в каждом доме",
-      "themeCodes": "002, 004",
-      "imageUrl": "tech.jpg",
-      "words": [
-        {
-          "translation": "телефон",
-          "word": "phone",
-          "transcription": "fəʊn"
-        },
-        {
-          "translation": "компьютер",
-          "word": "computer",
-          "transcription": "kəmˈpjuːtə"
-        },
-        {
-          "translation": "весы",
-          "word": "scale",
-          "transcription": "skeɪl"
-        },
-        {
-          "translation": "холодильник",
-          "word": "refrigerator",
-          "transcription": "rɪˈfrɪʤəreɪtə"
-        },
-        {
-          "translation": "телевизор",
-          "word": "TV",
-          "transcription": "ˌtiː ˈviː"
-        },
-        {
-          "translation": "микроволновая печь",
-          "word": "microwave",
-          "transcription": "ˈmaɪkrəʊweɪv"
-        },
-        {
-          "translation": "стиральная машина",
-          "word": "washing machine",
-          "transcription": "ˈwɔʃɪŋ məˈʃiːn"
-        },
-        {
-          "translation": "планшет",
-          "word": "tablet",
-          "transcription": "ˈtæblɪt"
-        },
-        {
-          "translation": "ноутбук",
-          "word": "laptop",
-          "transcription": "ˈlæptɒp"
-        },
-        {
-          "translation": "фотоаппарат",
-          "word": "camera",
-          "transcription": "ˈkæmərə"
-        },
-        {
-          "translation": "лампочка",
-          "word": "bulb",
-          "transcription": "bʌlb"
-        },
-        {
-          "translation": "люстра",
-          "word": "chandelier",
-          "transcription": "ʃændɪˈlɪə"
-        },
-        {
-          "translation": "пылесос",
-          "word": "Hoover",
-          "transcription": "ˈhuːvə"
-        },
-        {
-          "translation": "кофеварка",
-          "word": "coffee maker",
-          "transcription": "ˈkɔfɪ ˈmeɪkə"
-        },
-        {
-          "translation": "миксер",
-          "word": "mixer",
-          "transcription": "ˈmɪksə"
-        },
-        {
-          "translation": "кухонный комбайн",
-          "word": "food processor",
-          "transcription": "fuːd ˈprəʊsesər"
-        },
-        {
-          "translation": "выключатель",
-          "word": "switch",
-          "transcription": "swɪʧ"
-        }
-      ]
-    },{
-      "name": "Дом - строение",
-      "description": "Основные части строений",
-      "themeCodes": "002",
-      "imageUrl": "home.jpg",
-      "words": [
-        {
-          "translation": "Стена",
-          "word": "wall",
-          "transcription": "wɔːl"
-        },
-        {
-          "translation": "Пол",
-          "word": "floor",
-          "transcription": "flɔː"
-        },
-        {
-          "translation": "Потолок",
-          "word": "ceiling",
-          "transcription": "ˈsiːlɪŋ"
-        },
-        {
-          "translation": "Крыша",
-          "word": "roof",
-          "transcription": "ruːf"
-        },
-        {
-          "translation": "Чердак",
-          "word": "loft",
-          "transcription": " lɑːft"
-        },
-        {
-          "translation": "окно",
-          "word": "window",
-          "transcription": "ˈwɪndəʊ"
-        },
-        {
-          "translation": "дверь",
-          "word": "door",
-          "transcription": "dɔː"
-        },
-        {
-          "translation": "плинтус",
-          "word": "plinth",
-          "transcription": "plɪnθ"
-        },
-        {
-          "translation": "лестница",
-          "word": "stairs",
-          "transcription": "ster"
-        },
-        {
-          "translation": "крыльцо ",
-          "word": "porch",
-          "transcription": "pɔːʧ"
-        },
-        {
-          "translation": "квартира",
-          "word": "apartment",
-          "transcription": "əˈpɑːtmənt"
-        },
-        {
-          "translation": "подъезд",
-          "word": "entrance",
-          "transcription": "ˈentrəns"
-        },
-        {
-          "translation": "балкон",
-          "word": "balcony",
-          "transcription": "ˈbælkənɪ"
-        },
-        {
-          "translation": "туалет",
-          "word": "toilet",
-          "transcription": "ˈtɔɪlɪt"
-        },
-        {
-          "translation": "ванная комната",
-          "word": "bathroom",
-          "transcription": "ˈbɑːθruːm"
-        },
-        {
-          "translation": "кухня",
-          "word": "kitchen",
-          "transcription": "ˈkɪʧɪn"
-        },
-        {
-          "translation": "спальня",
-          "word": "bedroom",
-          "transcription": "ˈbedrʊm"
-        },
-        {
-          "translation": "гостинная",
-          "word": "living room",
-          "transcription": "ˈlɪvɪŋ ruːm"
-        },
-        {
-          "translation": "детская комната",
-          "word": "children room",
-          "transcription": "ˈʧɪldrən ruːm"
-        },{
-          "translation": "погреб",
-          "word": "cellar",
-          "transcription": "ˈselə"
-        },
-        {
-          "translation": "коридор",
-          "word": "corridor",
-          "transcription": "ˈkɔrɪdɔː"
-        },
-        {
-          "word":"hallway",
-          "translation": "прихожая",
-          "transcription": "ˈhɔːl.weɪ"
-        },
-        {
-          "translation": "лоджия",
-          "word": "loggia",
-          "transcription": "ˈlɒʤɪə"
-        },
-        {
-          "translation": "порог",
-          "word": "threshold",
-          "transcription": "ˈθreʃhəʊld"
-        }
-      ]
-    },{
-      "name": "Драгоценности",
-      "description": "Драгоценные камни и металлы",
-      "themeCodes": "004",
-      "imageUrl": "gems.jpg",
-      "words": [
-        {
-          "translation": "платина",
-          "word": "platinum",
-          "transcription": "ˈplæt.nəm "
-        },
-        {
-          "translation": "золото",
-          "word": "gold",
-          "transcription": "gəʊld"
-        },
-        {
-          "translation": "серебро",
-          "word": "silver",
-          "transcription": "ˈsɪlvə"
-        },
-        {
-          "translation": "алмаз",
-          "word": "diamond",
-          "transcription": "ˈdaɪəmənd"
-        },
-        {
-          "translation": "гранат (камень)",
-          "word": "garnet",
-          "transcription": "ˈɡɑː.nɪt"
-        },
-        {
-          "translation": "нефрит",
-          "word": "jade",
-          "transcription": "ʤeɪd"
-        },
-        {
-          "translation": "изумруд",
-          "word": "emerald",
-          "transcription": "ˈemərəld"
-        },
-        {
-          "translation": "жемчуг",
-          "word": "pearl",
-          "transcription": "pɜːl"
-        },
-        {
-          "translation": "опал",
-          "word": "opal",
-          "transcription": "ˈəʊpəl"
-        },
-        {
-          "translation": "оникс",
-          "word": "onyx",
-          "transcription": "ˈɔnɪks"
-        },
-        {
-          "translation": "агат",
-          "word": "agate",
-          "transcription": "ˈægət"
-        },
-        {
-          "translation": "циркон",
-          "word": "zircon",
-          "transcription": "ˈzɜːkɔn"
-        },
-        {
-          "translation": "кварц",
-          "word": "quartz",
-          "transcription": "kwɔːts"
-        },
-        {
-          "translation": "сапфир",
-          "word": "sapphire",
-          "transcription": "ˈsæfaɪə"
-        },
-        {
-          "translation": "малахит",
-          "word": "malachite",
-          "transcription": "ˈmæləkaɪt"
-        }
-      ]
-    },{
-      "name": "Инструменты",
-      "description": "Столярные, слесарные и прочие орудия труда",
-      "themeCodes": "004, 007",
-      "imageUrl": "axe.jpg",
-      "words": [
-        {
-          "translation": "Молоток",
-          "word": "hammer",
-          "transcription": "ˈhæmə"
-        },
-        {
-          "translation": "Топор",
-          "word": "axe",
-          "transcription": "æks"
-        },
-        {
-          "translation": "Отвертка",
-          "word": "screwdriver",
-          "transcription": "ˈskruːdraɪvə"
-        },
-        {
-          "translation": "Пила",
-          "word": "saw",
-          "transcription": "sɑː"
-        },{
-          "translation": "гайка",
-          "word": "nut",
-          "transcription": "nʌt"
-        },
-        {
-          "translation": "иголка",
-          "word": "needle",
-          "transcription": "niːdl"
-        },
-        {
-          "translation": "дисковая пила",
-          "word": "circular saw",
-          "transcription": "ˈsɜːkjʊlə sɔː"
-        },
-        {
-          "translation": "Дрель",
-          "word": "drill",
-          "transcription": "drɪl"
-        },
-        {
-          "translation": "инструмент",
-          "word": "tool",
-          "transcription": "tuːl"
-        },
-        {
-          "translation": "плоскогубцы",
-          "word": "pliers",
-          "transcription": "ˈplaɪəz"
-        },
-        {
-          "translation": "напильник",
-          "word": "rasp",
-          "transcription": "ræsp"
-        },
-        {
-          "translation": "ножницы",
-          "word": "scissors",
-          "transcription": "ˈsɪzəz"
-        },
-        {
-          "translation": "шило",
-          "word": "awl",
-          "transcription": "ɔːl"
-        },
-        {
-          "translation": "лопата",
-          "word": "shovel",
-          "transcription": "ʃʌvl"
-        },
-        {
-          "translation": "грабли",
-          "word": "rake",
-          "transcription": "reɪk"
-        },
-        {
-          "translation": "тяпка",
-          "word": "hoe",
-          "transcription": "həʊ"
-        },
-        {
-          "translation": "паяльник",
-          "word": "soldering iron",
-          "transcription": "ˈsɒldərɪŋ ˈaɪən"
-        },
-        {
-          "translation": "гвоздь",
-          "word": "nail",
-          "transcription": "neɪl"
-        },
-        {
-          "translation": "винт",
-          "word": "screw",
-          "transcription": "skruː"
-        },
-        {
-          "translation": "болт",
-          "word": "bolt",
-          "transcription": "bəʊlt"
-        },
-        {
-          "translation": "нож",
-          "word": "knife",
-          "transcription": "naɪf"
-        },
-        {
-          "translation": "щипцы",
-          "word": "tongs",
-          "transcription": "tɔŋz"
-        },
-        {
-          "translation": "деревянный молоток",
-          "word": "mallet",
-          "transcription": "'mælɪt"
-        },
-        {
-          "translation": "зубило",
-          "word": "chisel",
-          "transcription": "'ʧɪz(ə)l"
-        }
-      ]
-    },{
-      "name": "Кино и телевидение",
-      "description": "Жанры фильмов и типы телепередач",
-      "themeCodes": "006",
-      "imageUrl": "tv.jpg",
-      "words": [
-        {
-          "translation": "сериал",
-          "word": "series",
-          "transcription": "ˈsɪəriːz"
-        },{
-          "translation": "трейлер",
-          "word": "trailer",
-          "transcription": "ˈtreɪlə"
-        },
-        {
-          "translation": "серия",
-          "word": "series",
-          "transcription": "ˈsɪəriːz"
-        },
-        {
-          "translation": "сезон",
-          "word": "season",
-          "transcription": "siːzn"
-        },
-        {
-          "translation": "новости",
-          "word": "news",
-          "transcription": "nuːz"
-        },
-        {
-          "translation": "реклама",
-          "word": "advertising",
-          "transcription": "ˈædvətaɪzɪŋ"
-        },
-        {
-          "translation": "мелодрама",
-          "word": "melodrama",
-          "transcription": "ˈmeləʊdrɑːmə"
-        },
-        {
-          "translation": "комедия",
-          "word": "comedy",
-          "transcription": "ˈkɔmɪdɪ"
-        },
-        {
-          "translation": "ужасы",
-          "word": "horrors",
-          "transcription": "ˈhɔːrərs"
-        },
-        {
-          "translation": "мультфильм",
-          "word": "cartoon",
-          "transcription": "kɑːˈtuːn"
-        },
-        {
-          "translation": "детектив",
-          "word": "detective",
-          "transcription": "dɪˈtektɪv"
-        },
-        {
-          "translation": "драма",
-          "word": "drama",
-          "transcription": "ˈdrɑːmə"
-        },
-        {
-          "translation": "триллер",
-          "word": "thriller",
-          "transcription": "ˈθrɪlə"
-        },
-        {
-          "translation": "трагедия",
-          "word": "tragedy",
-          "transcription": "ˈtræʤɪdɪ"
-        },
-        {
-          "translation": "вестерн",
-          "word": "Western",
-          "transcription": "ˈwestən"
-        },
-        {
-          "translation": "фильм",
-          "word": "film",
-          "transcription": "fɪlm"
-        },
-        {
-          "word":"musical",
-          "translation": "мьюзикл",
-          "transcription": "ˈmjuːzɪkl"
-        },
-        {
-          "translation": "сюжет",
-          "word": "plot",
-          "transcription": "plɔt"
-        },
-        {
-          "translation": "трюк",
-          "word": "stunt",
-          "transcription": "stʌnt"
-        },
-        {
-          "translation": "каскадер",
-          "word": "stuntman",
-          "transcription": "ˈstʌntmən"
-        },
-        {
-          "translation": "главная роль",
-          "word": "leading role",
-          "transcription": "ˈliːdɪŋ rəʊl"
-        }
-      ]
-    },{
-      "name": "Напитки",
-      "description": "Горячие и прохладительные напитки",
-      "themeCodes": "002, 005",
-      "imageUrl": "drink.jpg",
-      "words": [
-        {
-          "translation": "сок",
-          "word": "juice",
-          "transcription": "ʤuːs"
-        },
-        {
-          "translation": "чай",
-          "word": "tea",
-          "transcription": "tiː"
-        },
-        {
-          "translation": "морс",
-          "word": "Morse",
-          "transcription": "mɔːs"
-        },
-        {
-          "translation": "кофе",
-          "word": "coffee",
-          "transcription": "ˈkɔfɪ"
-        },
-        {
-          "translation": "какао",
-          "word": "cocoa",
-          "transcription": "ˈkəʊkəʊ"
-        },
-        {
-          "translation": "горячий шоколад",
-          "word": "hot chocolate",
-          "transcription": "hɔt ˈʧɔkəlɪt"
-        },
-        {
-          "translation": "вода",
-          "word": "water",
-          "transcription": "ˈwɔːtə"
-        },
-        {
-          "translation": "молоко",
-          "word": "milk",
-          "transcription": "mɪlk"
-        },
-        {
-          "translation": "молочный коктейль",
-          "word": "milkshake",
-          "transcription": "ˈmɪlkʃeɪk"
-        },
-        {
-          "translation": "кефир",
-          "word": "kefir",
-          "transcription": "ˈkefə"
-        },
-        {
-          "translation": "кумыс",
-          "word": "koumiss",
-          "transcription": "ˈkuːmɪs"
-        },
-        {
-          "translation": "лимонад",
-          "word": "lemonade",
-          "transcription": "leməˈneɪd"
-        },
-        {
-          "translation": "квас",
-          "word": "kvass",
-          "transcription": "kvæs"
-        },
-        {
-          "translation": "кисель",
-          "word": "kissel",
-          "transcription": "ˈkɪsɪl"
-        }
-      ]
-    },{
-      "name": "Птицы",
-      "description": "Пернатые создания, летающие и не очень.",
-      "themeCodes": "003",
-      "imageUrl": "peacock.jpg",
-      "words": [
-        {
-          "translation": "голубь",
-          "word": "pigeon",
-          "transcription": "ˈpɪʤɪn"
-        },
-        {
-          "translation": "грач",
-          "word": "rook",
-          "transcription": "rʊk"
-        },
-        {
-          "translation": "попугай",
-          "word": "parrot",
-          "transcription": "ˈpærət"
-        },
-        {
-          "translation": "воробей",
-          "word": "sparrow",
-          "transcription": "ˈspærəʊ"
-        },
-        {
-          "translation": "ворона",
-          "word": "crow",
-          "transcription": "krəʊ"
-        },
-        {
-          "translation": "павлин",
-          "word": "peacock",
-          "transcription": "ˈpiːkɔk"
-        },
-        {
-          "translation": "сойка",
-          "word": "Jay",
-          "transcription": "ʤeɪ"
-        },
-        {
-          "translation": "колибри",
-          "word": "hummingbird",
-          "transcription": "ˈhʌmɪŋbɜːd"
-        },
-        {
-          "translation": "фламинго",
-          "word": "flamingo",
-          "transcription": "fləˈmɪŋgəʊ"
-        },
-        {
-          "translation": "пингвин",
-          "word": "penguin",
-          "transcription": "ˈpeŋgwɪn"
-        },
-        {
-          "translation": "сова",
-          "word": "owl",
-          "transcription": "aʊl"
-        },
-        {
-          "translation": "зяблик",
-          "word": "finch",
-          "transcription": "fɪnʧ"
-        },
-        {
-          "translation": "орёл",
-          "word": "eagle",
-          "transcription": "iːgl"
-        },
-        {
-          "translation": "страус",
-          "word": "ostrich",
-          "transcription": "ˈɔstrɪʧ"
-        },
-        {
-          "translation": "альбатрос",
-          "word": "albatross",
-          "transcription": "ˈælbətrɔs"
-        },
-        {
-          "translation": "сокол",
-          "word": "falcon",
-          "transcription": "ˈfɒl.kən"
-        },
-        {
-          "translation": "утка",
-          "word": "duck",
-          "transcription": "dʌk"
-        }
-      ]
-    },{
+    },
+    {
       "name": "Строительство",
       "description": "Материалы используемые в строительстве",
       "themeCodes": "004",
@@ -3785,1487 +5299,6 @@
           "translation": "труба",
           "word": "pipe",
           "transcription": "paɪp"
-        }
-      ]
-    },{
-      "name": "Топ 100 существительных",
-      "description": "Подборка из ста, самых важных существительных",
-      "themeCodes": "005",
-      "imageUrl": "top.jpg",
-      "words": [
-        {
-          "translation": "слово",
-          "word": "word",
-          "transcription": "wɜːd"
-        },
-        {
-          "translation": "письмо",
-          "word": "letter",
-          "transcription": "ˈletə"
-        },
-        {
-          "translation": "число",
-          "word": "number",
-          "transcription": "ˈnʌmbə"
-        },
-        {
-          "translation": "человек",
-          "word": "human",
-          "transcription": "ˈhjuːmən"
-        },
-        {
-          "translation": "ручка",
-          "word": "pen",
-          "transcription": "pen"
-        },
-        {
-          "translation": "класс",
-          "word": "class",
-          "transcription": "klɑːs"
-        },
-        {
-          "translation": "люди",
-          "word": "people",
-          "transcription": "piːpl"
-        },
-        {
-          "translation": "звук",
-          "word": "sound",
-          "transcription": "saʊnd"
-        },
-        {
-          "translation": "вода",
-          "word": "water",
-          "transcription": "ˈwɔːtə"
-        },
-        {
-          "translation": "сторона",
-          "word": "side",
-          "transcription": "saɪd"
-        },
-        {
-          "translation": "место",
-          "word": "place",
-          "transcription": "pleɪs"
-        },
-        {
-          "translation": "мужчина",
-          "word": "man",
-          "transcription": "mæn"
-        },
-        {
-          "translation": "женщина",
-          "word": "woman",
-          "transcription": "ˈwʊmən"
-        },
-        {
-          "translation": "мальчик",
-          "word": "boy",
-          "transcription": "bɔɪ"
-        },
-        {
-          "translation": "год",
-          "word": "year",
-          "transcription": "jɜː"
-        },
-        {
-          "translation": "день",
-          "word": "day",
-          "transcription": "deɪ"
-        },
-        {
-          "translation": "неделя",
-          "word": "week",
-          "transcription": "wiːk"
-        },
-        {
-          "translation": "месяц",
-          "word": "month",
-          "transcription": "mʌnθ"
-        },
-        {
-          "translation": "имя",
-          "word": "name",
-          "transcription": "neɪm"
-        },
-        {
-          "translation": "предложение",
-          "word": "sentence",
-          "transcription": "ˈsentəns"
-        },
-        {
-          "translation": "линия",
-          "word": "line",
-          "transcription": "laɪn"
-        },
-        {
-          "translation": "воздух",
-          "word": "air",
-          "transcription": "ɛə"
-        },
-        {
-          "translation": "земля",
-          "word": "land",
-          "transcription": "lænd"
-        },
-        {
-          "translation": "дом",
-          "word": "house",
-          "transcription": "haʊs"
-        },
-        {
-          "translation": "рука",
-          "word": "hand",
-          "transcription": "hænd"
-        },
-        {
-          "translation": "рисунок",
-          "word": "drawing",
-          "transcription": "ˈdrɔːɪŋ "
-        },
-        {
-          "translation": "животное ",
-          "word": "animal",
-          "transcription": "ˈænɪməl"
-        },
-        {
-          "translation": "мама",
-          "word": "mother",
-          "transcription": "ˈmʌðə"
-        },
-        {
-          "translation": "папа",
-          "word": "father",
-          "transcription": "ˈfɑːðər"
-        },
-        {
-          "translation": "брат",
-          "word": "brother",
-          "transcription": "ˈbrʌðə"
-        },
-        {
-          "translation": "сестра",
-          "word": "sister",
-          "transcription": "ˈsɪstə"
-        },
-        {
-          "translation": "мир",
-          "word": "world",
-          "transcription": "wɜːld"
-        },
-        {
-          "translation": "голова",
-          "word": "head",
-          "transcription": "hed"
-        },
-        {
-          "translation": "страница",
-          "word": "page",
-          "transcription": "peɪʤ"
-        },
-        {
-          "translation": "страна ",
-          "word": "country",
-          "transcription": "ˈkʌntrɪ"
-        },
-        {
-          "translation": "вопрос",
-          "word": "question",
-          "transcription": "ˈkwesʧən"
-        },
-        {
-          "translation": "ответ",
-          "word": "answer",
-          "transcription": "ˈɑːnsə"
-        },
-        {
-          "translation": "школа",
-          "word": "school",
-          "transcription": "skuːl"
-        },
-        {
-          "translation": "растение",
-          "word": "plant",
-          "transcription": "plɑːnt"
-        },
-        {
-          "translation": "еда",
-          "word": "food",
-          "transcription": "fuːd"
-        },
-        {
-          "translation": "солнце",
-          "word": "sun",
-          "transcription": "sʌn"
-        },
-        {
-          "translation": "состояние",
-          "word": "state",
-          "transcription": "steɪt"
-        },
-        {
-          "translation": "глаз",
-          "word": "eye",
-          "transcription": "aɪ"
-        },
-        {
-          "translation": "город",
-          "word": "city",
-          "transcription": "ˈsɪtɪ"
-        },
-        {
-          "translation": "дерево",
-          "word": "tree",
-          "transcription": "triː"
-        },
-        {
-          "translation": "ферма",
-          "word": "farm",
-          "transcription": "fɑːm"
-        },
-        {
-          "translation": "история",
-          "word": "history",
-          "transcription": "ˈhɪstərɪ"
-        },
-        {
-          "translation": "море",
-          "word": "sea",
-          "transcription": "siː"
-        },
-        {
-          "translation": "ночь",
-          "word": "night",
-          "transcription": "naɪt"
-        },
-        {
-          "translation": "день",
-          "word": "day",
-          "transcription": "deɪ"
-        },
-        {
-          "translation": "жизнь",
-          "word": "life",
-          "transcription": "laɪf"
-        },
-        {
-          "translation": "север",
-          "word": "North",
-          "transcription": "nɔːθ"
-        },
-        {
-          "translation": "юг",
-          "word": "South",
-          "transcription": "saʊθ"
-        },
-        {
-          "translation": "восток",
-          "word": "eastern",
-          "transcription": "ˈiːstən"
-        },
-        {
-          "translation": "запад",
-          "word": "West",
-          "transcription": "west"
-        },
-        {
-          "translation": "ребенок",
-          "word": "child",
-          "transcription": "ʧaɪld"
-        },
-        {
-          "translation": "дети",
-          "word": "children",
-          "transcription": "ˈʧɪldrən"
-        },
-        {
-          "translation": "пример",
-          "word": "example",
-          "transcription": "ɪgˈzɑːmpl"
-        },
-        {
-          "translation": "бумага",
-          "word": "paper",
-          "transcription": "ˈpeɪpə"
-        },
-        {
-          "translation": "музыка",
-          "word": "music",
-          "transcription": "ˈmjuːzɪk"
-        },
-        {
-          "translation": "река",
-          "word": "river",
-          "transcription": "ˈrɪvə"
-        },
-        {
-          "translation": "машина",
-          "word": "machine",
-          "transcription": "məˈʃiːn"
-        },
-        {
-          "translation": "нога",
-          "word": "foot",
-          "transcription": "fʊt"
-        },
-        {
-          "translation": "книга",
-          "word": "book",
-          "transcription": "bʊk"
-        },
-        {
-          "translation": "наука",
-          "word": "science",
-          "transcription": "ˈsaɪəns"
-        },
-        {
-          "translation": "комната",
-          "word": "room",
-          "transcription": "ruːm"
-        },
-        {
-          "translation": "друг",
-          "word": "friend",
-          "transcription": "frend"
-        },
-        {
-          "translation": "идея",
-          "word": "idea",
-          "transcription": "aɪˈdɪə"
-        },
-        {
-          "translation": "рыба",
-          "word": "fish",
-          "transcription": "fɪʃ"
-        },
-        {
-          "translation": "гора",
-          "word": "mountain",
-          "transcription": "ˈmaʊntɪn"
-        },
-        {
-          "translation": "лошадь",
-          "word": "horse",
-          "transcription": "hɔːs"
-        },
-        {
-          "translation": "часы",
-          "word": "clock",
-          "transcription": "klɔk"
-        },
-        {
-          "translation": "цвет",
-          "word": "color",
-          "transcription": "ˈkʌlə"
-        },
-        {
-          "translation": "лицо",
-          "word": "face",
-          "transcription": "feɪs"
-        },
-        {
-          "translation": "дерево",
-          "word": "tree",
-          "transcription": "triː"
-        },
-        {
-          "translation": "птица",
-          "word": "bird",
-          "transcription": "bɜːd"
-        },
-        {
-          "translation": "тело",
-          "word": "body",
-          "transcription": "ˈbɔdɪ"
-        },
-        {
-          "translation": "собака",
-          "word": "dog",
-          "transcription": "dɔg"
-        },
-        {
-          "translation": "семья",
-          "word": "family",
-          "transcription": "ˈfæmɪlɪ"
-        },
-        {
-          "translation": "песня",
-          "word": "song",
-          "transcription": "sɔŋ"
-        },
-        {
-          "translation": "дверь",
-          "word": "door",
-          "transcription": "dɔː"
-        },
-        {
-          "translation": "ветер",
-          "word": "wind",
-          "transcription": "wɪnd"
-        },
-        {
-          "translation": "корабль",
-          "word": "ship",
-          "transcription": "ʃɪp"
-        },
-        {
-          "translation": "скала",
-          "word": "rock",
-          "transcription": "rɔk"
-        },
-        {
-          "translation": "заказ",
-          "word": "order",
-          "transcription": "ˈɔːdə"
-        },
-        {
-          "translation": "огонь",
-          "word": "fire",
-          "transcription": "ˈfaɪə"
-        },
-        {
-          "translation": "проблема",
-          "word": "problem",
-          "transcription": "ˈprɔbləm"
-        },
-        {
-          "translation": "кусок",
-          "word": "piece",
-          "transcription": "piːs"
-        },
-        {
-          "translation": "вершина",
-          "word": "top",
-          "transcription": "tɔp"
-        },
-        {
-          "translation": "дно",
-          "word": "bottom",
-          "transcription": "ˈbɔtəm"
-        },
-        {
-          "translation": "пространство",
-          "word": "space",
-          "transcription": "speɪs"
-        },
-        {
-          "translation": "король",
-          "word": "king",
-          "transcription": "kɪŋ"
-        },
-        {
-          "translation": "деньги",
-          "word": "money",
-          "transcription": "ˈmʌnɪ"
-        },
-        {
-          "translation": "кино",
-          "word": "cinema",
-          "transcription": "ˈsɪnəmə"
-        },
-        {
-          "translation": "работа",
-          "word": "work",
-          "transcription": "wɜːk"
-        },
-        {
-          "translation": "лес",
-          "word": "forest",
-          "transcription": "ˈfɔrɪst"
-        },
-        {
-          "translation": "дорога",
-          "word": "road",
-          "transcription": "rəʊd"
-        },
-        {
-          "translation": "дело",
-          "word": "business",
-          "transcription": "ˈbɪznəs"
-        },
-        {
-          "translation": "муж",
-          "word": "husband",
-          "transcription": "ˈhʌzbənd"
-        },
-        {
-          "translation": "жена",
-          "word": "wife",
-          "transcription": "waɪf"
-        }
-      ]
-    },{
-      "name": "Характер и качества",
-      "description": "",
-      "themeCodes": "005, 001",
-      "imageUrl": "characters.jpg",
-      "words": [
-        {
-          "translation": "активный ",
-          "word": "active",
-          "transcription": "ˈæktɪv"
-        },
-        {
-          "translation": "амбициозный",
-          "word": "ambitious",
-          "transcription": "æmˈbɪʃəs"
-        },
-        {
-          "translation": "безумный",
-          "word": "crazy",
-          "transcription": "ˈkreɪzi"
-        },
-        {
-          "translation": "бешеный",
-          "word": "mad",
-          "transcription": "mæd"
-        },
-        {
-          "translation": "гордый",
-          "word": "proud",
-          "transcription": "praʊd"
-        },
-        {
-          "translation": "добрый",
-          "word": "good",
-          "transcription": "gʊd"
-        },
-        {
-          "translation": "жадный",
-          "word": "greedy",
-          "transcription": "ˈgriːdɪ"
-        },
-        {
-          "translation": "жестокий",
-          "word": "cruel",
-          "transcription": "krʊəl"
-        },
-        {
-          "translation": "завистливый",
-          "word": "envious",
-          "transcription": "ˈenvɪəs"
-        },
-        {
-          "translation": "высокомерный",
-          "word": "arrogant",
-          "transcription": "ˈærəʊgənt"
-        },
-        {
-          "translation": "злой",
-          "word": "evil",
-          "transcription": "iːvl"
-        },
-        {
-          "translation": "ленивый",
-          "word": "lazy",
-          "transcription": "ˈleɪzɪ"
-        },
-        {
-          "translation": "любопытный",
-          "word": "curious",
-          "transcription": "ˈkjʊərɪəs"
-        },
-        {
-          "translation": "наивный",
-          "word": "naive",
-          "transcription": "nɑːˈiːv"
-        },
-        {
-          "translation": "оптимист",
-          "word": "optimist",
-          "transcription": "ˈɔptɪmɪst"
-        },
-        {
-          "translation": "остроумный",
-          "word": "witty",
-          "transcription": "ˈwɪtɪ"
-        },
-        {
-          "translation": "ответственный",
-          "word": "responsible",
-          "transcription": "rɪsˈpɔnsəbl"
-        },
-        {
-          "translation": "пессимист",
-          "word": "pessimist",
-          "transcription": "ˈpesɪmɪst"
-        },
-        {
-          "translation": "умный",
-          "word": "smart",
-          "transcription": "smɑːt"
-        },
-        {
-          "translation": "реалист",
-          "word": "realist",
-          "transcription": "ˈrɪəlɪst"
-        },
-        {
-          "translation": "серьезный",
-          "word": "serious",
-          "transcription": "ˈsɪərɪəs"
-        },
-        {
-          "translation": "скромный",
-          "word": "modest",
-          "transcription": "ˈmɔdɪst"
-        },
-        {
-          "translation": "смелый",
-          "word": "brave",
-          "transcription": "breɪv "
-        },
-        {
-          "translation": "талантливый",
-          "word": "talented",
-          "transcription": "ˈtæləntɪd"
-        },
-        {
-          "translation": "глупый",
-          "word": "stupid",
-          "transcription": "ˈstjuːpɪd"
-        },
-        {
-          "translation": "щедрый",
-          "word": "generous",
-          "transcription": "ˈʤenərəs"
-        },{
-          "translation": "скупой ",
-          "word": "stingy",
-          "transcription": "ˈstɪnʤɪ"
-        },
-        {
-          "translation": "веселый ",
-          "word": "cheerful",
-          "transcription": "ˈʧɪəfʊl"
-        },
-        {
-          "translation": "грустный",
-          "word": "sad",
-          "transcription": "sæd"
-        },
-        {
-          "translation": "застенчивый",
-          "word": "shy",
-          "transcription": "ʃaɪ"
-        }
-      ]
-    },{
-      "name": "цветы и травы",
-      "description": "Мелкие растения в поле, саду и на подоконнике",
-      "themeCodes": "003",
-      "imageUrl": "flowers3.jpg",
-      "words": [
-        {
-          "translation": "алоэ",
-          "word": "aloe",
-          "transcription": "ˈæləʊ"
-        },
-        {
-          "translation": "анютины глазки",
-          "word": "pansy",
-          "transcription": "ˈpænzɪ"
-        },
-        {
-          "translation": "астра",
-          "word": "astra",
-          "transcription": "ˈæstrə"
-        },
-        {
-          "translation": "бегония",
-          "word": "begonia",
-          "transcription": "bɪˈgəʊnɪə"
-        },{
-          "translation": "подсолнух",
-          "word": "sunflower",
-          "transcription": "ˈsʌnflaʊə"
-        },
-        {
-          "translation": "василёк",
-          "word": "cornflower",
-          "transcription": "ˈkɔːnflaʊə"
-        },{
-          "translation": "вьюнок",
-          "word": "bindweed",
-          "transcription": "ˈbaɪndwiːd"
-        },{
-          "translation": "гвоздика",
-          "word": "carnation",
-          "transcription": "kɑːˈneɪʃn"
-        },
-        {
-          "translation": "гладиолус",
-          "word": "gladiolus",
-          "transcription": "glædɪˈəʊləs"
-        },
-        {
-          "translation": "камыш",
-          "word": "reed",
-          "transcription": "riːd"
-        },
-        {
-          "translation": "колокольчик",
-          "word": "bellflowers"
-        },
-        {
-          "translation": "крапива",
-          "word": "nettle",
-          "transcription": "netl"
-        },
-        {
-          "translation": "кувшинка",
-          "word": "nenuphar"
-        },
-        {
-          "translation": "лаванда",
-          "word": "lavender",
-          "transcription": "ˈlævɪndə"
-        },
-        {
-          "translation": "ландыш",
-          "word": "lily of the valley"
-        },
-        {
-          "translation": "мак",
-          "word": "poppy",
-          "transcription": "ˈpɔpɪ"
-        },
-        {
-          "translation": "маргаритка",
-          "word": "daisy",
-          "transcription": "ˈdeɪzɪ"
-        },
-        {
-          "translation": "мимоза",
-          "word": "mimosa",
-          "transcription": "mɪˈməʊzə"
-        },
-        {
-          "translation": "одуванчик",
-          "word": "dandelion",
-          "transcription": "ˈdændɪlaɪən"
-        },
-        {
-          "translation": "орхидея",
-          "word": "orchid",
-          "transcription": "ˈɔːkɪd"
-        },
-        {
-          "translation": "пион",
-          "word": "peony",
-          "transcription": "ˈpɪənɪ"
-        },
-        {
-          "translation": "подорожник",
-          "word": "plantain",
-          "transcription": "ˈplæntɪn"
-        },
-        {
-          "translation": "лопух",
-          "word": "burdock",
-          "transcription": "ˈbɜːdɔk"
-        },
-        {
-          "translation": "ромашка",
-          "word": "chamomile",
-          "transcription": "ˈkæməmaɪl"
-        },
-        {
-          "translation": "фиалка",
-          "word": "violet",
-          "transcription": "ˈvaɪəlɪt"
-        },
-        {
-          "translation": "шалфей",
-          "word": "sage",
-          "transcription": "seɪʤ"
-        },
-        {
-          "translation": "тюльпан",
-          "word": "Tulip",
-          "transcription": "ˈtjuːlɪp"
-        },
-        {
-          "translation": "роза",
-          "word": "rose",
-          "transcription": "rəʊz"
-        }
-      ]
-    },{
-      "name": "Топ 100 глаголов часть 1",
-      "description": "Самые распространенные глаголы английского языка",
-      "themeCodes": "005",
-      "imageUrl": "run.jpg",
-      "words": [
-        {
-          "translation": "быть",
-          "word": "be",
-          "transcription": "biː"
-        },
-        {
-          "translation": "иметь",
-          "word": "have",
-          "transcription": "hæv"
-        },
-        {
-          "translation": "делать",
-          "word": "do",
-          "transcription": "duː"
-        },
-        {
-          "translation": "говорить",
-          "word": "say",
-          "transcription": "seɪ"
-        },
-        {
-          "translation": "идти",
-          "word": "go",
-          "transcription": "gəʊ"
-        },
-        {
-          "translation": "получать",
-          "word": "receive",
-          "transcription": "rɪˈsiːv"
-        },
-        {
-          "translation": "знать",
-          "word": "know",
-          "transcription": "nəʊ"
-        },
-        {
-          "translation": "думать",
-          "word": "think",
-          "transcription": "θɪŋk"
-        },
-        {
-          "translation": "брать",
-          "word": "take",
-          "transcription": "teɪk"
-        },
-        {
-          "translation": "видеть",
-          "word": "see",
-          "transcription": "siː"
-        },
-        {
-          "translation": "приходить",
-          "word": "come",
-          "transcription": "kʌm"
-        },
-        {
-          "translation": "хотеть",
-          "word": "want",
-          "transcription": "wɔnt"
-        },
-        {
-          "translation": "использовать",
-          "word": "use",
-          "transcription": "juːs"
-        },
-        {
-          "translation": "находить",
-          "word": "find",
-          "transcription": "faɪnd"
-        },
-        {
-          "translation": "давать ",
-          "word": "give",
-          "transcription": "gɪv"
-        },
-        {
-          "translation": "рассказывать",
-          "word": "tell",
-          "transcription": "tel"
-        },
-        {
-          "translation": "работать",
-          "word": "work",
-          "transcription": "wɜːk"
-        },
-        {
-          "translation": "звонить",
-          "word": "call",
-          "transcription": "kɔːl"
-        },
-        {
-          "translation": "пытаться",
-          "word": "try",
-          "transcription": "traɪ"
-        },
-        {
-          "translation": "просить",
-          "word": "ask",
-          "transcription": "ɑːsk"
-        },
-        {
-          "translation": "нуждаться",
-          "word": "need",
-          "transcription": "niːd"
-        },
-        {
-          "translation": "чувствовать",
-          "word": "feel",
-          "transcription": "fiːl"
-        },
-        {
-          "translation": "становиться",
-          "word": "become",
-          "transcription": "bɪˈkʌm"
-        },
-        {
-          "translation": "оставлять",
-          "word": "leave",
-          "transcription": "liːv"
-        },
-        {
-          "translation": "класть",
-          "word": "put",
-          "transcription": "pʊt"
-        },
-        {
-          "translation": "значить",
-          "word": "mean",
-          "transcription": "miːn"
-        },
-        {
-          "translation": "хранить",
-          "word": "store",
-          "transcription": "stɔː"
-        },
-        {
-          "translation": "позволять",
-          "word": "allow",
-          "transcription": "əˈlaʊ"
-        },
-        {
-          "translation": "начинать",
-          "word": "begin",
-          "transcription": "bɪˈgɪn"
-        },
-        {
-          "translation": "казаться",
-          "word": "seem",
-          "transcription": "siːm"
-        },
-        {
-          "translation": "помогать",
-          "word": "help",
-          "transcription": "help"
-        },
-        {
-          "translation": "показывать",
-          "word": "show",
-          "transcription": "ʃəʊ"
-        },
-        {
-          "translation": "слышать",
-          "word": "hear",
-          "transcription": "hɪə"
-        },
-        {
-          "translation": "играть",
-          "word": "play",
-          "transcription": "pleɪ"
-        },
-        {
-          "translation": "бежать",
-          "word": "run"
-        },
-        {
-          "translation": "двигаться",
-          "word": "move",
-          "transcription": "muːv"
-        },
-        {
-          "translation": "жить",
-          "word": "live",
-          "transcription": "lɪv"
-        },
-        {
-          "translation": "верить",
-          "word": "believe",
-          "transcription": "bɪˈliːv"
-        },
-        {
-          "translation": "случаться",
-          "word": "happen",
-          "transcription": "ˈhæpən"
-        },
-        {
-          "translation": "писать",
-          "word": "write",
-          "transcription": "raɪt"
-        },
-        {
-          "translation": "сидеть",
-          "word": "sit",
-          "transcription": "sɪt"
-        },
-        {
-          "translation": "стоять",
-          "word": "stand",
-          "transcription": "stænd"
-        },
-        {
-          "translation": "терять",
-          "word": "lose",
-          "transcription": "luːz"
-        },
-        {
-          "translation": "платить",
-          "word": "pay",
-          "transcription": "peɪ"
-        },
-        {
-          "translation": "встречать",
-          "word": "meet",
-          "transcription": "miːt"
-        },
-        {
-          "translation": "включать",
-          "word": "include",
-          "transcription": "ɪnˈkluːd"
-        },
-        {
-          "translation": "продолжать",
-          "word": "continue",
-          "transcription": "kənˈtɪnjuː"
-        }
-      ]
-    },{
-      "name": "Топ 100 глаголов часть 2",
-      "description": "Самые распространенные глаголы английского языка, продолжение",
-      "themesCodes": "005",
-      "imageUrl": "nature.jpg",
-      "words": [
-        {
-          "translation": "устанавливать",
-          "word": "install",
-          "transcription": "ɪnˈstɔːl"
-        },
-        {
-          "translation": "учить",
-          "word": "teach",
-          "transcription": "tiːʧ"
-        },
-        {
-          "translation": "менять",
-          "word": "change",
-          "transcription": "ʧeɪnʤ"
-        },
-        {
-          "translation": "вести",
-          "word": "lead",
-          "transcription": "liːd"
-        },
-        {
-          "translation": "понимать",
-          "word": "understand",
-          "transcription": "ʌndəˈstænd"
-        },
-        {
-          "translation": "смотреть",
-          "word": "look",
-          "transcription": "lʊk"
-        },
-        {
-          "translation": "следовать",
-          "word": "follow",
-          "transcription": "ˈfɔləʊ"
-        },
-        {
-          "translation": "останавливать",
-          "word": "stop",
-          "transcription": "stɔp"
-        },
-        {
-          "translation": "создавать",
-          "word": "create",
-          "transcription": "kriːˈeɪt"
-        },
-        {
-          "translation": "говорить",
-          "word": "say",
-          "transcription": "seɪ"
-        },
-        {
-          "translation": "читать",
-          "word": "read",
-          "transcription": "riːd"
-        },
-        {
-          "translation": "тратить",
-          "word": "spend",
-          "transcription": "spend"
-        },
-        {
-          "translation": "расти",
-          "word": "grow",
-          "transcription": "grəʊ"
-        },
-        {
-          "translation": "открывать",
-          "word": "open",
-          "transcription": "ˈəʊpən"
-        },
-        {
-          "translation": "идти",
-          "word": "go",
-          "transcription": "gəʊ"
-        },
-        {
-          "translation": "побеждать",
-          "word": "win",
-          "transcription": "wɪn"
-        },
-        {
-          "translation": "учиться",
-          "word": "learn",
-          "transcription": "lɜːrn"
-        },
-        {
-          "translation": "предлагать",
-          "word": "offer",
-          "transcription": "ˈɔfə"
-        },
-        {
-          "translation": "помнить",
-          "word": "remember",
-          "transcription": "rɪˈmembə"
-        },
-        {
-          "translation": "появляться",
-          "word": "appear",
-          "transcription": "əˈpɪə"
-        },
-        {
-          "translation": "покупать",
-          "word": "buy",
-          "transcription": "baɪ"
-        },
-        {
-          "translation": "служить",
-          "word": "serve",
-          "transcription": "sɜːv"
-        },
-        {
-          "translation": "умирать",
-          "word": "die",
-          "transcription": "daɪ"
-        },
-        {
-          "translation": "посылать",
-          "word": "send",
-          "transcription": "send"
-        },
-        {
-          "translation": "строить",
-          "word": "build",
-          "transcription": "bɪld"
-        },
-        {
-          "translation": "оставаться",
-          "word": "remain",
-          "transcription": "rɪˈmeɪn"
-        },
-        {
-          "translation": "падать",
-          "word": "fall",
-          "transcription": "fɔːl"
-        },
-        {
-          "translation": "резать",
-          "word": "cut",
-          "transcription": "kʌt"
-        },
-        {
-          "translation": "достигать",
-          "word": "reach",
-          "transcription": "riːʧ"
-        },
-        {
-          "translation": "убивать",
-          "word": "kill",
-          "transcription": "kɪl"
-        },
-        {
-          "translation": "поднимать",
-          "word": "raise",
-          "transcription": "reɪz"
-        },
-        {
-          "translation": "миновать",
-          "word": "pass",
-          "transcription": "pɑːs"
-        },
-        {
-          "translation": "продавать",
-          "word": "sell",
-          "transcription": "sel"
-        },
-        {
-          "translation": "решать",
-          "word": "decide",
-          "transcription": "dɪˈsaɪd"
-        },
-        {
-          "translation": "возвращаться",
-          "word": "return",
-          "transcription": "rɪˈtɜːn"
-        },
-        {
-          "translation": "объяснять",
-          "word": "explain",
-          "transcription": "ɪksˈpleɪn"
-        },
-        {
-          "translation": "надеяться",
-          "word": "hope",
-          "transcription": "həʊp"
-        },
-        {
-          "translation": "развивать",
-          "word": "develop",
-          "transcription": "dɪˈveləp"
-        },
-        {
-          "translation": "нести",
-          "word": "carry",
-          "transcription": "ˈkærɪ"
-        },
-        {
-          "translation": "ломать",
-          "word": "break",
-          "transcription": "breɪk"
-        },
-        {
-          "translation": "получать",
-          "word": "receive",
-          "transcription": "rɪˈsiːv"
-        },
-        {
-          "translation": "соглашаться",
-          "word": "agree",
-          "transcription": "əˈgriː"
-        },
-        {
-          "translation": "поддерживать",
-          "word": "support",
-          "transcription": "səˈpɔːt"
-        },
-        {
-          "translation": "бить",
-          "word": "beat",
-          "transcription": "biːt"
-        },
-        {
-          "translation": "производить",
-          "word": "produce",
-          "transcription": "ˈprɔdjuːs"
-        },
-        {
-          "translation": "есть",
-          "word": "eat",
-          "transcription": "iːt"
-        },
-        {
-          "translation": "покрывать",
-          "word": "cover",
-          "transcription": "ˈkʌvə"
-        },
-        {
-          "translation": "ловить",
-          "word": "catch",
-          "transcription": "kæʧ"
-        },
-        {
-          "translation": "рисовать",
-          "word": "draw",
-          "transcription": "drɔː"
-        },
-        {
-          "translation": "выбирать",
-          "word": "choose",
-          "transcription": "ʧuːz"
-        }
-      ]
-    },{
-      "name": "Злаки и крупы",
-      "description": "Название круп и бобовых на английском",
-      "themesCodes": "005",
-      "imageUrl": "wheat.jpg",
-      "words": [
-        {
-          "translation": "рис",
-          "word": "rice",
-          "transcription": "raɪs"
-        },
-        {
-          "translation": "пшеница",
-          "word": "wheat",
-          "transcription": "wiːt"
-        },
-        {
-          "translation": "рожь",
-          "word": "rye",
-          "transcription": "raɪ"
-        },
-        {
-          "translation": "овес",
-          "word": "oat",
-          "transcription": "əʊt"
-        },
-        {
-          "translation": "гречиха",
-          "word": "buckwheat",
-          "transcription": "ˈbʌkwiːt"
-        },
-        {
-          "translation": "горох",
-          "word": "pea",
-          "transcription": "piː"
-        },
-        {
-          "translation": "фасоль",
-          "word": "bean",
-          "transcription": "biːn"
-        },
-        {
-          "translation": "чечевица",
-          "word": "lentil",
-          "transcription": "ˈlentɪl"
-        },
-        {
-          "translation": "соя",
-          "word": "soy",
-          "transcription": "sɔɪ"
-        },
-        {
-          "translation": "ячмень",
-          "word": "barley",
-          "transcription": "ˈbɑːlɪ"
-        },
-        {
-          "translation": "солод",
-          "word": "malt",
-          "transcription": "mɔːlt"
-        },
-        {
-          "translation": "пшено",
-          "word": "millet",
-          "transcription": "ˈmɪl.ɪt"
-        }
-      ]
-    },{
-      "name": "Оружие",
-      "description": "Оружие и боевая техника",
-      "themesCodes": "004,007",
-      "imageUrl": "gun.jpg",
-      "words": [
-        {
-          "translation": "пистолет",
-          "word": "pistol",
-          "transcription": "ˈpɪs.təl"
-        },
-        {
-          "translation": "пулемет",
-          "word": "machinegun",
-          "transcription": "məˈʃiːngʌn"
-        },
-        {
-          "translation": "винтовка",
-          "word": "rifle",
-          "transcription": "raɪfl"
-        },
-        {
-          "translation": "гранатомет",
-          "word": "grenade launcher",
-          "transcription": "grɪˈneɪd ˈlɔːnʧə"
-        },
-        {
-          "translation": "граната",
-          "word": "grenade",
-          "transcription": "grɪˈneɪd"
-        },
-        {
-          "translation": "миномет",
-          "word": "mortar",
-          "transcription": "ˈmɔːtə"
-        },
-        {
-          "translation": "нож",
-          "word": "knife",
-          "transcription": "naɪf"
-        },
-        {
-          "translation": "кинжал",
-          "word": "dagger",
-          "transcription": "ˈdægə"
-        },
-        {
-          "translation": "штык",
-          "word": "bayonet",
-          "transcription": "ˈbeɪ.ə.nət"
-        },
-        {
-          "translation": "боеприпасы",
-          "word": "ammunition",
-          "transcription": "ˌæm.jʊˈnɪʃ.ən"
-        },
-        {
-          "translation": "пуля",
-          "word": "bullet",
-          "transcription": "ˈbʊlɪt"
-        },
-        {
-          "translation": "стрела",
-          "word": "arrow",
-          "transcription": "ˈæroʊ"
-        },
-        {
-          "translation": "лук (оружие)",
-          "word": "bow",
-          "transcription": "baʊ"
-        },
-        {
-          "translation": "кортик",
-          "word": "Dirk",
-          "transcription": "dɜːk"
-        },
-        {
-          "translation": "боевой топор",
-          "word": "battle axe",
-          "transcription": "bætl æks"
-        },
-        {
-          "translation": "меч",
-          "word": "sword",
-          "transcription": "sɔːd"
-        },
-        {
-          "translation": "сабля",
-          "word": "saber",
-          "transcription": "ˈseɪ.bər"
-        },
-        {
-          "translation": "рапира",
-          "word": "rapier",
-          "transcription": "ˈreɪpjə"
-        },
-        {
-          "translation": "танк",
-          "word": "tank",
-          "transcription": "tæŋk"
-        },
-        {
-          "translation": "истребитель",
-          "word": "fighter",
-          "transcription": "ˈfaɪtə"
-        },
-        {
-          "translation": "бомбардировщик",
-          "word": "bomber",
-          "transcription": "ˈbɔmə"
         }
       ]
     }

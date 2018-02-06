@@ -4,8 +4,4 @@
         android:id="@+id/menu_main_settings"
         android:title="@string/settings" />
 
-    <item
-        android:id="@+id/menu_update"
-        android:title="update"/>
-
 </menu>

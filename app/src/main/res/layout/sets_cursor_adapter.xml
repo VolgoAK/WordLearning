@@ -20,7 +20,7 @@
 
         <TextView
             android:id="@+id/tv_name_setsadapter"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="@dimen/medium_text_size"
             android:textColor="@android:color/black"
@@ -28,6 +28,7 @@
             android:layout_marginLeft="@dimen/views_horizontal_margin"
             android:layout_marginTop="@dimen/views_small_margin"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/civ_sets"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Example set"/>
 
