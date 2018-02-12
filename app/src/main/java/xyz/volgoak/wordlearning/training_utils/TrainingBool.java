@@ -23,7 +23,7 @@ public class TrainingBool extends Training {
     private int rightInLine = 0;
 
 
-    public TrainingBool(ArrayList<PlayWord> playWords, int trainingType) {
+    public TrainingBool(List<PlayWord> playWords, int trainingType) {
         super(playWords, trainingType);
         for (PlayWord pw : playWords) {
             Log.d(TAG, "TrainingBool: " + pw.getWord());

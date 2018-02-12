@@ -2,6 +2,7 @@ package xyz.volgoak.wordlearning.training_utils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 
@@ -13,18 +14,18 @@ public class Training implements Serializable{
 
     public static final String TAG = "Training";
 
-    protected ArrayList<PlayWord> playWords;
+    protected List<PlayWord> playWords;
     private int currentPosition = 0;
     private int tries = 0;
     private int score = 0;
-    private ArrayList<Long> mIdsForUpdate = new ArrayList<>();
+    private List<Long> mIdsForUpdate = new ArrayList<>();
     private PlayWord currentWord;
     //private WordUpdater updater;
     private int trainingType;
 
     private boolean accessible = false;
 
-    Training(ArrayList<PlayWord> playWords, int trainingType){
+    Training(List<PlayWord> playWords, int trainingType){
         this.playWords = playWords;
         this.trainingType = trainingType;
     }

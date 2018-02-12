@@ -33,7 +33,6 @@
                 <ImageView
                     android:fitsSystemWindows="true"
                     android:id="@+id/set_iv_title"
-
                     android:scaleType="centerCrop"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

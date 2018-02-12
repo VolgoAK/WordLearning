@@ -2,6 +2,7 @@ package xyz.volgoak.wordlearning.training_utils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Alexander Karachev on 07.05.2017.
@@ -17,7 +18,7 @@ public class Results implements Serializable{
     }
 
     public ResultType resultType;
-    public ArrayList<Long> idsForUpdate;
+    public List<Long> idsForUpdate;
     public int trainedType;
     public long setId = -1;
     public int wordCount;

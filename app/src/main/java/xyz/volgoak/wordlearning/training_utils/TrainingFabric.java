@@ -3,10 +3,15 @@ package xyz.volgoak.wordlearning.training_utils;
 
 import android.util.Log;
 
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.entities.Word;
@@ -76,13 +81,19 @@ public abstract class TrainingFabric {
 
     public static TrainingBool getBoolTraining(long setId, DataProvider provider) {
         List<Word> words = provider.getTrainingWords(setId);
-        ArrayList<PlayWord> playWords = new ArrayList<>();
+
+        Queue<String> variants = Stream.of(words).map(Word::getTranslation)
+                .collect(Collectors.toCollection(LinkedList::new));
         Collections.shuffle(words);
-        for (Word w : words) {
-            List<Word> vars = provider.getVariants(w.getId(), 1, setId);
-            PlayWord pw = new PlayWord(w.getWord(), w.getTranslation(), new String[]{vars.get(0).getTranslation()}, w.getId());
-            playWords.add(pw);
-        }
+
+        List<PlayWord> playWords = Stream.of(words).map(PlayWord::new)
+                .map(p -> {
+                    p.setVars(new String[] {variants.poll()});
+                    return p;})
+                .toList();
+        
+        Collections.shuffle(playWords);
+
         return new TrainingBool(playWords, BOOL_TRAINING);
     }
 
