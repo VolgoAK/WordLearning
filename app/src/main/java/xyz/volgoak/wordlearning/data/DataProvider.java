@@ -126,6 +126,7 @@ public class DataProvider {
     }
 
     public List<Set> getAllSets() {
+        
         return setsDao.getAllSets();
     }
 
