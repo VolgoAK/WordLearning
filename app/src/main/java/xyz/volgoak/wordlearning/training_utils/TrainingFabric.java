@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import io.reactivex.Single;
 import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.entities.Word;
 
@@ -29,6 +30,10 @@ public abstract class TrainingFabric {
     public static final int TRAINING_LIMIT = 4;
     public static final int WORDS_LIMIT = 10;
 
+
+    public static Single<Training> getSimpleTrainingRx(int trainingType, long setId, DataProvider provider) {
+        return Single.create(subscriber -> subscriber.onSuccess(getSimpleTraining(trainingType, setId, provider)));
+    }
 
     public static Training getSimpleTraining(int trainingType, long setId, DataProvider provider) {
 

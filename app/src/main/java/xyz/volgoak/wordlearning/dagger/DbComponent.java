@@ -5,7 +5,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.fragment.BoolTrainingFragment;
-import xyz.volgoak.wordlearning.fragment.RedactorFragment;
+import xyz.volgoak.wordlearning.fragment.DictionaryFragment;
 import xyz.volgoak.wordlearning.fragment.ResultsFragment;
 import xyz.volgoak.wordlearning.fragment.SingleSetFragment;
 import xyz.volgoak.wordlearning.fragment.StartFragment;
@@ -13,6 +13,7 @@ import xyz.volgoak.wordlearning.fragment.TimerFragment;
 import xyz.volgoak.wordlearning.fragment.TrainingFragment;
 import xyz.volgoak.wordlearning.fragment.WordCardsFragment;
 import xyz.volgoak.wordlearning.fragment.WordSetsFragment;
+import xyz.volgoak.wordlearning.model.DictionaryViewModel;
 import xyz.volgoak.wordlearning.model.SetsViewModel;
 import xyz.volgoak.wordlearning.recycler.SetsRecyclerAdapter;
 import xyz.volgoak.wordlearning.services.SetsLoaderService;
@@ -28,7 +29,7 @@ import xyz.volgoak.wordlearning.utils.SoundsManager;
 @Singleton
 public interface DbComponent {
     void inject(WordsApp app);
-    void inject(RedactorFragment fragment);
+    void inject(DictionaryFragment fragment);
     void inject(ResultsFragment fragment);
     void inject(SingleSetFragment fragment);
     void inject(StartFragment fragment);
@@ -45,4 +46,5 @@ public interface DbComponent {
     void inject(SoundsManager manager);
 
     void inject(SetsViewModel model);
+    void inject(DictionaryViewModel model);
 }

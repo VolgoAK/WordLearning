@@ -2,14 +2,7 @@ package xyz.volgoak.wordlearning;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.util.Log;
 
-import com.google.android.gms.gcm.GcmNetworkManager;
-import com.google.android.gms.gcm.OneoffTask;
-import com.google.android.gms.gcm.PeriodicTask;
-import com.google.android.gms.gcm.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 import javax.inject.Inject;
@@ -20,11 +13,7 @@ import xyz.volgoak.wordlearning.dagger.DbComponent;
 import xyz.volgoak.wordlearning.dagger.DbModule;
 import xyz.volgoak.wordlearning.dagger.DownloaderModule;
 import xyz.volgoak.wordlearning.data.DataProvider;
-import xyz.volgoak.wordlearning.data.DatabaseContract;
-import xyz.volgoak.wordlearning.services.SetsLoaderService;
 import xyz.volgoak.wordlearning.update.DbUpdateManager;
-import xyz.volgoak.wordlearning.update.ImageDownloader;
-import xyz.volgoak.wordlearning.update.SetsLoader;
 import xyz.volgoak.wordlearning.utils.WordSpeaker;
 
 public class WordsApp extends Application {

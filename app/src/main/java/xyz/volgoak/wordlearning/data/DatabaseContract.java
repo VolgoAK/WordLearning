@@ -74,7 +74,7 @@ public final class DatabaseContract {
     }
 
     public static abstract class Themes implements BaseColumns{
-        public static final String THEME_ANY = "ANY_THEME";
+        public static final String THEME_ANY = "";
         public static final String TABLE_NAME = "THEMES_TABLE";
         public static final String COLUMN_NAME = "THEME_NAME";
         public static final String COLUMN_CODE = "THEME_COD";

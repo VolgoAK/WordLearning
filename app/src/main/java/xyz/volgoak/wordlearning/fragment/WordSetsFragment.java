@@ -32,10 +32,10 @@ import javax.inject.Inject;
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
-import xyz.volgoak.wordlearning.activity.SetsActivity;
 import xyz.volgoak.wordlearning.activity.SingleSetActivity;
 import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
+import xyz.volgoak.wordlearning.entities.DataEntity;
 import xyz.volgoak.wordlearning.entities.Set;
 import xyz.volgoak.wordlearning.entities.Theme;
 import xyz.volgoak.wordlearning.model.SetsViewModel;
@@ -63,9 +63,6 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     private SetsFragmentListener mSetsFragmentListener;
     private SetsRecyclerAdapter mRecyclerAdapter;
 
-    @Inject
-    DataProvider mDataProvider;
-
     private RecyclerView mRecyclerView;
 
     private boolean mPartScreenMode = true;
@@ -92,7 +89,6 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        WordsApp.getsComponent().inject(this);
         return inflater.inflate(R.layout.fragment_word_sets, container, false);
     }
 
@@ -117,8 +113,6 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     public void onStart() {
         super.onStart();
 
-//        mFragmentListener.setActionBarTitle(getString(R.string.sets));
-
         mRecyclerView = getView().findViewById(R.id.rv_setsfrag);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
@@ -127,23 +121,6 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
 
         viewModel.getThemes().observe(this, (themes -> mThemes = themes));
         initRecycler(mSelectedTheme);
-//
-//        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                long setId = mRecyclerAdapter.getItemId(position);
-//                mSetsFragmentListener.startSet(setId);
-//                return true;
-//            }
-//        });
-//
-//        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                invokeSetMenu(id);
-//            }
-//        });
 
     }
 
@@ -151,6 +128,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
         if (context instanceof SetsFragmentListener) {
             Log.d(TAG, "onAttach: FragmentListener set");
             mSetsFragmentListener = (SetsFragmentListener) context;
@@ -199,17 +177,14 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
             }
         }
 
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == -1) {
-                    mSelectedTheme = "";
-                } else {
-                    mSelectedTheme = mThemes.get(item.getItemId()).getCode();
-                }
-                viewModel.changeTheme(mSelectedTheme);
-                return true;
+        popupMenu.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == -1) {
+                mSelectedTheme = "";
+            } else {
+                mSelectedTheme = mThemes.get(item.getItemId()).getCode();
             }
+            viewModel.changeTheme(mSelectedTheme);
+            return true;
         });
 
         popupMenu.show();
@@ -243,12 +218,11 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         outState.putString(SAVED_THEME, mSelectedTheme);
     }
 
-    public void invokeSetMenu(final long setId) {
+    public void invokeSetMenu(Set set) {
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog);
 
-        Set set = mDataProvider.getSetById(setId);
         String name = set.getName();
         final int currentSetStatus = set.getStatus();
 
@@ -257,61 +231,46 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
 
         Button openButton = dialog.findViewById(R.id.dialog_bt_one);
         openButton.setText(R.string.open);
-        openButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SingleSetActivity.class);
-                intent.putExtra(SingleSetActivity.ID_EXTRA, setId);
-                startActivity(intent);
-                dialog.dismiss();
-            }
+        openButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), SingleSetActivity.class);
+            intent.putExtra(SingleSetActivity.ID_EXTRA, set.getId());
+            startActivity(intent);
+            dialog.dismiss();
+
         });
 
         Button addButton = dialog.findViewById(R.id.dialog_bt_two);
+
         int actionStringId = currentSetStatus == DatabaseContract.Sets.IN_DICTIONARY ?
                 R.string.remove_from_dictionary : R.string.add_to_dictionary;
 
         addButton.setText(actionStringId);
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeSetStatus(setId);
-                dialog.dismiss();
-            }
+        addButton.setOnClickListener(v -> {
+            changeSetStatus(set);
+            dialog.dismiss();
         });
-
 
         Button wtButton = dialog.findViewById(R.id.dialog_bt_three);
         wtButton.setVisibility(View.VISIBLE);
         wtButton.setText(R.string.word_translation);
-        wtButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mFragmentListener.startTraining(TrainingFabric.WORD_TRANSLATION, setId);
-                dialog.dismiss();
-            }
+        wtButton.setOnClickListener(v -> {
+            mFragmentListener.startTraining(TrainingFabric.WORD_TRANSLATION, set.getId());
+            dialog.dismiss();
         });
 
         Button twButton = dialog.findViewById(R.id.dialog_bt_four);
         twButton.setVisibility(View.VISIBLE);
         twButton.setText(R.string.translation_word);
-        twButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mFragmentListener.startTraining(TrainingFabric.TRANSLATION_WORD, setId);
-                dialog.dismiss();
-            }
+        twButton.setOnClickListener(v -> {
+            mFragmentListener.startTraining(TrainingFabric.TRANSLATION_WORD, set.getId());
+            dialog.dismiss();
         });
 
         dialog.show();
     }
 
     @Override
-    public void changeSetStatus(long setId) {
-        Set set = mDataProvider.getSetById(setId);
-        if (set == null) {
-            return;
-        }
+    public void changeSetStatus(Set set) {
 
         int currentStatus = set.getStatus();
         int newStatus = currentStatus == DatabaseContract.Sets.IN_DICTIONARY ?
@@ -324,20 +283,19 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
 
         set.setStatus(newStatus);
-        mDataProvider.updateSetStatus(set);
+        viewModel.updateSetStatus(set);
         mRecyclerAdapter.notifyEntityChanged(set);
     }
 
     @Override
-    public void onClick(View root, int position, long id) {
-        Log.d(TAG, "onClick: " + id);
-        mSetsFragmentListener.startSet(id, root.findViewById(R.id.civ_sets));
+    public void onClick(View root, int position, DataEntity entity) {
+        mSetsFragmentListener.startSet(entity.getId(), root.findViewById(R.id.civ_sets));
     }
 
     @Override
-    public boolean onLongClick(View root, int position, long id) {
+    public boolean onLongClick(View root, int position, DataEntity entity) {
         Log.d(TAG, "on item long click");
-        invokeSetMenu(id);
+        invokeSetMenu((Set) entity);
         return true;
     }
 
@@ -354,7 +312,6 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         mRecyclerView.setAdapter(mRecyclerAdapter);
 
         viewModel.getSets(themeCode).observe(this, (list) -> mRecyclerAdapter.changeData(list));
-
     }
 
     public interface SetsFragmentListener {

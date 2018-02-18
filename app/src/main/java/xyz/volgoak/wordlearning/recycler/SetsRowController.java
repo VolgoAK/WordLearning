@@ -74,12 +74,11 @@ import xyz.volgoak.wordlearning.update.ImageDownloader;
                 ? R.drawable.ic_added_green_50dp : R.drawable.ic_add_blue_50dp;
         addButton.setImageResource(drawableId);
 
-        final long id = set.getId();
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(mStatusChanger != null){
-                    mStatusChanger.changeSetStatus(id);
+                    mStatusChanger.changeSetStatus(set);
                 }
             }
         });

@@ -1,9 +1,9 @@
 package xyz.volgoak.wordlearning.data;
 
-import android.support.annotation.NonNull;
-
 import java.util.List;
 
+import io.reactivex.Flowable;
+import io.reactivex.Single;
 import xyz.volgoak.wordlearning.entities.DictionaryInfo;
 import xyz.volgoak.wordlearning.entities.Link;
 import xyz.volgoak.wordlearning.entities.Set;
@@ -60,18 +60,19 @@ public class DataProvider {
         word.setStudied(0);
         word.setTrainedTw(0);
         word.setTrainedWt(0);
-        
+
         wordDao.udateWords(word);
     }
-    
-    public void deleteOrHideWordById(long wordId) {
-        // TODO: 1/7/18 implement this method 
-    }
 
-    public void updateWordStatus(){}
+    public void updateWordStatus() {
+    }
 
     public List<Word> getDictionaryWords() {
         return wordDao.getDictionaryWords();
+    }
+
+    public Flowable<List<Word>> getDictionaryWordsFlowable() {
+        return wordDao.getDictionaryWordsFlowable();
     }
 
     public List<Word> getTrainingWords(long setId) {
@@ -79,13 +80,13 @@ public class DataProvider {
     }
 
     public List<Word> getTrainingWords(long setId, int limit) {
-        if(setId == -1) {
+        if (setId == -1) {
             return wordDao.getDictionaryWords();
         } else return wordDao.getWordsBySetId(setId);
     }
 
     public List<Word> getVariants(long wordId, int limit, long setId) {
-        if(setId == -1) {
+        if (setId == -1) {
             return wordDao.getVariants(wordId, limit);
         } else {
             return wordDao.getVarints(wordId, limit, setId);
@@ -108,7 +109,7 @@ public class DataProvider {
         setsDao.insertSets(sets);
     }
 
-    public void updateSets(Set...sets) {
+    public void updateSets(Set... sets) {
         setsDao.updateSets(sets);
     }
 
@@ -117,16 +118,16 @@ public class DataProvider {
         List<Word> words = wordDao.getWordsBySetId(set.getId());
         long time = System.currentTimeMillis();
         boolean updateTime = set.getStatus() == DatabaseContract.Sets.IN_DICTIONARY;
-        for(Word word : words) {
+        for (Word word : words) {
             word.setStatus(set.getStatus());
-            if(updateTime) word.setAddedTime(time);
+            if (updateTime) word.setAddedTime(time);
         }
         Word[] wordsArray = words.toArray(new Word[0]);
         wordDao.udateWords(wordsArray);
     }
 
     public List<Set> getAllSets() {
-        
+
         return setsDao.getAllSets();
     }
 
@@ -151,7 +152,7 @@ public class DataProvider {
         linkDao.insertLinks(links);
     }
 
-    public DictionaryInfo getDictionaryInfo() {
+    public Single<DictionaryInfo> getDictionaryInfo() {
         return infoDao.getDictionaryInfo();
     }
 
@@ -159,7 +160,7 @@ public class DataProvider {
         return themeDao.insertTheme(theme);
     }
 
-    public void insertThemes(Theme...themes) {
+    public void insertThemes(Theme... themes) {
         themeDao.insertThemes(themes);
     }
 

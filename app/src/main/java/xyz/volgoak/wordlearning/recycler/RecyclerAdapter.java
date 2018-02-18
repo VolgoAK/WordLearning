@@ -1,6 +1,7 @@
 package xyz.volgoak.wordlearning.recycler;
 
 import android.content.Context;
+import android.content.Entity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -121,13 +122,13 @@ public abstract class RecyclerAdapter<RC extends NewRowController> extends Recyc
             }
         }
         if(mAdapterClickListener != null){
-            mAdapterClickListener.onClick(root, position, getItemId(position));
+            mAdapterClickListener.onClick(root, position, mEntities.get(position));
         }
     }
 
     public boolean onControllerLongClick(NewRowController controller, View root, int position){
         if(mAdapterLongClickListener != null){
-            return  mAdapterLongClickListener.onLongClick(root, position, getItemId(position));
+            return  mAdapterLongClickListener.onLongClick(root, position, mEntities.get(position));
         }
         return false;
     }
@@ -141,10 +142,10 @@ public abstract class RecyclerAdapter<RC extends NewRowController> extends Recyc
     }
 
     public interface AdapterClickListener{
-        void onClick(View root, int position, long id);
+        void onClick(View root, int position, DataEntity entity);
     }
 
     public interface AdapterLongClickListener {
-        boolean onLongClick(View root, int position, long id);
+        boolean onLongClick(View root, int position, DataEntity entity);
     }
 }

@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import xyz.volgoak.wordlearning.entities.Word;
 import xyz.volgoak.wordlearning.data.DatabaseContract.*;
 
@@ -35,6 +36,9 @@ public interface WordDao {
 
     @Query("SELECT * FROM words_table WHERE STATUS=" + Words.IN_DICTIONARY)
     List<Word> getDictionaryWords();
+
+    @Query("SELECT * FROM words_table WHERE STATUS=" + Words.IN_DICTIONARY)
+    Flowable<List<Word>> getDictionaryWordsFlowable();
 
     @Query("SELECT * FROM words_table WHERE _id != :id AND STATUS = "+Words.IN_DICTIONARY
             + " ORDER BY RANDOM() LIMIT :wordsLimit ")

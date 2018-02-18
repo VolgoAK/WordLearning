@@ -65,4 +65,8 @@ public class SetsViewModel extends ViewModel{
             setsLiveData.postValue(themeSet);
         });
     }
+
+    public void updateSetStatus(Set set) {
+        AsyncTask.execute(() -> provider.updateSetStatus(set));
+    }
 }

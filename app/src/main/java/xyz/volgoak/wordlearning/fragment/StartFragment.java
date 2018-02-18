@@ -16,6 +16,8 @@ import android.view.animation.AccelerateInterpolator;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import xyz.volgoak.wordlearning.BR;
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
@@ -79,10 +81,14 @@ public class StartFragment extends Fragment {
 
         //load dictionary info
 
-        DictionaryInfo info = mDataProvider.getDictionaryInfo();
-        Log.d(TAG, "onStart: learned " + info.getLearnedWords());
-        mBinding.tvWordsDicStartF.setText(getString(R.string.words_in_dictionary, info.getWordsInDictionary()));
-        mBinding.tvWordsLearnedStartF.setText(getString(R.string.words_learned, info.getLearnedWords(), info.getAllWords()));
+        mDataProvider.getDictionaryInfo()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(info -> {
+                    Log.d(TAG, "onStart: learned " + info.getLearnedWords());
+                    mBinding.tvWordsDicStartF.setText(getString(R.string.words_in_dictionary, info.getWordsInDictionary()));
+                    mBinding.tvWordsLearnedStartF.setText(getString(R.string.words_learned, info.getLearnedWords(), info.getAllWords()));
+                });
 
         mAppearanceAnimated = false;
     }
