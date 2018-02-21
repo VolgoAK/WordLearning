@@ -1,20 +1,19 @@
 package xyz.volgoak.wordlearning.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.view.GravityCompat;
-import android.view.MenuItem;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import xyz.volgoak.wordlearning.AppRater;
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.fragment.SingleSetFragment;
 import xyz.volgoak.wordlearning.fragment.WordSetsFragment;
 
-public class SetsActivity extends NavigationActivity implements FragmentListener, WordSetsFragment.SetsFragmentListener {
+public class SetsActivity extends AppCompatActivity implements FragmentListener, WordSetsFragment.SetsFragmentListener {
 
     private WordSetsFragment mSetsFragment;
     private SingleSetFragment mSingleSetFragment;
@@ -26,7 +25,6 @@ public class SetsActivity extends NavigationActivity implements FragmentListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sets);
-        super.onCreateNavigationDrawer();
 
         isMultiFrag = findViewById(R.id.container_detail_sets_activity) != null;
 
@@ -49,53 +47,24 @@ public class SetsActivity extends NavigationActivity implements FragmentListener
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.navigation_menu_sets:
-                break;
-            case R.id.navigation_menu_redactor:
-                startDictionary();
-                break;
-            case R.id.navigation_menu_to_home:
-                finish();
-                break;
-            case R.id.navigation_menu_training:
-                selectTraining();
-                break;
-            case R.id.navigation_menu_rate:
-                AppRater.rateApp(this);
-                break;
-            case R.id.navigation_menu_settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
-                break;
-        }
-        mDrawerLayout.closeDrawer(GravityCompat.START);
-        return false;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void startSet(long setId, View shared) {
-        if (findViewById(R.id.container_detail_sets_activity) != null) {
-            mSingleSetFragment = SingleSetFragment.newInstance(setId, false);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container_detail_sets_activity, mSingleSetFragment)
-                    .commit();
-            mSelectedSetId = setId;
-        } else {
-            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
-                    shared, "title");
-            Intent intent = new Intent(this, SingleSetActivity.class);
-            intent.putExtra(SingleSetActivity.ID_EXTRA, setId);
-            // TODO: 05.11.2017 add shared element transition - uncomment first line
-//            startActivity(intent, optionsCompat.toBundle());
-            startActivity(intent);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        boolean singleMode = findViewById(R.id.container_detail_sets_activity) == null;
+        int container = singleMode ? R.id.container_master_sets_activity : R.id.container_master_sets_activity;
+
+        mSingleSetFragment = SingleSetFragment.newInstance(setId, singleMode);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            String transitionName = ViewCompat.getTransitionName(shared);
+            mSingleSetFragment.getArguments().putString(SingleSetFragment.EXTRA_TRANSITION_NAME, transitionName);
+            transaction.addSharedElement(shared, transitionName);
         }
+
+        transaction.replace(container, mSingleSetFragment)
+                .addToBackStack(null)
+                .commit();
+
+        mSelectedSetId = setId;
     }
 
     @Override

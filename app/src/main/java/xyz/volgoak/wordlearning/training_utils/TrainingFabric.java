@@ -31,11 +31,15 @@ public abstract class TrainingFabric {
     public static final int WORDS_LIMIT = 10;
 
 
-    public static Single<Training> getSimpleTrainingRx(int trainingType, long setId, DataProvider provider) {
-        return Single.create(subscriber -> subscriber.onSuccess(getSimpleTraining(trainingType, setId, provider)));
+    public static Single<Training> getSimpleTraining(int trainingType, long setId, DataProvider provider) {
+        return Single.create(subscriber -> subscriber.onSuccess(createSimpleTraining(trainingType, setId, provider)));
     }
 
-    public static Training getSimpleTraining(int trainingType, long setId, DataProvider provider) {
+    public static Single<TrainingBool> getBoolTrainingRx(long setId, DataProvider provider) {
+        return Single.create(subscriber -> subscriber.onSuccess(createBoolTraining(setId, provider)));
+    }
+
+    private static Training createSimpleTraining(int trainingType, long setId, DataProvider provider) {
 
         String variantsColumnString = "";
         List<Word> wordList = provider.getTrainingWords(setId);
@@ -49,7 +53,7 @@ public abstract class TrainingFabric {
             variantsGetter = Word::getTranslation;
             trainedComparator = (w1, w2) -> Integer.compare(w1.getTrainedWt(), w2.getTrainedWt());
 
-            Log.d("Fabric", "getSimpleTraining: words " + wordList.size());
+            Log.d("Fabric", "createSimpleTraining: words " + wordList.size());
         } else if (trainingType == TRANSLATION_WORD) {
             wordGetter = Word::getTranslation;
             variantsGetter = Word::getWord;
@@ -84,7 +88,7 @@ public abstract class TrainingFabric {
         return new Training(playWords, trainingType);
     }
 
-    public static TrainingBool getBoolTraining(long setId, DataProvider provider) {
+    private static TrainingBool createBoolTraining(long setId, DataProvider provider) {
         List<Word> words = provider.getTrainingWords(setId);
 
         Queue<String> variants = Stream.of(words).map(Word::getTranslation)

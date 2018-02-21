@@ -27,8 +27,8 @@ public class DbModule {
 
     public DbModule(Application application) {
         appDatabase = Room.databaseBuilder(application, AppDatabase.class, DatabaseContract.DB_NAME)
-                .build();
-//                .allowMainThreadQueries().build();
+//                .build();
+                .allowMainThreadQueries().build();
     }
 
     @Provides

@@ -125,50 +125,6 @@ public class TimerFragment extends Fragment {
         }, 1000);
     }
 
-    private void runRightToLeft() {
-        Handler handler = new Handler();
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (paused) return;
-
-//                soundPool.play(timeSound, 0.8f, 0.8f, 1, 0, 1);
-
-                Button in = (time % 2 == 0) ? btTwo : btOne;
-                Button out = (time % 2 == 0) ? btOne : btTwo;
-
-                in.setAlpha(1.0f);
-//                out.setAlpha(1.0f);
-
-                in.setText("" + time);
-                if (time == 0) {
-                    in.setText(R.string.go);
-                    in.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.green_circle));
-                }
-
-                ObjectAnimator animatorIn = AppearingAnimator
-                        .createAnimator(getActivity(), in, AppearingAnimator.FROM_RIGHT, false);
-                ObjectAnimator animatorOut = AppearingAnimator
-                        .createAnimator(getActivity(), out, AppearingAnimator.FROM_LEFT, true);
-                ObjectAnimator animatorOutFade = ObjectAnimator.ofFloat(out, "alpha", 1, 0);
-
-                AnimatorSet set = new AnimatorSet();
-                set.play(animatorIn).with(animatorOut).with(animatorOutFade);
-                set.setInterpolator(new AccelerateInterpolator());
-                set.setDuration(500);
-                set.start();
-
-                time--;
-
-                if (time < 0) {
-                    handler.postDelayed(() -> timerListener.onTimerFinished(), 1100);
-                } else {
-                    handler.postDelayed(this, 1100);
-                }
-            }
-        });
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

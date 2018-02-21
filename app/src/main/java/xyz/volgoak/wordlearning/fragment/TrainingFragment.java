@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.Toast;
@@ -82,7 +83,6 @@ public class TrainingFragment extends Fragment {
     private boolean mIsAnimated = false;
     private float mNextButtonPath = 0f;
 
-    boolean firstAnswered = false;
 
     public TrainingFragment() {
         // Required empty public constructor
@@ -125,7 +125,7 @@ public class TrainingFragment extends Fragment {
             if(mTraining != null) {
                 mTrainingWord = mTraining.getFirstWord();
             }*/
-            TrainingFabric.getSimpleTrainingRx(mTrainingType, mSetId, mDataProvider)
+            TrainingFabric.getSimpleTraining(mTrainingType, mSetId, mDataProvider)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe((this::onTrainingReady));
@@ -242,8 +242,9 @@ public class TrainingFragment extends Fragment {
         }
 
         //hide the next button
-        if(firstAnswered) hideShowNextButton(false);
-        firstAnswered = true;
+        /*if(firstAnswered) hideShowNextButton(false);
+        firstAnswered = true;*/
+        hideShowNextButton(false);
 
         if (PreferenceManager.getDefaultSharedPreferences(getContext())
                 .getBoolean(PreferenceContract.AUTO_PLAY_PRONOUN, true)) {
@@ -265,7 +266,6 @@ public class TrainingFragment extends Fragment {
     }
 
     public void pronounceWord() {
-//        Log.d(TAG, "pronounceWord: ");
         if (mTrainingType == TrainingFabric.WORD_TRANSLATION)
             WordSpeaker.speakWord(mTrainingWord.getWord());
     }
@@ -277,7 +277,7 @@ public class TrainingFragment extends Fragment {
         mBinding.btVar2Tf.setBackground(mUnavailableBackground);
         mBinding.btVar3Tf.setBackground(mUnavailableBackground);
         mBinding.btVar4Tf.setBackground(mUnavailableBackground);
-//        Log.d(TAG, "checkAnswer: ");
+
         Button button = (Button) view;
         String tag = (String) button.getTag();
         int number = Integer.parseInt(tag);
@@ -302,17 +302,19 @@ public class TrainingFragment extends Fragment {
         if (mNextButtonPath == 0f) {
             DisplayMetrics metrics = new DisplayMetrics();
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-            mNextButtonPath = metrics.widthPixels - mBinding.btNextTf.getY();
+            mNextButtonPath = metrics.widthPixels - mBinding.btNextTf.getX();
             mBinding.btNextTf.setVisibility(View.VISIBLE);
         }
         ObjectAnimator animator;
         if (show) {
             animator = ObjectAnimator.ofFloat(mBinding.btNextTf, "TranslationX", mNextButtonPath, 0);
-        } else
+            animator.setInterpolator(new MetallBounceInterpoltor());
+        } else {
             animator = ObjectAnimator.ofFloat(mBinding.btNextTf, "TranslationX", 0, mNextButtonPath);
+            animator.setInterpolator(new AccelerateInterpolator());
+        }
 
-        animator.setInterpolator(new MetallBounceInterpoltor());
-        animator.setDuration(800);
+        animator.setDuration(500);
         animator.start();
     }
 

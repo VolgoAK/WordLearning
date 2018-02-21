@@ -1,15 +1,36 @@
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rv_setsfrag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent"
-    tools:context="xyz.volgoak.wordlearning.fragment.WordSetsFragment"/>
+    android:fitsSystemWindows="true">
 
-    <!--<android.support.v7.widget.RecyclerView
-
-        android:dividerHeight="@dimen/list_divider_height"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarSets"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>-->
+        android:layout_height="?attr/actionBarSize">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarSets"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@null"
+            app:layout_collapseMode="pin"
+            app:theme="@style/AppTheme.AppBarOverlay"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:titleTextColor="@color/white"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_setsfrag"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="xyz.volgoak.wordlearning.fragment.WordSetsFragment" />
+</android.support.design.widget.CoordinatorLayout>
+
 
 
