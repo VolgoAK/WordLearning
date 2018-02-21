@@ -28,7 +28,7 @@ public class WordsApp extends Application {
     public WordsApp() {
         sInstance = this;
         initComponent();
-        //check git
+        //check gitdd
     }
 
     public static Context getContext() {
