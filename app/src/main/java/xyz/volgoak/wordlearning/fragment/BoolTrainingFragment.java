@@ -21,6 +21,8 @@ import org.greenrobot.eventbus.EventBus;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import xyz.volgoak.wordlearning.IntegerEvent;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.SwipeHolder;
@@ -79,23 +81,31 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
         if (savedInstanceState != null) {
             trainingBool = (TrainingBool) savedInstanceState.getSerializable(SAVED_TRAINING);
             timer = savedInstanceState.getInt(SAVED_TIME);
+            onTrainingReady(trainingBool);
         } else {
             setId = getArguments().getLong(EXTRA_SET_ID, -1);
-            trainingBool = TrainingFabric.getBoolTraining(setId, dataProvider);
+            TrainingFabric.getBoolTrainingRx(setId, dataProvider)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::onTrainingReady);
         }
 
+        dataBinding.btBoolRight.setOnClickListener((v) -> checkAnswer(true));
+        dataBinding.btBoolWrong.setOnClickListener((v) -> checkAnswer(false));
+
+        return dataBinding.getRoot();
+    }
+
+    private void onTrainingReady(TrainingBool training) {
+
+        trainingBool = training;
         for (PlayWord pw : trainingBool.getInitialWords()) {
             SwipeHolder holder = new SwipeHolder(pw);
             holder.setSwipeListener(this);
             dataBinding.swipeView.addView(holder);
         }
 
-        dataBinding.btBoolRight.setOnClickListener((v) -> checkAnswer(true));
-        dataBinding.btBoolWrong.setOnClickListener((v) -> checkAnswer(false));
-
         dataBinding.tvPointsBool.setText(String.valueOf(trainingBool.getScores()));
-
-        return dataBinding.getRoot();
     }
 
     @Override

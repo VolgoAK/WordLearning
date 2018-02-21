@@ -1,12 +1,13 @@
 package xyz.volgoak.wordlearning.fragment;
 
 import android.app.Dialog;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,9 +28,9 @@ import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
-import xyz.volgoak.wordlearning.entities.Word;
 import xyz.volgoak.wordlearning.databinding.FragmentRedactorBinding;
-import xyz.volgoak.wordlearning.recycler.RecyclerAdapter;
+import xyz.volgoak.wordlearning.entities.Word;
+import xyz.volgoak.wordlearning.model.DictionaryViewModel;
 import xyz.volgoak.wordlearning.recycler.WordsRecyclerAdapter;
 
 /**
@@ -38,19 +40,17 @@ import xyz.volgoak.wordlearning.recycler.WordsRecyclerAdapter;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RedactorFragment extends Fragment{
+public class DictionaryFragment extends Fragment {
 
-    public static final String TAG = RedactorFragment.class.getSimpleName();
+    public static final String TAG = DictionaryFragment.class.getSimpleName();
 
-    @Inject
-    DataProvider mDataProvider;
     private WordsRecyclerAdapter mRecyclerAdapter;
     private FragmentListener mFragmentListener;
 
     private FragmentRedactorBinding mBinding;
-    private List<Word> mWords;
+    private DictionaryViewModel viewModel;
 
-    public RedactorFragment() {
+    public DictionaryFragment() {
         // Required empty public constructor
     }
 
@@ -58,73 +58,63 @@ public class RedactorFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         WordsApp.getsComponent().inject(this);
-        // Inflate the layout for this fragment
         mFragmentListener = (FragmentListener) getActivity();
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_redactor, container, false);
-        return mBinding.getRoot();
-    }
-
-    @Override
-    public void onStart(){
-        super.onStart();
-        mFragmentListener.setActionBarTitle(getString(R.string.redactor));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mBinding.rvRedactor.setLayoutManager(layoutManager);
 
-        mWords = mDataProvider.getDictionaryWords();
-        Collections.sort(mWords, (one, two) -> Long.compare(two.getAddedTime(), one.getAddedTime()));
-
-        mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), mWords, mBinding.rvRedactor);
+        mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), new ArrayList<>(), mBinding.rvRedactor);
+        mRecyclerAdapter.setAdapterClickListener((root, position, word) -> fireCustomDialog((Word) word));
         mBinding.rvRedactor.setAdapter(mRecyclerAdapter);
 
-        mRecyclerAdapter.setAdapterClickListener(new RecyclerAdapter.AdapterClickListener() {
-            @Override
-            public void onClick(View root, int position, long id) {
-                fireCustomDialog(id);
-            }
-
-        });
+        viewModel = ViewModelProviders.of(this).get(DictionaryViewModel.class);
+        viewModel.getDictionaryWords().observe(this, list -> mRecyclerAdapter.changeData(list));
 
         mBinding.fabAddRedactor.setOnClickListener((v) -> fireAddWordDialog());
+
+        return mBinding.getRoot();
     }
 
-    public void fireCustomDialog(final long id){
+    @Override
+    public void onStart() {
+        super.onStart();
+        mFragmentListener.setActionBarTitle(getString(R.string.redactor));
+
+
+
+
+    }
+
+    public void fireCustomDialog(final Word word) {
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog);
 
-        TextView dialogTitle = (TextView) dialog.findViewById(R.id.dialog_title);
+        TextView dialogTitle = dialog.findViewById(R.id.dialog_title);
         dialogTitle.setText(R.string.what_to_do);
 
         Button toTrainingButton = dialog.findViewById(R.id.dialog_bt_one);
         toTrainingButton.setText(getString(R.string.send_to_training));
-        toTrainingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDataProvider.resetWordProgress(id);
-                mRecyclerAdapter.changeData(mDataProvider.getDictionaryWords());
-                dialog.dismiss();
-            }
+        toTrainingButton.setOnClickListener(v -> {
+            viewModel.resetWordProgress(word);
+            dialog.dismiss();
         });
 
         Button deleteButton = dialog.findViewById(R.id.dialog_bt_two);
         deleteButton.setText(getString(R.string.delete));
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDataProvider.deleteOrHideWordById(id);
-                mRecyclerAdapter.changeData(mDataProvider.getDictionaryWords());
-                dialog.dismiss();
-            }
+        deleteButton.setOnClickListener(v -> {
+            viewModel.deleteOrHideWord(word);
+            dialog.dismiss();
         });
 
         dialog.show();
     }
 
-    public void fireAddWordDialog(){
+    public void fireAddWordDialog() {
         Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_add_word);
@@ -136,12 +126,11 @@ public class RedactorFragment extends Fragment{
         addButton.setOnClickListener((v) -> {
             String word = wordEt.getText().toString();
             String translation = translationEt.getText().toString();
-            if(!word.isEmpty() && !translation.isEmpty()){
+            if (!word.isEmpty() && !translation.isEmpty()) {
                 Word newWord = new Word(word, translation);
                 newWord.setStatus(DatabaseContract.Words.IN_DICTIONARY);
-                mDataProvider.insertWord(newWord);
-                mRecyclerAdapter.changeData(mDataProvider.getDictionaryWords());
-            }else{
+                viewModel.insertWord(newWord);
+            } else {
                 Toast.makeText(getContext(), R.string.fields_empty_message, Toast.LENGTH_LONG).show();
             }
             dialog.dismiss();

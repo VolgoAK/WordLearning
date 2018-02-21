@@ -3,6 +3,7 @@ package xyz.volgoak.wordlearning.recycler;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
@@ -17,12 +18,14 @@ import com.crashlytics.android.Crashlytics;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
 import javax.inject.Inject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import xyz.volgoak.wordlearning.BuildConfig;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
@@ -74,12 +77,13 @@ import xyz.volgoak.wordlearning.update.ImageDownloader;
                 ? R.drawable.ic_added_green_50dp : R.drawable.ic_add_blue_50dp;
         addButton.setImageResource(drawableId);
 
-        final long id = set.getId();
+        if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) civ.setTransitionName(((Set) dataEntity).getName());
+
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(mStatusChanger != null){
-                    mStatusChanger.changeSetStatus(id);
+                    mStatusChanger.changeSetStatus(set);
                 }
             }
         });
@@ -104,7 +108,7 @@ import xyz.volgoak.wordlearning.update.ImageDownloader;
         Uri imageUri = Uri.fromFile(imageFile);
 
         if(imageFile.exists()) {
-            Glide.with(mContext).load(imageUri)
+            Picasso.with(mContext).load(imageUri)
                     .error(R.drawable.button_back)
                     .into(civ);
         } else {

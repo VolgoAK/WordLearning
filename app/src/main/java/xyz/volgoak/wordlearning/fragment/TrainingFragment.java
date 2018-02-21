@@ -19,12 +19,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.Toast;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.data.DataProvider;
@@ -33,9 +36,9 @@ import xyz.volgoak.wordlearning.training_utils.Results;
 import xyz.volgoak.wordlearning.training_utils.Training;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 import xyz.volgoak.wordlearning.training_utils.TrainingWord;
-import xyz.volgoak.wordlearning.utils.SoundsManager;
 import xyz.volgoak.wordlearning.utils.MetallBounceInterpoltor;
 import xyz.volgoak.wordlearning.utils.PreferenceContract;
+import xyz.volgoak.wordlearning.utils.SoundsManager;
 import xyz.volgoak.wordlearning.utils.WordSpeaker;
 
 /**
@@ -80,11 +83,12 @@ public class TrainingFragment extends Fragment {
     private boolean mIsAnimated = false;
     private float mNextButtonPath = 0f;
 
+
     public TrainingFragment() {
         // Required empty public constructor
     }
 
-    public static TrainingFragment getWordTrainingFragment(int  trainingType, long setId){
+    public static TrainingFragment getWordTrainingFragment(int trainingType, long setId) {
         TrainingFragment fragment = new TrainingFragment();
         fragment.mTrainingType = trainingType;
         fragment.mSetId = setId;
@@ -106,21 +110,25 @@ public class TrainingFragment extends Fragment {
         mWrongAnswerBackground = ContextCompat.getDrawable(getContext(), R.drawable.orange_button);
         mUnavailableBackground = ContextCompat.getDrawable(getContext(), R.drawable.blue_button_unavailable);
 
-        if(savedInstanceState != null){
-            mTraining =(Training) savedInstanceState.getSerializable(TRAINING_TAG);
+        if (savedInstanceState != null) {
+            mTraining = (Training) savedInstanceState.getSerializable(TRAINING_TAG);
             mTrainingWord = mTraining.getCurrentWord();
             boolean answered = savedInstanceState.getBoolean(ANSWERED, false);
             mAnswered.set(answered);
-            if(answered){
+            if (answered) {
                 hideShowNextButton(true);
             }
-        }else {
+        } else {
             mAnswered.set(false);
-            mTraining = TrainingFabric.getSimpleTraining(mTrainingType, mSetId, mDataProvider);
+            /*mTraining = TrainingFabric.getSimpleTraining(mTrainingType, mSetId, mDataProvider);
             //if training is null, we have to go to the dictionary
             if(mTraining != null) {
                 mTrainingWord = mTraining.getFirstWord();
-            }
+            }*/
+            TrainingFabric.getSimpleTraining(mTrainingType, mSetId, mDataProvider)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe((this::onTrainingReady));
         }
 
         mResultReceiver = (ResultReceiver) getActivity();
@@ -129,9 +137,9 @@ public class TrainingFragment extends Fragment {
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
-        //finish training and go to the dictionary if there is nothing to train
+        /*//finish training and go to the dictionary if there is nothing to train
         if(mTraining == null){
             goToDictionary();
             return;
@@ -142,7 +150,7 @@ public class TrainingFragment extends Fragment {
         //max progress 100 percent
         mBinding.progressTf.setMax(100);
         //load first word at start time
-        showWord();
+        showWord();*/
 
         //createAnimator buttons appearance
         mIsAnimated = false;
@@ -150,7 +158,7 @@ public class TrainingFragment extends Fragment {
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                if(!mIsAnimated){
+                if (!mIsAnimated) {
                     mIsAnimated = true;
                     startAppearenceAnim();
                 }
@@ -158,14 +166,32 @@ public class TrainingFragment extends Fragment {
         });
     }
 
+    private void onTrainingReady(Training training) {
+        mTraining = training;
+        //finish training and go to the dictionary if there is nothing to train
+        if (mTraining == null) {
+            goToDictionary();
+            return;
+        }
+        int titleId = mTrainingType == TrainingFabric.TRANSLATION_WORD ? R.string.translation_word : R.string.word_translation;
+        getActivity().setTitle(getString(titleId));
+
+        //max progress 100 percent
+        mBinding.progressTf.setMax(100);
+        //load first word at start time
+        mTrainingWord = mTraining.getFirstWord();
+        showWord();
+    }
+
     @Override
     public void onResume() {
         super.onResume();
     }
-    private void startAppearenceAnim(){
+
+    private void startAppearenceAnim() {
         Log.d(TAG, "startAppearenceAnim: ");
         float path = mBinding.btVar1Tf.getWidth() + mBinding.btVar1Tf.getX();
-        ValueAnimator animator  = ValueAnimator.ofFloat(path, 0);
+        ValueAnimator animator = ValueAnimator.ofFloat(path, 0);
         animator.setInterpolator(new MetallBounceInterpoltor());
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -197,7 +223,7 @@ public class TrainingFragment extends Fragment {
         set.start();
     }
 
-    public void showWord(){
+    public void showWord() {
 
         mVarArray.set(mTrainingWord.getVars());
         mWord.set(mTrainingWord.getWord());
@@ -209,24 +235,26 @@ public class TrainingFragment extends Fragment {
 
 //        mBinding.progressTf.setProgress(mTraining.getProgressInPercents());
         float newProgress = mTraining.getProgressInPercents();
-        if(newProgress > mBinding.progressTf.getProgress()){
+        if (newProgress > mBinding.progressTf.getProgress()) {
             ObjectAnimator animator = ObjectAnimator.ofFloat(mBinding.progressTf, "progress",
                     mBinding.progressTf.getProgress(), newProgress);
             animator.start();
         }
 
         //hide the next button
+        /*if(firstAnswered) hideShowNextButton(false);
+        firstAnswered = true;*/
         hideShowNextButton(false);
 
-        if(PreferenceManager.getDefaultSharedPreferences(getContext())
-                .getBoolean(PreferenceContract.AUTO_PLAY_PRONOUN, true)){
+        if (PreferenceManager.getDefaultSharedPreferences(getContext())
+                .getBoolean(PreferenceContract.AUTO_PLAY_PRONOUN, true)) {
             pronounceWord();
         }
     }
 
-    public void nextWord(){
+    public void nextWord() {
         mTrainingWord = mTraining.getNextWord();
-        if(mTrainingWord == null){
+        if (mTrainingWord == null) {
             Results results = mTraining.getResults();
             results.setId = mSetId;
             mResultReceiver.showResults(results);
@@ -237,19 +265,19 @@ public class TrainingFragment extends Fragment {
         showWord();
     }
 
-    public void pronounceWord(){
-//        Log.d(TAG, "pronounceWord: ");
-        if(mTrainingType == TrainingFabric.WORD_TRANSLATION) WordSpeaker.speakWord(mTrainingWord.getWord());
+    public void pronounceWord() {
+        if (mTrainingType == TrainingFabric.WORD_TRANSLATION)
+            WordSpeaker.speakWord(mTrainingWord.getWord());
     }
 
     //checks is answer correct and sets background for button
     //depends on correctness
-    public void checkAnswer(View view){
+    public void checkAnswer(View view) {
         mBinding.btVar1Tf.setBackground(mUnavailableBackground);
         mBinding.btVar2Tf.setBackground(mUnavailableBackground);
         mBinding.btVar3Tf.setBackground(mUnavailableBackground);
         mBinding.btVar4Tf.setBackground(mUnavailableBackground);
-//        Log.d(TAG, "checkAnswer: ");
+
         Button button = (Button) view;
         String tag = (String) button.getTag();
         int number = Integer.parseInt(tag);
@@ -269,32 +297,34 @@ public class TrainingFragment extends Fragment {
         soundsManager.play(correct ? SoundsManager.Sound.CORRECT_SOUND : SoundsManager.Sound.WRONG_SOUND);
     }
 
-    private void hideShowNextButton(boolean show){
+    private void hideShowNextButton(boolean show) {
         //show a next button
-        if(mNextButtonPath == 0f) {
+        if (mNextButtonPath == 0f) {
             DisplayMetrics metrics = new DisplayMetrics();
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-            mNextButtonPath = metrics.widthPixels - mBinding.btNextTf.getY();
+            mNextButtonPath = metrics.widthPixels - mBinding.btNextTf.getX();
             mBinding.btNextTf.setVisibility(View.VISIBLE);
         }
         ObjectAnimator animator;
-        if(show){
+        if (show) {
             animator = ObjectAnimator.ofFloat(mBinding.btNextTf, "TranslationX", mNextButtonPath, 0);
-        }else animator = ObjectAnimator.ofFloat(mBinding.btNextTf, "TranslationX", 0, mNextButtonPath);
+            animator.setInterpolator(new MetallBounceInterpoltor());
+        } else {
+            animator = ObjectAnimator.ofFloat(mBinding.btNextTf, "TranslationX", 0, mNextButtonPath);
+            animator.setInterpolator(new AccelerateInterpolator());
+        }
 
-        animator.setInterpolator(new MetallBounceInterpoltor());
-        animator.setDuration(800);
+        animator.setDuration(500);
         animator.start();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(TRAINING_TAG, mTraining );
+        outState.putSerializable(TRAINING_TAG, mTraining);
         boolean answered = mAnswered.get();
         outState.putBoolean(ANSWERED, answered);
     }
-
 
 
     @Override
@@ -302,18 +332,18 @@ public class TrainingFragment extends Fragment {
         super.onDestroy();
     }
 
-    private void goToDictionary(){
+    private void goToDictionary() {
         Toast.makeText(getContext(), getString(R.string.all_words_studied_message), Toast.LENGTH_LONG).show();
         //mListener.startSets();
         Results results = new Results(Results.ResultType.NO_WORDS);
         mResultReceiver.showResults(results);
     }
 
-    public int getTrainingType(){
+    public int getTrainingType() {
         return mTrainingType;
     }
 
-    public interface ResultReceiver{
+    public interface ResultReceiver {
         void showResults(Results results);
     }
 }

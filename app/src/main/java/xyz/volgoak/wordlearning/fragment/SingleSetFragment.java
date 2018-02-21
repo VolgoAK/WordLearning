@@ -4,10 +4,12 @@ package xyz.volgoak.wordlearning.fragment;
 import android.app.Dialog;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
+import android.support.transition.TransitionInflater;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
@@ -23,8 +25,11 @@ import android.view.ViewGroup;
 import android.view.Window;
 
 import com.bumptech.glide.Glide;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -54,6 +59,7 @@ public class SingleSetFragment extends Fragment {
     public static final String EXTRA_SINGLE_MODE = "single_mode";
     public static final String SAVED_IS_MULTI_CHOICE = "is_multi_choice";
     public static final String SAVED_CHOICE_MODE = "saved_choice_mode";
+    public static final String EXTRA_TRANSITION_NAME = "extra_transition";
 
     private FragmentSingleSetBinding mBinding;
     private FragmentListener mFragmentListener;
@@ -100,6 +106,10 @@ public class SingleSetFragment extends Fragment {
                 mWordsCallBack.onRestoreInstanceState(savedInstanceState);
             }
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
+        }
     }
 
     @Override
@@ -107,6 +117,11 @@ public class SingleSetFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_single_set, container, false);
+        String transitionName = getArguments().getString(EXTRA_TRANSITION_NAME);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mBinding.setIvTitle.setTransitionName(transitionName);
+        }
 
         manageTrainingStatusMenu();
         loadSetInformation();
@@ -126,12 +141,7 @@ public class SingleSetFragment extends Fragment {
         mRecyclerAdapter.changeData(mWords);
         if (mSingleFragMode) {
             mBinding.setToolbar.setNavigationIcon(R.drawable.ic_back_toolbar);
-            mBinding.setToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getActivity().finish();
-                }
-            });
+            mBinding.setToolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
             mBinding.coordinatorSetact.setFitsSystemWindows(true);
         } else {
 //            AppBarLayout.LayoutParams layoutParams =(AppBarLayout.LayoutParams) mBinding.collapsingToolbarSetAct.getLayoutParams();
@@ -178,11 +188,20 @@ public class SingleSetFragment extends Fragment {
         File imageDir = new File(getActivity().getFilesDir(), StorageContract.IMAGES_FOLDER);
         File imageFile = new File(imageDir, imageRes);
 
-        Glide.with(this)
+        Picasso.with(getContext())
                 .load(imageFile)
-                .centerCrop()
-                .crossFade().error(R.drawable.def_title)
-                .into(mBinding.setIvTitle);
+                .into(mBinding.setIvTitle, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        startPostponedEnterTransition();
+                    }
+
+                    @Override
+                    public void onError() {
+                        startPostponedEnterTransition();
+                    }
+                });
+
 
 
         int setStatus = set.getStatus();
@@ -238,14 +257,14 @@ public class SingleSetFragment extends Fragment {
     }
 
     private void prepareRecycler() {
-        mWords = mDataProvider.getWordsBySetId(mSetId);
+//        mWords = mDataProvider.getWordsBySetId(mSetId);
 
         mBinding.rvSetAc.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mBinding.rvSetAc.setLayoutManager(llm);
 
-        mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), mWords, mBinding.rvSetAc);
+        mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), new ArrayList<>(), mBinding.rvSetAc);
 
         if (mWordsCallBack != null) {
             mRecyclerAdapter.setChoiceMode(mWordsCallBack.choiceMode);

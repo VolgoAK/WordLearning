@@ -13,7 +13,7 @@ import android.widget.Toast;
 import xyz.volgoak.wordlearning.AppRater;
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
-import xyz.volgoak.wordlearning.fragment.RedactorFragment;
+import xyz.volgoak.wordlearning.fragment.DictionaryFragment;
 import xyz.volgoak.wordlearning.fragment.StartFragment;
 import xyz.volgoak.wordlearning.fragment.TrainingSelectFragment;
 
@@ -118,7 +118,7 @@ public class MainActivity extends NavigationActivity implements FragmentListener
     }
 
     public void startDictionary() {
-        RedactorFragment redactorFragment = new RedactorFragment();
+        DictionaryFragment redactorFragment = new DictionaryFragment();
         startFragment(redactorFragment);
     }
 

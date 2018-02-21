@@ -57,6 +57,6 @@ public class SetsRecyclerAdapter extends RecyclerAdapter {
     }
 
     public interface SetStatusChanger{
-        void changeSetStatus(long id);
+        void changeSetStatus(Set set);
     }
 }

@@ -1,5 +1,7 @@
 package xyz.volgoak.wordlearning.data;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
@@ -34,4 +36,6 @@ public interface SetsDao {
     @Query("SELECT * FROM SETS_TABLE WHERE THEME_CODES LIKE :themeCode")
     List<Set> getSetsByTheme(String themeCode);
 
+    @Query("SELECT * FROM SETS_TABLE")
+    LiveData<List<Set>> getAllSetsAsync();
 }

@@ -50,7 +50,8 @@
 
         <activity
             android:name=".activity.SetsActivity"
-            android:label="@string/sets" />
+            android:label="@string/sets"
+            android:theme="@style/AppTheme.SimpleCoordinatorTheme"/>
         <activity android:name=".activity.SettingsActivity"></activity>
     </application>
 
