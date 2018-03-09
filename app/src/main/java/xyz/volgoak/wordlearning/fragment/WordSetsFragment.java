@@ -2,6 +2,8 @@ package xyz.volgoak.wordlearning.fragment;
 
 
 import android.app.Dialog;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
@@ -29,13 +31,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
-import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.activity.SingleSetActivity;
-import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.entities.DataEntity;
 import xyz.volgoak.wordlearning.entities.Set;
@@ -138,7 +136,6 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         super.onAttach(context);
 
         if (context instanceof SetsFragmentListener) {
-            Log.d(TAG, "onAttach: FragmentListener set");
             mSetsFragmentListener = (SetsFragmentListener) context;
         } else {
             throw new RuntimeException("Activity must implement WordsFragmentListener");
@@ -182,7 +179,6 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
             MenuItem item = popupMenu.getMenu().add(1, i, 0, name);
             item.setCheckable(true);
             if (mSelectedTheme.equals(theme.getCode())) {
-                Log.d(TAG, "showThemesList: set checked");
                 item.setChecked(true);
                 allThemes.setChecked(false);
             }
@@ -204,7 +200,6 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(TAG, "onDetach: ");
         mSetsFragmentListener = null;
         mFragmentListener = null;
     }
@@ -300,13 +295,18 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
 
     @Override
     public void onClick(View root, int position, DataEntity entity) {
-        viewModel.changeSet(entity.getId());
-        mSetsFragmentListener.startSet(entity.getId(), root.findViewById(R.id.civ_sets));
+        LiveData<Boolean> loadedData = viewModel.changeSet(entity.getId());
+        loadedData.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                loadedData.removeObserver(this);
+                mSetsFragmentListener.startSet(entity.getId(), root.findViewById(R.id.civ_sets));
+            }
+        });
     }
 
     @Override
     public boolean onLongClick(View root, int position, DataEntity entity) {
-        Log.d(TAG, "on item long click");
         invokeSetMenu((Set) entity);
         return true;
     }

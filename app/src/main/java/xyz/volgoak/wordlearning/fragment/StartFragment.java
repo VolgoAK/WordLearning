@@ -61,7 +61,6 @@ public class StartFragment extends Fragment {
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                Log.d(TAG, "onGlobalLayout: createAnimator");
                 if (!mAppearanceAnimated) {
                     mAppearanceAnimated = true;
                     runAppearAnimation(false);
@@ -74,7 +73,6 @@ public class StartFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        Log.d(TAG, "onStart: ");
         mBinding.setListener(mListener);
         mBinding.notifyPropertyChanged(BR._all);
         mListener.setActionBarTitle(getString(R.string.app_name));
@@ -85,7 +83,6 @@ public class StartFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(info -> {
-                    Log.d(TAG, "onStart: learned " + info.getLearnedWords());
                     mBinding.tvWordsDicStartF.setText(getString(R.string.words_in_dictionary, info.getWordsInDictionary()));
                     mBinding.tvWordsLearnedStartF.setText(getString(R.string.words_learned, info.getLearnedWords(), info.getAllWords()));
                 });

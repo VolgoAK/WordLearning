@@ -45,7 +45,6 @@ public class SetsViewModel extends ViewModel {
 
     private ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    private long selectedSetId;
 
     public SetsViewModel() {
         WordsApp.getsComponent().inject(this);
@@ -83,8 +82,8 @@ public class SetsViewModel extends ViewModel {
         return selectedSetData;
     }
 
-    public void changeSet(long setId) {
-        selectedSetId = setId;
+    public LiveData<Boolean> changeSet(long setId) {
+        MutableLiveData<Boolean> loadedCallback = new MutableLiveData<>();
 
         if(wordsDisposable != null && !wordsDisposable.isDisposed()) {
             wordsDisposable.dispose();
@@ -99,14 +98,17 @@ public class SetsViewModel extends ViewModel {
                 .subscribe(list -> {
                     Timber.d("words from flowable");
                     selectedSetWordsData.setValue(list);
-                }, Throwable::printStackTrace);
+                }, Timber::e);
 
         setDisposable = provider.getSetById(setId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(set -> {
+                    loadedCallback.setValue(true);
                     selectedSetData.setValue(set);
                     Timber.d("set from flowable %1$s", set.getName());
-                }, Throwable::printStackTrace);
+                }, Timber::e);
+
+        return loadedCallback;
     }
 
     public LiveData<Integer> changeCurrentSetStatus() {

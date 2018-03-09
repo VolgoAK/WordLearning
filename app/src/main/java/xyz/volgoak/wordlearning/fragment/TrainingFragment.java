@@ -189,7 +189,6 @@ public class TrainingFragment extends Fragment {
     }
 
     private void startAppearenceAnim() {
-        Log.d(TAG, "startAppearenceAnim: ");
         float path = mBinding.btVar1Tf.getWidth() + mBinding.btVar1Tf.getX();
         ValueAnimator animator = ValueAnimator.ofFloat(path, 0);
         animator.setInterpolator(new MetallBounceInterpoltor());

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import javax.inject.Inject;
 
+import io.fabric.sdk.android.services.concurrency.AsyncTask;
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
@@ -79,7 +80,7 @@ public class ResultsFragment extends Fragment {
         mDataBinding.cvSetsResult.setOnClickListener((v) -> fragmentListener.startSets());
         mDataBinding.cvAgainResult.setOnClickListener((v) -> fragmentListener.startTraining(results.trainedType, results.setId));
 
-        updateWordsStatus();
+        AsyncTask.execute(this::updateWordsStatus);
     }
 
     private void manageFeedBack() {

@@ -25,9 +25,6 @@ public class TrainingBool extends Training {
 
     public TrainingBool(List<PlayWord> playWords, int trainingType) {
         super(playWords, trainingType);
-        for (PlayWord pw : playWords) {
-            Log.d(TAG, "TrainingBool: " + pw.getWord());
-        }
     }
 
     public List<PlayWord> getInitialWords() {
@@ -45,18 +42,15 @@ public class TrainingBool extends Training {
     public PlayWord nextWord() {
         position++;
         if (playWords.size() <= position + 2) {
-            Log.d(TAG, "nextWord: add new words " + position);
             List<PlayWord> nextWords = new ArrayList<>(playWords);
             Collections.shuffle(nextWords);
             playWords.addAll(nextWords);
-            Log.d(TAG, "nextWord: new list size " + playWords.size());
         }
 
         return playWords.get(position + 1);
     }
 
     public boolean checkAnswer(boolean correct) {
-        Log.d(TAG, "checkAnswer: ");
         boolean answer = correct ? playWords.get(position).checkAnswer(0)
                 : playWords.get(position).checkAnswer(1);
         if (answer) {

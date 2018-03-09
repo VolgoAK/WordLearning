@@ -54,7 +54,6 @@ public class CustomFloatingButtonBehavior extends CoordinatorLayout.Behavior<Flo
 
     @Override
     public boolean onDependentViewChanged(CoordinatorLayout parent, FloatingActionButton child, View dependency) {
-        Log.d(TAG, "onDependentViewChanged: " + this);
         shouldInitialize(child, dependency);
 
         float dependencyBottom = dependency.getBottom();
@@ -77,7 +76,6 @@ public class CustomFloatingButtonBehavior extends CoordinatorLayout.Behavior<Flo
 
     @Override
     public boolean onMeasureChild(CoordinatorLayout parent, FloatingActionButton child, int parentWidthMeasureSpec, int widthUsed, int parentHeightMeasureSpec, int heightUsed) {
-        Log.d(TAG, "onMeasureChild: " + this);
         if(!measured) {
             measured = true;
             return true;

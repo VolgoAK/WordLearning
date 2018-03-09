@@ -58,7 +58,6 @@ public class DbUpdateManager {
         //check auth and download images and new sets
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            Log.d(TAG, "manageDbState: " + user.toString());
             scheduleUpdateTasks(context);
         } else {
             FirebaseAuth.getInstance().signInAnonymously();
@@ -76,10 +75,8 @@ public class DbUpdateManager {
 
     // Firebase downloads and update tasks
     private static void scheduleUpdateTasks(Context context) {
-        Log.d(TAG, "scheduleUpdateTasks: ");
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         if (!preferences.getBoolean(PreferenceContract.IMAGES_LOADED, false)) {
-            Log.d(TAG, "scheduleUpdateTasks: download images");
             new ImageDownloader().downloadImages();
         }
 

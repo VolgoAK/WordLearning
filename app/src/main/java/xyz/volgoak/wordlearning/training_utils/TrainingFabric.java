@@ -53,7 +53,6 @@ public abstract class TrainingFabric {
             variantsGetter = Word::getTranslation;
             trainedComparator = (w1, w2) -> Integer.compare(w1.getTrainedWt(), w2.getTrainedWt());
 
-            Log.d("Fabric", "createSimpleTraining: words " + wordList.size());
         } else if (trainingType == TRANSLATION_WORD) {
             wordGetter = Word::getTranslation;
             variantsGetter = Word::getWord;

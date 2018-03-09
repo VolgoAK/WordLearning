@@ -40,7 +40,6 @@ public class DbExporter {
             destination.transferFrom(source, 0, source.size());
             source.close();
             destination.close();
-            Log.d("DBExporter", "exportDb: completed");
         } catch (IOException ex) {
             ex.printStackTrace();
         }

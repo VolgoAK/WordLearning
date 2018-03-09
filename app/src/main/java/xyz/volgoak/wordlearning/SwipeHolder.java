@@ -50,7 +50,6 @@ public class SwipeHolder {
 
     @Resolve
     public void onResolwed() {
-        Log.d(TAG, "onResolwed: ");
         tvWord.setText(word.getWord());
         tvTranslation.setText(word.getVars()[0]);
         IntegerEvent starEvent = EventBus.getDefault().getStickyEvent(IntegerEvent.class);
@@ -61,7 +60,6 @@ public class SwipeHolder {
 
     @SwipeOut
     private void onSwipedOut() {
-        Log.d(TAG, "onSwipedOut");
         if (swipeListener != null) {
             swipeListener.onSwipe(false);
         }
@@ -73,7 +71,6 @@ public class SwipeHolder {
 
     @SwipeIn
     private void onSwipedIn() {
-        Log.d(TAG, "onSwipeIn: ");
         if (swipeListener != null) {
             swipeListener.onSwipe(true);
         }

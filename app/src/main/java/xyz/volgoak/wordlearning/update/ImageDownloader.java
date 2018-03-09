@@ -43,7 +43,6 @@ public class ImageDownloader {
     }
 
     public void downloadImages() {
-        Log.d(TAG, "downloadImages: ");
         checkOrCreateDirs();
         File photosFile = new File(mImagesDir, StorageContract.PHOTOS_ARCHIVE);
         StorageReference imagesReference = FirebaseStorage.getInstance().getReference(FirebaseContract.IMAGES_FOLDER);
@@ -58,7 +57,6 @@ public class ImageDownloader {
 
                     ZipFile zipFile = new ZipFile(photosFile);
                     zipFile.extractAll(mImagesDir.getAbsolutePath());
-                    Log.d(TAG, "onSuccess: downloaded");
                     PreferenceManager.getDefaultSharedPreferences(mContext).edit()
                             .putBoolean(PreferenceContract.IMAGES_LOADED, true).apply();
 

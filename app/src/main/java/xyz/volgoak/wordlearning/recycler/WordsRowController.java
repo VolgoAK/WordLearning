@@ -54,7 +54,6 @@ class WordsRowController extends NewRowController {
 
     @Override
     public void bindController(DataEntity dataEntity) {
-        Log.d(TAG, "bindController: ");
         Word word = (Word) dataEntity;
 
         wordText.setText(word.getWord());

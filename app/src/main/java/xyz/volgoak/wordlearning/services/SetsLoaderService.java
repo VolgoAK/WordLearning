@@ -52,7 +52,6 @@ public class SetsLoaderService extends GcmTaskService {
     }
 
     private void checkUpdate() {
-        Log.d(TAG, "checkUpdate: ");
         FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signInAnonymously();
 

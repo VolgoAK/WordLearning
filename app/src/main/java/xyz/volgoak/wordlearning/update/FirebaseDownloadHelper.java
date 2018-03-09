@@ -85,7 +85,6 @@ public class FirebaseDownloadHelper {
             @Override
             public void onSuccess(Void aVoid) {
                 synchronized (checkLock) {
-                    Log.d(TAG, "onSuccess: check() finished");
                     checkLock.notify();
                 }
             }

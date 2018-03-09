@@ -23,6 +23,7 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 import xyz.volgoak.wordlearning.IntegerEvent;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.SwipeHolder;
@@ -167,7 +168,7 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
         if (trainingBool != null) {
             boolean correct = trainingBool.checkAnswer(answer);
             manageAnswer(correct);
-            Log.d(TAG, "onSwipe: answer " + correct);
+            Timber.d("onSwipe: answer " + answer);
             PlayWord playWord = trainingBool.nextWord();
             if (playWord == null) {
                 finishTraining();

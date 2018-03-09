@@ -176,7 +176,6 @@ public class SingleSetFragment extends Fragment {
     }
 
     private void loadSetInformation(Set set) {
-        Log.d(TAG, "loadSetInformation: theme " + set.getThemeCodes());
         //set title
         mSetName = set.getName();
         mBinding.collapsingToolbarSetAct.setTitle(mSetName);
@@ -343,18 +342,15 @@ public class SingleSetFragment extends Fragment {
         public void onSaveInstanceState(Bundle instanceState) {
             if (choiceMode != null) {
                 choiceMode.onSaveInstanceState(instanceState);
-                Log.d("Callback", "onSaveInstanceState: size " + choiceMode.getCheckedCount());
             }
         }
 
         public void onRestoreInstanceState(Bundle savedInstanceState) {
             choiceMode.restoreInstanceState(savedInstanceState);
-            Log.d("Callback", "onRestoreInstanceState: size " + choiceMode.getCheckedCount());
         }
 
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            Log.d("Callback", "onCreateActionMode: ");
             mode.getMenuInflater().inflate(R.menu.menu_set_frag_action_mode, menu);
             mRecyclerAdapter.setChoiceMode(choiceMode);
             mActionMode = mode;
@@ -393,7 +389,6 @@ public class SingleSetFragment extends Fragment {
 
         @Override
         public void onDestroyActionMode(ActionMode mode) {
-            Log.d("Callback", "onDestroyActionMode: ");
             choiceMode.clearChecks();
             mRecyclerAdapter.setChoiceMode(null);
             mActionMode = null;

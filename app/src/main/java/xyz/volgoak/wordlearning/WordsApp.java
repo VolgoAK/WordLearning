@@ -15,6 +15,7 @@ import xyz.volgoak.wordlearning.dagger.DbModule;
 import xyz.volgoak.wordlearning.dagger.DownloaderModule;
 import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.update.DbUpdateManager;
+import xyz.volgoak.wordlearning.utils.ReleaseTree;
 import xyz.volgoak.wordlearning.utils.WordSpeaker;
 
 public class WordsApp extends Application {
@@ -55,6 +56,8 @@ public class WordsApp extends Application {
 
         if(BuildConfig.DEBUG)
             Timber.plant(new Timber.DebugTree());
+        else
+            Timber.plant(new ReleaseTree());
     }
 
     @Override
