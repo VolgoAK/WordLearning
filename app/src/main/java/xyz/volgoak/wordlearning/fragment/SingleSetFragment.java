@@ -2,6 +2,7 @@ package xyz.volgoak.wordlearning.fragment;
 
 
 import android.app.Dialog;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
@@ -24,7 +25,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
-import com.bumptech.glide.Glide;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -32,17 +32,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
-import xyz.volgoak.wordlearning.WordsApp;
-import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.StorageContract;
 import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding;
 import xyz.volgoak.wordlearning.entities.Set;
 import xyz.volgoak.wordlearning.entities.Word;
+import xyz.volgoak.wordlearning.model.SetsViewModel;
 import xyz.volgoak.wordlearning.recycler.MultiChoiceMode;
 import xyz.volgoak.wordlearning.recycler.WordsRecyclerAdapter;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
@@ -69,13 +66,13 @@ public class SingleSetFragment extends Fragment {
     private long mSetId;
     private boolean mSingleFragMode;
 
-    @Inject
-    DataProvider mDataProvider;
     private WordsRecyclerAdapter mRecyclerAdapter;
     private ActionMode mActionMode;
     private WordsActionModeCallback mWordsCallBack;
     private boolean mSetInDictionary;
     private String mSetName;
+
+    private SetsViewModel viewModel;
 
     public static SingleSetFragment newInstance(long setId, boolean singleFragmentMode) {
         SingleSetFragment fragment = new SingleSetFragment();
@@ -93,7 +90,7 @@ public class SingleSetFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WordsApp.getsComponent().inject(this);
+
         if (getArguments() != null) {
             mSetId = getArguments().getLong(EXTRA_SET_ID);
             mSingleFragMode = getArguments().getBoolean(EXTRA_SINGLE_MODE);
@@ -115,7 +112,7 @@ public class SingleSetFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        viewModel = ViewModelProviders.of(getActivity()).get(SetsViewModel.class);
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_single_set, container, false);
         String transitionName = getArguments().getString(EXTRA_TRANSITION_NAME);
 
@@ -124,12 +121,16 @@ public class SingleSetFragment extends Fragment {
         }
 
         manageTrainingStatusMenu();
-        loadSetInformation();
         prepareRecycler();
 
         if (mWordsCallBack != null) {
             ((AppCompatActivity) getActivity()).startSupportActionMode(mWordsCallBack);
         }
+
+        viewModel.getWordsForSet()
+                .observe(this, list -> mRecyclerAdapter.changeData(list));
+        viewModel.getCurrentSet()
+                .observe(this, this::loadSetInformation);
 
         return mBinding.getRoot();
     }
@@ -137,8 +138,7 @@ public class SingleSetFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        mWords = mDataProvider.getWordsBySetId(mSetId);
-        mRecyclerAdapter.changeData(mWords);
+
         if (mSingleFragMode) {
             mBinding.setToolbar.setNavigationIcon(R.drawable.ic_back_toolbar);
             mBinding.setToolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
@@ -175,8 +175,7 @@ public class SingleSetFragment extends Fragment {
         }
     }
 
-    private void loadSetInformation() {
-        Set set = mDataProvider.getSetById(mSetId);
+    private void loadSetInformation(Set set) {
         Log.d(TAG, "loadSetInformation: theme " + set.getThemeCodes());
         //set title
         mSetName = set.getName();
@@ -209,7 +208,8 @@ public class SingleSetFragment extends Fragment {
 
         prepareSetStatusFabs();
 
-        mBinding.setAddFab.setOnClickListener((v) -> addOrRemoveSetFromDictionary());
+        mBinding.setAddFab.setOnClickListener((v) ->
+                viewModel.changeCurrentSetStatus().observe(this, this::onStatusChanged));
 
         mBinding.setResetFab.setOnClickListener((v) -> resetSetProgress());
 
@@ -257,7 +257,6 @@ public class SingleSetFragment extends Fragment {
     }
 
     private void prepareRecycler() {
-//        mWords = mDataProvider.getWordsBySetId(mSetId);
 
         mBinding.rvSetAc.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
@@ -294,50 +293,16 @@ public class SingleSetFragment extends Fragment {
         mBinding.rvSetAc.setAdapter(mRecyclerAdapter);
     }
 
-    // TODO: 25.08.2017 manage this method/ I don't remember why I broke it
-    public void addOrRemoveSetFromDictionary() {
-        View.OnClickListener snackListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        };
-        int newStatus = mSetInDictionary ? DatabaseContract.Sets.OUT_OF_DICTIONARY : DatabaseContract.Sets.IN_DICTIONARY;
-        mSetInDictionary = !mSetInDictionary;
-
-        Set set = mDataProvider.getSetById(mSetId);
-        set.setStatus(newStatus);
-
-        mDataProvider.updateSetStatus(set);
-        prepareSetStatusFabs();
-        manageTrainingStatusMenu();
-
-        int messageId = mSetInDictionary ? R.string.set_added_message : R.string.set_removed_message;
+    public void onStatusChanged(int status) {
+        int messageId = status == DatabaseContract.Sets.IN_DICTIONARY ?
+                R.string.set_added_message : R.string.set_removed_message;
         String message = getString(messageId, mSetName);
         Snackbar.make(getView().findViewById(R.id.coordinator_setact), message, BaseTransientBottomBar.LENGTH_LONG).show();
-
-        mWords = mDataProvider.getWordsBySetId(mSetId);
-        mRecyclerAdapter.changeData(mWords);
     }
 
     public void resetSetProgress() {
-
-        View.OnClickListener snackListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<Word> words = mDataProvider.getWordsBySetId(mSetId);
-                for(Word word : words) {
-                    word.resetProgress();
-                }
-                mDataProvider.updateWords(words.toArray(new Word[words.size()]));
-                mWords = mDataProvider.getWordsBySetId(mSetId);
-                mRecyclerAdapter.changeData(mWords);
-            }
-        };
-
         Snackbar.make(getView().findViewById(R.id.coordinator_setact), R.string.reset_progress_question, BaseTransientBottomBar.LENGTH_LONG)
-                .setAction(R.string.reset, snackListener).show();
-
+                .setAction(R.string.reset, v -> viewModel.resetCurrentSetProgress()).show();
     }
 
     public void changeWordsStatus(List<Integer> positions, int newStatus) {
@@ -351,8 +316,7 @@ public class SingleSetFragment extends Fragment {
             wordsArray[a] = word;
         }
 
-        mDataProvider.updateWords(wordsArray);
-        mRecyclerAdapter.notifyDataSetChanged();
+        viewModel.updateWords(wordsArray);
     }
 
     public void resetWordsProgress(List<Integer> positions) {
@@ -364,8 +328,7 @@ public class SingleSetFragment extends Fragment {
             wordsArray[a] = word;
         }
 
-        mDataProvider.updateWords(wordsArray);
-        mRecyclerAdapter.notifyDataSetChanged();
+        viewModel.updateWords(wordsArray);
     }
 
     class WordsActionModeCallback implements ActionMode.Callback {
@@ -411,15 +374,15 @@ public class SingleSetFragment extends Fragment {
             int itemId = item.getItemId();
             switch (itemId) {
                 case R.id.menu_add_setfrag_action:
-                    changeWordsStatus(choiceMode.getCheckedList(), DatabaseContract.Words.IN_DICTIONARY);
+                    viewModel.changeWordsStatus(choiceMode.getCheckedList(), DatabaseContract.Words.IN_DICTIONARY);
                     mActionMode.finish();
                     return true;
                 case R.id.menu_remove_setfrag_action:
-                    changeWordsStatus(choiceMode.getCheckedList(), DatabaseContract.Words.OUT_OF_DICTIONARY);
+                    viewModel.changeWordsStatus(choiceMode.getCheckedList(), DatabaseContract.Words.OUT_OF_DICTIONARY);
                     mActionMode.finish();
                     return true;
                 case R.id.menu_reset_setfrag_action:
-                    resetWordsProgress(choiceMode.getCheckedList());
+                    viewModel.resetWordsProgress(choiceMode.getCheckedList());
                     mActionMode.finish();
                     return true;
 

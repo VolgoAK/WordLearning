@@ -93,6 +93,10 @@ public class DataProvider {
         }
     }
 
+    public Flowable<List<Word>> getWordsBySetIdRx(long setId) {
+        return wordDao.getWordsBySetIdRx(setId);
+    }
+
     public List<Word> getWordsBySetId(long setId) {
         return wordDao.getWordsBySetId(setId);
     }
@@ -126,12 +130,20 @@ public class DataProvider {
         wordDao.udateWords(wordsArray);
     }
 
+    public void resetSetProgress(Set set) {
+        List<Word> words = wordDao.getWordsBySetId(set.getId());
+        for(Word word : words) {
+            word.resetProgress();
+        }
+        wordDao.udateWords(words.toArray(new Word[0]));
+    }
+
     public List<Set> getAllSets() {
 
         return setsDao.getAllSets();
     }
 
-    public Set getSetById(long setId) {
+    public Flowable<Set> getSetById(long setId) {
         return setsDao.getSetById(setId);
     }
 

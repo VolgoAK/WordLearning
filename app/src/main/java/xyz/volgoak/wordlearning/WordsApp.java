@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
 import xyz.volgoak.wordlearning.dagger.AppModule;
 import xyz.volgoak.wordlearning.dagger.DaggerDbComponent;
 import xyz.volgoak.wordlearning.dagger.DbComponent;
@@ -51,6 +52,9 @@ public class WordsApp extends Application {
 
         FirebaseAuth.getInstance().signInAnonymously();
         DbUpdateManager.manageDbState(this, dataProvider);
+
+        if(BuildConfig.DEBUG)
+            Timber.plant(new Timber.DebugTree());
     }
 
     @Override

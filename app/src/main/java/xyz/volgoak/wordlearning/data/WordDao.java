@@ -57,4 +57,9 @@ public interface WordDao {
     List<Word> getWordsBySetId(long setId);
 
 
+    @Query("SELECT * FROM words_table WHERE _id IN "
+            + "(SELECT "+WordLinks.COLUMN_WORD_ID+" FROM "+WordLinks.TABLE_NAME
+            + " WHERE "+WordLinks.COLUMN_SET_ID+"=:setId)"
+            + " ORDER BY WORD COLLATE NOCASE")
+    Flowable<List<Word>> getWordsBySetIdRx(long setId);
 }

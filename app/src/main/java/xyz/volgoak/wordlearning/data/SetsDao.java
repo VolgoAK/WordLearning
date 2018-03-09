@@ -9,6 +9,7 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import xyz.volgoak.wordlearning.entities.Set;
 
 /**
@@ -31,7 +32,7 @@ public interface SetsDao {
     List<Set> getAllSets();
 
     @Query("SELECT * FROM SETS_TABLE WHERE _id = :setId")
-    Set getSetById(long setId);
+    Flowable<Set> getSetById(long setId);
 
     @Query("SELECT * FROM SETS_TABLE WHERE THEME_CODES LIKE :themeCode")
     List<Set> getSetsByTheme(String themeCode);

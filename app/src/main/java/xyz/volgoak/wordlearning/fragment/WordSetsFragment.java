@@ -300,6 +300,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
 
     @Override
     public void onClick(View root, int position, DataEntity entity) {
+        viewModel.changeSet(entity.getId());
         mSetsFragmentListener.startSet(entity.getId(), root.findViewById(R.id.civ_sets));
     }
 
