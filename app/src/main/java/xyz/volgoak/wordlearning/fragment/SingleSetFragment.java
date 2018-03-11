@@ -17,7 +17,6 @@ import android.support.v7.view.ActionMode;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,7 +38,7 @@ import xyz.volgoak.wordlearning.data.StorageContract;
 import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding;
 import xyz.volgoak.wordlearning.entities.Set;
 import xyz.volgoak.wordlearning.entities.Word;
-import xyz.volgoak.wordlearning.model.SetsViewModel;
+import xyz.volgoak.wordlearning.model.WordsViewModel;
 import xyz.volgoak.wordlearning.recycler.MultiChoiceMode;
 import xyz.volgoak.wordlearning.recycler.WordsRecyclerAdapter;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
@@ -72,7 +71,7 @@ public class SingleSetFragment extends Fragment {
     private boolean mSetInDictionary;
     private String mSetName;
 
-    private SetsViewModel viewModel;
+    private WordsViewModel viewModel;
 
     public static SingleSetFragment newInstance(long setId, boolean singleFragmentMode) {
         SingleSetFragment fragment = new SingleSetFragment();
@@ -112,7 +111,7 @@ public class SingleSetFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        viewModel = ViewModelProviders.of(getActivity()).get(SetsViewModel.class);
+        viewModel = ViewModelProviders.of(getActivity()).get(WordsViewModel.class);
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_single_set, container, false);
         String transitionName = getArguments().getString(EXTRA_TRANSITION_NAME);
 

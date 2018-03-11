@@ -101,10 +101,37 @@
                 android:id="@+id/tvWordInDictionary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/word_in_dictionary"
+                android:text="@string/add_to_dictionary"
+                android:layout_marginLeft="20dp"
                 app:layout_constraintBottom_toBottomOf="@id/ivAddRemove"
-                app:layout_constraintLeft_toLeftOf="@id/tvTransWord"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="@id/ivAddRemove" />
+
+            <TextView
+                android:id="@+id/tvResetProgress"
+                android:text="@string/reset_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                app:layout_constraintRight_toLeftOf="@id/ivReset"
+                app:layout_constraintTop_toTopOf="@id/ivAddRemove"
+                app:layout_constraintBottom_toBottomOf="@id/ivAddRemove"/>
+
+            <ImageView
+                android:id="@+id/ivReset"
+                android:layout_width="@dimen/state_image_size"
+                android:layout_height="@dimen/state_image_size"
+                app:layout_constraintTop_toTopOf="@id/ivAddRemove"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="20dp"
+                app:srcCompat="@drawable/ic_reset_gray" />
+
+            <android.support.v4.widget.Space
+                android:id="@+id/spaceVertical"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
 
             <TextView
                 android:id="@+id/tvWordTrans"
@@ -112,17 +139,16 @@
                 android:layout_height="wrap_content"
                 android:text="@string/word_translation"
                 app:layout_constraintBottom_toBottomOf="@id/ivProgressWt"
-                app:layout_constraintLeft_toLeftOf="@id/tvTransWord"
+                app:layout_constraintLeft_toLeftOf="@id/tvWordInDictionary"
                 app:layout_constraintTop_toTopOf="@id/ivProgressWt" />
 
             <TextView
                 android:id="@+id/tvTransWord"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
                 android:text="@string/translation_word"
                 app:layout_constraintBottom_toBottomOf="@id/ivProgressTw"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/tvResetProgress"
                 app:layout_constraintTop_toTopOf="@id/ivProgressTw" />
 
             <ImageView
@@ -130,11 +156,11 @@
                 android:layout_width="@dimen/state_image_size"
                 android:layout_height="@dimen/state_image_size"
                 android:layout_marginBottom="@dimen/views_small_margin"
-                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
 
                 android:gravity="center_vertical"
                 app:layout_constraintBottom_toTopOf="@id/ivProgressWt"
-                app:layout_constraintLeft_toRightOf="@id/tvWordInDictionary"
+                app:layout_constraintRight_toRightOf="@id/spaceVertical"
                 app:srcCompat="@drawable/ic_add_blue_50dp" />
 
             <ImageView
@@ -144,7 +170,7 @@
                 android:layout_marginBottom="@dimen/views_small_margin"
                 android:gravity="center_vertical"
                 android:src="@drawable/ic_progress_0"
-                app:layout_constraintBottom_toTopOf="@id/ivProgressTw"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="@id/ivAddRemove" />
 
             <ImageView
@@ -154,27 +180,9 @@
                 android:layout_marginBottom="@dimen/views_small_margin"
                 android:gravity="center_vertical"
                 android:src="@drawable/ic_progress_0"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="@id/ivAddRemove" />
+                app:layout_constraintTop_toTopOf="@id/ivProgressWt"
+                app:layout_constraintLeft_toLeftOf="@id/ivReset" />
 
-            <ImageView
-                android:id="@+id/ivResetTw"
-                android:layout_width="@dimen/state_image_size"
-                android:layout_height="@dimen/state_image_size"
-                android:gravity="center_vertical"
-                app:layout_constraintBottom_toBottomOf="@id/ivProgressTw"
-                app:layout_constraintLeft_toRightOf="@id/ivProgressTw"
-                app:srcCompat="@drawable/ic_reset_gray" />
-
-            <ImageView
-                android:id="@+id/ivResetWt"
-                android:layout_width="@dimen/state_image_size"
-                android:layout_height="@dimen/state_image_size"
-                android:layout_marginBottom="@dimen/views_small_margin"
-                android:gravity="center_vertical"
-                app:layout_constraintBottom_toBottomOf="@id/ivProgressWt"
-                app:layout_constraintLeft_toRightOf="@id/ivProgressWt"
-                app:srcCompat="@drawable/ic_reset_gray" />
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>

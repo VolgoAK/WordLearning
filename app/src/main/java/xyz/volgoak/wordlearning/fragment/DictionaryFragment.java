@@ -1,7 +1,6 @@
 package xyz.volgoak.wordlearning.fragment;
 
 import android.app.Dialog;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -14,24 +13,18 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.inject.Inject;
 
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.activity.MainActivity;
-import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.databinding.FragmentRedactorBinding;
 import xyz.volgoak.wordlearning.entities.Word;
-import xyz.volgoak.wordlearning.model.DictionaryViewModel;
+import xyz.volgoak.wordlearning.model.WordsViewModel;
 import xyz.volgoak.wordlearning.recycler.WordsRecyclerAdapter;
 
 /**
@@ -49,7 +42,7 @@ public class DictionaryFragment extends Fragment {
     private FragmentListener mFragmentListener;
 
     private FragmentRedactorBinding mBinding;
-    private DictionaryViewModel viewModel;
+    private WordsViewModel viewModel;
 
     public DictionaryFragment() {
         // Required empty public constructor
@@ -69,11 +62,12 @@ public class DictionaryFragment extends Fragment {
         mBinding.rvRedactor.setLayoutManager(layoutManager);
 
         mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), new ArrayList<>(), mBinding.rvRedactor);
-        mRecyclerAdapter.setAdapterClickListener((root, position, word) -> onWordClicked(position,(Word) word));
+        mRecyclerAdapter.setAdapterClickListener((root, position, word) -> onWordClicked(position, (Word) word));
         mBinding.rvRedactor.setAdapter(mRecyclerAdapter);
 
-        viewModel = ViewModelProviders.of(this).get(DictionaryViewModel.class);
-        viewModel.getDictionaryWords().observe(this, list -> mRecyclerAdapter.changeData(list));
+        viewModel = ViewModelProviders.of(getActivity()).get(WordsViewModel.class);
+        viewModel.changeToDictionary();
+        viewModel.getWordsForSet().observe(this, list -> mRecyclerAdapter.changeData(list));
 
         mBinding.fabAddRedactor.setOnClickListener((v) -> fireAddWordDialog());
 
@@ -84,39 +78,10 @@ public class DictionaryFragment extends Fragment {
     public void onStart() {
         super.onStart();
         mFragmentListener.setActionBarTitle(getString(R.string.redactor));
-
-
-
-
     }
 
     private void onWordClicked(int position, Word word) {
         ((MainActivity) getActivity()).startCardsFragment(position);
-    }
-
-    public void fireCustomDialog(final Word word) {
-        final Dialog dialog = new Dialog(getContext());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog);
-
-        TextView dialogTitle = dialog.findViewById(R.id.dialog_title);
-        dialogTitle.setText(R.string.what_to_do);
-
-        Button toTrainingButton = dialog.findViewById(R.id.dialog_bt_one);
-        toTrainingButton.setText(getString(R.string.send_to_training));
-        toTrainingButton.setOnClickListener(v -> {
-            viewModel.resetWordProgress(word);
-            dialog.dismiss();
-        });
-
-        Button deleteButton = dialog.findViewById(R.id.dialog_bt_two);
-        deleteButton.setText(getString(R.string.delete));
-        deleteButton.setOnClickListener(v -> {
-            viewModel.deleteOrHideWord(word);
-            dialog.dismiss();
-        });
-
-        dialog.show();
     }
 
     public void fireAddWordDialog() {

@@ -15,9 +15,11 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import timber.log.Timber;
 import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.entities.Word;
-import xyz.volgoak.wordlearning.model.DictionaryViewModel;
+import xyz.volgoak.wordlearning.model.WordsViewModel;
 import xyz.volgoak.wordlearning.recycler.CardsRecyclerAdapter;
 
 /**
@@ -27,7 +29,7 @@ public class WordCardsFragment extends Fragment {
 
     public static final String EXTRA_POSITION = "position";
 
-    private DictionaryViewModel viewModel;
+    private WordsViewModel viewModel;
     private RecyclerView recyclerView;
     private CardsRecyclerAdapter adapter;
 
@@ -66,8 +68,8 @@ public class WordCardsFragment extends Fragment {
 
         startPosition = getArguments().getInt(EXTRA_POSITION);
 
-        viewModel = ViewModelProviders.of(getActivity()).get(DictionaryViewModel.class);
-        viewModel.getDictionaryWords().observe(this, this::onWordsReady);
+        viewModel = ViewModelProviders.of(getActivity()).get(WordsViewModel.class);
+        viewModel.getWordsForSet().observe(this, this::onWordsReady);
 
         FloatingActionButton fabNext = root.findViewById(R.id.fabNext);
         fabNext.setOnClickListener(v -> {
@@ -78,21 +80,35 @@ public class WordCardsFragment extends Fragment {
         FloatingActionButton fabPrev = root.findViewById(R.id.fabPrev);
         fabPrev.setOnClickListener(v -> {
             int position = manager.findFirstCompletelyVisibleItemPosition();
-            if(position > 0) recyclerView.smoothScrollToPosition(--position);
+            if (position > 0) recyclerView.smoothScrollToPosition(--position);
         });
-        
+
         return root;
     }
 
 
     private void onWordsReady(List<Word> words) {
-        if(adapter == null) {
+        Timber.d("onWordsReady: ");
+        if (adapter == null) {
             adapter = new CardsRecyclerAdapter();
             recyclerView.setAdapter(adapter);
+            int startPostition = words.size() * 1000 + startPosition;
+            recyclerView.scrollToPosition(startPostition);
         }
 
-        int startPostition = words.size() * 1000 + startPosition;
         adapter.setDataList(words);
-        recyclerView.scrollToPosition(startPostition);
+
+        adapter.setProgressResetListener(word -> {
+            Timber.d("reset progress " + word.getWord());
+            word.resetProgress();
+            viewModel.updateWords(new Word[]{word});
+        });
+
+        adapter.setRemoveListener(word -> {
+            int status = word.isInDictionary() ? DatabaseContract.Words.OUT_OF_DICTIONARY
+                    : DatabaseContract.Words.IN_DICTIONARY;
+            word.setStatus(status);
+            viewModel.updateWords(new Word[]{word});
+        });
     }
 }

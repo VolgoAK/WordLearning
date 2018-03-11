@@ -16,7 +16,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,7 +37,7 @@ import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.entities.DataEntity;
 import xyz.volgoak.wordlearning.entities.Set;
 import xyz.volgoak.wordlearning.entities.Theme;
-import xyz.volgoak.wordlearning.model.SetsViewModel;
+import xyz.volgoak.wordlearning.model.WordsViewModel;
 import xyz.volgoak.wordlearning.recycler.RecyclerAdapter;
 import xyz.volgoak.wordlearning.recycler.SetsRecyclerAdapter;
 import xyz.volgoak.wordlearning.recycler.SingleChoiceMode;
@@ -71,7 +70,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     private String mSelectedTheme = DatabaseContract.Themes.THEME_ANY;
     private List<Theme> mThemes;
 
-    private SetsViewModel viewModel;
+    private WordsViewModel viewModel;
 
     public static WordSetsFragment newInstance(boolean part_mode) {
         Bundle args = new Bundle();
@@ -112,7 +111,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
             mSelectedTheme = savedInstanceState.getString(SAVED_THEME, DatabaseContract.Themes.THEME_ANY);
         }
 
-        viewModel = ViewModelProviders.of(getActivity()).get(SetsViewModel.class);
+        viewModel = ViewModelProviders.of(getActivity()).get(WordsViewModel.class);
     }
 
     @Override

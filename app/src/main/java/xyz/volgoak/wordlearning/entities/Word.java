@@ -7,6 +7,7 @@ import android.arch.persistence.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
 
+import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.DatabaseContract.Words;
 
 /**
@@ -148,6 +149,10 @@ public class Word implements DataEntity {
         trainedTw = 0;
         trainedWt = 0;
         studied = 0;
+    }
+
+    public boolean isInDictionary() {
+        return status == Words.IN_DICTIONARY;
     }
 
     @Override

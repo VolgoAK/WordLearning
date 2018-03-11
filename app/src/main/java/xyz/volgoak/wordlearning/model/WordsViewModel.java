@@ -13,6 +13,7 @@ import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
 
+import io.fabric.sdk.android.services.concurrency.AsyncTask;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
@@ -27,7 +28,7 @@ import xyz.volgoak.wordlearning.entities.Word;
  * Created by alex on 2/13/18.
  */
 
-public class SetsViewModel extends ViewModel {
+public class WordsViewModel extends ViewModel {
 
     @Inject
     DataProvider provider;
@@ -46,7 +47,7 @@ public class SetsViewModel extends ViewModel {
     private ExecutorService executor = Executors.newSingleThreadExecutor();
 
 
-    public SetsViewModel() {
+    public WordsViewModel() {
         WordsApp.getsComponent().inject(this);
     }
 
@@ -106,6 +107,27 @@ public class SetsViewModel extends ViewModel {
                     loadedCallback.setValue(true);
                     selectedSetData.setValue(set);
                     Timber.d("set from flowable %1$s", set.getName());
+                }, Timber::e);
+
+        return loadedCallback;
+    }
+
+    public LiveData<Boolean> changeToDictionary() {
+        if(wordsDisposable != null && !wordsDisposable.isDisposed()) {
+            wordsDisposable.dispose();
+        }
+
+        if(setDisposable != null && !setDisposable.isDisposed()) {
+            setDisposable.dispose();
+        }
+
+        MutableLiveData<Boolean> loadedCallback = new MutableLiveData<>();
+
+        wordsDisposable = provider.getDictionaryWordsFlowable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(list -> {
+                    loadedCallback.postValue(true);
+                    selectedSetWordsData.postValue(list);
                 }, Timber::e);
 
         return loadedCallback;
@@ -179,6 +201,15 @@ public class SetsViewModel extends ViewModel {
 
     public void updateSetStatus(Set set) {
         executor.submit(() -> provider.updateSetStatus(set));
+    }
+
+    public void insertWord(Word newWord) {
+        provider.insertWord(newWord);
+    }
+
+    public void deleteOrHideWord(Word word) {
+        word.setStatus(DatabaseContract.Words.OUT_OF_DICTIONARY);
+        AsyncTask.execute(() -> provider.updateWords(word));
     }
 
     @Override

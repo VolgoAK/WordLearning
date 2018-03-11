@@ -2,11 +2,15 @@ package xyz.volgoak.wordlearning;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Bundle;
 
+import com.crashlytics.android.Crashlytics;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 
 import javax.inject.Inject;
 
+import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 import xyz.volgoak.wordlearning.dagger.AppModule;
 import xyz.volgoak.wordlearning.dagger.DaggerDbComponent;
@@ -54,10 +58,18 @@ public class WordsApp extends Application {
         FirebaseAuth.getInstance().signInAnonymously();
         DbUpdateManager.manageDbState(this, dataProvider);
 
-        if(BuildConfig.DEBUG)
+        if(BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
-        else
+        } else {
             Timber.plant(new ReleaseTree());
+            Fabric.with(this, new Crashlytics());
+            FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true);
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putString("Test", "Test is disabling work");
+        bundle.putBoolean("Release", BuildConfig.DEBUG);
+        FirebaseAnalytics.getInstance(this).logEvent("Test", bundle);
     }
 
     @Override

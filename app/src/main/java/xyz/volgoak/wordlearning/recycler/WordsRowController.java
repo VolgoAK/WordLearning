@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import timber.log.Timber;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.entities.DataEntity;
@@ -62,14 +63,14 @@ class WordsRowController extends NewRowController {
         try {
             trainTWImage.setImageDrawable(sProgresIcons[word.getTrainedTw()]);
         } catch (IndexOutOfBoundsException ex) {
-            ex.printStackTrace();
+            Timber.e(ex);
             trainTWImage.setImageResource(R.drawable.ic_progress_4);
         }
 
         try {
             trainWTImage.setImageDrawable(sProgresIcons[word.getTrainedWt()]);
         } catch (IndexOutOfBoundsException ex) {
-            ex.printStackTrace();
+            Timber.e(ex);
             trainWTImage.setImageResource(R.drawable.ic_progress_4);
         }
 

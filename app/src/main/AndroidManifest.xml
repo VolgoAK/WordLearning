@@ -52,7 +52,10 @@
             android:name=".activity.SetsActivity"
             android:label="@string/sets"
             android:theme="@style/AppTheme.SimpleCoordinatorTheme"/>
-        <activity android:name=".activity.SettingsActivity"></activity>
+        <activity android:name=".activity.SettingsActivity"/>
+
+        <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="false" />
+        <meta-data android:name="firebase_analytics_collection_enabled" android:value="false" />
     </application>
 
 </manifest>
