@@ -3,6 +3,7 @@ package xyz.volgoak.wordlearning.fragment;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,6 +35,7 @@ public class WordCardsFragment extends Fragment {
     private CardsRecyclerAdapter adapter;
 
     private int startPosition;
+    private boolean useStartPosition = true;
 
     public static WordCardsFragment newInstance(int position) {
 
@@ -61,42 +63,15 @@ public class WordCardsFragment extends Fragment {
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        if (savedInstanceState != null) {
+            useStartPosition = false;
+        }
         recyclerView.setLayoutManager(manager);
 
         SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(recyclerView);
 
-        startPosition = getArguments().getInt(EXTRA_POSITION);
-
-        viewModel = ViewModelProviders.of(getActivity()).get(WordsViewModel.class);
-        viewModel.getWordsForSet().observe(this, this::onWordsReady);
-
-        FloatingActionButton fabNext = root.findViewById(R.id.fabNext);
-        fabNext.setOnClickListener(v -> {
-            int position = manager.findFirstCompletelyVisibleItemPosition();
-            recyclerView.smoothScrollToPosition(++position);
-        });
-
-        FloatingActionButton fabPrev = root.findViewById(R.id.fabPrev);
-        fabPrev.setOnClickListener(v -> {
-            int position = manager.findFirstCompletelyVisibleItemPosition();
-            if (position > 0) recyclerView.smoothScrollToPosition(--position);
-        });
-
-        return root;
-    }
-
-
-    private void onWordsReady(List<Word> words) {
-        Timber.d("onWordsReady: ");
-        if (adapter == null) {
-            adapter = new CardsRecyclerAdapter();
-            recyclerView.setAdapter(adapter);
-            int startPostition = words.size() * 1000 + startPosition;
-            recyclerView.scrollToPosition(startPostition);
-        }
-
-        adapter.setDataList(words);
+        adapter = new CardsRecyclerAdapter();
 
         adapter.setProgressResetListener(word -> {
             Timber.d("reset progress " + word.getWord());
@@ -110,5 +85,36 @@ public class WordCardsFragment extends Fragment {
             word.setStatus(status);
             viewModel.updateWords(new Word[]{word});
         });
+
+        recyclerView.setAdapter(adapter);
+
+        FloatingActionButton fabNext = root.findViewById(R.id.fabNext);
+        fabNext.setOnClickListener(v -> {
+            int position = manager.findFirstCompletelyVisibleItemPosition();
+            recyclerView.smoothScrollToPosition(++position);
+        });
+
+        FloatingActionButton fabPrev = root.findViewById(R.id.fabPrev);
+        fabPrev.setOnClickListener(v -> {
+            int position = manager.findFirstCompletelyVisibleItemPosition();
+            if (position > 0) recyclerView.smoothScrollToPosition(--position);
+        });
+
+        startPosition = getArguments().getInt(EXTRA_POSITION);
+
+        viewModel = ViewModelProviders.of(getActivity()).get(WordsViewModel.class);
+        viewModel.getWordsForSet().observe(this, this::onWordsReady);
+
+        return root;
+    }
+
+    private void onWordsReady(List<Word> words) {
+        Timber.d("onWordsReady: ");
+        if (useStartPosition) {
+            int startPostition = words.size() * 1000 + startPosition;
+            recyclerView.scrollToPosition(startPostition);
+        }
+
+        adapter.setDataList(words);
     }
 }

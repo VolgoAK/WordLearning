@@ -45,10 +45,10 @@ public class ContainerFragment extends Fragment {
         // Inflate the layout for this fragmen
         View root = inflater.inflate(R.layout.fragment_container, container, false);
         Toolbar toolbar = root.findViewById(R.id.toolbarContainer);
-        toolbar.setNavigationOnClickListener(v -> getActivity().getSupportFragmentManager().popBackStack());
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(v -> getActivity().getSupportFragmentManager().popBackStack());
 
 
         int position = getArguments().getInt(EXTRA_POSITION);

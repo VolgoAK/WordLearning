@@ -113,6 +113,7 @@ public class TrainingFragment extends Fragment {
         if (savedInstanceState != null) {
             mTraining = (Training) savedInstanceState.getSerializable(TRAINING_TAG);
             mTrainingWord = mTraining.getCurrentWord();
+            showWord();
             boolean answered = savedInstanceState.getBoolean(ANSWERED, false);
             mAnswered.set(answered);
             if (answered) {

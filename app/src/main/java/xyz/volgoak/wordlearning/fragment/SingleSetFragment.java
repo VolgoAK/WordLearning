@@ -155,11 +155,11 @@ public class SingleSetFragment extends Fragment {
         super.onStart();
 
         if (mSingleFragMode) {
-            mBinding.setToolbar.setNavigationIcon(R.drawable.ic_back_toolbar);
-            mBinding.setToolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
             ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.setToolbar);
             ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
             ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            mBinding.setToolbar.setNavigationIcon(R.drawable.ic_back_toolbar);
+            mBinding.setToolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Window window = getActivity().getWindow();
@@ -294,9 +294,9 @@ public class SingleSetFragment extends Fragment {
         mRecyclerAdapter.setAdapterClickListener((root, position, id) -> {
             if (mActionMode != null) {
                 mActionMode.invalidate();
+            } else {
+                mFragmentListener.startCards(position);
             }
-
-            mFragmentListener.startCards(position);
         });
 
         mRecyclerAdapter.setAdapterLongClickListener((root, position, id) -> {

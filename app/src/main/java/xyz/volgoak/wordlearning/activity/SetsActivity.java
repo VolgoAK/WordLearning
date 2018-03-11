@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
@@ -21,7 +22,6 @@ import xyz.volgoak.wordlearning.fragment.WordSetsFragment;
 
 public class SetsActivity extends AppCompatActivity implements FragmentListener, WordSetsFragment.SetsFragmentListener {
 
-    private WordSetsFragment mSetsFragment;
     private SingleSetFragment mSingleSetFragment;
 
     private boolean isMultiFrag;
@@ -35,11 +35,11 @@ public class SetsActivity extends AppCompatActivity implements FragmentListener,
         isMultiFrag = findViewById(R.id.container_detail_sets_activity) != null;
 
         // TODO: 3/11/18 cast exception here
-        mSetsFragment = (WordSetsFragment) getSupportFragmentManager().findFragmentById(R.id.container_master_sets_activity);
-        if (mSetsFragment == null) {
-            mSetsFragment = WordSetsFragment.newInstance(isMultiFrag);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container_master_sets_activity);
+        if (fragment == null) {
+            fragment = WordSetsFragment.newInstance(isMultiFrag);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container_master_sets_activity, mSetsFragment)
+                    .add(R.id.container_master_sets_activity, fragment)
                     .commit();
         }
 
