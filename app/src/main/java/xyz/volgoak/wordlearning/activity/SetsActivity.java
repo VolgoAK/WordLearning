@@ -1,16 +1,22 @@
 package xyz.volgoak.wordlearning.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.fragment.ContainerFragment;
 import xyz.volgoak.wordlearning.fragment.SingleSetFragment;
+import xyz.volgoak.wordlearning.fragment.WordCardsFragment;
 import xyz.volgoak.wordlearning.fragment.WordSetsFragment;
 
 public class SetsActivity extends AppCompatActivity implements FragmentListener, WordSetsFragment.SetsFragmentListener {
@@ -28,6 +34,7 @@ public class SetsActivity extends AppCompatActivity implements FragmentListener,
 
         isMultiFrag = findViewById(R.id.container_detail_sets_activity) != null;
 
+        // TODO: 3/11/18 cast exception here
         mSetsFragment = (WordSetsFragment) getSupportFragmentManager().findFragmentById(R.id.container_master_sets_activity);
         if (mSetsFragment == null) {
             mSetsFragment = WordSetsFragment.newInstance(isMultiFrag);
@@ -90,6 +97,17 @@ public class SetsActivity extends AppCompatActivity implements FragmentListener,
     @Override
     public void startSets() {
         //do nothing sets already started
+    }
+
+    @Override
+    public void startCards(int startPosition) {
+        boolean singleMode = findViewById(R.id.container_detail_sets_activity) == null;
+        int container = singleMode ? R.id.container_master_sets_activity : R.id.container_master_sets_activity;
+        ContainerFragment fragment = ContainerFragment.newInstance(startPosition);
+        getSupportFragmentManager().beginTransaction()
+                .replace(container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override

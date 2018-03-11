@@ -15,4 +15,6 @@ public interface FragmentListener {
     void startSets();
 
     void setActionBarTitle(String title);
+
+    void startCards(int startPosition);
 }

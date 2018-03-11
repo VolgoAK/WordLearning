@@ -81,7 +81,7 @@ public class DictionaryFragment extends Fragment {
     }
 
     private void onWordClicked(int position, Word word) {
-        ((MainActivity) getActivity()).startCardsFragment(position);
+        mFragmentListener.startCards(position);
     }
 
     public void fireAddWordDialog() {

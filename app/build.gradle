@@ -40,13 +40,14 @@ android {
 }
 
 ext {
-    supportVersion = "27.0.2"
+    supportVersion = "27.1.0"
     firebaseVersion = "11.8.0"
 }
 
 
 
 dependencies {
+    implementation 'com.android.support:support-v4:27.1.0'
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
     implementation "com.android.support:support-v4:$supportVersion"

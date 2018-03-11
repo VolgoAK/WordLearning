@@ -7,10 +7,13 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
@@ -23,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +36,7 @@ import java.util.List;
 
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
-import xyz.volgoak.wordlearning.activity.SingleSetActivity;
+
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.entities.DataEntity;
 import xyz.volgoak.wordlearning.entities.Set;
@@ -117,6 +121,12 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
     @Override
     public void onStart() {
         super.onStart();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getActivity().getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
+        }
 
         mRecyclerView = getView().findViewById(R.id.rv_setsfrag);
         mRecyclerView.setHasFixedSize(true);
@@ -234,7 +244,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
         TextView dialogTitle = dialog.findViewById(R.id.dialog_title);
         dialogTitle.setText(name);
 
-        Button openButton = dialog.findViewById(R.id.dialog_bt_one);
+        /*Button openButton = dialog.findViewById(R.id.dialog_bt_one);
         openButton.setText(R.string.open);
         openButton.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), SingleSetActivity.class);
@@ -242,7 +252,7 @@ public class WordSetsFragment extends Fragment implements SetsRecyclerAdapter.Se
             startActivity(intent);
             dialog.dismiss();
 
-        });
+        });*/
 
         Button addButton = dialog.findViewById(R.id.dialog_bt_two);
 

@@ -3,20 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    >
+    android:fitsSystemWindows="true"
+    tools:context="xyz.volgoak.wordlearning.fragment.ContainerFragment">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBarSets"
+        android:id="@+id/appBarContainer"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:theme="@style/AppTheme.AppBarOverlay"
-        >
+        android:layout_height="?attr/actionBarSize">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbarSets"
+            android:id="@+id/toolbarContainer"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:background="@null"
             app:layout_collapseMode="pin"
             app:theme="@style/AppTheme.AppBarOverlay"
             app:popupTheme="@style/AppTheme.PopupOverlay"
@@ -25,14 +24,10 @@
     </android.support.design.widget.AppBarLayout>
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_setsfrag"
+    <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="xyz.volgoak.wordlearning.fragment.WordSetsFragment" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 </android.support.design.widget.CoordinatorLayout>
-
-
-

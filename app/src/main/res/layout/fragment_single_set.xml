@@ -16,9 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/title_image_height"
             android:fitsSystemWindows="true"
-            android:theme="@style/AppTheme.AppBarOverlay"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
-            >
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/collapsing_toolbar_set_act"
                 android:fitsSystemWindows="true"
@@ -27,8 +26,7 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:contentScrim="@color/colorPrimary"
                 app:expandedTitleMarginBottom="40dp"
-                app:expandedTitleTextAppearance="@style/expanded_title_text"
-                >
+                app:expandedTitleTextAppearance="@style/expanded_title_text" >
 
                 <ImageView
                     android:fitsSystemWindows="true"

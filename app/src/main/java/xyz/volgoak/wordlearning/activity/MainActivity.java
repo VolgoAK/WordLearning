@@ -148,8 +148,9 @@ public class MainActivity extends NavigationActivity implements FragmentListener
         startFragment(fragment);
     }
 
-    public void startCardsFragment(int position) {
-        WordCardsFragment fragment = WordCardsFragment.newInstance(position);
+    @Override
+    public void startCards(int startPosition) {
+        WordCardsFragment fragment = WordCardsFragment.newInstance(startPosition);
         startFragment(fragment);
     }
 

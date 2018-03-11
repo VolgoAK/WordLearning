@@ -5,13 +5,16 @@ import android.app.Dialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.support.transition.TransitionInflater;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.CardView;
@@ -23,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -33,6 +37,7 @@ import java.util.List;
 
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.activity.SetsActivity;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.StorageContract;
 import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding;
@@ -69,7 +74,7 @@ public class SingleSetFragment extends Fragment {
     private ActionMode mActionMode;
     private WordsActionModeCallback mWordsCallBack;
     private boolean mSetInDictionary;
-    private String mSetName;
+    private String mSetName = "";
 
     private WordsViewModel viewModel;
 
@@ -126,6 +131,17 @@ public class SingleSetFragment extends Fragment {
             ((AppCompatActivity) getActivity()).startSupportActionMode(mWordsCallBack);
         }
 
+        //Avoid bug with incorrect title position
+        mBinding.appbarSetact.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+            if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange() - 35) {
+                mBinding.collapsingToolbarSetAct.setTitleEnabled(false);
+                mBinding.setToolbar.setTitle(mSetName);
+            } else {
+                mBinding.collapsingToolbarSetAct.setTitleEnabled(true);
+                mBinding.setToolbar.setTitle("");
+            }
+        });
+
         viewModel.getWordsForSet()
                 .observe(this, list -> mRecyclerAdapter.changeData(list));
         viewModel.getCurrentSet()
@@ -141,7 +157,15 @@ public class SingleSetFragment extends Fragment {
         if (mSingleFragMode) {
             mBinding.setToolbar.setNavigationIcon(R.drawable.ic_back_toolbar);
             mBinding.setToolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
-            mBinding.coordinatorSetact.setFitsSystemWindows(true);
+            ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.setToolbar);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Window window = getActivity().getWindow();
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(Color.TRANSPARENT);
+            }
         } else {
 //            AppBarLayout.LayoutParams layoutParams =(AppBarLayout.LayoutParams) mBinding.collapsingToolbarSetAct.getLayoutParams();
 //            layoutParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP | AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL);
@@ -271,6 +295,8 @@ public class SingleSetFragment extends Fragment {
             if (mActionMode != null) {
                 mActionMode.invalidate();
             }
+
+            mFragmentListener.startCards(position);
         });
 
         mRecyclerAdapter.setAdapterLongClickListener((root, position, id) -> {

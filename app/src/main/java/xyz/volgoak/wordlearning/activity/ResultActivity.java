@@ -90,4 +90,9 @@ public class ResultActivity extends AppCompatActivity implements FragmentListene
     public void selectTraining() {
 
     }
+
+    @Override
+    public void startCards(int startPosition) {
+        
+    }
 }
