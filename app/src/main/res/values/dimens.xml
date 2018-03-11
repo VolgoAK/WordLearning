@@ -35,6 +35,8 @@
     <dimen name="menu_image_size">40dp</dimen>
     <dimen name="menu_image_margin">5dp</dimen>
 
+    <dimen name="card_ib_size">30dp</dimen>
+
 
     <dimen name="word_training_text_size">20sp</dimen>
     <dimen name="fab_size">56dp</dimen>

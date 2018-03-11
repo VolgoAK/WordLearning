@@ -26,6 +26,7 @@ import javax.inject.Inject;
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
+import xyz.volgoak.wordlearning.activity.MainActivity;
 import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.databinding.FragmentRedactorBinding;
@@ -68,7 +69,7 @@ public class DictionaryFragment extends Fragment {
         mBinding.rvRedactor.setLayoutManager(layoutManager);
 
         mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), new ArrayList<>(), mBinding.rvRedactor);
-        mRecyclerAdapter.setAdapterClickListener((root, position, word) -> fireCustomDialog((Word) word));
+        mRecyclerAdapter.setAdapterClickListener((root, position, word) -> onWordClicked(position,(Word) word));
         mBinding.rvRedactor.setAdapter(mRecyclerAdapter);
 
         viewModel = ViewModelProviders.of(this).get(DictionaryViewModel.class);
@@ -87,6 +88,10 @@ public class DictionaryFragment extends Fragment {
 
 
 
+    }
+
+    private void onWordClicked(int position, Word word) {
+        ((MainActivity) getActivity()).startCardsFragment(position);
     }
 
     public void fireCustomDialog(final Word word) {

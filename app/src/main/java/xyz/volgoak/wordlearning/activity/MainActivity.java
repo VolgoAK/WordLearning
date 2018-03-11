@@ -16,6 +16,7 @@ import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.fragment.DictionaryFragment;
 import xyz.volgoak.wordlearning.fragment.StartFragment;
 import xyz.volgoak.wordlearning.fragment.TrainingSelectFragment;
+import xyz.volgoak.wordlearning.fragment.WordCardsFragment;
 
 /**
  * Created by Alexander Karachev on 07.05.2017.
@@ -144,6 +145,11 @@ public class MainActivity extends NavigationActivity implements FragmentListener
     @Override
     public void selectTraining() {
         TrainingSelectFragment fragment = new TrainingSelectFragment();
+        startFragment(fragment);
+    }
+
+    public void startCardsFragment(int position) {
+        WordCardsFragment fragment = WordCardsFragment.newInstance(position);
         startFragment(fragment);
     }
 
