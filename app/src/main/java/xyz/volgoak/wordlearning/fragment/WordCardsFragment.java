@@ -113,6 +113,7 @@ public class WordCardsFragment extends Fragment {
         if (useStartPosition) {
             int startPostition = words.size() * 1000 + startPosition;
             recyclerView.scrollToPosition(startPostition);
+            useStartPosition = false;
         }
 
         adapter.setDataList(words);

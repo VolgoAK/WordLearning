@@ -1,10 +1,13 @@
 package xyz.volgoak.wordlearning.recycler;
 
+import android.animation.LayoutTransition;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import xyz.volgoak.wordlearning.R;
@@ -23,8 +26,9 @@ public class WordCardRowController extends RecyclerView.ViewHolder{
     private static boolean isDrawableInit;
 
     private WordCardHolderBinding binding;
-
     private CardsRecyclerAdapter adapter;
+
+    private boolean settingsVisible;
 
     public WordCardRowController(WordCardHolderBinding binding, CardsRecyclerAdapter adapter) {
         super(binding.getRoot());
@@ -34,6 +38,7 @@ public class WordCardRowController extends RecyclerView.ViewHolder{
     }
 
     public void bindController(DataEntity dataEntity) {
+        settingsVisible = false;
         Word word = (Word) dataEntity;
         binding.tvCardTranslation.setText(word.getTranslation());
         binding.tvCardTranscription.setText(word.getTranscription());
@@ -60,6 +65,18 @@ public class WordCardRowController extends RecyclerView.ViewHolder{
 
         binding.btShow.setOnClickListener(v -> binding.tvCardTranslation.setVisibility(View.VISIBLE));
         binding.btPronounce.setOnClickListener(v -> WordSpeaker.speakWord(word.getWord()));
+
+        hideShowSettings();
+        binding.ivShowSettings.setOnClickListener(v -> {
+            settingsVisible = !settingsVisible;
+            hideShowSettings();
+        });
+    }
+
+    private void hideShowSettings() {
+        binding.group.setVisibility(settingsVisible ? View.VISIBLE : View.GONE);
+        binding.ivShowSettings.setImageResource(settingsVisible ? R.drawable.ic_arrow_up :
+                R.drawable.ic_arrow_down);
     }
 
     public static void initDrawables(Context context) {
