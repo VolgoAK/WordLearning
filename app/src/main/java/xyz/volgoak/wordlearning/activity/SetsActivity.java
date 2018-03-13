@@ -1,28 +1,28 @@
 package xyz.volgoak.wordlearning.activity;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.fragment.ContainerFragment;
 import xyz.volgoak.wordlearning.fragment.SingleSetFragment;
-import xyz.volgoak.wordlearning.fragment.WordCardsFragment;
 import xyz.volgoak.wordlearning.fragment.WordSetsFragment;
+import xyz.volgoak.wordlearning.model.WordsViewModel;
 
 public class SetsActivity extends AppCompatActivity implements FragmentListener, WordSetsFragment.SetsFragmentListener {
 
+    public static final String SAVED_SET_ID = "saved_set_id";
+
     private SingleSetFragment mSingleSetFragment;
+    private WordsViewModel viewModel;
 
     private boolean isMultiFrag;
     private long mSelectedSetId = -1;
@@ -33,6 +33,15 @@ public class SetsActivity extends AppCompatActivity implements FragmentListener,
         setContentView(R.layout.activity_sets);
 
         isMultiFrag = findViewById(R.id.container_detail_sets_activity) != null;
+
+        viewModel = ViewModelProviders.of(this).get(WordsViewModel.class);
+
+        if (savedInstanceState != null)
+            mSelectedSetId = savedInstanceState.getLong(SAVED_SET_ID, -1);
+
+        if (mSelectedSetId != -1 && !viewModel.isSetLoaded()) {
+            viewModel.changeSet(mSelectedSetId);
+        }
 
         // TODO: 3/11/18 cast exception here
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container_master_sets_activity);
@@ -61,7 +70,7 @@ public class SetsActivity extends AppCompatActivity implements FragmentListener,
 
         mSingleSetFragment = SingleSetFragment.newInstance(setId, singleMode);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             String transitionName = ViewCompat.getTransitionName(shared);
             mSingleSetFragment.getArguments().putString(SingleSetFragment.EXTRA_TRANSITION_NAME, transitionName);
             transaction.addSharedElement(shared, transitionName);
@@ -72,6 +81,12 @@ public class SetsActivity extends AppCompatActivity implements FragmentListener,
                 .commit();
 
         mSelectedSetId = setId;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putLong(SAVED_SET_ID, mSelectedSetId);
     }
 
     @Override

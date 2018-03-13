@@ -72,17 +72,24 @@
                     app:layout_constraintLeft_toLeftOf="@id/tvCardTranslation"
                     app:layout_constraintRight_toRightOf="@id/tvCardTranslation"
                     app:layout_constraintTop_toBottomOf="@id/tvCardTranslation" />
+                
+                <android.support.constraint.Barrier
+                    android:id="@+id/wordsBarrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="right"
+                    app:constraint_referenced_ids="tvCardWord,tvCardTranslation"/>
 
 
                 <ImageButton
                     android:id="@+id/btPronounce"
                     android:layout_width="@dimen/card_ib_size"
                     android:layout_height="@dimen/card_ib_size"
-                    android:layout_marginRight="@dimen/views_horizontal_margin"
+                    android:layout_marginLeft="4dp"
                     android:background="@null"
                     android:scaleType="fitCenter"
                     app:layout_constraintBottom_toBottomOf="@id/tvCardWord"
-                    app:layout_constraintLeft_toLeftOf="@id/btShow"
+                    app:layout_constraintLeft_toRightOf="@id/wordsBarrier"
                     app:layout_constraintTop_toTopOf="@id/tvCardWord"
                     app:srcCompat="@drawable/ic_sound_gray_24dp" />
 
@@ -90,13 +97,11 @@
                     android:id="@+id/btShow"
                     android:layout_width="@dimen/card_ib_size"
                     android:layout_height="@dimen/card_ib_size"
-                    android:layout_marginRight="@dimen/views_horizontal_margin"
+                    android:layout_marginLeft="4dp"
                     android:background="@null"
                     android:scaleType="fitCenter"
                     app:layout_constraintBottom_toBottomOf="@id/tvCardTranslation"
-                    app:layout_constraintHorizontal_bias="0.21"
-                    app:layout_constraintLeft_toRightOf="@id/tvCardTranslation"
-                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/wordsBarrier"
                     app:layout_constraintTop_toTopOf="@id/tvCardTranslation"
                     app:srcCompat="@drawable/ic_eye" />
 
@@ -147,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/views_small_margin"
                     android:text="@string/reset_progress"
-                    android:textSize="@dimen/small_text_size"
+                    android:textSize="@dimen/tiny_text_size"
                     app:layout_constraintBottom_toBottomOf="@id/ivReset"
                     app:layout_constraintRight_toLeftOf="@id/ivReset"
                     app:layout_constraintTop_toTopOf="@id/ivReset" />
@@ -173,7 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/word_translation"
-                    android:textSize="@dimen/small_text_size"
+                    android:textSize="@dimen/tiny_text_size"
                     app:layout_constraintBottom_toBottomOf="@id/ivProgressWt"
                     app:layout_constraintLeft_toLeftOf="@id/tvWordInDictionary"
                     app:layout_constraintTop_toTopOf="@id/ivProgressWt" />
@@ -183,7 +188,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/translation_word"
-                    android:textSize="@dimen/small_text_size"
+                    android:textSize="@dimen/tiny_text_size"
                     app:layout_constraintBottom_toBottomOf="@id/ivProgressTw"
                     app:layout_constraintLeft_toLeftOf="@id/tvResetProgress"
                     app:layout_constraintTop_toTopOf="@id/ivProgressTw" />

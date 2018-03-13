@@ -51,6 +51,8 @@ public class WordsViewModel extends ViewModel {
         WordsApp.getsComponent().inject(this);
     }
 
+    private boolean isSetLoaded;
+
     public LiveData<List<Set>> getSets(String theme) {
         if (sets == null || sets.size() == 0) {
             executor.submit(() -> {
@@ -84,6 +86,7 @@ public class WordsViewModel extends ViewModel {
     }
 
     public LiveData<Boolean> changeSet(long setId) {
+        isSetLoaded = true;
         MutableLiveData<Boolean> loadedCallback = new MutableLiveData<>();
 
         if(wordsDisposable != null && !wordsDisposable.isDisposed()) {
@@ -210,6 +213,10 @@ public class WordsViewModel extends ViewModel {
     public void deleteOrHideWord(Word word) {
         word.setStatus(DatabaseContract.Words.OUT_OF_DICTIONARY);
         AsyncTask.execute(() -> provider.updateWords(word));
+    }
+
+    public boolean isSetLoaded() {
+        return isSetLoaded;
     }
 
     @Override

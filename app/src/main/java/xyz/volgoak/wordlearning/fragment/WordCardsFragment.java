@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.view.LayoutInflater;
@@ -68,7 +69,7 @@ public class WordCardsFragment extends Fragment {
         }
         recyclerView.setLayoutManager(manager);
 
-        SnapHelper snapHelper = new LinearSnapHelper();
+        SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(recyclerView);
 
         adapter = new CardsRecyclerAdapter();
