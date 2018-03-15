@@ -10,6 +10,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import timber.log.Timber;
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.fragment.ContainerFragment;
@@ -66,7 +67,7 @@ public class SetsActivity extends AppCompatActivity implements FragmentListener,
     public void startSet(long setId, View shared) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         boolean singleMode = findViewById(R.id.container_detail_sets_activity) == null;
-        int container = singleMode ? R.id.container_master_sets_activity : R.id.container_master_sets_activity;
+        int container = singleMode ? R.id.container_master_sets_activity : R.id.container_detail_sets_activity;
 
         mSingleSetFragment = SingleSetFragment.newInstance(setId, singleMode);
 
@@ -117,7 +118,8 @@ public class SetsActivity extends AppCompatActivity implements FragmentListener,
     @Override
     public void startCards(int startPosition) {
         boolean singleMode = findViewById(R.id.container_detail_sets_activity) == null;
-        int container = singleMode ? R.id.container_master_sets_activity : R.id.container_master_sets_activity;
+        Timber.d("startCards: singlemode " + singleMode);
+        int container = singleMode ? R.id.container_master_sets_activity : R.id.container_detail_sets_activity;
         ContainerFragment fragment = ContainerFragment.newInstance(startPosition);
         getSupportFragmentManager().beginTransaction()
                 .replace(container, fragment)

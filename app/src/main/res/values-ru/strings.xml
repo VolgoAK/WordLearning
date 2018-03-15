@@ -84,4 +84,5 @@
     <string name="pronun_auto_summary">вкл/выкл авто произношение слов при появлении</string>
     <string name="one_more_time">Еще раз</string>
     <string name="repeat">Повторить</string>
+    <string name="remove">Удалить</string>
 </resources>
