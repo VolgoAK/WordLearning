@@ -209,7 +209,7 @@ public class SingleSetFragment extends Fragment {
         File imageDir = new File(getActivity().getFilesDir(), StorageContract.IMAGES_FOLDER);
         File imageFile = new File(imageDir, imageRes);
 
-        Picasso.with(getContext())
+        Picasso.get()
                 .load(imageFile)
                 .into(mBinding.setIvTitle, new Callback() {
                     @Override
@@ -218,8 +218,8 @@ public class SingleSetFragment extends Fragment {
                     }
 
                     @Override
-                    public void onError() {
-                        startPostponedEnterTransition();
+                    public void onError(Exception e) {
+
                     }
                 });
 

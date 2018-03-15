@@ -53,7 +53,7 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
     private FragmentBoolTrainingBinding dataBinding;
     private TrainingBool trainingBool;
 
-    private int timer = 60;
+    private int timer = 30;
     private boolean paused = false;
     private long setId;
 

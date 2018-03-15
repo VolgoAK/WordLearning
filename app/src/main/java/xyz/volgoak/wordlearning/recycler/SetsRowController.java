@@ -108,7 +108,7 @@ import xyz.volgoak.wordlearning.update.ImageDownloader;
         Uri imageUri = Uri.fromFile(imageFile);
 
         if(imageFile.exists()) {
-            Picasso.with(mContext).load(imageUri)
+            Picasso.get().load(imageUri)
                     .error(R.drawable.button_back)
                     .into(civ);
         } else {
