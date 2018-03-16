@@ -28,7 +28,7 @@ public class TrainingBool extends Training {
     }
 
     public List<PlayWord> getInitialWords() {
-        if (playWords.size() >= position + 1) {
+        if (playWords.size() >= position + 2) {
             return playWords.subList(position, position + 2);
         } else return null;
     }

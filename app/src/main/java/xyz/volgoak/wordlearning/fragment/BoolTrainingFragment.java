@@ -98,6 +98,10 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
     }
 
     private void onTrainingReady(TrainingBool training) {
+        if(training == null) {
+            Timber.e(new NullPointerException("Training is null"));
+            return;
+        }
 
         trainingBool = training;
         for (PlayWord pw : trainingBool.getInitialWords()) {

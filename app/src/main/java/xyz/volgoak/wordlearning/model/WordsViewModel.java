@@ -207,7 +207,7 @@ public class WordsViewModel extends ViewModel {
     }
 
     public void insertWord(Word newWord) {
-        provider.insertWord(newWord);
+        executor.submit(() -> provider.insertWord(newWord));
     }
 
     public void deleteOrHideWord(Word word) {

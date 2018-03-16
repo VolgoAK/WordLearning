@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import timber.log.Timber;
 import xyz.volgoak.wordlearning.AppRater;
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
@@ -47,6 +48,7 @@ public class MainActivity extends NavigationActivity implements FragmentListener
             }
         } else if (savedInstanceState == null)
             startHomeFragment();
+
     }
 
     @Override

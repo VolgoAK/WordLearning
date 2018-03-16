@@ -15,7 +15,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.annimon.stream.Stream;
+
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
@@ -67,7 +70,11 @@ public class DictionaryFragment extends Fragment {
 
         viewModel = ViewModelProviders.of(getActivity()).get(WordsViewModel.class);
         viewModel.changeToDictionary();
-        viewModel.getWordsForSet().observe(this, list -> mRecyclerAdapter.changeData(list));
+        viewModel.getWordsForSet().observe(this, list -> {
+            mRecyclerAdapter.changeData(Stream.of(list)
+                .sorted((w1, w2) -> Long.compare(w2.getAddedTime(), w1.getAddedTime()))
+                .toList());
+        });
 
         mBinding.fabAddRedactor.setOnClickListener((v) -> fireAddWordDialog());
 
@@ -99,6 +106,7 @@ public class DictionaryFragment extends Fragment {
             if (!word.isEmpty() && !translation.isEmpty()) {
                 Word newWord = new Word(word, translation);
                 newWord.setStatus(DatabaseContract.Words.IN_DICTIONARY);
+                newWord.setAddedTime(System.currentTimeMillis());
                 viewModel.insertWord(newWord);
             } else {
                 Toast.makeText(getContext(), R.string.fields_empty_message, Toast.LENGTH_LONG).show();

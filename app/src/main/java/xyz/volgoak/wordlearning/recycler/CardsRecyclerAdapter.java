@@ -30,8 +30,12 @@ public class CardsRecyclerAdapter extends RecyclerView.Adapter<WordCardRowContro
 
     @Override
     public void onBindViewHolder(WordCardRowController holder, int position) {
-        Timber.d("onBindViewHolder: position " + position);
-        holder.bindController(dataList.get(position % dataList.size()));
+        Timber.d("onBindViewHolder: position %1$d", position);
+        try {
+            holder.bindController(dataList.get(position % dataList.size()));
+        }catch (ArithmeticException ex) {
+            Timber.e(ex);
+        }
     }
 
     @Override
