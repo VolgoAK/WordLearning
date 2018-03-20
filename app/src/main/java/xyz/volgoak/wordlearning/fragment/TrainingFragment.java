@@ -24,6 +24,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.Toast;
 
+
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -37,6 +38,7 @@ import xyz.volgoak.wordlearning.training_utils.Training;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 import xyz.volgoak.wordlearning.training_utils.TrainingWord;
 import xyz.volgoak.wordlearning.utils.MetallBounceInterpoltor;
+import xyz.volgoak.wordlearning.utils.Optional;
 import xyz.volgoak.wordlearning.utils.PreferenceContract;
 import xyz.volgoak.wordlearning.utils.SoundsManager;
 import xyz.volgoak.wordlearning.utils.WordSpeaker;
@@ -167,13 +169,14 @@ public class TrainingFragment extends Fragment {
         });
     }
 
-    private void onTrainingReady(Training training) {
-        mTraining = training;
+    private void onTrainingReady(Optional<Training> trainingOptional) {
         //finish training and go to the dictionary if there is nothing to train
-        if (mTraining == null) {
+        if (trainingOptional.isEmpty()) {
             goToDictionary();
             return;
         }
+
+        mTraining = trainingOptional.get();
         int titleId = mTrainingType == TrainingFabric.TRANSLATION_WORD ? R.string.translation_word : R.string.word_translation;
         getActivity().setTitle(getString(titleId));
 

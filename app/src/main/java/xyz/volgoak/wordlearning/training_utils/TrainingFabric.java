@@ -1,6 +1,7 @@
 package xyz.volgoak.wordlearning.training_utils;
 
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.annimon.stream.Collectors;
@@ -11,11 +12,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+
 import java.util.Queue;
 
 import io.reactivex.Single;
 import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.entities.Word;
+import xyz.volgoak.wordlearning.utils.Optional;
 
 
 /**
@@ -31,7 +34,7 @@ public abstract class TrainingFabric {
     public static final int WORDS_LIMIT = 10;
 
 
-    public static Single<Training> getSimpleTraining(int trainingType, long setId, DataProvider provider) {
+    public static Single<Optional<Training>> getSimpleTraining(int trainingType, long setId, DataProvider provider) {
         return Single.create(subscriber -> subscriber.onSuccess(createSimpleTraining(trainingType, setId, provider)));
     }
 
@@ -39,9 +42,7 @@ public abstract class TrainingFabric {
         return Single.create(subscriber -> subscriber.onSuccess(createBoolTraining(setId, provider)));
     }
 
-    private static Training createSimpleTraining(int trainingType, long setId, DataProvider provider) {
-
-        String variantsColumnString = "";
+    private static @NonNull Optional<Training> createSimpleTraining(int trainingType, long setId, DataProvider provider) {
         List<Word> wordList = provider.getTrainingWords(setId);
 
         GetWord wordGetter;
@@ -61,7 +62,7 @@ public abstract class TrainingFabric {
 
         if (wordList.size() == 0) {
             //no untrained words in a dictionary
-            return null;
+            return new Optional<>(null);
         }
 
         Collections.shuffle(wordList);
@@ -83,8 +84,8 @@ public abstract class TrainingFabric {
             if (playWords.size() == WORDS_LIMIT) break;
         }
 
-        if (playWords.size() == 0) return null;
-        return new Training(playWords, trainingType);
+        if (playWords.size() == 0) return new Optional<>(null);
+        return new Optional<>(new Training(playWords, trainingType));
     }
 
     private static TrainingBool createBoolTraining(long setId, DataProvider provider) {

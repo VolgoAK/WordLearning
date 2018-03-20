@@ -22,7 +22,6 @@ public class SetsActivity extends AppCompatActivity implements FragmentListener,
 
     public static final String SAVED_SET_ID = "saved_set_id";
 
-    private SingleSetFragment mSingleSetFragment;
     private WordsViewModel viewModel;
 
     private boolean isMultiFrag;
@@ -53,12 +52,12 @@ public class SetsActivity extends AppCompatActivity implements FragmentListener,
                     .commit();
         }
 
-        mSingleSetFragment = (SingleSetFragment) getSupportFragmentManager().findFragmentById(R.id.container_detail_sets_activity);
-        if (mSingleSetFragment == null && isMultiFrag) {
+        Fragment detailFragment = getSupportFragmentManager().findFragmentById(R.id.container_detail_sets_activity);
+        if (detailFragment == null && isMultiFrag) {
             // TODO: 17.06.2017 change test id to real
-            mSingleSetFragment = SingleSetFragment.newInstance(1, false);
+            detailFragment = SingleSetFragment.newInstance(1, false);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container_detail_sets_activity, mSingleSetFragment)
+                    .replace(R.id.container_detail_sets_activity, detailFragment)
                     .commit();
         }
     }
@@ -69,15 +68,15 @@ public class SetsActivity extends AppCompatActivity implements FragmentListener,
         boolean singleMode = findViewById(R.id.container_detail_sets_activity) == null;
         int container = singleMode ? R.id.container_master_sets_activity : R.id.container_detail_sets_activity;
 
-        mSingleSetFragment = SingleSetFragment.newInstance(setId, singleMode);
+        SingleSetFragment setFragment = SingleSetFragment.newInstance(setId, singleMode);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             String transitionName = ViewCompat.getTransitionName(shared);
-            mSingleSetFragment.getArguments().putString(SingleSetFragment.EXTRA_TRANSITION_NAME, transitionName);
+            setFragment.getArguments().putString(SingleSetFragment.EXTRA_TRANSITION_NAME, transitionName);
             transaction.addSharedElement(shared, transitionName);
         }
 
-        transaction.replace(container, mSingleSetFragment)
+        transaction.replace(container, setFragment)
                 .addToBackStack(null)
                 .commit();
 

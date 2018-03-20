@@ -16,10 +16,13 @@ import javax.inject.Inject;
 import io.fabric.sdk.android.services.concurrency.AsyncTask;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
+import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
+import xyz.volgoak.wordlearning.entities.DictionaryInfo;
 import xyz.volgoak.wordlearning.entities.Set;
 import xyz.volgoak.wordlearning.entities.Theme;
 import xyz.volgoak.wordlearning.entities.Word;
@@ -41,6 +44,8 @@ public class WordsViewModel extends ViewModel {
     private MutableLiveData<Set> selectedSetData = new MutableLiveData<>();
     private MutableLiveData<List<Word>> selectedSetWordsData = new MutableLiveData<>();
 
+    private MutableLiveData<DictionaryInfo> dictionaryInfoLiveData;
+
     private Disposable wordsDisposable;
     private Disposable setDisposable;
 
@@ -52,6 +57,20 @@ public class WordsViewModel extends ViewModel {
     }
 
     private boolean isSetLoaded;
+
+    public LiveData<DictionaryInfo> getDictionaryInfo() {
+        if(dictionaryInfoLiveData == null) {
+            dictionaryInfoLiveData = new MutableLiveData<>();
+            provider.getDictionaryInfo()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(info -> {
+                        dictionaryInfoLiveData.setValue(info);
+                    });
+        }
+
+        return dictionaryInfoLiveData;
+    }
 
     public LiveData<List<Set>> getSets(String theme) {
         if (sets == null || sets.size() == 0) {

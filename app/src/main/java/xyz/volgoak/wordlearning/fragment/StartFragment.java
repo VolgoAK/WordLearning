@@ -3,6 +3,7 @@ package xyz.volgoak.wordlearning.fragment;
 
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.databinding.FragmentStartBinding;
 import xyz.volgoak.wordlearning.entities.DictionaryInfo;
+import xyz.volgoak.wordlearning.model.WordsViewModel;
 import xyz.volgoak.wordlearning.utils.AppearingAnimator;
 
 /**
@@ -41,8 +43,7 @@ public class StartFragment extends Fragment {
     private FragmentListener mListener;
     private FragmentStartBinding mBinding;
 
-    @Inject
-    DataProvider mDataProvider;
+    private WordsViewModel viewModel;
 
     private boolean mAppearanceAnimated;
 
@@ -67,6 +68,14 @@ public class StartFragment extends Fragment {
                 }
             }
         });
+
+        viewModel = ViewModelProviders.of(getActivity()).get(WordsViewModel.class);
+        viewModel.getDictionaryInfo().observe(this, info -> {
+            mBinding.tvWordsDicStartF.setText(getString(R.string.words_in_dictionary,
+                    info.getWordsInDictionary()));
+            mBinding.tvWordsLearnedStartF.setText(getString(R.string.words_learned,
+                    info.getLearnedWords(), info.getAllWords()));
+        });
         return mBinding.getRoot();
     }
 
@@ -76,16 +85,6 @@ public class StartFragment extends Fragment {
         mBinding.setListener(mListener);
         mBinding.notifyPropertyChanged(BR._all);
         mListener.setActionBarTitle(getString(R.string.app_name));
-
-        //load dictionary info
-
-        mDataProvider.getDictionaryInfo()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(info -> {
-                    mBinding.tvWordsDicStartF.setText(getString(R.string.words_in_dictionary, info.getWordsInDictionary()));
-                    mBinding.tvWordsLearnedStartF.setText(getString(R.string.words_learned, info.getLearnedWords(), info.getAllWords()));
-                });
 
         mAppearanceAnimated = false;
     }
