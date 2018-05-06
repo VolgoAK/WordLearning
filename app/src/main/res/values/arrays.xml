@@ -17,4 +17,11 @@
         <item>https://www.zapsplat.com/</item>
         <item>https://pixabay.com/</item>
     </string-array>
+
+    <string-array name="words_in_training_values">
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+    </string-array>
 </resources>

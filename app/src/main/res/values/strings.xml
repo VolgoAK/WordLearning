@@ -93,6 +93,13 @@
     <string name="wrong">Wrong</string>
     <string name="rate_us">Rate us</string>
     <string name="settings">Settings</string>
+
+    <string name="one_more_time">One more time</string>
+    <string name="repeat">Repeat</string>
+
+    <string name="word_in_dictionary">Word in dictionary</string>
+
+    <!-- settings -->
     <string name="enable_sounds">Enable sounds</string>
     <string name="preference_sound_key" translatable="false">sounds_enabled_pref</string>
     <string name="preference_license_key" translatable="false">preference_license</string>
@@ -102,6 +109,10 @@
     <string name="content_licenses">Content licenses</string>
     <string name="preference_auto_pronoun" translatable="false">auto_play_pronoun_pref</string>
     <string name="auto_play_pronoun">Play pronunciation automatically</string>
+    <string name="preference_words_in_training_key" translatable="false">words_in_training</string>
+    <string name="words_in_training_default">10</string>
+    <string name="words_in_training_title">Words in a training</string>
+    <string name="words_in_training_description">Count of words in simple trainings</string>
     <string name="rate_us_summary">Rate WordLearning if you like it.</string>
     <string name="rate_us_key" translatable="false">rate_us_pref_key</string>
     <string name="preference_rate_key" translatable="false">preference_rate</string>
@@ -109,8 +120,4 @@
     <string name="remind_me_later">Later</string>
     <string name="enable_sounds_summary">on/off funny play sounds</string>
     <string name="pronun_auto_summary">on/off auto audio pronuciation when word appears.</string>
-    <string name="one_more_time">One more time</string>
-    <string name="repeat">Repeat</string>
-
-    <string name="word_in_dictionary">Word in dictionary</string>
 </resources>

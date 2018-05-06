@@ -30,19 +30,19 @@ public abstract class TrainingFabric {
     public final static int TRANSLATION_WORD = 1;
     public static final int BOOL_TRAINING = 3;
 
-    public static final int TRAINING_LIMIT = 4;
-    public static final int WORDS_LIMIT = 10;
 
-
-    public static Single<Optional<Training>> getSimpleTraining(int trainingType, long setId, DataProvider provider) {
-        return Single.create(subscriber -> subscriber.onSuccess(createSimpleTraining(trainingType, setId, provider)));
+    public static Single<Optional<Training>> getSimpleTraining(int trainingType, long setId,
+                                                               int wordsLimit, DataProvider provider) {
+        return Single.create(subscriber ->
+                subscriber.onSuccess(createSimpleTraining(trainingType, setId, wordsLimit, provider)));
     }
 
     public static Single<TrainingBool> getBoolTrainingRx(long setId, DataProvider provider) {
         return Single.create(subscriber -> subscriber.onSuccess(createBoolTraining(setId, provider)));
     }
 
-    private static @NonNull Optional<Training> createSimpleTraining(int trainingType, long setId, DataProvider provider) {
+    private static @NonNull Optional<Training> createSimpleTraining(int trainingType, long setId,
+                                                                    int wordsLimit, DataProvider provider) {
         List<Word> wordList = provider.getTrainingWords(setId);
 
         GetWord wordGetter;
@@ -81,7 +81,7 @@ public abstract class TrainingFabric {
             }
             PlayWord playWord = new PlayWord(word, translation, vars, w.getId());
             playWords.add(playWord);
-            if (playWords.size() == WORDS_LIMIT) break;
+            if (playWords.size() == wordsLimit) break;
         }
 
         if (playWords.size() == 0) return new Optional<>(null);

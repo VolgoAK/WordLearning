@@ -4,6 +4,7 @@ package xyz.volgoak.wordlearning.fragment;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
@@ -29,6 +30,7 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.data.DataProvider;
@@ -123,12 +125,10 @@ public class TrainingFragment extends Fragment {
             }
         } else {
             mAnswered.set(false);
-            /*mTraining = TrainingFabric.getSimpleTraining(mTrainingType, mSetId, mDataProvider);
-            //if training is null, we have to go to the dictionary
-            if(mTraining != null) {
-                mTrainingWord = mTraining.getFirstWord();
-            }*/
-            TrainingFabric.getSimpleTraining(mTrainingType, mSetId, mDataProvider)
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            String wordsLimit = preferences.getString(getString(R.string.preference_words_in_training_key), "10");
+
+            TrainingFabric.getSimpleTraining(mTrainingType, mSetId, Integer.parseInt(wordsLimit),  mDataProvider)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe((this::onTrainingReady));

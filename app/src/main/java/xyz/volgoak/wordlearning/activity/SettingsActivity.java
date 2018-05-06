@@ -81,7 +81,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsFragm
         licenses.add(new License(this, "Architecture Components", LicenseType.APACHE_LICENSE_20, "2015", "Android Open Sourse Project"));
         licenses.add(new License(this, "PlaceHolderView", LicenseType.APACHE_LICENSE_20, "2016", "Janishar Ali Anwar"));
         licenses.add(new License(this, "Eventbus", LicenseType.APACHE_LICENSE_20, "2012-2017", "Markus Junginger - Greenrobot"));
-        licenses.add(new License(this, "Zif4j", LicenseType.APACHE_LICENSE_20, "2013", "Srikanth Reddy Lingala"));
+        licenses.add(new License(this, "Zip4j", LicenseType.APACHE_LICENSE_20, "2013", "Srikanth Reddy Lingala"));
 
         Collections.shuffle(licenses);
 
