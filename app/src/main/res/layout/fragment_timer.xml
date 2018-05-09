@@ -10,19 +10,7 @@
         android:layout_width="@dimen/timer_bt_size"
         android:layout_height="@dimen/timer_bt_size"
         android:textSize="@dimen/large_text_size"
-        android:background="@drawable/yellow_circle"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <Button
-        android:id="@+id/bt_two_timer"
-        android:layout_width="@dimen/timer_bt_size"
-        android:layout_height="@dimen/timer_bt_size"
-        android:textSize="@dimen/large_text_size"
-        android:background="@drawable/yellow_circle"
-        tools:text="3"
+        android:background="@drawable/white_circle"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"

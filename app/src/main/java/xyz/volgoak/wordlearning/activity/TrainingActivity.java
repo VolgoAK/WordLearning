@@ -7,8 +7,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
 import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.admob.AdsManager;
+import xyz.volgoak.wordlearning.admob.Banner;
 import xyz.volgoak.wordlearning.fragment.BoolTrainingFragment;
 import xyz.volgoak.wordlearning.fragment.TimerFragment;
 import xyz.volgoak.wordlearning.fragment.TrainingFragment;
@@ -23,6 +26,8 @@ public class TrainingActivity extends AppCompatActivity implements TrainingFragm
 
     private int trainingType;
     private long setId;
+
+    private Banner banner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +51,43 @@ public class TrainingActivity extends AppCompatActivity implements TrainingFragm
                 transaction.commit();
             } else onTimerFinished();
         }
+
+        if(AdsManager.INSTANCE.getInitialized()) {
+            LinearLayout bannerContainer = findViewById(R.id.llBannerContainerTraining);
+            banner = new Banner(this);
+            banner.loadAdRequest();
+            banner.setTargetView(bannerContainer);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(banner != null) {
+            banner.onResume();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(banner != null) {
+            banner.onPause();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(banner != null) {
+            banner.onDestroy();
+        }
     }
 
     @Override
     public void showResults(Results results) {
         Intent intent = new Intent(this, ResultActivity.class);
-        intent.putExtra(ResultActivity.EXTRA_TRAINING_RESULTS, results);
+        intent.putExtra(ResultActivity.Companion.getEXTRA_TRAINING_RESULTS(), results);
         startActivity(intent);
         finish();
     }

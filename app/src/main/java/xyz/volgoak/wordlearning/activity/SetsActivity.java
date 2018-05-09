@@ -9,10 +9,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import timber.log.Timber;
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.admob.AdsManager;
+import xyz.volgoak.wordlearning.admob.Banner;
 import xyz.volgoak.wordlearning.fragment.ContainerFragment;
 import xyz.volgoak.wordlearning.fragment.SingleSetFragment;
 import xyz.volgoak.wordlearning.fragment.WordSetsFragment;
@@ -26,6 +29,8 @@ public class SetsActivity extends AppCompatActivity implements FragmentListener,
 
     private boolean isMultiFrag;
     private long mSelectedSetId = -1;
+
+    private Banner banner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +64,37 @@ public class SetsActivity extends AppCompatActivity implements FragmentListener,
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container_detail_sets_activity, detailFragment)
                     .commit();
+        }
+
+        if(AdsManager.INSTANCE.getInitialized()) {
+            LinearLayout bannerContainer = findViewById(R.id.llBannerContainerSets);
+            banner = new Banner(this);
+            banner.loadAdRequest();
+            banner.setTargetView(bannerContainer);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(banner != null) {
+            banner.onResume();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(banner != null) {
+            banner.onPause();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(banner != null) {
+            banner.onDestroy();
         }
     }
 

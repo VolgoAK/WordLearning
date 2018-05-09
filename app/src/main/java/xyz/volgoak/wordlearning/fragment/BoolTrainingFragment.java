@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -98,8 +99,10 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
     }
 
     private void onTrainingReady(TrainingBool training) {
-        if(training == null) {
+        if(training == null || training.getInitialWords() == null) {
             Timber.e(new NullPointerException("Training is null"));
+            Toast.makeText(getContext(), R.string.error_message, Toast.LENGTH_SHORT).show();
+            finishTraining();
             return;
         }
 
