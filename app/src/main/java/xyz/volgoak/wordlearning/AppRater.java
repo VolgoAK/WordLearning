@@ -2,6 +2,7 @@ package xyz.volgoak.wordlearning;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -79,6 +80,10 @@ public class AppRater {
             rateApp(context);
             dialog.dismiss();
         }));
+
+        builder.setOnDismissListener(dialog -> {
+            editor.putLong(PreferenceContract.LAST_RATE_SHOW_TIME, System.currentTimeMillis()).apply();
+        });
 
         builder.show();
     }

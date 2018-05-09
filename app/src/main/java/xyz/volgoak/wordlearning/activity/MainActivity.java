@@ -8,12 +8,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import timber.log.Timber;
 import xyz.volgoak.wordlearning.AppRater;
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
+import xyz.volgoak.wordlearning.admob.AdsManager;
+import xyz.volgoak.wordlearning.admob.Banner;
 import xyz.volgoak.wordlearning.fragment.DictionaryFragment;
 import xyz.volgoak.wordlearning.fragment.StartFragment;
 import xyz.volgoak.wordlearning.fragment.TrainingSelectFragment;
@@ -32,6 +35,8 @@ public class MainActivity extends NavigationActivity implements FragmentListener
 
     private boolean exitPressed;
 
+    private Banner banner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 //        Log.d(TAG, "onCreate: ");
@@ -49,6 +54,30 @@ public class MainActivity extends NavigationActivity implements FragmentListener
         } else if (savedInstanceState == null)
             startHomeFragment();
 
+        if(AdsManager.INSTANCE.getInitialized()) {
+            LinearLayout bannerLayout = findViewById(R.id.llBannerContainer);
+            banner = new Banner(this);
+            banner.loadAdRequest();
+            banner.setTargetView(bannerLayout);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(banner != null) banner.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(banner != null) banner.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(banner != null) banner.onDestroy();
     }
 
     @Override

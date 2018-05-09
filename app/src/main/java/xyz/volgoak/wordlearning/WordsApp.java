@@ -2,7 +2,6 @@ package xyz.volgoak.wordlearning;
 
 import android.app.Application;
 import android.content.Context;
-import android.os.Bundle;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -19,6 +18,7 @@ import xyz.volgoak.wordlearning.dagger.DbModule;
 import xyz.volgoak.wordlearning.dagger.DownloaderModule;
 import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.update.DbUpdateManager;
+import xyz.volgoak.wordlearning.admob.AdsManager;
 import xyz.volgoak.wordlearning.utils.ReleaseTree;
 import xyz.volgoak.wordlearning.utils.WordSpeaker;
 
@@ -66,10 +66,13 @@ public class WordsApp extends Application {
             FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true);
         }
 
-        Bundle bundle = new Bundle();
+       /* Bundle bundle = new Bundle();
         bundle.putString("Test", "Test is disabling work");
         bundle.putBoolean("Release", BuildConfig.DEBUG);
         FirebaseAnalytics.getInstance(this).logEvent("Test", bundle);
+        */
+
+        AdsManager.INSTANCE.initAds(this);
     }
 
     @Override
