@@ -142,18 +142,6 @@ public class TrainingFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        /*//finish training and go to the dictionary if there is nothing to train
-        if(mTraining == null){
-            goToDictionary();
-            return;
-        }
-        int titleId = mTrainingType == TrainingFabric.TRANSLATION_WORD ? R.string.translation_word : R.string.word_translation;
-        getActivity().setTitle(getString(titleId));
-
-        //max progress 100 percent
-        mBinding.progressTf.setMax(100);
-        //load first word at start time
-        showWord();*/
 
         //createAnimator buttons appearance
         mIsAnimated = false;
@@ -236,13 +224,15 @@ public class TrainingFragment extends Fragment {
         mBinding.btVar3Tf.setBackground(mDefaultBackground);
         mBinding.btVar4Tf.setBackground(mDefaultBackground);
 
-//        mBinding.progressTf.setProgress(mTraining.getProgressInPercents());
         float newProgress = mTraining.getProgressInPercents();
         if (newProgress > mBinding.progressTf.getProgress()) {
             ObjectAnimator animator = ObjectAnimator.ofFloat(mBinding.progressTf, "progress",
                     mBinding.progressTf.getProgress(), newProgress);
             animator.start();
         }
+
+        String progressText = mTraining.getProgressString();
+        mBinding.tvProgressTraining.setText(progressText);
 
         //hide the next button
         /*if(firstAnswered) hideShowNextButton(false);

@@ -1,5 +1,7 @@
 package xyz.volgoak.wordlearning.training_utils;
 
+import android.annotation.SuppressLint;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,6 +100,11 @@ public class Training implements Serializable{
 
     public int getTrainingType() {
         return trainingType;
+    }
+
+    @SuppressLint("DefaultLocale")
+    public String getProgressString() {
+        return String.format("%d/%d", currentPosition, playWords.size());
     }
 
     public float getProgressInPercents(){

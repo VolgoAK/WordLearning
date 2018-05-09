@@ -117,9 +117,8 @@ public class SetsActivity extends AppCompatActivity implements FragmentListener,
     @Override
     public void startCards(int startPosition) {
         boolean singleMode = findViewById(R.id.container_detail_sets_activity) == null;
-        Timber.d("startCards: singlemode " + singleMode);
         int container = singleMode ? R.id.container_master_sets_activity : R.id.container_detail_sets_activity;
-        ContainerFragment fragment = ContainerFragment.newInstance(startPosition);
+        ContainerFragment fragment = ContainerFragment.Companion.newInstance(startPosition);
         getSupportFragmentManager().beginTransaction()
                 .replace(container, fragment)
                 .addToBackStack(null)

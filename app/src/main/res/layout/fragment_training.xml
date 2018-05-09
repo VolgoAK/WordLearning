@@ -52,6 +52,18 @@
             app:layout_constraintRight_toRightOf="@id/iv_tf"
             app:layout_constraintTop_toBottomOf="@id/iv_tf"/>
 
+        <TextView
+            android:id="@+id/tvProgressTraining"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/tiny_text_size"
+            android:layout_marginRight="16dp"
+            app:layout_constraintTop_toTopOf="@id/progress_tf"
+            app:layout_constraintBottom_toBottomOf="@id/progress_tf"
+            app:layout_constraintRight_toRightOf="@id/progress_tf"
+            tools:text="5/10"/>
+
+
         <ImageButton
             android:id="@+id/ibt_sound_tf"
             app:srcCompat="@drawable/ic_sound_gray_24dp"

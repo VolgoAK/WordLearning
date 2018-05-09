@@ -18,6 +18,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <ImageView
+                    android:id="@+id/ivInDictionary"
+                    android:layout_width="@dimen/small_icon"
+                    android:layout_height="@dimen/small_icon"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvInDictionaryLabal"
+                    android:layout_marginTop="@dimen/views_small_margin"
+                    android:layout_marginLeft="@dimen/views_small_margin"
+                    app:srcCompat="@drawable/ic_book_black_24dp"
+                    android:tint="@color/green"
+                    android:rotation="330"/>
+
+                <TextView
+                    android:id="@+id/tvInDictionaryLabal"
+                    android:text="@string/in_dictionary"
+                    android:textColor="@color/green"
+                    android:rotation="330"
+                    android:textSize="@dimen/tiny_text_size"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/ivInDictionary"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
                 <View
                     android:id="@+id/topPlaceHolder"
                     android:layout_width="1dp"

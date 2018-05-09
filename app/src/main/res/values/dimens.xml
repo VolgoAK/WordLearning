@@ -70,6 +70,7 @@
     <!-- cards -->
     <dimen name="stats_card_height">150dp</dimen>
     <dimen name="stats_card_width">280dp</dimen>
+    <dimen name="small_icon">18dp</dimen>
 
     <!-- bool training -->
     <dimen name="bool_word_card_height">150dp</dimen>

@@ -46,11 +46,17 @@ public class WordCardRowController extends RecyclerView.ViewHolder{
 
         binding.tvCardTranslation.setVisibility(View.INVISIBLE);
 
-        binding.ivAddRemove.setImageResource(word.isInDictionary() ?
-                R.drawable.ic_remove : R.drawable.ic_add_blue_50dp);
-
-        binding.tvWordInDictionary.setText(word.isInDictionary() ?
-            R.string.remove : R.string.add);
+        if(word.isInDictionary()) {
+            binding.ivAddRemove.setImageResource(R.drawable.ic_remove);
+            binding.tvWordInDictionary.setText(R.string.remove);
+            binding.tvInDictionaryLabal.setVisibility(View.VISIBLE);
+            binding.ivInDictionary.setVisibility(View.VISIBLE);
+        } else {
+            binding.ivAddRemove.setImageResource(R.drawable.ic_add_blue_50dp);
+            binding.tvWordInDictionary.setText(R.string.add);
+            binding.tvInDictionaryLabal.setVisibility(View.GONE);
+            binding.ivInDictionary.setVisibility(View.GONE);
+        }
 
         Drawable wtProgress = word.getTrainedWt() >= sProgresIcons.length ?
                 sProgresIcons[sProgresIcons.length - 1] : sProgresIcons[word.getTrainedWt()];
