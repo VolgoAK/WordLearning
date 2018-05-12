@@ -157,7 +157,7 @@ public class SingleSetFragment extends Fragment {
                 mBinding.getRoot().getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 new Handler().postDelayed(() -> {
                     if(SingleSetFragment.this.isResumed()) {
-                        Guide.INSTANCE.showGuide(SingleSetFragment.this, false);
+                        Guide.INSTANCE.showGuide(SingleSetFragment.this, true);
                     }
                 }, 500);
             }

@@ -79,6 +79,10 @@ public class WordsViewModel extends ViewModel {
                 List<Set> themed = Stream.of(sets)
                         .filter(set -> set.getThemeCodes().contains(theme))
                         .toList();
+
+                if(themed.size() != 0) {
+                    changeSet(themed.get(0).getId());
+                }
                 setsLiveData.postValue(themed);
             });
         }

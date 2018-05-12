@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.takusemba.spotlight.SimpleTarget
 import com.takusemba.spotlight.Spotlight
+import timber.log.Timber
 import xyz.volgoak.wordlearning.R
 import xyz.volgoak.wordlearning.fragment.SingleSetFragment
 import xyz.volgoak.wordlearning.fragment.WordCardsFragment
@@ -23,24 +24,25 @@ object Guide {
     private const val SETS_FRAG_PREF = "sets_fragment_guide"
 
     fun showGuide(fragment: WordCardsFragment, ignorePrefs: Boolean = false) {
-        if (!ignorePrefs) {
-            if (checkPref(fragment.context!!, CARDS_FRAG_PREF)) return
+        fragment.activity?.let {
+            if (!ignorePrefs) {
+                if (checkPref(it, CARDS_FRAG_PREF)) return
+            }
+
+            val radius = Functions.dpToPx(it, 30f)
+
+            runGuide(it,
+                    titles = listOf(R.string.translation,
+                            R.string.add_to_dictionary,
+                            R.string.progress),
+                    description = listOf(R.string.click_to_translate,
+                            R.string.click_to_add_or_delete,
+                            R.string.click_to_more_info),
+                    targets = listOf(R.id.btShow,
+                            R.id.ivAddRemove,
+                            R.id.ivShowSettings),
+                    radius = radius)
         }
-
-        val radius = Functions.dpToPx(fragment.context!!, 30f)
-
-        runGuide(fragment.activity!!,
-                titles = listOf(R.string.translation,
-                        R.string.add_to_dictionary,
-                        R.string.progress),
-                description = listOf(R.string.click_to_translate,
-                        R.string.click_to_add_or_delete,
-                        R.string.click_to_more_info),
-                targets = listOf(R.id.btShow,
-                        R.id.ivAddRemove,
-                        R.id.ivShowSettings),
-                radius = radius)
-
     }
 
     fun showGuide(fragment: SingleSetFragment, ignorePrefs: Boolean = false) {
@@ -76,19 +78,27 @@ object Guide {
                          description: List<Int>, targets: List<Int>, radius: Float) {
         val targetArray: Array<SimpleTarget?> = arrayOfNulls(titles.size)
 
-        for (i in 0 until titles.size) {
-            val spot = SimpleTarget.Builder(activity)
-                    .setPoint(activity.findViewById<View>(targets[i]))
-                    .setTitle(activity.getString(titles[i]))
-                    .setDescription(activity.getString(description[i]))
-                    .setRadius(radius)
-                    .build()
-            targetArray[i] = spot
-        }
+        //Some times throwing an exception
+        //Can find cause. It's not a critical part of app, so just ignore it
+        try {
+            for (i in 0 until titles.size) {
+                val point = activity.findViewById<View>(targets[i])
 
-        Spotlight.with(activity)
-                .setTargets(*targetArray)
-                .setClosedOnTouchedOutside(true)
-                .start()
+                val spot = SimpleTarget.Builder(activity)
+                        .setPoint(point)
+                        .setTitle(activity.getString(titles[i]))
+                        .setDescription(activity.getString(description[i]))
+                        .setRadius(radius)
+                        .build()
+                targetArray[i] = spot
+            }
+
+            Spotlight.with(activity)
+                    .setTargets(*targetArray)
+                    .setClosedOnTouchedOutside(true)
+                    .start()
+        } catch (ex : Exception) {
+            Timber.e(ex)
+        }
     }
 }
