@@ -121,4 +121,13 @@
     <string name="enable_sounds_summary">on/off funny play sounds</string>
     <string name="pronun_auto_summary">on/off auto audio pronuciation when word appears.</string>
     <string name="error_message">Sorry, somthing went wrong</string>
+    <string name="click_to_translate">Click to see translation</string>
+    <string name="click_to_add_or_delete">Click button to add or remove word from dictionary</string>
+    <string name="click_to_listen">Click to listen pronounciation</string>
+    <string name="click_to_more_info">Click to see additional info</string>
+    <string name="click_to_begin_training">Click to begin training</string>
+    <string name="click_to_add_set">Click to add set to your dictionary</string>
+    <string name="click_and_open_card">Click any word to open as card</string>
+    <string name="words_cards">Word cards</string>
+    <string name="progress">Progress</string>
 </resources>

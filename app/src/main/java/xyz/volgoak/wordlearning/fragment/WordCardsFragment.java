@@ -14,6 +14,7 @@ import android.support.v7.widget.SnapHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.entities.Word;
 import xyz.volgoak.wordlearning.model.WordsViewModel;
 import xyz.volgoak.wordlearning.recycler.CardsRecyclerAdapter;
+import xyz.volgoak.wordlearning.utils.Guide;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -105,6 +107,14 @@ public class WordCardsFragment extends Fragment {
 
         viewModel = ViewModelProviders.of(getActivity()).get(WordsViewModel.class);
         viewModel.getWordsForSet().observe(this, this::onWordsReady);
+
+        root.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                root.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                Guide.INSTANCE.showGuide(WordCardsFragment.this , false);
+            }
+        });
 
         return root;
     }

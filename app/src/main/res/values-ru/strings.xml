@@ -77,7 +77,7 @@
     <string name="content_license_title">Звуки и изображения использованные в приложении</string>
     <string name="content_licenses">Лицензии контента</string>
     <string name="auto_play_pronoun">Озвучивать слова автоматически</string>
-    <string name="rate_us_summary">Оцените приложение WordLearning, если оно вам понравилось</string>
+    <string name="rate_us_summary">Оцените приложение WordLearning, если оно Dам понравилось</string>
     <string name="never">Никогда</string>
     <string name="remind_me_later">Позже</string>
     <string name="enable_sounds_summary">вкл/выкл звуки в тренировках</string>
@@ -86,4 +86,15 @@
     <string name="repeat">Повторить</string>
     <string name="remove">Удалить</string>
     <string name="error_message">Извините, произошла ошибка, мы попытаемся это исправить</string>
+
+    <!-- Guide -->
+    <string name="click_to_translate">Нажмите что бы увидеть перевод</string>
+    <string name="click_to_listen">Кликните, что бы услышать произношение</string>
+    <string name="click_to_add_or_delete">Что бы удалить или добавить слово в словарь, нажмите на иконку</string>
+    <string name="click_to_more_info">Что бы увидеть прогресс изучения, нажмите на эту кнопку</string>
+    <string name="click_to_begin_training">Нажмите что бы начать тренировку</string>
+    <string name="click_to_add_set">Кликните, что бы добавить набор в словарь</string>
+    <string name="click_and_open_card">Нажмите на любое слово, что бы открыть его в виде карточки</string>
+    <string name="words_cards">Карточки слов</string>
+    <string name="progress">Прогресс</string>
 </resources>

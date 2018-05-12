@@ -8,6 +8,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BaseTransientBottomBar;
@@ -25,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -47,6 +49,7 @@ import xyz.volgoak.wordlearning.model.WordsViewModel;
 import xyz.volgoak.wordlearning.recycler.MultiChoiceMode;
 import xyz.volgoak.wordlearning.recycler.WordsRecyclerAdapter;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
+import xyz.volgoak.wordlearning.utils.Guide;
 
 
 /**
@@ -146,6 +149,19 @@ public class SingleSetFragment extends Fragment {
                 .observe(this, list -> mRecyclerAdapter.changeData(list));
         viewModel.getCurrentSet()
                 .observe(this, this::loadSetInformation);
+
+        // TODO: 5/10/18 Refactor this peace of shit
+        mBinding.getRoot().getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                mBinding.getRoot().getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                new Handler().postDelayed(() -> {
+                    if(SingleSetFragment.this.isResumed()) {
+                        Guide.INSTANCE.showGuide(SingleSetFragment.this, false);
+                    }
+                }, 500);
+            }
+        });
 
         return mBinding.getRoot();
     }
