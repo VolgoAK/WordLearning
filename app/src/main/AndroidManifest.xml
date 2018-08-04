@@ -22,19 +22,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".screens.MainActivity"
             android:launchMode="singleTop" />
         <activity
             android:name=".activity.SingleSetActivity"
             android:label="@string/title_activity_set"
-            android:parentActivityName=".activity.MainActivity"
+            android:parentActivityName=".screens.MainActivity"
             android:theme="@style/AppTheme.SimpleCoordinatorTheme" />
         <activity
             android:name=".activity.TrainingActivity"
-            android:parentActivityName=".activity.MainActivity" />
+            android:parentActivityName=".screens.MainActivity" />
         <activity
             android:name=".activity.ResultActivity"
-            android:parentActivityName=".activity.MainActivity" />
+            android:parentActivityName=".screens.MainActivity" />
         <activity
             android:name=".activity.AboutActivity"
             android:theme="@style/AppTheme.NoActionBar" />

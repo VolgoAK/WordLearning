@@ -14,6 +14,7 @@ import xyz.volgoak.wordlearning.admob.Banner
 import xyz.volgoak.wordlearning.fragment.NoWordsFragment
 import xyz.volgoak.wordlearning.fragment.ResultBoolFragment
 import xyz.volgoak.wordlearning.fragment.ResultsFragment
+import xyz.volgoak.wordlearning.screens.MainActivity
 import xyz.volgoak.wordlearning.training_utils.Results
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric
 

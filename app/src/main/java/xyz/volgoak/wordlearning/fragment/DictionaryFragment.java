@@ -18,12 +18,10 @@ import android.widget.Toast;
 import com.annimon.stream.Stream;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
-import xyz.volgoak.wordlearning.activity.MainActivity;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.databinding.FragmentRedactorBinding;
 import xyz.volgoak.wordlearning.entities.Word;

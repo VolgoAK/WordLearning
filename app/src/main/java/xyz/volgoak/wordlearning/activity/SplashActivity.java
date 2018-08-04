@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
+import xyz.volgoak.wordlearning.screens.MainActivity;
 
 /**
  * Created by Alexander Karachev on 07.05.2017.
