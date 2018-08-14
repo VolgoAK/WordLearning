@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.attiladroid.data.DataProvider;
+
 import org.greenrobot.eventbus.EventBus;
 
 import javax.inject.Inject;
@@ -29,7 +31,6 @@ import xyz.volgoak.wordlearning.IntegerEvent;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.SwipeHolder;
 import xyz.volgoak.wordlearning.WordsApp;
-import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.databinding.FragmentBoolTrainingBinding;
 import xyz.volgoak.wordlearning.training_utils.PlayWord;
 import xyz.volgoak.wordlearning.training_utils.Results;

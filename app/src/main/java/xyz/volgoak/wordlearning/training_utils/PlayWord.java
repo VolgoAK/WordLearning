@@ -1,10 +1,12 @@
 package xyz.volgoak.wordlearning.training_utils;
 
+import com.attiladroid.data.entities.Word;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import xyz.volgoak.wordlearning.entities.Word;
+
 
 /**
  * Created by Alexander Karachev on 07.05.2017.

@@ -9,15 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.attiladroid.data.DataProvider;
+import com.attiladroid.data.entities.Word;
+
 import javax.inject.Inject;
 
 import io.fabric.sdk.android.services.concurrency.AsyncTask;
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
-import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.databinding.FragmentResultsBinding;
-import xyz.volgoak.wordlearning.entities.Word;
+
 import xyz.volgoak.wordlearning.training_utils.Results;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 

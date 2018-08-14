@@ -26,6 +26,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 
+import com.attiladroid.data.DataProvider;
+
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -33,7 +35,7 @@ import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
-import xyz.volgoak.wordlearning.data.DataProvider;
+
 import xyz.volgoak.wordlearning.databinding.FragmentTrainingBinding;
 import xyz.volgoak.wordlearning.training_utils.Results;
 import xyz.volgoak.wordlearning.training_utils.Training;

@@ -2,22 +2,20 @@ package xyz.volgoak.wordlearning.training_utils;
 
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
+import com.attiladroid.data.DataProvider;
+import com.attiladroid.data.entities.Word;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-
 import java.util.Queue;
 
 import io.reactivex.Single;
-import xyz.volgoak.wordlearning.data.DataProvider;
-import xyz.volgoak.wordlearning.entities.Word;
 import xyz.volgoak.wordlearning.utils.Optional;
 
 
@@ -41,8 +39,9 @@ public abstract class TrainingFabric {
         return Single.create(subscriber -> subscriber.onSuccess(createBoolTraining(setId, provider)));
     }
 
-    private static @NonNull Optional<Training> createSimpleTraining(int trainingType, long setId,
-                                                                    int wordsLimit, DataProvider provider) {
+    private static @NonNull
+    Optional<Training> createSimpleTraining(int trainingType, long setId,
+                                            int wordsLimit, DataProvider provider) {
         List<Word> wordList = provider.getTrainingWords(setId);
 
         GetWord wordGetter;
@@ -97,10 +96,11 @@ public abstract class TrainingFabric {
 
         List<PlayWord> playWords = Stream.of(words).map(PlayWord::new)
                 .map(p -> {
-                    p.setVars(new String[] {variants.poll()});
-                    return p;})
+                    p.setVars(new String[]{variants.poll()});
+                    return p;
+                })
                 .toList();
-        
+
         Collections.shuffle(playWords);
 
         return new TrainingBool(playWords, BOOL_TRAINING);

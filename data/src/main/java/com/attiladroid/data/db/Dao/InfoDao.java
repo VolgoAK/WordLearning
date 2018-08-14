@@ -1,11 +1,12 @@
-package xyz.volgoak.wordlearning.data;
+package com.attiladroid.data.db.Dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Query;
 
-import io.reactivex.Single;
-import xyz.volgoak.wordlearning.entities.DictionaryInfo;
+import com.attiladroid.data.DatabaseContract;
+import com.attiladroid.data.entities.DictionaryInfo;
+
 
 /**
  * Created by alex on 1/5/18.

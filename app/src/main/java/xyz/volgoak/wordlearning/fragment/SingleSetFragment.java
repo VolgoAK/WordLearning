@@ -28,6 +28,8 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.attiladroid.data.entities.Word;
+import com.attiladroid.data.entities.Set;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -40,8 +42,6 @@ import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.StorageContract;
 import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding;
-import xyz.volgoak.wordlearning.entities.Set;
-import xyz.volgoak.wordlearning.entities.Word;
 import xyz.volgoak.wordlearning.model.WordsViewModel;
 import xyz.volgoak.wordlearning.recycler.MultiChoiceMode;
 import xyz.volgoak.wordlearning.adapter.WordsRecyclerAdapter;

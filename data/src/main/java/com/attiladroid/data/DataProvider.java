@@ -1,17 +1,24 @@
-package xyz.volgoak.wordlearning.data;
+package com.attiladroid.data;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
+import android.content.Context;
+
+import com.attiladroid.data.db.AppDatabase;
+import com.attiladroid.data.db.Dao.InfoDao;
+import com.attiladroid.data.db.Dao.LinkDao;
+import com.attiladroid.data.db.Dao.SetsDao;
+import com.attiladroid.data.db.Dao.ThemeDao;
+import com.attiladroid.data.db.Dao.WordDao;
+import com.attiladroid.data.entities.DictionaryInfo;
+import com.attiladroid.data.entities.Link;
+import com.attiladroid.data.entities.Word;
+import com.attiladroid.data.entities.Set;
+import com.attiladroid.data.entities.Theme;
 
 import java.util.List;
 
 import io.reactivex.Flowable;
-import io.reactivex.Single;
-import xyz.volgoak.wordlearning.entities.DictionaryInfo;
-import xyz.volgoak.wordlearning.entities.Link;
-import xyz.volgoak.wordlearning.entities.Set;
-import xyz.volgoak.wordlearning.entities.Theme;
-import xyz.volgoak.wordlearning.entities.Word;
+
 
 /**
  * Created by alex on 1/5/18.
@@ -25,7 +32,14 @@ public class DataProvider {
     private ThemeDao themeDao;
     private WordDao wordDao;
 
-    public DataProvider(InfoDao infoDao, LinkDao linkDao, SetsDao setsDao, ThemeDao themeDao, WordDao wordDao) {
+    public static DataProvider newInstance(Context context) {
+        AppDatabase db = AppDatabase.Companion.newInstance(context);
+        DataProvider provider = new DataProvider(db.infoDao(), db.linkDao(), db.setsDao(),
+                db.themeDao(), db.wordDao());
+        return provider;
+    }
+
+    private DataProvider(InfoDao infoDao, LinkDao linkDao, SetsDao setsDao, ThemeDao themeDao, WordDao wordDao) {
         this.infoDao = infoDao;
         this.linkDao = linkDao;
         this.setsDao = setsDao;
@@ -71,11 +85,11 @@ public class DataProvider {
     }
 
     public List<Word> getDictionaryWords() {
-        return wordDao.getDictionaryWords();
+        return wordDao.dictionaryWords();
     }
 
     public Flowable<List<Word>> getDictionaryWordsFlowable() {
-        return wordDao.getDictionaryWordsFlowable();
+        return wordDao.dictionaryWordsFlowable();
     }
 
     public List<Word> getTrainingWords(long setId) {
@@ -84,7 +98,7 @@ public class DataProvider {
 
     public List<Word> getTrainingWords(long setId, int limit) {
         if (setId == -1) {
-            return wordDao.getDictionaryWords();
+            return wordDao.dictionaryWords();
         } else return wordDao.getWordsBySetId(setId);
     }
 
@@ -150,11 +164,11 @@ public class DataProvider {
 
     public List<Set> getAllSets() {
 
-        return setsDao.getAllSets();
+        return setsDao.allSets();
     }
 
     public LiveData<List<Set>> getAllSetsLd() {
-        return setsDao.getAllSetsAsync();
+        return setsDao.allSetsAsync();
     }
 
     public Flowable<Set> getSetById(long setId) {
@@ -191,6 +205,6 @@ public class DataProvider {
     }
 
     public LiveData<List<Theme>> getAllThemes() {
-        return themeDao.getAllThemes();
+        return themeDao.allThemes();
     }
 }

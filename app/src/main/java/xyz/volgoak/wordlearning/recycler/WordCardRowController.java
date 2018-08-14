@@ -10,10 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.attiladroid.data.entities.DataEntity;
+import com.attiladroid.data.entities.Word;
+
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.databinding.WordCardHolderBinding;
-import xyz.volgoak.wordlearning.entities.DataEntity;
-import xyz.volgoak.wordlearning.entities.Word;
 import xyz.volgoak.wordlearning.utils.WordSpeaker;
 
 /**

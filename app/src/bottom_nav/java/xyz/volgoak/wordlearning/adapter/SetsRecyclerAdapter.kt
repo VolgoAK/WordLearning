@@ -13,14 +13,15 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import com.attiladroid.data.entities.DataEntity
 import com.bumptech.glide.Glide
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.picasso.Picasso
 import xyz.volgoak.wordlearning.R
 import xyz.volgoak.wordlearning.data.DatabaseContract
 import xyz.volgoak.wordlearning.data.StorageContract
-import xyz.volgoak.wordlearning.entities.DataEntity
-import xyz.volgoak.wordlearning.entities.Set
+import com.attiladroid.data.entities.Set
+import timber.log.Timber
 import java.io.File
 
 /**
@@ -61,6 +62,7 @@ class SetsRecyclerAdapter(entityList: MutableList<Set>, recyclerView: RecyclerVi
         }
 
         override fun bindController(dataEntity: DataEntity) {
+            Timber.d("Bind holder $dataEntity")
             val set = dataEntity as Set
             setNameTv.text = set.name
             setDescriptionTv.text = set.description

@@ -3,20 +3,15 @@ package xyz.volgoak.wordlearning.screens.main.fragment
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import xyz.volgoak.wordlearning.BR
-import xyz.volgoak.wordlearning.FragmentListener
 import xyz.volgoak.wordlearning.R
 import xyz.volgoak.wordlearning.WordsApp
 import xyz.volgoak.wordlearning.databinding.FragmentStartBinding
-import xyz.volgoak.wordlearning.model.WordsViewModel
 import xyz.volgoak.wordlearning.screens.main.viewModel.MainViewModel
 
 
@@ -42,7 +37,7 @@ class StartFragment : Fragment() {
 
         mainViewModel.dictionaryInfoLiveData.observe(this, Observer { info ->
             mBinding.tvWordsDicStartF.text = getString(R.string.words_in_dictionary,
-                    info!!.getWordsInDictionary())
+                    info!!.wordsInDictionary)
             mBinding.tvWordsLearnedStartF.text = getString(R.string.words_learned,
                     info!!.learnedWords, info!!.allWords)
         })

@@ -6,6 +6,11 @@ import android.arch.lifecycle.ViewModel;
 import android.util.Log;
 
 import com.annimon.stream.Stream;
+import com.attiladroid.data.DataProvider;
+import com.attiladroid.data.entities.DictionaryInfo;
+import com.attiladroid.data.entities.Theme;
+import com.attiladroid.data.entities.Word;
+import com.attiladroid.data.entities.Set;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -20,12 +25,8 @@ import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
-import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
-import xyz.volgoak.wordlearning.entities.DictionaryInfo;
-import xyz.volgoak.wordlearning.entities.Set;
-import xyz.volgoak.wordlearning.entities.Theme;
-import xyz.volgoak.wordlearning.entities.Word;
+
 
 /**
  * Created by alex on 2/13/18.

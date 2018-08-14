@@ -4,11 +4,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.attiladroid.data.entities.Word;
+
 import java.util.List;
 
 import timber.log.Timber;
 import xyz.volgoak.wordlearning.databinding.WordCardHolderBinding;
-import xyz.volgoak.wordlearning.entities.Word;
+
 
 /**
  * Created by alex on 1/26/18.

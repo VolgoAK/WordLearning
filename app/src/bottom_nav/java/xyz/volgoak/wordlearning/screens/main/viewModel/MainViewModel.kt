@@ -5,14 +5,15 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.MutableLiveData
+import com.attiladroid.data.DataProvider
+import com.attiladroid.data.DatabaseContract
+import com.attiladroid.data.entities.DictionaryInfo
+import com.attiladroid.data.entities.Theme
+import com.attiladroid.data.entities.Set
 import timber.log.Timber
 import xyz.volgoak.wordlearning.R
 import xyz.volgoak.wordlearning.WordsApp
-import xyz.volgoak.wordlearning.data.DataProvider
-import xyz.volgoak.wordlearning.data.DatabaseContract
-import xyz.volgoak.wordlearning.entities.DictionaryInfo
-import xyz.volgoak.wordlearning.entities.Set
-import xyz.volgoak.wordlearning.entities.Theme
+
 import xyz.volgoak.wordlearning.extensions.toast
 import xyz.volgoak.wordlearning.utils.SingleLiveEvent
 import java.util.concurrent.Executors
@@ -55,7 +56,7 @@ class MainViewModel(val app: Application) : AndroidViewModel(app) {
 
     fun changeTheme(theme: String) {
         Timber.d(theme)
-        themesFilter = { set -> set.themeCodes.contains(theme) }
+        themesFilter = { set -> set.themeCodes!!.contains(theme) }
         executor.submit {
             val themeSet = setsDbLiveData.value
                     ?.filter { themesFilter(it) }
@@ -65,18 +66,19 @@ class MainViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     fun changeSetStatus(set: Set) {
+        var status: Int
         val message = if (set.status == DatabaseContract.Sets.IN_DICTIONARY) {
-            set.status = DatabaseContract.Sets.OUT_OF_DICTIONARY
+            status = DatabaseContract.Sets.OUT_OF_DICTIONARY
             app.getString(R.string.set_removed_message, set.name)
         } else {
-            set.status = DatabaseContract.Sets.IN_DICTIONARY
+            status = DatabaseContract.Sets.IN_DICTIONARY
             app.getString(R.string.set_added_message, set.name)
         }
 
         app.toast(message)
 
         executor.submit {
-            dataProvider.updateSetStatus(set)
+            dataProvider.updateSetStatus(set.copy(status = status))
         }
     }
 

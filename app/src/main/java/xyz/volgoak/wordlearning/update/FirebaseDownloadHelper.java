@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 
+import com.attiladroid.data.DataProvider;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -28,7 +29,6 @@ import javax.inject.Inject;
 
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
-import xyz.volgoak.wordlearning.data.DataProvider;
 
 import static xyz.volgoak.wordlearning.update.SetsLoader.DATA_ID_ATTR;
 import static xyz.volgoak.wordlearning.update.SetsLoader.DATA_SOURCE_ATTR;

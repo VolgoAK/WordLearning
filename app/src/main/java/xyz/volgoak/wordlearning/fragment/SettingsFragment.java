@@ -2,16 +2,10 @@ package xyz.volgoak.wordlearning.fragment;
 
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import xyz.volgoak.wordlearning.AppRater;
 import xyz.volgoak.wordlearning.R;
@@ -67,6 +61,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     public interface PreferenceFragmentListener {
         void showOpensourceLicense();
+
         void showContentLicens();
     }
 }

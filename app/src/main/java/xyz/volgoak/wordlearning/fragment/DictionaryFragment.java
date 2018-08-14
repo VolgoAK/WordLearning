@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.annimon.stream.Stream;
+import com.attiladroid.data.entities.Word;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,6 @@ import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.databinding.FragmentRedactorBinding;
-import xyz.volgoak.wordlearning.entities.Word;
 import xyz.volgoak.wordlearning.model.WordsViewModel;
 import xyz.volgoak.wordlearning.adapter.WordsRecyclerAdapter;
 

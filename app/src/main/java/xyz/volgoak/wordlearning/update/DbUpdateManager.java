@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.attiladroid.data.DataProvider;
 import com.google.android.gms.gcm.GcmNetworkManager;
 import com.google.android.gms.gcm.OneoffTask;
 import com.google.android.gms.gcm.PeriodicTask;
@@ -15,7 +16,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 import xyz.volgoak.wordlearning.BuildConfig;
 import xyz.volgoak.wordlearning.Config;
-import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.services.SetsLoaderService;
 import xyz.volgoak.wordlearning.utils.PreferenceContract;

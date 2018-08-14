@@ -4,6 +4,13 @@ import android.content.Context;
 import android.os.Environment;
 import android.widget.Toast;
 
+import com.attiladroid.data.DataProvider;
+import com.attiladroid.data.DatabaseContract;
+import com.attiladroid.data.entities.Dictionary;
+import com.attiladroid.data.entities.Link;
+import com.attiladroid.data.entities.Theme;
+import com.attiladroid.data.entities.Word;
+import com.attiladroid.data.entities.Set;
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -16,13 +23,7 @@ import java.io.InputStream;
 import java.nio.channels.FileChannel;
 import java.util.List;
 
-import xyz.volgoak.wordlearning.data.DataProvider;
-import xyz.volgoak.wordlearning.data.DatabaseContract;
-import xyz.volgoak.wordlearning.entities.Dictionary;
-import xyz.volgoak.wordlearning.entities.Link;
-import xyz.volgoak.wordlearning.entities.Set;
-import xyz.volgoak.wordlearning.entities.Theme;
-import xyz.volgoak.wordlearning.entities.Word;
+
 
 
 /**

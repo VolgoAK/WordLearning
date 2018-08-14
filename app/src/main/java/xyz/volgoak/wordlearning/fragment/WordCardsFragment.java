@@ -16,12 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
+import com.attiladroid.data.entities.Word;
+
 import java.util.List;
 
 import timber.log.Timber;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
-import xyz.volgoak.wordlearning.entities.Word;
 import xyz.volgoak.wordlearning.model.WordsViewModel;
 import xyz.volgoak.wordlearning.recycler.CardsRecyclerAdapter;
 import xyz.volgoak.wordlearning.utils.Guide;

@@ -10,11 +10,11 @@ import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import com.attiladroid.data.entities.DataEntity
+import com.attiladroid.data.entities.Word
 import timber.log.Timber
 import xyz.volgoak.wordlearning.R
 import xyz.volgoak.wordlearning.data.DatabaseContract
-import xyz.volgoak.wordlearning.entities.DataEntity
-import xyz.volgoak.wordlearning.entities.Word
 import xyz.volgoak.wordlearning.utils.WordSpeaker
 
 /**

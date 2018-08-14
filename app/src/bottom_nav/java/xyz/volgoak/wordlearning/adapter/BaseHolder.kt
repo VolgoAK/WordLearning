@@ -2,7 +2,7 @@ package xyz.volgoak.wordlearning.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import xyz.volgoak.wordlearning.entities.DataEntity
+import com.attiladroid.data.entities.DataEntity
 
 /**
  * Created by alex on 1/3/18.

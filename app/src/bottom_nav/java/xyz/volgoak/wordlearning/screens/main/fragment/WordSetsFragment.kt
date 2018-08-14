@@ -5,19 +5,20 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Build
 import android.os.Bundle
+import android.os.Parcelable
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.PopupMenu
 import android.view.*
+import com.attiladroid.data.entities.Set
+import com.attiladroid.data.entities.Theme
 import kotlinx.android.synthetic.main.fragment_word_sets.*
 import xyz.volgoak.wordlearning.R
 import xyz.volgoak.wordlearning.adapter.SetsRecyclerAdapter
 import xyz.volgoak.wordlearning.data.DatabaseContract
-import xyz.volgoak.wordlearning.entities.Theme
 import xyz.volgoak.wordlearning.recycler.SingleChoiceMode
 import xyz.volgoak.wordlearning.screens.main.viewModel.MainViewModel
-import java.util.*
 
 /**
  * Created by Alexander Karachev on 07.05.2017.
@@ -37,6 +38,24 @@ class WordSetsFragment : Fragment() {
 
     private lateinit var viewModel: MainViewModel
 
+    private var savedLLState: Parcelable? = null
+
+    companion object {
+        const val TAG = "WordSetsFragment"
+        const val EXTRA_PARTSCREEN_MODE = "extra_screen_mode"
+        const val SAVED_LL_STATE = "saved_ll_state"
+        const val SAVED_THEME = "saved_theme"
+
+        fun newInstance(part_mode: Boolean): WordSetsFragment {
+            val args = Bundle()
+            args.putBoolean(EXTRA_PARTSCREEN_MODE, part_mode)
+
+            val fragment = WordSetsFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_word_sets, container, false)
@@ -54,6 +73,7 @@ class WordSetsFragment : Fragment() {
 
         if (savedInstanceState != null) {
             mSelectedTheme = savedInstanceState.getString(SAVED_THEME, DatabaseContract.Themes.THEME_ANY)
+            savedLLState = savedInstanceState.getParcelable(SAVED_LL_STATE)
         }
 
         viewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
@@ -68,13 +88,10 @@ class WordSetsFragment : Fragment() {
             window.statusBarColor = ContextCompat.getColor(context!!, R.color.colorPrimaryDark)
         }
 
-        rv_setsfrag!!.setHasFixedSize(true)
-        val llm = LinearLayoutManager(context)
-        llm.orientation = LinearLayoutManager.VERTICAL
-        rv_setsfrag!!.layoutManager = llm
-
         viewModel.themesLD.observe(this, Observer { themes -> mThemes = themes })
-        initRecycler()
+        viewModel.setsLD.observe(this, Observer { list ->
+            list?.let { onSetsReady(it) }
+        })
 
     }
 
@@ -97,7 +114,7 @@ class WordSetsFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun showThemesList() {
+    private fun showThemesList() {
         val view = activity!!.findViewById<View>(R.id.item_sort_by_theme)
         val popupMenu = PopupMenu(context!!, view)
 
@@ -120,7 +137,7 @@ class WordSetsFragment : Fragment() {
             if (item.itemId == -1) {
                 mSelectedTheme = ""
             } else {
-                mSelectedTheme = mThemes!![item.itemId].code
+                mSelectedTheme = mThemes!![item.itemId].code!!
             }
             viewModel.changeTheme(mSelectedTheme)
             true
@@ -132,49 +149,44 @@ class WordSetsFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(SAVED_THEME, mSelectedTheme)
+        rv_setsfrag.layoutManager?.let {
+            outState.putParcelable(SAVED_LL_STATE, it.onSaveInstanceState())
+        }
     }
 
-    fun initRecycler() {
+    private fun onSetsReady(data: MutableList<Set>) {
+        if (mRecyclerAdapter == null) {
+            LinearLayoutManager(context).apply {
+                orientation = LinearLayoutManager.VERTICAL
+                savedLLState?.let { state ->
+                    onRestoreInstanceState(state) }
+                rv_setsfrag.layoutManager = this
+            }
 
-        mRecyclerAdapter = SetsRecyclerAdapter(ArrayList(), rv_setsfrag)
+            rv_setsfrag.setHasFixedSize(true)
 
-        mRecyclerAdapter!!.setStatusChanger = { set ->
-            viewModel.changeSetStatus(set)
+            mRecyclerAdapter = SetsRecyclerAdapter(data, rv_setsfrag)
+            mRecyclerAdapter!!.setStatusChanger = { set ->
+                viewModel.changeSetStatus(set)
+            }
+
+            mRecyclerAdapter!!.onClick = { set ->
+                viewModel.openSet(set.id)
+            }
+
+            if (mPartScreenMode) {
+                mRecyclerAdapter!!.setChoiceMode(SingleChoiceMode())
+            }
+
+            rv_setsfrag!!.adapter = mRecyclerAdapter
+        } else {
+            mRecyclerAdapter?.changeData(data)
         }
-
-        mRecyclerAdapter!!.onClick = { set ->
-            viewModel.openSet(set.id)
-        }
-
-        if (mPartScreenMode) {
-            mRecyclerAdapter!!.setChoiceMode(SingleChoiceMode())
-        }
-
-        rv_setsfrag!!.adapter = mRecyclerAdapter
-
-        viewModel.setsLD.observe(this, Observer { list ->
-            list?.let { mRecyclerAdapter?.changeData(it) }
-        })
     }
 
     interface SetsFragmentListener {
         fun startSet(setId: Long, shared: View)
     }
 
-    companion object {
 
-        val TAG = "WordSetsFragment"
-        val EXTRA_PARTSCREEN_MODE = "extra_screen_mode"
-        val SAVED_POSITION = "saved_position"
-        val SAVED_THEME = "saved_theme"
-
-        fun newInstance(part_mode: Boolean): WordSetsFragment {
-            val args = Bundle()
-            args.putBoolean(EXTRA_PARTSCREEN_MODE, part_mode)
-
-            val fragment = WordSetsFragment()
-            fragment.arguments = args
-            return fragment
-        }
-    }
-}// Required empty public constructor
+}
