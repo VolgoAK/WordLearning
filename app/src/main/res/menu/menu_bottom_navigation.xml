@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menu_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/to_home"
+        app:showAsAction="always|withText"/>
+
+    <item
         android:id="@+id/menu_training"
         android:icon="@drawable/ic_training_24dp"
         android:title="@string/training"

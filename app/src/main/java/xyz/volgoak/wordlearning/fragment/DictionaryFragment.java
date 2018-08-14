@@ -26,7 +26,7 @@ import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.databinding.FragmentRedactorBinding;
 import xyz.volgoak.wordlearning.entities.Word;
 import xyz.volgoak.wordlearning.model.WordsViewModel;
-import xyz.volgoak.wordlearning.recycler.WordsRecyclerAdapter;
+import xyz.volgoak.wordlearning.adapter.WordsRecyclerAdapter;
 
 /**
  * Created by Alexander Karachev on 07.05.2017.
@@ -63,7 +63,7 @@ public class DictionaryFragment extends Fragment {
         mBinding.rvRedactor.setLayoutManager(layoutManager);
 
         mRecyclerAdapter = new WordsRecyclerAdapter(getContext(), new ArrayList<>(), mBinding.rvRedactor);
-        mRecyclerAdapter.setAdapterClickListener((root, position, word) -> onWordClicked(position, (Word) word));
+//        mRecyclerAdapter.setAdapterClickListener((root, position, word) -> onWordClicked(position, (Word) word));
         mBinding.rvRedactor.setAdapter(mRecyclerAdapter);
 
         viewModel = ViewModelProviders.of(getActivity()).get(WordsViewModel.class);

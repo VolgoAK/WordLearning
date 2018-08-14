@@ -15,9 +15,9 @@ import xyz.volgoak.wordlearning.admob.AdsManager
 import xyz.volgoak.wordlearning.admob.Banner
 import xyz.volgoak.wordlearning.fragment.ContainerFragment
 import xyz.volgoak.wordlearning.fragment.SingleSetFragment
-import xyz.volgoak.wordlearning.fragment.WordSetsFragment
+import xyz.volgoak.wordlearning.screens.main.fragment.WordSetsFragment
 import xyz.volgoak.wordlearning.model.WordsViewModel
-import xyz.volgoak.wordlearning.screens.MainActivity
+import xyz.volgoak.wordlearning.screens.main.MainActivity
 
 class SetsActivity : AppCompatActivity(), FragmentListener, WordSetsFragment.SetsFragmentListener {
 
@@ -127,9 +127,9 @@ class SetsActivity : AppCompatActivity(), FragmentListener, WordSetsFragment.Set
     }
 
     override fun startDictionary() {
-        val intent = Intent(this, MainActivity::class.java)
+       /* val intent = Intent(this, MainActivity::class.java)
         intent.putExtra(MainActivity.EXTRA_MODE, MainActivity.START_DICTIONARY)
-        startActivity(intent)
+        startActivity(intent)*/
     }
 
     override fun startSets() {
@@ -151,9 +151,9 @@ class SetsActivity : AppCompatActivity(), FragmentListener, WordSetsFragment.Set
     }
 
     override fun selectTraining() {
-        val intent = Intent(this, MainActivity::class.java)
+       /* val intent = Intent(this, MainActivity::class.java)
         intent.putExtra(MainActivity.EXTRA_MODE, MainActivity.SELECT_TRAINING)
-        startActivity(intent)
+        startActivity(intent)*/
     }
 
     companion object {

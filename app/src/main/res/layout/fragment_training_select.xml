@@ -4,8 +4,8 @@
 
     <data>
         <variable
-            name="listener"
-            type="xyz.volgoak.wordlearning.FragmentListener" />
+            name="viewModel"
+            type="xyz.volgoak.wordlearning.screens.main.viewModel.MainViewModel" />
 
         <import type="xyz.volgoak.wordlearning.training_utils.TrainingFabric"/>
     </data>
@@ -13,7 +13,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="xyz.volgoak.wordlearning.fragment.TrainingSelectFragment">
+        tools:context="xyz.volgoak.wordlearning.screens.main.fragment.TrainingSelectFragment">
 
         <android.support.v7.widget.CardView
             android:id="@+id/cv_training_wt"
@@ -22,7 +22,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/cv_training_tw"
             app:layout_constraintVertical_chainStyle="packed"
-            android:onClick="@{() -> listener.startTraining(TrainingFabric.WORD_TRANSLATION)}"
+            android:onClick="@{() -> viewModel.startTraining(TrainingFabric.WORD_TRANSLATION, -1)}"
             style="@style/MenuCards">
 
             <LinearLayout
@@ -54,7 +54,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cv_training_wt"
             app:layout_constraintBottom_toTopOf="@+id/cv_training_bool"
-            android:onClick="@{() -> listener.startTraining(TrainingFabric.TRANSLATION_WORD)}"
+            android:onClick="@{() -> viewModel.startTraining(TrainingFabric.TRANSLATION_WORD, -1)}"
             style="@style/MenuCards">
 
             <LinearLayout
@@ -86,7 +86,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cv_training_tw"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:onClick="@{() -> listener.startTraining(TrainingFabric.BOOL_TRAINING)}"
+            android:onClick="@{() -> viewModel.startTraining(TrainingFabric.BOOL_TRAINING, -1)}"
             style="@style/MenuCards">
 
             <LinearLayout

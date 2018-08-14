@@ -10,12 +10,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.support.transition.TransitionInflater;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.CardView;
@@ -39,7 +37,6 @@ import java.util.List;
 
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
-import xyz.volgoak.wordlearning.activity.SetsActivity;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.StorageContract;
 import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding;
@@ -47,7 +44,7 @@ import xyz.volgoak.wordlearning.entities.Set;
 import xyz.volgoak.wordlearning.entities.Word;
 import xyz.volgoak.wordlearning.model.WordsViewModel;
 import xyz.volgoak.wordlearning.recycler.MultiChoiceMode;
-import xyz.volgoak.wordlearning.recycler.WordsRecyclerAdapter;
+import xyz.volgoak.wordlearning.adapter.WordsRecyclerAdapter;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 import xyz.volgoak.wordlearning.utils.Guide;
 
@@ -307,7 +304,7 @@ public class SingleSetFragment extends Fragment {
             mRecyclerAdapter.setChoiceMode(mWordsCallBack.choiceMode);
         }
 
-        mRecyclerAdapter.setAdapterClickListener((root, position, id) -> {
+        /*mRecyclerAdapter.setAdapterClickListener((root, position, id) -> {
             if (mActionMode != null) {
                 mActionMode.invalidate();
             } else {
@@ -328,7 +325,7 @@ public class SingleSetFragment extends Fragment {
 
                 return true;
             } else return false;
-        });
+        });*/
 
         mBinding.rvSetAc.setAdapter(mRecyclerAdapter);
     }

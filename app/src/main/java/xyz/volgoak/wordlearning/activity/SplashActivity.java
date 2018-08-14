@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import xyz.volgoak.wordlearning.screens.MainActivity;
+import xyz.volgoak.wordlearning.screens.main.MainActivity;
 
 /**
  * Created by Alexander Karachev on 07.05.2017.

@@ -14,7 +14,7 @@ import xyz.volgoak.wordlearning.admob.Banner
 import xyz.volgoak.wordlearning.fragment.NoWordsFragment
 import xyz.volgoak.wordlearning.fragment.ResultBoolFragment
 import xyz.volgoak.wordlearning.fragment.ResultsFragment
-import xyz.volgoak.wordlearning.screens.MainActivity
+import xyz.volgoak.wordlearning.screens.main.MainActivity
 import xyz.volgoak.wordlearning.training_utils.Results
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric
 
@@ -76,11 +76,11 @@ class ResultActivity : AppCompatActivity(), FragmentListener {
     }
 
     override fun startDictionary() {
-        val intent = Intent(this, MainActivity::class.java)
+        /*val intent = Intent(this, MainActivity::class.java)
         intent.putExtra(MainActivity.EXTRA_MODE, MainActivity.START_DICTIONARY)
         startActivity(intent)
 
-        finish()
+        finish()*/
     }
 
     override fun startTraining(type: Int) {
