@@ -58,7 +58,7 @@ public class WordsViewModel extends ViewModel {
 
     private boolean isSetLoaded;
 
-    public LiveData<DictionaryInfo> getDictionaryInfo() {
+    /*public LiveData<DictionaryInfo> getDictionaryInfo() {
         if(dictionaryInfoLiveData == null) {
             dictionaryInfoLiveData = new MutableLiveData<>();
             provider.getDictionaryInfo()
@@ -70,7 +70,7 @@ public class WordsViewModel extends ViewModel {
         }
 
         return dictionaryInfoLiveData;
-    }
+    }*/
 
     public LiveData<List<Set>> getSets(String theme) {
         if (sets == null || sets.size() == 0) {
@@ -90,12 +90,6 @@ public class WordsViewModel extends ViewModel {
     }
 
     public LiveData<List<Theme>> getThemes() {
-        if (themes == null || themes.size() == 0) {
-            executor.submit(() -> {
-                themes = provider.getAllThemes();
-                themesLiveData.postValue(themes);
-            });
-        }
 
         return themesLiveData;
     }

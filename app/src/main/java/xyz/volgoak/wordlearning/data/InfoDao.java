@@ -1,5 +1,6 @@
 package xyz.volgoak.wordlearning.data;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Query;
 
@@ -25,5 +26,5 @@ public interface InfoDao {
             + " THEN 1 ELSE NULL END) AS " + DatabaseContract.Info.DICTIONARY_WORDS_COUNT
 
             + " FROM " + DatabaseContract.Words.TABLE_NAME)
-    Single<DictionaryInfo> getDictionaryInfo();
+    LiveData<DictionaryInfo> getDictionaryInfo();
 }

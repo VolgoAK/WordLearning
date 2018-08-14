@@ -2,21 +2,96 @@ package xyz.volgoak.wordlearning.screens.main.viewModel
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.MutableLiveData
-import android.support.annotation.IdRes
+import timber.log.Timber
+import xyz.volgoak.wordlearning.R
+import xyz.volgoak.wordlearning.WordsApp
+import xyz.volgoak.wordlearning.data.DataProvider
+import xyz.volgoak.wordlearning.data.DatabaseContract
+import xyz.volgoak.wordlearning.entities.DictionaryInfo
+import xyz.volgoak.wordlearning.entities.Set
+import xyz.volgoak.wordlearning.entities.Theme
+import xyz.volgoak.wordlearning.extensions.toast
 import xyz.volgoak.wordlearning.utils.SingleLiveEvent
+import java.util.concurrent.Executors
+import javax.inject.Inject
 
-class MainViewModel(val app: Application) : AndroidViewModel(app){
+class MainViewModel(val app: Application) : AndroidViewModel(app) {
 
-    val titleLiveData = MutableLiveData<String>()
-    val startTrainingLiveData = SingleLiveEvent<Pair<Int,Long>>()
+    private val executor = Executors.newFixedThreadPool(2)
+
+    @Inject
+    lateinit var dataProvider: DataProvider
+
+    val titleLD = MutableLiveData<String>()
+    val startTrainingLD = SingleLiveEvent<Pair<Int, Long>>()
+    val startSetLD = SingleLiveEvent<Long>()
+    val themesLD: LiveData<List<Theme>> by lazy { dataProvider.allThemes }
+
+    private val setsDbLiveData by lazy { dataProvider.allSetsLd }
+    val setsLD by lazy { createSetsLiveData() }
+    val dictionaryInfoLiveData: LiveData<DictionaryInfo> by lazy { dataProvider.dictionaryInfo }
+
+    private var themesFilter: (Set) -> Boolean = { true }
+
+    init {
+        WordsApp.getsComponent().inject(this)
+    }
 
     fun setTitle(titleId: Int) {
         val title = app.getString(titleId)
-        titleLiveData.value = title
+        titleLD.value = title
     }
 
     fun startTraining(type: Int, setId: Long) {
-        startTrainingLiveData.value = Pair(type, setId)
+        startTrainingLD.value = Pair(type, setId)
+    }
+
+    fun openSet(setId: Long) {
+        startSetLD.value = setId
+    }
+
+    fun changeTheme(theme: String) {
+        Timber.d(theme)
+        themesFilter = { set -> set.themeCodes.contains(theme) }
+        executor.submit {
+            val themeSet = setsDbLiveData.value
+                    ?.filter { themesFilter(it) }
+                    ?.toMutableList()
+            setsLD.postValue(themeSet)
+        }
+    }
+
+    fun changeSetStatus(set: Set) {
+        val message = if (set.status == DatabaseContract.Sets.IN_DICTIONARY) {
+            set.status = DatabaseContract.Sets.OUT_OF_DICTIONARY
+            app.getString(R.string.set_removed_message, set.name)
+        } else {
+            set.status = DatabaseContract.Sets.IN_DICTIONARY
+            app.getString(R.string.set_added_message, set.name)
+        }
+
+        app.toast(message)
+
+        executor.submit {
+            dataProvider.updateSetStatus(set)
+        }
+    }
+
+    private fun createSetsLiveData() =
+            MediatorLiveData<MutableList<Set>>().apply {
+                addSource(setsDbLiveData) { setList ->
+                    setList?.let {
+                        postValue(it.filter { themesFilter(it) }.toMutableList())
+                    }
+                }
+            }
+
+
+    override fun onCleared() {
+        super.onCleared()
+        executor.shutdown()
     }
 }

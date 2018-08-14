@@ -15,6 +15,7 @@ import xyz.volgoak.wordlearning.fragment.WordCardsFragment;
 import xyz.volgoak.wordlearning.screens.main.fragment.WordSetsFragment;
 import xyz.volgoak.wordlearning.model.WordsViewModel;
 import xyz.volgoak.wordlearning.adapter.SetsRecyclerAdapter;
+import xyz.volgoak.wordlearning.screens.main.viewModel.MainViewModel;
 import xyz.volgoak.wordlearning.services.SetsLoaderService;
 import xyz.volgoak.wordlearning.update.FirebaseDownloadHelper;
 import xyz.volgoak.wordlearning.update.ImageDownloader;
@@ -45,4 +46,5 @@ public interface DbComponent {
     void inject(SoundsManager manager);
 
     void inject(WordsViewModel model);
+    void inject(MainViewModel model);
 }

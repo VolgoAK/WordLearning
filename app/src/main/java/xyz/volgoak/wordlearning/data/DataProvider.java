@@ -1,5 +1,8 @@
 package xyz.volgoak.wordlearning.data;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
+
 import java.util.List;
 
 import io.reactivex.Flowable;
@@ -117,6 +120,13 @@ public class DataProvider {
         setsDao.updateSets(sets);
     }
 
+    public void switchSetStatus(Set set) {
+        int status = set.getStatus() == DatabaseContract.Sets.IN_DICTIONARY ?
+                DatabaseContract.Sets.OUT_OF_DICTIONARY : DatabaseContract.Sets.IN_DICTIONARY;
+        set.setStatus(status);
+        updateSetStatus(set);
+    }
+
     public void updateSetStatus(Set set) {
         setsDao.updateSets(set);
         List<Word> words = wordDao.getWordsBySetId(set.getId());
@@ -143,6 +153,10 @@ public class DataProvider {
         return setsDao.getAllSets();
     }
 
+    public LiveData<List<Set>> getAllSetsLd() {
+        return setsDao.getAllSetsAsync();
+    }
+
     public Flowable<Set> getSetById(long setId) {
         return setsDao.getSetById(setId);
     }
@@ -164,7 +178,7 @@ public class DataProvider {
         linkDao.insertLinks(links);
     }
 
-    public Single<DictionaryInfo> getDictionaryInfo() {
+    public LiveData<DictionaryInfo> getDictionaryInfo() {
         return infoDao.getDictionaryInfo();
     }
 
@@ -176,7 +190,7 @@ public class DataProvider {
         themeDao.insertThemes(themes);
     }
 
-    public List<Theme> getAllThemes() {
+    public LiveData<List<Theme>> getAllThemes() {
         return themeDao.getAllThemes();
     }
 }

@@ -29,9 +29,7 @@ import xyz.volgoak.wordlearning.screens.main.viewModel.MainViewModel
  */
 class StartFragment : Fragment() {
 
-    private var mBinding: FragmentStartBinding? = null
-
-    private var viewModel: WordsViewModel? = null
+    private lateinit var mBinding: FragmentStartBinding
 
     lateinit var mainViewModel: MainViewModel
 
@@ -42,19 +40,17 @@ class StartFragment : Fragment() {
 
         mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
-        viewModel = ViewModelProviders.of(activity!!).get(WordsViewModel::class.java)
-        viewModel!!.dictionaryInfo.observe(this, Observer { info ->
-            mBinding!!.tvWordsDicStartF.text = getString(R.string.words_in_dictionary,
+        mainViewModel.dictionaryInfoLiveData.observe(this, Observer { info ->
+            mBinding.tvWordsDicStartF.text = getString(R.string.words_in_dictionary,
                     info!!.getWordsInDictionary())
-            mBinding!!.tvWordsLearnedStartF.text = getString(R.string.words_learned,
+            mBinding.tvWordsLearnedStartF.text = getString(R.string.words_learned,
                     info!!.learnedWords, info!!.allWords)
         })
-        return mBinding!!.root
+        return mBinding.root
     }
 
     override fun onStart() {
         super.onStart()
         mainViewModel.setTitle(R.string.app_name)
-        //        mListener.setActionBarTitle(getString(R.string.app_name));
     }
 }

@@ -1,10 +1,13 @@
 package xyz.volgoak.wordlearning.adapter
 
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import timber.log.Timber
 
 import xyz.volgoak.wordlearning.entities.DataEntity
+import xyz.volgoak.wordlearning.entities.Set
 import xyz.volgoak.wordlearning.recycler.ChoiceMode
 import xyz.volgoak.wordlearning.recycler.MultiChoiceMode
 import xyz.volgoak.wordlearning.recycler.SingleChoiceMode
@@ -74,8 +77,10 @@ abstract class RecyclerAdapter<RC : BaseHolder, DE: DataEntity>
     }
 
     fun changeData(entities: MutableList<DE>) {
+        val diffResult = DiffUtil.calculateDiff(DiffCallback(this.entities, entities))
+        diffResult.dispatchUpdatesTo(this)
         this.entities = entities
-        notifyDataSetChanged()
+//        notifyDataSetChanged()
     }
 
     open fun onControllerClick(controller: BaseHolder, root: View, position: Int) {
@@ -103,6 +108,23 @@ abstract class RecyclerAdapter<RC : BaseHolder, DE: DataEntity>
         if (position != -1) {
             entities[position] = dataEntity
             notifyItemChanged(position)
+        }
+    }
+
+    inner class DiffCallback(val oldList: MutableList<DE>, val newList: MutableList<DE>) : DiffUtil.Callback() {
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+                oldList[oldItemPosition].id == newList[newItemPosition].id
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+                oldList[oldItemPosition] == newList[newItemPosition]
+
+        override fun getOldListSize() = oldList.size
+
+        override fun getNewListSize() = newList.size
+
+        override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
+            Timber.d("GET CHANGE PAYLOAD old p $oldItemPosition")
+            return super.getChangePayload(oldItemPosition, newItemPosition)
         }
     }
 }

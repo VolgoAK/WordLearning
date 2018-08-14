@@ -58,11 +58,18 @@ class MainActivity : NavigationActivity() {
     }
 
     private fun initSubscriptions() {
-        viewModel.titleLiveData.observe(this, Observer { title = it })
-        viewModel.startTrainingLiveData.observe(this,
+        viewModel.titleLD.observe(this, Observer { title = it })
+        viewModel.startTrainingLD.observe(this,
                 Observer {
                     it?.let {
                         startTraining(it.first, it.second)
+                    }
+                })
+
+        viewModel.startSetLD.observe(this,
+                Observer {
+                    it?.let {
+                        onSearchRequested()
                     }
                 })
     }
