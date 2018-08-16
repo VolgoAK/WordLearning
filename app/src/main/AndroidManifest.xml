@@ -39,15 +39,6 @@
             android:name=".activity.AboutActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <service
-            android:name=".services.SetsLoaderService"
-            android:exported="true"
-            android:permission="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE">
-            <intent-filter>
-                <action android:name="com.google.android.gms.gcm.ACTION_TASK_READY" />
-            </intent-filter>
-        </service>
-
         <activity
             android:name=".activity.SetsActivity"
             android:label="@string/sets"

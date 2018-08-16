@@ -16,16 +16,16 @@ import xyz.volgoak.wordlearning.screens.main.fragment.WordSetsFragment;
 import xyz.volgoak.wordlearning.model.WordsViewModel;
 import xyz.volgoak.wordlearning.adapter.SetsRecyclerAdapter;
 import xyz.volgoak.wordlearning.screens.main.viewModel.MainViewModel;
-import xyz.volgoak.wordlearning.services.SetsLoaderService;
-import xyz.volgoak.wordlearning.update.FirebaseDownloadHelper;
-import xyz.volgoak.wordlearning.update.ImageDownloader;
+import com.attiladroid.data.update_managment.SetsLoaderService;
+import com.attiladroid.data.update_managment.FirebaseDownloadHelper;
+import com.attiladroid.data.update_managment.ImageDownloader;
 import xyz.volgoak.wordlearning.utils.SoundsManager;
 
 /**
  * Created by alex on 1/7/18.
  */
 
-@Component(modules = {DbModule.class, DownloaderModule.class, AppModule.class})
+@Component(modules = {DbModule.class, AppModule.class})
 @Singleton
 public interface DbComponent {
     void inject(WordsApp app);

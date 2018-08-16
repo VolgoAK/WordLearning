@@ -7,7 +7,7 @@ import android.arch.persistence.room.PrimaryKey
 
 import com.google.gson.annotations.Expose
 
-import com.attiladroid.data.DatabaseContract.*
+import com.attiladroid.data.DataContract.*
 
 /**
  * Created by alex on 1/3/18.
@@ -21,8 +21,8 @@ class Theme : DataEntity {
     override var id: Long = 0
     @Expose
     @ColumnInfo(name = Themes.COLUMN_NAME)
-    var name: String? = null
+    var name: String = ""
     @Expose
     @ColumnInfo(name = Themes.COLUMN_CODE)
-    var code: String? = null
+    var code: String = ""
 }

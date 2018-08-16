@@ -14,10 +14,8 @@ import xyz.volgoak.wordlearning.data.DataProvider;
 import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.entities.Set;
 import xyz.volgoak.wordlearning.entities.Word;
-import xyz.volgoak.wordlearning.training_utils.PlayWord;
-import xyz.volgoak.wordlearning.training_utils.TrainingBool;
-import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
-import xyz.volgoak.wordlearning.update.DbUpdateManager;
+
+import com.attiladroid.data.update_managment.DbUpdateManager;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
@@ -42,7 +40,7 @@ public class TrainingTests {
         provider = new DataProvider(dbModule.getInfoDao(), dbModule.getLinkDao(),
                 dbModule.getSetsDao(), dbModule.getThemeDao(), dbModule.getWordDao());
 
-        DbUpdateManager.manageDbState(RuntimeEnvironment.application, provider);
+        DbUpdateManager.INSTANCE.manageDbState(RuntimeEnvironment.application, provider);
         List<Set> sets = provider.getAllSets();
         for (Set set : sets) {
             set.setStatus(DatabaseContract.Sets.IN_DICTIONARY);

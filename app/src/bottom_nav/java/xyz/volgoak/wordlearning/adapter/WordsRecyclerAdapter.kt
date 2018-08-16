@@ -10,11 +10,11 @@ import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import com.attiladroid.data.DataContract
 import com.attiladroid.data.entities.DataEntity
 import com.attiladroid.data.entities.Word
 import timber.log.Timber
 import xyz.volgoak.wordlearning.R
-import xyz.volgoak.wordlearning.data.DatabaseContract
 import xyz.volgoak.wordlearning.utils.WordSpeaker
 
 /**
@@ -52,8 +52,6 @@ class WordsRecyclerAdapter(context: Context, wordList: MutableList<Word>, rv: Re
         private val checkBox = rootView.findViewById<CheckBox>(R.id.cb_selected_dict_adapter)
 
         init {
-//            rootView.setOnLongClickListener { v -> onControllerLongClick(this@WordsRowController, v, adapterPosition) }
-
             rootView.setOnClickListener { v -> onControllerClick(this@WordsRowController, v, adapterPosition) }
         }
 
@@ -78,7 +76,7 @@ class WordsRecyclerAdapter(context: Context, wordList: MutableList<Word>, rv: Re
             }
 
             val status = word.status
-            inDictionaryImage.visibility = if (status == DatabaseContract.Words.IN_DICTIONARY)
+            inDictionaryImage.visibility = if (status == DataContract.Words.IN_DICTIONARY)
                 View.VISIBLE
             else
                 View.INVISIBLE

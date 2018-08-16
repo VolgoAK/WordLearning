@@ -3,10 +3,10 @@ package xyz.volgoak.wordlearning.model;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.util.Log;
 
 import com.annimon.stream.Stream;
 import com.attiladroid.data.DataProvider;
+import com.attiladroid.data.DataContract;
 import com.attiladroid.data.entities.DictionaryInfo;
 import com.attiladroid.data.entities.Theme;
 import com.attiladroid.data.entities.Word;
@@ -21,11 +21,8 @@ import javax.inject.Inject;
 import io.fabric.sdk.android.services.concurrency.AsyncTask;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
-import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
-import xyz.volgoak.wordlearning.data.DatabaseContract;
 
 
 /**
@@ -158,8 +155,8 @@ public class WordsViewModel extends ViewModel {
         MutableLiveData<Integer> statusLive = new MutableLiveData<>();
         Set current = selectedSetData.getValue();
         if (current != null) {
-            int newStatus = current.getStatus() == DatabaseContract.Sets.IN_DICTIONARY ?
-                    DatabaseContract.Sets.OUT_OF_DICTIONARY : DatabaseContract.Sets.IN_DICTIONARY;
+            int newStatus = current.getStatus() == DataContract.Sets.IN_DICTIONARY ?
+                    DataContract.Sets.OUT_OF_DICTIONARY : DataContract.Sets.IN_DICTIONARY;
 
             current.setStatus(newStatus);
             executor.submit(() -> {
@@ -229,7 +226,7 @@ public class WordsViewModel extends ViewModel {
     }
 
     public void deleteOrHideWord(Word word) {
-        word.setStatus(DatabaseContract.Words.OUT_OF_DICTIONARY);
+        word.setStatus(DataContract.Words.OUT_OF_DICTIONARY);
         AsyncTask.execute(() -> provider.updateWords(word));
     }
 

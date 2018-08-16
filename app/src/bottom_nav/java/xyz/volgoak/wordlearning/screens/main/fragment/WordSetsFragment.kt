@@ -11,12 +11,12 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.PopupMenu
 import android.view.*
+import com.attiladroid.data.DataContract
 import com.attiladroid.data.entities.Set
 import com.attiladroid.data.entities.Theme
 import kotlinx.android.synthetic.main.fragment_word_sets.*
 import xyz.volgoak.wordlearning.R
 import xyz.volgoak.wordlearning.adapter.SetsRecyclerAdapter
-import xyz.volgoak.wordlearning.data.DatabaseContract
 import xyz.volgoak.wordlearning.recycler.SingleChoiceMode
 import xyz.volgoak.wordlearning.screens.main.viewModel.MainViewModel
 
@@ -33,7 +33,7 @@ class WordSetsFragment : Fragment() {
 
     private var mPartScreenMode = true
 
-    private var mSelectedTheme = DatabaseContract.Themes.THEME_ANY
+    private var mSelectedTheme = DataContract.Themes.THEME_ANY
     private var mThemes: List<Theme>? = null
 
     private lateinit var viewModel: MainViewModel
@@ -72,7 +72,7 @@ class WordSetsFragment : Fragment() {
         }
 
         if (savedInstanceState != null) {
-            mSelectedTheme = savedInstanceState.getString(SAVED_THEME, DatabaseContract.Themes.THEME_ANY)
+            mSelectedTheme = savedInstanceState.getString(SAVED_THEME, DataContract.Themes.THEME_ANY)
             savedLLState = savedInstanceState.getParcelable(SAVED_LL_STATE)
         }
 

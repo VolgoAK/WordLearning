@@ -6,7 +6,7 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
 import android.arch.persistence.room.Update
 
-import com.attiladroid.data.DatabaseContract.*
+import com.attiladroid.data.DataContract.*
 
 import com.attiladroid.data.entities.Set
 

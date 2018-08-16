@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.annimon.stream.Stream;
+import com.attiladroid.data.DataContract;
 import com.attiladroid.data.entities.Word;
 
 import java.util.ArrayList;
@@ -23,7 +24,6 @@ import java.util.ArrayList;
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
-import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.databinding.FragmentRedactorBinding;
 import xyz.volgoak.wordlearning.model.WordsViewModel;
 import xyz.volgoak.wordlearning.adapter.WordsRecyclerAdapter;
@@ -102,10 +102,11 @@ public class DictionaryFragment extends Fragment {
             String word = wordEt.getText().toString();
             String translation = translationEt.getText().toString();
             if (!word.isEmpty() && !translation.isEmpty()) {
-                Word newWord = new Word(word, translation);
-                newWord.setStatus(DatabaseContract.Words.IN_DICTIONARY);
+                //todo manage
+                /*Word newWord = new Word(word, translation);
+                newWord.setStatus(DataContract.Words.IN_DICTIONARY);
                 newWord.setAddedTime(System.currentTimeMillis());
-                viewModel.insertWord(newWord);
+                viewModel.insertWord(newWord);*/
             } else {
                 Toast.makeText(getContext(), R.string.fields_empty_message, Toast.LENGTH_LONG).show();
             }

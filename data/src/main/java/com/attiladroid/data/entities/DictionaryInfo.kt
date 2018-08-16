@@ -6,7 +6,7 @@ package com.attiladroid.data.entities
 
 import android.arch.persistence.room.ColumnInfo
 
-import com.attiladroid.data.DatabaseContract.Info
+import com.attiladroid.data.DataContract.Info
 
 
 /**Keeps info about database

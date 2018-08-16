@@ -6,7 +6,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.MutableLiveData
 import com.attiladroid.data.DataProvider
-import com.attiladroid.data.DatabaseContract
+import com.attiladroid.data.DataContract
 import com.attiladroid.data.entities.DictionaryInfo
 import com.attiladroid.data.entities.Theme
 import com.attiladroid.data.entities.Set
@@ -67,11 +67,11 @@ class MainViewModel(val app: Application) : AndroidViewModel(app) {
 
     fun changeSetStatus(set: Set) {
         var status: Int
-        val message = if (set.status == DatabaseContract.Sets.IN_DICTIONARY) {
-            status = DatabaseContract.Sets.OUT_OF_DICTIONARY
+        val message = if (set.status == DataContract.Sets.IN_DICTIONARY) {
+            status = DataContract.Sets.OUT_OF_DICTIONARY
             app.getString(R.string.set_removed_message, set.name)
         } else {
-            status = DatabaseContract.Sets.IN_DICTIONARY
+            status = DataContract.Sets.IN_DICTIONARY
             app.getString(R.string.set_added_message, set.name)
         }
 

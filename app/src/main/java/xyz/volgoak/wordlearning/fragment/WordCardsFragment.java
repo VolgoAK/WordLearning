@@ -3,11 +3,9 @@ package xyz.volgoak.wordlearning.fragment;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
@@ -16,13 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
+import com.attiladroid.data.DataContract;
 import com.attiladroid.data.entities.Word;
 
 import java.util.List;
 
 import timber.log.Timber;
 import xyz.volgoak.wordlearning.R;
-import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.model.WordsViewModel;
 import xyz.volgoak.wordlearning.recycler.CardsRecyclerAdapter;
 import xyz.volgoak.wordlearning.utils.Guide;
@@ -84,8 +82,8 @@ public class WordCardsFragment extends Fragment {
         });
 
         adapter.setRemoveListener(word -> {
-            int status = word.isInDictionary() ? DatabaseContract.Words.OUT_OF_DICTIONARY
-                    : DatabaseContract.Words.IN_DICTIONARY;
+            int status = word.isInDictionary() ? DataContract.Words.OUT_OF_DICTIONARY
+                    : DataContract.Words.IN_DICTIONARY;
             word.setStatus(status);
             viewModel.updateWords(new Word[]{word});
         });

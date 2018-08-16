@@ -28,6 +28,7 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.attiladroid.data.DataContract;
 import com.attiladroid.data.entities.Word;
 import com.attiladroid.data.entities.Set;
 import com.squareup.picasso.Callback;
@@ -39,7 +40,6 @@ import java.util.List;
 
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
-import xyz.volgoak.wordlearning.data.DatabaseContract;
 import xyz.volgoak.wordlearning.data.StorageContract;
 import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding;
 import xyz.volgoak.wordlearning.model.WordsViewModel;
@@ -239,7 +239,7 @@ public class SingleSetFragment extends Fragment {
 
 
         int setStatus = set.getStatus();
-        mSetInDictionary = setStatus == DatabaseContract.Sets.IN_DICTIONARY;
+        mSetInDictionary = setStatus == DataContract.Sets.IN_DICTIONARY;
 
         prepareSetStatusFabs();
 
@@ -331,7 +331,7 @@ public class SingleSetFragment extends Fragment {
     }
 
     public void onStatusChanged(int status) {
-        int messageId = status == DatabaseContract.Sets.IN_DICTIONARY ?
+        int messageId = status == DataContract.Sets.IN_DICTIONARY ?
                 R.string.set_added_message : R.string.set_removed_message;
         String message = getString(messageId, mSetName);
         Snackbar.make(getView().findViewById(R.id.coordinator_setact), message, BaseTransientBottomBar.LENGTH_LONG).show();
@@ -349,7 +349,7 @@ public class SingleSetFragment extends Fragment {
         for (int a = 0; a < positions.size(); a++) {
             Word word = mWords.get(positions.get(a));
             word.setStatus(newStatus);
-            if(newStatus == DatabaseContract.Words.IN_DICTIONARY) word.setAddedTime(time);
+            if(newStatus == DataContract.Words.IN_DICTIONARY) word.setAddedTime(time);
             wordsArray[a] = word;
         }
 
@@ -408,11 +408,11 @@ public class SingleSetFragment extends Fragment {
             int itemId = item.getItemId();
             switch (itemId) {
                 case R.id.menu_add_setfrag_action:
-                    viewModel.changeWordsStatus(choiceMode.getCheckedList(), DatabaseContract.Words.IN_DICTIONARY);
+                    viewModel.changeWordsStatus(choiceMode.getCheckedList(), DataContract.Words.IN_DICTIONARY);
                     mActionMode.finish();
                     return true;
                 case R.id.menu_remove_setfrag_action:
-                    viewModel.changeWordsStatus(choiceMode.getCheckedList(), DatabaseContract.Words.OUT_OF_DICTIONARY);
+                    viewModel.changeWordsStatus(choiceMode.getCheckedList(), DataContract.Words.OUT_OF_DICTIONARY);
                     mActionMode.finish();
                     return true;
                 case R.id.menu_reset_setfrag_action:

@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import xyz.volgoak.wordlearning.data.DatabaseContract;
 
 /**
  * Created by Alexander Karachev on 07.05.2017.

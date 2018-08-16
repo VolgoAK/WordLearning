@@ -4,7 +4,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
-import android.support.v7.util.DiffUtil
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -13,15 +12,14 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import com.attiladroid.data.DataContract
 import com.attiladroid.data.entities.DataEntity
+import com.attiladroid.data.entities.Set
 import com.bumptech.glide.Glide
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.picasso.Picasso
 import xyz.volgoak.wordlearning.R
-import xyz.volgoak.wordlearning.data.DatabaseContract
 import xyz.volgoak.wordlearning.data.StorageContract
-import com.attiladroid.data.entities.Set
-import timber.log.Timber
 import java.io.File
 
 /**
@@ -41,11 +39,6 @@ class SetsRecyclerAdapter(entityList: MutableList<Set>, recyclerView: RecyclerVi
         return SetsRowController(view)
     }
 
-    /*public void downloadImage(String image) {
-        WordsApp.getsComponent().inject(this);
-        downloader.loadImage(image);
-    }*/
-
     inner class SetsRowController(mRoot: View) : BaseHolder(mRoot) {
 
         private val mCardRoot: CardView = mRoot as CardView
@@ -62,12 +55,11 @@ class SetsRecyclerAdapter(entityList: MutableList<Set>, recyclerView: RecyclerVi
         }
 
         override fun bindController(dataEntity: DataEntity) {
-            Timber.d("Bind holder $dataEntity")
             val set = dataEntity as Set
             setNameTv.text = set.name
             setDescriptionTv.text = set.description
 
-            val drawableId = if (set.status == DatabaseContract.Sets.IN_DICTIONARY)
+            val drawableId = if (set.status == DataContract.Sets.IN_DICTIONARY)
                 R.drawable.ic_added_green_50dp
             else
                 R.drawable.ic_add_blue_50dp
@@ -95,8 +87,6 @@ class SetsRecyclerAdapter(entityList: MutableList<Set>, recyclerView: RecyclerVi
                 val failEvent = Bundle()
                 failEvent.putString("image", set.imageUrl)
                 FirebaseAnalytics.getInstance(itemView.context).logEvent("Image_fail", failEvent)
-
-                //            ((SetsRecyclerAdapter) mAdapter).downloadImage(set.getImageUrl());
 
                 Glide.with(itemView.context).load(R.drawable.button_back).into(civ)
             }

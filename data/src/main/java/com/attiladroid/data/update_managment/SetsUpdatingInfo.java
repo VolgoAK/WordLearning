@@ -1,4 +1,4 @@
-package xyz.volgoak.wordlearning.update;
+package com.attiladroid.data.update_managment;
 
 /**
  * Created by Alexander Karachev on 07.05.2017.

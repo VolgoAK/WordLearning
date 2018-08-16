@@ -7,10 +7,10 @@ import android.provider.BaseColumns;
  * Created by Alexander Karachev on 11.04.2017.
  */
 
-public final class DatabaseContract {
+public final class DataContract {
 
     public final static String DB_NAME = "NEW_WORDS_DATABASE";
-
+    public static final int DB_VERSION = 17;
 
     public static abstract class Words implements BaseColumns{
 
@@ -64,5 +64,39 @@ public final class DatabaseContract {
         public static final String ALL_WORDS_COUNT = "all_words";
         public static final String DICTIONARY_WORDS_COUNT = "dictionary_words";
         public static final String STUDIED_WORDS_COUNT = "studied_words";
+    }
+
+    public static abstract class Preference {
+        public static final String BOOL_RECORD = "record_boolean";
+
+        public static final String BASE_CREATED = "base_created";
+        public static final String LAST_VERSION = "last_app_version";
+
+        public static final String IMAGES_LOADED = "images_loaded";
+
+        public static final String SOUNDS_ENABLED = "sounds_enabled_pref";
+        public static final String AUTO_PLAY_PRONOUN = "auto_play_pronoun_pref";
+        public static final String WORDS_IN_TRAINING = "words_in_training";
+
+        public static final String DONT_SHOW_RATE_DIALOG = "dont_show_rate";
+        public static final String LAST_RATE_SHOW_TIME = "last_show_time";
+        public static final String DATE_FIRST_LAUNCH = "date_first_launch";
+        public static final String LAUNCH_COUNT = "launch_times_count";
+    }
+
+    public static abstract class Firebase {
+        public static final String IMAGES_FOLDER = "/images";
+        public static final String IMAGES_W_50_FOLDER = IMAGES_FOLDER + "/w_50";
+        public static final String IMAGES_W_400_FOLDER = IMAGES_FOLDER + "/w_400";
+
+        public static final String PHOTOS_ARCHIVE = "photos.zip";
+    }
+
+    public static abstract class Storage {
+        public static final String IMAGES_FOLDER = "/images";
+        public static final String IMAGES_W_50_FOLDER = IMAGES_FOLDER + "/w_50";
+        public static final String IMAGES_W_400_FOLDER = IMAGES_FOLDER + "/w_400";
+
+        public static final String PHOTOS_ARCHIVE = "photos.zip";
     }
 }

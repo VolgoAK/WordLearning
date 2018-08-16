@@ -27,6 +27,6 @@ public class DbModule {
     @Provides
     @Singleton
     public DataProvider getDataProvider() {
-        return DataProvider.newInstance(application);
+        return DataProvider.Companion.newInstance(application);
     }
 }

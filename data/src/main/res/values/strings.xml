@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Data</string>
+    <string name="new_sets_loaded">New sets was loaded</string>
+    <string name="num_of_words_loaded">Loaded %1$d words</string>
 </resources>
