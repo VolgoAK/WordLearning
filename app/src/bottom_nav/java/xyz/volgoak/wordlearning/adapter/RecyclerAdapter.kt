@@ -88,8 +88,8 @@ abstract class RecyclerAdapter<RC : BaseHolder, DE : DataEntity>
         if (choiceMode != null) {
             if (choiceMode is SingleChoiceMode) {
                 if (choiceMode!!.checkedPosition != -1) {
-                    val rc = mRecyclerView.findViewHolderForAdapterPosition(choiceMode!!.checkedPosition) as BaseHolder
-                    rc.setChecked(false)
+                    val rc = mRecyclerView.findViewHolderForAdapterPosition(choiceMode!!.checkedPosition) as BaseHolder?
+                    rc?.setChecked(false)
                 }
                 controller.setChecked(true)
                 choiceMode!!.setChecked(position, true)

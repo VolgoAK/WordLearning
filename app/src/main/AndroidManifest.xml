@@ -24,11 +24,7 @@
         <activity
             android:name=".screens.main.MainActivity"
             android:launchMode="singleTop" />
-        <activity
-            android:name=".activity.SingleSetActivity"
-            android:label="@string/title_activity_set"
-            android:parentActivityName=".screens.main.MainActivity"
-            android:theme="@style/AppTheme.SimpleCoordinatorTheme" />
+
         <activity
             android:name=".activity.TrainingActivity"
             android:parentActivityName=".screens.main.MainActivity" />
@@ -40,7 +36,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".activity.SetsActivity"
+            android:name=".screens.set.SetsActivity"
             android:label="@string/sets"
             android:theme="@style/AppTheme.SimpleCoordinatorTheme"/>
         <activity android:name=".activity.SettingsActivity"/>

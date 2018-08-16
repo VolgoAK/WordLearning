@@ -35,7 +35,7 @@ interface SetsDao {
     fun updateSets(vararg sets: Set)
 
     @Query("SELECT * FROM SETS_TABLE WHERE _id = :setId")
-    fun getSetById(setId: Long): Flowable<Set>
+    fun getSetById(setId: Long): LiveData<Set>
 
     @Query("SELECT * FROM SETS_TABLE WHERE THEME_CODES LIKE :themeCode")
     fun getSetsByTheme(themeCode: String): List<Set>

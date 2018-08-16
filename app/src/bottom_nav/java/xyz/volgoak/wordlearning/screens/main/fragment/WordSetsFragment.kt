@@ -31,8 +31,6 @@ class WordSetsFragment : Fragment() {
 
     private var mRecyclerAdapter: SetsRecyclerAdapter? = null
 
-    private var mPartScreenMode = true
-
     private var mSelectedTheme = DataContract.Themes.THEME_ANY
     private var mThemes: List<Theme>? = null
 
@@ -66,10 +64,6 @@ class WordSetsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
-        if (arguments != null) {
-            mPartScreenMode = arguments!!.getBoolean(EXTRA_PARTSCREEN_MODE, false)
-        }
 
         if (savedInstanceState != null) {
             mSelectedTheme = savedInstanceState.getString(SAVED_THEME, DataContract.Themes.THEME_ANY)
@@ -172,10 +166,6 @@ class WordSetsFragment : Fragment() {
 
             mRecyclerAdapter!!.onClick = { set ->
                 viewModel.openSet(set.id)
-            }
-
-            if (mPartScreenMode) {
-                mRecyclerAdapter!!.setChoiceMode(SingleChoiceMode())
             }
 
             rv_setsfrag!!.adapter = mRecyclerAdapter

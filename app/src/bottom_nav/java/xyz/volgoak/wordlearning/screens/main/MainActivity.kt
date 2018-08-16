@@ -26,6 +26,7 @@ import xyz.volgoak.wordlearning.screens.main.fragment.StartFragment
 import xyz.volgoak.wordlearning.screens.main.fragment.TrainingSelectFragment
 import xyz.volgoak.wordlearning.screens.main.fragment.WordSetsFragment
 import xyz.volgoak.wordlearning.screens.main.viewModel.MainViewModel
+import xyz.volgoak.wordlearning.screens.set.SetsActivity
 
 /**
  * Created by Alexander Karachev on 07.05.2017.
@@ -59,19 +60,17 @@ class MainActivity : NavigationActivity() {
 
     private fun initSubscriptions() {
         viewModel.titleLD.observe(this, Observer { title = it })
-        viewModel.startTrainingLD.observe(this,
-                Observer {
-                    it?.let {
-                        startTraining(it.first, it.second)
-                    }
-                })
+        viewModel.startTrainingLD.observe(this, Observer {
+            it?.let { startTraining(it.first, it.second) }
+        })
 
-        viewModel.startSetLD.observe(this,
-                Observer {
-                    it?.let {
-                        onSearchRequested()
-                    }
-                })
+        viewModel.startSetLD.observe(this, Observer {
+            it?.let { startSet(it) }
+        })
+    }
+
+    private fun startSet(id: Long) {
+        startActivity(SetsActivity.getIntent(this, id))
     }
 
     override fun onResume() {

@@ -3,16 +3,12 @@ package xyz.volgoak.wordlearning.utils
 import android.app.Activity
 import android.content.Context
 import android.preference.PreferenceManager
-import android.support.design.widget.FloatingActionButton
 import android.view.View
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
 import com.takusemba.spotlight.SimpleTarget
 import com.takusemba.spotlight.Spotlight
 import timber.log.Timber
 import xyz.volgoak.wordlearning.R
-import xyz.volgoak.wordlearning.fragment.SingleSetFragment
+import xyz.volgoak.wordlearning.screens.set.SingleSetFragment
 import xyz.volgoak.wordlearning.fragment.WordCardsFragment
 
 /**

@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:background="@android:color/transparent"
-        tools:context="xyz.volgoak.wordlearning.fragment.SingleSetFragment">
+        tools:context="xyz.volgoak.wordlearning.screens.set.SingleSetFragment">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar_setact"

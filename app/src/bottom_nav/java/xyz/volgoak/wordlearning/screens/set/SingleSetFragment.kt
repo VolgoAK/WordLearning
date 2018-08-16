@@ -1,0 +1,424 @@
+package xyz.volgoak.wordlearning.screens.set
+
+
+import android.app.Dialog
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
+import android.databinding.DataBindingUtil
+import android.graphics.Color
+import android.os.Build
+import android.os.Bundle
+import android.os.Handler
+import android.support.design.widget.BaseTransientBottomBar
+import android.support.design.widget.Snackbar
+import android.support.transition.TransitionInflater
+import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.view.ActionMode
+import android.support.v7.widget.CardView
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.Toolbar
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.view.Window
+import android.view.WindowManager
+
+import com.attiladroid.data.DataContract
+import com.attiladroid.data.entities.Word
+import com.attiladroid.data.entities.Set
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
+
+import java.io.File
+import java.util.ArrayList
+
+import xyz.volgoak.wordlearning.FragmentListener
+import xyz.volgoak.wordlearning.R
+import xyz.volgoak.wordlearning.data.StorageContract
+import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding
+import xyz.volgoak.wordlearning.screens.set.viewModel.WordsViewModel
+import xyz.volgoak.wordlearning.recycler.MultiChoiceMode
+import xyz.volgoak.wordlearning.adapter.WordsRecyclerAdapter
+import xyz.volgoak.wordlearning.training_utils.TrainingFabric
+import xyz.volgoak.wordlearning.utils.Guide
+
+
+/**
+ * A simple [Fragment] subclass.
+ */
+class SingleSetFragment : Fragment() {
+
+    /*private var mBinding: FragmentSingleSetBinding? = null
+    private var mFragmentListener: FragmentListener? = null
+
+    private val mWords: List<Word>? = null
+
+    private var mSetId: Long = 0
+    private var mSingleFragMode: Boolean = false
+
+    private var mRecyclerAdapter: WordsRecyclerAdapter? = null
+    private var mActionMode: ActionMode? = null
+    private var mWordsCallBack: WordsActionModeCallback? = null
+    private var mSetInDictionary: Boolean = false
+    private var mSetName = ""
+
+    lateinit var viewModel: WordsViewModel
+
+    companion object {
+        const val TAG = "SingleSetFragment"
+
+        const val EXTRA_SET_ID = "set_id"
+        const val EXTRA_SINGLE_MODE = "single_mode"
+        const val SAVED_IS_MULTI_CHOICE = "is_multi_choice"
+        const val SAVED_CHOICE_MODE = "saved_choice_mode"
+        const val EXTRA_TRANSITION_NAME = "extra_transition"
+
+        fun newInstance(setId: Long, singleFragmentMode: Boolean, transitionName: String = ""): SingleSetFragment {
+            val fragment = SingleSetFragment()
+            val args = Bundle()
+            args.putLong(EXTRA_SET_ID, setId)
+            args.putBoolean(EXTRA_SINGLE_MODE, singleFragmentMode)
+            args.putString(EXTRA_TRANSITION_NAME, transitionName)
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        if (arguments != null) {
+            mSetId = arguments!!.getLong(EXTRA_SET_ID)
+            mSingleFragMode = arguments!!.getBoolean(EXTRA_SINGLE_MODE)
+        }
+
+        if (savedInstanceState != null) {
+            val inMultiChoice = savedInstanceState.getBoolean(SAVED_IS_MULTI_CHOICE, false)
+            if (inMultiChoice) {
+                mWordsCallBack = WordsActionModeCallback()
+                mWordsCallBack!!.onRestoreInstanceState(savedInstanceState)
+            }
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+        }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        viewModel = ViewModelProviders.of(activity!!, WordsViewModel.Factory(mSetId)).get(WordsViewModel::class.java)
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_single_set, container, false)
+        val transitionName = arguments!!.getString(EXTRA_TRANSITION_NAME)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mBinding!!.setIvTitle.transitionName = transitionName
+        }
+
+        manageTrainingStatusMenu()
+        prepareRecycler()
+
+        if (mWordsCallBack != null) {
+            (activity as AppCompatActivity).startSupportActionMode(mWordsCallBack!!)
+        }
+
+        //Avoid bug with incorrect title position
+        mBinding!!.appbarSetact.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+            if (Math.abs(verticalOffset) >= appBarLayout.totalScrollRange - 35) {
+                mBinding!!.collapsingToolbarSetAct.isTitleEnabled = false
+                mBinding!!.setToolbar.title = mSetName
+            } else {
+                mBinding!!.collapsingToolbarSetAct.isTitleEnabled = true
+                mBinding!!.setToolbar.title = ""
+            }
+        }
+
+        *//*viewModel!!.getWordsForSet()
+                .observe(this, { list -> mRecyclerAdapter!!.changeData(list) })*//*
+        viewModel.setData.observe(this, Observer { set ->
+            set?.let { loadSetInformation(it) }
+        })
+
+        // TODO: 5/10/18 Refactor this peace of shit
+        mBinding!!.root.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                mBinding!!.root.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                Handler().postDelayed({
+                    if (this@SingleSetFragment.isResumed) {
+                        Guide.showGuide(this@SingleSetFragment, true)
+                    }
+                }, 500)
+            }
+        })
+
+        return mBinding!!.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if (mSingleFragMode) {
+            (activity as AppCompatActivity).setSupportActionBar(mBinding!!.setToolbar)
+            (activity as AppCompatActivity).supportActionBar!!.setHomeButtonEnabled(true)
+            (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+            mBinding!!.setToolbar.setNavigationIcon(R.drawable.ic_back_toolbar)
+            mBinding!!.setToolbar.setNavigationOnClickListener { v -> activity!!.onBackPressed() }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                val window = activity!!.window
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                window.statusBarColor = Color.TRANSPARENT
+            }
+        } else {
+            //            AppBarLayout.LayoutParams layoutParams =(AppBarLayout.LayoutParams) mBinding.collapsingToolbarSetAct.getLayoutParams();
+            //            layoutParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP | AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL);
+            //            mBinding.collapsingToolbarSetAct.setLayoutParams(layoutParams);
+        }
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if (context is FragmentListener) {
+            mFragmentListener = context
+        } else {
+            throw RuntimeException("Context must implement FragmentListener")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        mFragmentListener = null
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (mWordsCallBack != null) {
+            outState.putBoolean(SAVED_IS_MULTI_CHOICE, true)
+            mWordsCallBack!!.onSaveInstanceState(outState)
+        }
+    }
+
+    private fun loadSetInformation(set: Set) {
+        //set title
+        mSetName = set.name
+        mBinding!!.collapsingToolbarSetAct.title = mSetName
+
+        //load title image
+        val imageRes = set.imageUrl
+
+        val imageDir = File(activity!!.filesDir, StorageContract.IMAGES_FOLDER)
+        val imageFile = File(imageDir, imageRes)
+
+        Picasso.get()
+                .load(imageFile)
+                .into(mBinding!!.setIvTitle, object : Callback {
+                    override fun onSuccess() {
+                        startPostponedEnterTransition()
+                    }
+
+                    override fun onError(e: Exception) {
+
+                    }
+                })
+
+
+        val setStatus = set.status
+        mSetInDictionary = setStatus == DataContract.Sets.IN_DICTIONARY
+
+        prepareSetStatusFabs()
+
+       *//* mBinding!!.setAddFab.setOnClickListener { v -> viewModel!!.changeCurrentSetStatus().observe(this, ???({ this.onStatusChanged(it) })) }
+
+        mBinding!!.setResetFab.setOnClickListener { v -> resetSetProgress() }
+
+        mBinding!!.setTrainingFab.setOnClickListener { v -> showCoolDialog() }*//*
+    }
+
+    private fun prepareSetStatusFabs() {
+        mBinding!!.setResetFab.visibility = if (mSetInDictionary) View.VISIBLE else View.INVISIBLE
+        val addDrawableId = if (mSetInDictionary) R.drawable.ic_remove_white_24dp else R.drawable.ic_add_white_24dp
+        mBinding!!.setAddFab.setImageResource(addDrawableId)
+    }
+
+    private fun manageTrainingStatusMenu() {
+
+    }
+
+    private fun showCoolDialog() {
+        val dialog = Dialog(context!!)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.start_training_dialog)
+
+        val titleToolbar = dialog.findViewById<Toolbar>(R.id.dialog_toolbar)
+        titleToolbar.setTitle(R.string.training)
+        titleToolbar.setNavigationIcon(R.drawable.ic_training_24dp)
+
+        val wtCard = dialog.findViewById<CardView>(R.id.cv_word_trans_dialog)
+        wtCard.setOnClickListener { v ->
+            mFragmentListener!!.startTraining(TrainingFabric.WORD_TRANSLATION, mSetId)
+            dialog.dismiss()
+        }
+
+        val twCard = dialog.findViewById<CardView>(R.id.cv_trans_word_dialog)
+        twCard.setOnClickListener { v ->
+            mFragmentListener!!.startTraining(TrainingFabric.TRANSLATION_WORD, mSetId)
+            dialog.dismiss()
+        }
+
+        val boolCard = dialog.findViewById<CardView>(R.id.cv_bool_dialog)
+        boolCard.setOnClickListener { v ->
+            mFragmentListener!!.startTraining(TrainingFabric.BOOL_TRAINING, mSetId)
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    private fun prepareRecycler() {
+
+        mBinding!!.rvSetAc.setHasFixedSize(true)
+        val llm = LinearLayoutManager(context)
+        llm.orientation = LinearLayoutManager.VERTICAL
+        mBinding!!.rvSetAc.layoutManager = llm
+
+        mRecyclerAdapter = WordsRecyclerAdapter(context!!, ArrayList(), mBinding!!.rvSetAc)
+
+        if (mWordsCallBack != null) {
+            mRecyclerAdapter!!.setChoiceMode(mWordsCallBack!!.choiceMode!!)
+        }
+
+        *//*mRecyclerAdapter.setAdapterClickListener((root, position, id) -> {
+            if (mActionMode != null) {
+                mActionMode.invalidate();
+            } else {
+                mFragmentListener.startCards(position);
+            }
+        });
+
+        mRecyclerAdapter.setAdapterLongClickListener((root, position, id) -> {
+
+            if (mActionMode == null) {
+                AppCompatActivity activity = (AppCompatActivity) getActivity();
+                //set action mode to fragment toolbar only in single mode
+                if (mSingleFragMode) activity.setSupportActionBar(mBinding.setToolbar);
+
+                mWordsCallBack = new WordsActionModeCallback();
+                mWordsCallBack.choiceMode.setChecked(position, true);
+                activity.startSupportActionMode(mWordsCallBack);
+
+                return true;
+            } else return false;
+        });*//*
+
+        mBinding!!.rvSetAc.adapter = mRecyclerAdapter
+    }
+
+    fun onStatusChanged(status: Int) {
+        val messageId = if (status == DataContract.Sets.IN_DICTIONARY)
+            R.string.set_added_message
+        else
+            R.string.set_removed_message
+        val message = getString(messageId, mSetName)
+        Snackbar.make(view!!.findViewById(R.id.coordinator_setact), message, BaseTransientBottomBar.LENGTH_LONG).show()
+    }
+
+    fun resetSetProgress() {
+        Snackbar.make(view!!.findViewById(R.id.coordinator_setact), R.string.reset_progress_question, BaseTransientBottomBar.LENGTH_LONG)
+                .setAction(R.string.reset) { v -> viewModel!!.resetCurrentSetProgress() }.show()
+    }
+
+    fun changeWordsStatus(positions: List<Int>, newStatus: Int) {
+        if (positions.size == 0) return
+        val time = System.currentTimeMillis()
+        val wordsArray = arrayOfNulls<Word>(positions.size)
+        for (a in positions.indices) {
+            val word = mWords!![positions[a]]
+            word.status = newStatus
+            if (newStatus == DataContract.Words.IN_DICTIONARY) word.addedTime = time
+            wordsArray[a] = word
+        }
+
+//        viewModel!!.updateWords(wordsArray)
+    }
+
+    fun resetWordsProgress(positions: List<Int>) {
+        if (positions.size == 0) return
+        val wordsArray = arrayOfNulls<Word>(positions.size)
+        for (a in positions.indices) {
+            val word = mWords!![positions[a]]
+            word.resetProgress()
+            wordsArray[a] = word
+        }
+
+//        viewModel!!.updateWords(wordsArray)
+    }
+
+    internal inner class WordsActionModeCallback : ActionMode.Callback {
+
+        var choiceMode: MultiChoiceMode? = null
+        //        TextView counter;
+
+        init {
+            choiceMode = MultiChoiceMode()
+        }
+
+        fun onSaveInstanceState(instanceState: Bundle) {
+            if (choiceMode != null) {
+                choiceMode!!.onSaveInstanceState(instanceState)
+            }
+        }
+
+        fun onRestoreInstanceState(savedInstanceState: Bundle) {
+            choiceMode!!.restoreInstanceState(savedInstanceState)
+        }
+
+        override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
+            mode.menuInflater.inflate(R.menu.menu_set_frag_action_mode, menu)
+            mRecyclerAdapter!!.setChoiceMode(choiceMode!!)
+            mActionMode = mode
+            //            counter = new TextView(getContext());
+            mode.title = choiceMode!!.checkedCount.toString() + ""
+            return true
+        }
+
+        override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
+            mode.title = choiceMode!!.checkedCount.toString() + ""
+            return false
+        }
+
+        override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
+            val itemId = item.itemId
+            when (itemId) {
+                R.id.menu_add_setfrag_action -> {
+                    viewModel!!.changeWordsStatus(choiceMode!!.checkedList, DataContract.Words.IN_DICTIONARY)
+                    mActionMode!!.finish()
+                    return true
+                }
+                R.id.menu_remove_setfrag_action -> {
+                    viewModel!!.changeWordsStatus(choiceMode!!.checkedList, DataContract.Words.OUT_OF_DICTIONARY)
+                    mActionMode!!.finish()
+                    return true
+                }
+                R.id.menu_reset_setfrag_action -> {
+                    viewModel!!.resetWordsProgress(choiceMode!!.checkedList)
+                    mActionMode!!.finish()
+                    return true
+                }
+            }
+            mActionMode!!.finish()
+            return false
+        }
+
+        override fun onDestroyActionMode(mode: ActionMode) {
+            choiceMode!!.clearChecks()
+            mRecyclerAdapter!!.setChoiceMode(null!!)
+            mActionMode = null
+            mWordsCallBack = null
+        }
+    }*/
+}// Required empty public constructor

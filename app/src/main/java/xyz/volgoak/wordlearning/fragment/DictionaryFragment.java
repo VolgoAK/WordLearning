@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.annimon.stream.Stream;
-import com.attiladroid.data.DataContract;
 import com.attiladroid.data.entities.Word;
 
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.databinding.FragmentRedactorBinding;
-import xyz.volgoak.wordlearning.model.WordsViewModel;
+import xyz.volgoak.wordlearning.screens.set.viewModel.WordsViewModel;
 import xyz.volgoak.wordlearning.adapter.WordsRecyclerAdapter;
 
 /**
@@ -68,11 +67,11 @@ public class DictionaryFragment extends Fragment {
 
         viewModel = ViewModelProviders.of(getActivity()).get(WordsViewModel.class);
         viewModel.changeToDictionary();
-        viewModel.getWordsForSet().observe(this, list -> {
+        /*viewModel.getWordsForSet().observe(this, list -> {
             mRecyclerAdapter.changeData(Stream.of(list)
                 .sorted((w1, w2) -> Long.compare(w2.getAddedTime(), w1.getAddedTime()))
                 .toList());
-        });
+        });*/
 
         mBinding.fabAddRedactor.setOnClickListener((v) -> fireAddWordDialog());
 

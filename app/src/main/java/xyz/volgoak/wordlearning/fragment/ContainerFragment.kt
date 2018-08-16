@@ -14,7 +14,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import xyz.volgoak.wordlearning.R
-import xyz.volgoak.wordlearning.model.WordsViewModel
+import com.attiladroid.data.entities.Set
+import xyz.volgoak.wordlearning.screens.set.viewModel.WordsViewModel
 
 
 /**
@@ -37,11 +38,11 @@ class ContainerFragment : Fragment() {
 
         toolbar.setNavigationOnClickListener { activity?.supportFragmentManager?.popBackStack() }
 
-        //Observe title for toolbar
+        /*//Observe title for toolbar
         viewModel = ViewModelProviders.of(activity!!).get(WordsViewModel::class.java)
         viewModel.currentSet.observe(this, Observer { set ->
             set?.let { toolbar.title = it.name }
-        })
+        })*/
 
         val position = arguments!!.getInt(EXTRA_POSITION)
         childFragmentManager.beginTransaction()

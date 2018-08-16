@@ -107,12 +107,8 @@ class DataProvider private constructor(
         }
     }
 
-    fun getWordsBySetIdRx(setId: Long): Flowable<List<Word>> {
-        return wordDao.getWordsBySetIdRx(setId)
-    }
-
-    fun getWordsBySetId(setId: Long): List<Word> {
-        return wordDao.getWordsBySetId(setId)
+    fun getWordsBySetId(setId: Long): LiveData<MutableList<Word>> {
+        return wordDao.getWordsBySetIdLiveData(setId)
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -161,7 +157,7 @@ class DataProvider private constructor(
         wordDao.udateWords(*words.toTypedArray())
     }
 
-    fun getSetById(setId: Long): Flowable<Set> {
+    fun getSetById(setId: Long): LiveData<Set> {
         return setsDao.getSetById(setId)
     }
 

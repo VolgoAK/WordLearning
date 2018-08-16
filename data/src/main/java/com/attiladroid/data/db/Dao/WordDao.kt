@@ -1,5 +1,6 @@
 package com.attiladroid.data.db.Dao
 
+import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
@@ -42,6 +43,7 @@ interface WordDao {
             + " ORDER BY RANDOM() LIMIT :wordsLimit ")
     fun getVariants(id: Long, wordsLimit: Int): List<Word>
 
+    //todo manage this function, spell
     @Query("SELECT * FROM words_table WHERE _id != :id AND _id IN "
             + "(SELECT " + WordLinks.COLUMN_WORD_ID + " FROM " + WordLinks.TABLE_NAME
             + " WHERE " + WordLinks.COLUMN_SET_ID + "=:setId)"
@@ -54,10 +56,9 @@ interface WordDao {
             + " ORDER BY WORD COLLATE NOCASE")
     fun getWordsBySetId(setId: Long): List<Word>
 
-
     @Query("SELECT * FROM words_table WHERE _id IN "
             + "(SELECT " + WordLinks.COLUMN_WORD_ID + " FROM " + WordLinks.TABLE_NAME
             + " WHERE " + WordLinks.COLUMN_SET_ID + "=:setId)"
             + " ORDER BY WORD COLLATE NOCASE")
-    fun getWordsBySetIdRx(setId: Long): Flowable<List<Word>>
+    fun getWordsBySetIdLiveData(setId: Long): LiveData<MutableList<Word>>
 }

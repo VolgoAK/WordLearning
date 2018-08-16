@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.MutableLiveData
+import android.view.View
 import com.attiladroid.data.DataProvider
 import com.attiladroid.data.DataContract
 import com.attiladroid.data.entities.DictionaryInfo
@@ -16,6 +17,7 @@ import xyz.volgoak.wordlearning.WordsApp
 
 import xyz.volgoak.wordlearning.extensions.toast
 import xyz.volgoak.wordlearning.utils.SingleLiveEvent
+import java.lang.ref.WeakReference
 import java.util.concurrent.Executors
 import javax.inject.Inject
 

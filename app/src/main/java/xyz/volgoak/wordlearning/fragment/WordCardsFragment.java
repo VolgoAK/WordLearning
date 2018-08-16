@@ -21,7 +21,7 @@ import java.util.List;
 
 import timber.log.Timber;
 import xyz.volgoak.wordlearning.R;
-import xyz.volgoak.wordlearning.model.WordsViewModel;
+import xyz.volgoak.wordlearning.screens.set.viewModel.WordsViewModel;
 import xyz.volgoak.wordlearning.recycler.CardsRecyclerAdapter;
 import xyz.volgoak.wordlearning.utils.Guide;
 
@@ -105,7 +105,7 @@ public class WordCardsFragment extends Fragment {
         startPosition = getArguments().getInt(EXTRA_POSITION);
 
         viewModel = ViewModelProviders.of(getActivity()).get(WordsViewModel.class);
-        viewModel.getWordsForSet().observe(this, this::onWordsReady);
+//        viewModel.getWordsForSet().observe(this, this::onWordsReady);
 
         root.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
