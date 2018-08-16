@@ -4,7 +4,6 @@ package xyz.volgoak.wordlearning.screens.set
 import android.app.Dialog
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
 import android.databinding.DataBindingUtil
 import android.graphics.Color
 import android.os.Build
@@ -19,33 +18,20 @@ import android.support.v7.view.ActionMode
 import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-import android.view.ViewTreeObserver
-import android.view.Window
-import android.view.WindowManager
-
+import android.view.*
 import com.attiladroid.data.DataContract
-import com.attiladroid.data.entities.Word
 import com.attiladroid.data.entities.Set
+import com.attiladroid.data.entities.Word
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-
-import java.io.File
-import java.util.ArrayList
-
-import xyz.volgoak.wordlearning.FragmentListener
 import xyz.volgoak.wordlearning.R
+import xyz.volgoak.wordlearning.adapter.WordsRecyclerAdapter
 import xyz.volgoak.wordlearning.data.StorageContract
 import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding
-import xyz.volgoak.wordlearning.screens.set.viewModel.WordsViewModel
 import xyz.volgoak.wordlearning.recycler.MultiChoiceMode
-import xyz.volgoak.wordlearning.adapter.WordsRecyclerAdapter
-import xyz.volgoak.wordlearning.training_utils.TrainingFabric
+import xyz.volgoak.wordlearning.screens.set.viewModel.WordsViewModel
 import xyz.volgoak.wordlearning.utils.Guide
+import java.io.File
 
 
 /**
@@ -53,15 +39,9 @@ import xyz.volgoak.wordlearning.utils.Guide
  */
 class SingleSetFragment : Fragment() {
 
-    /*private var mBinding: FragmentSingleSetBinding? = null
-    private var mFragmentListener: FragmentListener? = null
+    private lateinit var mBinding: FragmentSingleSetBinding
 
-    private val mWords: List<Word>? = null
-
-    private var mSetId: Long = 0
-    private var mSingleFragMode: Boolean = false
-
-    private var mRecyclerAdapter: WordsRecyclerAdapter? = null
+    private var recyclerAdapter: WordsRecyclerAdapter? = null
     private var mActionMode: ActionMode? = null
     private var mWordsCallBack: WordsActionModeCallback? = null
     private var mSetInDictionary: Boolean = false
@@ -69,20 +49,20 @@ class SingleSetFragment : Fragment() {
 
     lateinit var viewModel: WordsViewModel
 
+    private val setId by lazy { arguments?.getLong(EXTRA_SET_ID) ?: -1L }
+
     companion object {
         const val TAG = "SingleSetFragment"
 
         const val EXTRA_SET_ID = "set_id"
-        const val EXTRA_SINGLE_MODE = "single_mode"
         const val SAVED_IS_MULTI_CHOICE = "is_multi_choice"
         const val SAVED_CHOICE_MODE = "saved_choice_mode"
         const val EXTRA_TRANSITION_NAME = "extra_transition"
 
-        fun newInstance(setId: Long, singleFragmentMode: Boolean, transitionName: String = ""): SingleSetFragment {
+        fun newInstance(setId: Long, transitionName: String = ""): SingleSetFragment {
             val fragment = SingleSetFragment()
             val args = Bundle()
             args.putLong(EXTRA_SET_ID, setId)
-            args.putBoolean(EXTRA_SINGLE_MODE, singleFragmentMode)
             args.putString(EXTRA_TRANSITION_NAME, transitionName)
             fragment.arguments = args
             return fragment
@@ -91,11 +71,6 @@ class SingleSetFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        if (arguments != null) {
-            mSetId = arguments!!.getLong(EXTRA_SET_ID)
-            mSingleFragMode = arguments!!.getBoolean(EXTRA_SINGLE_MODE)
-        }
 
         if (savedInstanceState != null) {
             val inMultiChoice = savedInstanceState.getBoolean(SAVED_IS_MULTI_CHOICE, false)
@@ -112,7 +87,7 @@ class SingleSetFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        viewModel = ViewModelProviders.of(activity!!, WordsViewModel.Factory(mSetId)).get(WordsViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity!!, WordsViewModel.Factory(setId)).get(WordsViewModel::class.java)
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_single_set, container, false)
         val transitionName = arguments!!.getString(EXTRA_TRANSITION_NAME)
 
@@ -121,7 +96,6 @@ class SingleSetFragment : Fragment() {
         }
 
         manageTrainingStatusMenu()
-        prepareRecycler()
 
         if (mWordsCallBack != null) {
             (activity as AppCompatActivity).startSupportActionMode(mWordsCallBack!!)
@@ -138,61 +112,82 @@ class SingleSetFragment : Fragment() {
             }
         }
 
-        *//*viewModel!!.getWordsForSet()
-                .observe(this, { list -> mRecyclerAdapter!!.changeData(list) })*//*
+        viewModel.wordsData
+                .observe(this, Observer { list -> list?.let { onWords(it) } })
         viewModel.setData.observe(this, Observer { set ->
             set?.let { loadSetInformation(it) }
         })
 
-        // TODO: 5/10/18 Refactor this peace of shit
-        mBinding!!.root.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+
+        mBinding.root.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
-                mBinding!!.root.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                mBinding.root.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 Handler().postDelayed({
                     if (this@SingleSetFragment.isResumed) {
-                        Guide.showGuide(this@SingleSetFragment, true)
+                        Guide.showGuide(this@SingleSetFragment, false)
                     }
                 }, 500)
             }
         })
 
-        return mBinding!!.root
+        return mBinding.root
+    }
+
+    private fun onWords(words: MutableList<Word>) {
+        if(recyclerAdapter == null) {
+            mBinding.rvSetAc.setHasFixedSize(true)
+            val llm = LinearLayoutManager(context)
+            llm.orientation = LinearLayoutManager.VERTICAL
+            mBinding.rvSetAc.layoutManager = llm
+
+            recyclerAdapter = WordsRecyclerAdapter(context!!, words, mBinding.rvSetAc)
+
+            if (mWordsCallBack != null) {
+                recyclerAdapter!!.setChoiceMode(mWordsCallBack!!.choiceMode!!)
+            }
+
+            /* recyclerAdapter.setAdapterClickListener((root, position, id) -> {
+             if (mActionMode != null) {
+                 mActionMode.invalidate();
+             } else {
+                 mFragmentListener.startCards(position);
+             }
+         });
+
+         recyclerAdapter.setAdapterLongClickListener((root, position, id) -> {
+
+             if (mActionMode == null) {
+                 AppCompatActivity activity = (AppCompatActivity) getActivity();
+                 //set action mode to fragment toolbar only in single mode
+                 if (mSingleFragMode) activity.setSupportActionBar(mBinding.setToolbar);
+
+                 mWordsCallBack = new WordsActionModeCallback();
+                 mWordsCallBack.choiceMode.setChecked(position, true);
+                 activity.startSupportActionMode(mWordsCallBack);
+
+                 return true;
+             } else return false;
+         });*/
+
+            mBinding.rvSetAc.adapter = recyclerAdapter
+        } else {
+            recyclerAdapter!!.changeData(words)
+        }
     }
 
     override fun onStart() {
         super.onStart()
+        (activity as AppCompatActivity).setSupportActionBar(mBinding!!.setToolbar)
+        (activity as AppCompatActivity).supportActionBar!!.setHomeButtonEnabled(true)
+        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        mBinding.setToolbar.setNavigationIcon(R.drawable.ic_back_toolbar)
+        mBinding.setToolbar.setNavigationOnClickListener { v -> activity!!.onBackPressed() }
 
-        if (mSingleFragMode) {
-            (activity as AppCompatActivity).setSupportActionBar(mBinding!!.setToolbar)
-            (activity as AppCompatActivity).supportActionBar!!.setHomeButtonEnabled(true)
-            (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-            mBinding!!.setToolbar.setNavigationIcon(R.drawable.ic_back_toolbar)
-            mBinding!!.setToolbar.setNavigationOnClickListener { v -> activity!!.onBackPressed() }
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                val window = activity!!.window
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                window.statusBarColor = Color.TRANSPARENT
-            }
-        } else {
-            //            AppBarLayout.LayoutParams layoutParams =(AppBarLayout.LayoutParams) mBinding.collapsingToolbarSetAct.getLayoutParams();
-            //            layoutParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP | AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL);
-            //            mBinding.collapsingToolbarSetAct.setLayoutParams(layoutParams);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window = activity!!.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.statusBarColor = Color.TRANSPARENT
         }
-    }
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        if (context is FragmentListener) {
-            mFragmentListener = context
-        } else {
-            throw RuntimeException("Context must implement FragmentListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        mFragmentListener = null
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -232,17 +227,17 @@ class SingleSetFragment : Fragment() {
 
         prepareSetStatusFabs()
 
-       *//* mBinding!!.setAddFab.setOnClickListener { v -> viewModel!!.changeCurrentSetStatus().observe(this, ???({ this.onStatusChanged(it) })) }
+//        mBinding.setAddFab.setOnClickListener { v -> viewModel!!.changeCurrentSetStatus().observe(this, ???({ this.onStatusChanged(it) })) }
 
-        mBinding!!.setResetFab.setOnClickListener { v -> resetSetProgress() }
+        mBinding.setResetFab.setOnClickListener { v -> resetSetProgress() }
 
-        mBinding!!.setTrainingFab.setOnClickListener { v -> showCoolDialog() }*//*
+        mBinding.setTrainingFab.setOnClickListener { v -> showCoolDialog() }
     }
 
     private fun prepareSetStatusFabs() {
-        mBinding!!.setResetFab.visibility = if (mSetInDictionary) View.VISIBLE else View.INVISIBLE
+        mBinding.setResetFab.visibility = if (mSetInDictionary) View.VISIBLE else View.INVISIBLE
         val addDrawableId = if (mSetInDictionary) R.drawable.ic_remove_white_24dp else R.drawable.ic_add_white_24dp
-        mBinding!!.setAddFab.setImageResource(addDrawableId)
+        mBinding.setAddFab.setImageResource(addDrawableId)
     }
 
     private fun manageTrainingStatusMenu() {
@@ -259,7 +254,7 @@ class SingleSetFragment : Fragment() {
         titleToolbar.setNavigationIcon(R.drawable.ic_training_24dp)
 
         val wtCard = dialog.findViewById<CardView>(R.id.cv_word_trans_dialog)
-        wtCard.setOnClickListener { v ->
+        /*wtCard.setOnClickListener { v ->
             mFragmentListener!!.startTraining(TrainingFabric.WORD_TRANSLATION, mSetId)
             dialog.dismiss()
         }
@@ -274,48 +269,9 @@ class SingleSetFragment : Fragment() {
         boolCard.setOnClickListener { v ->
             mFragmentListener!!.startTraining(TrainingFabric.BOOL_TRAINING, mSetId)
             dialog.dismiss()
-        }
+        }*/
 
         dialog.show()
-    }
-
-    private fun prepareRecycler() {
-
-        mBinding!!.rvSetAc.setHasFixedSize(true)
-        val llm = LinearLayoutManager(context)
-        llm.orientation = LinearLayoutManager.VERTICAL
-        mBinding!!.rvSetAc.layoutManager = llm
-
-        mRecyclerAdapter = WordsRecyclerAdapter(context!!, ArrayList(), mBinding!!.rvSetAc)
-
-        if (mWordsCallBack != null) {
-            mRecyclerAdapter!!.setChoiceMode(mWordsCallBack!!.choiceMode!!)
-        }
-
-        *//*mRecyclerAdapter.setAdapterClickListener((root, position, id) -> {
-            if (mActionMode != null) {
-                mActionMode.invalidate();
-            } else {
-                mFragmentListener.startCards(position);
-            }
-        });
-
-        mRecyclerAdapter.setAdapterLongClickListener((root, position, id) -> {
-
-            if (mActionMode == null) {
-                AppCompatActivity activity = (AppCompatActivity) getActivity();
-                //set action mode to fragment toolbar only in single mode
-                if (mSingleFragMode) activity.setSupportActionBar(mBinding.setToolbar);
-
-                mWordsCallBack = new WordsActionModeCallback();
-                mWordsCallBack.choiceMode.setChecked(position, true);
-                activity.startSupportActionMode(mWordsCallBack);
-
-                return true;
-            } else return false;
-        });*//*
-
-        mBinding!!.rvSetAc.adapter = mRecyclerAdapter
     }
 
     fun onStatusChanged(status: Int) {
@@ -332,7 +288,7 @@ class SingleSetFragment : Fragment() {
                 .setAction(R.string.reset) { v -> viewModel!!.resetCurrentSetProgress() }.show()
     }
 
-    fun changeWordsStatus(positions: List<Int>, newStatus: Int) {
+    /*fun changeWordsStatus(positions: List<Int>, newStatus: Int) {
         if (positions.size == 0) return
         val time = System.currentTimeMillis()
         val wordsArray = arrayOfNulls<Word>(positions.size)
@@ -356,7 +312,7 @@ class SingleSetFragment : Fragment() {
         }
 
 //        viewModel!!.updateWords(wordsArray)
-    }
+    }*/
 
     internal inner class WordsActionModeCallback : ActionMode.Callback {
 
@@ -379,7 +335,7 @@ class SingleSetFragment : Fragment() {
 
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             mode.menuInflater.inflate(R.menu.menu_set_frag_action_mode, menu)
-            mRecyclerAdapter!!.setChoiceMode(choiceMode!!)
+            recyclerAdapter!!.setChoiceMode(choiceMode!!)
             mActionMode = mode
             //            counter = new TextView(getContext());
             mode.title = choiceMode!!.checkedCount.toString() + ""
@@ -416,9 +372,9 @@ class SingleSetFragment : Fragment() {
 
         override fun onDestroyActionMode(mode: ActionMode) {
             choiceMode!!.clearChecks()
-            mRecyclerAdapter!!.setChoiceMode(null!!)
+            recyclerAdapter!!.setChoiceMode(null!!)
             mActionMode = null
             mWordsCallBack = null
         }
-    }*/
+    }
 }// Required empty public constructor

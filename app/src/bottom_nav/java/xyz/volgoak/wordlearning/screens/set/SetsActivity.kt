@@ -51,10 +51,15 @@ class SetsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sets)
 
-        manageActionBar()
         viewModel = ViewModelProviders.of(this, WordsViewModel.Factory(setId))
                 .get(WordsViewModel::class.java)
         initSubscriptions()
+
+        if(supportFragmentManager.findFragmentById(R.id.fSetContainer) == null) {
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.fSetContainer, SingleSetFragment.newInstance(setId))
+                    .commit()
+        }
 
         if (AdsManager.initialized) {
             banner = Banner(this)
@@ -63,22 +68,22 @@ class SetsActivity : AppCompatActivity() {
         }
     }
 
-    private fun manageActionBar() {
+    /*private fun manageActionBar() {
         setSupportActionBar(toolbarSet)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
-    }
+    }*/
 
     private fun initSubscriptions() {
-        viewModel.setData.observe(this, Observer { set ->
+        /*viewModel.setData.observe(this, Observer { set ->
             set?.let { onWordsSet(it) }
         })
         viewModel.wordsData.observe(this, Observer { words ->
             words?.let { onWords(it)}
-        })
+        })*/
     }
 
-    @SuppressLint("NewApi")
+    /*@SuppressLint("NewApi")
     private fun onWordsSet(set: Set) {
         //set title
         ctSetAct.title = set.name
@@ -132,7 +137,7 @@ class SetsActivity : AppCompatActivity() {
         } else {
             rvAdapter!!.changeData(wordList)
         }
-    }
+    }*/
 
     override fun onResume() {
         super.onResume()
