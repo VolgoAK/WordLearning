@@ -18,8 +18,8 @@ import xyz.volgoak.wordlearning.recycler.SingleChoiceMode
 abstract class RecyclerAdapter<RC : BaseHolder, DE : DataEntity>
 (var entities: MutableList<DE>, private val mRecyclerView: RecyclerView) : RecyclerView.Adapter<RC>() {
 
-    var onClick: (DE) -> Unit = {}
-    var onLongClick: (DE) -> Unit = {}
+    var onClick: (DE, Int) -> Unit = { _, _ -> }
+    var onLongClick: (DE, Int) -> Unit = { _, _ ->}
 
     private var isSelectable: Boolean = false
     private var choiceMode: ChoiceMode? = null
@@ -67,7 +67,7 @@ abstract class RecyclerAdapter<RC : BaseHolder, DE : DataEntity>
         }
     }
 
-    fun setChoiceMode(choiceMode: ChoiceMode) {
+    fun setChoiceMode(choiceMode: ChoiceMode?) {
         this.choiceMode = choiceMode
         if (choiceMode is MultiChoiceMode) {
             setSelectable(true)
@@ -101,7 +101,7 @@ abstract class RecyclerAdapter<RC : BaseHolder, DE : DataEntity>
             }
         }
 
-        onClick(entities[position])
+        onClick(entities[position], position)
     }
 
     open inner class BaseDiffCallback(val oldList: List<DE>, val newList: List<DE>) : DiffUtil.Callback() {

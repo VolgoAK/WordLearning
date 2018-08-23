@@ -11,7 +11,9 @@ import java.util.concurrent.Executors
 import javax.inject.Inject
 
 import io.fabric.sdk.android.services.concurrency.AsyncTask
+import xyz.volgoak.wordlearning.R.string.word
 import xyz.volgoak.wordlearning.WordsApp
+import xyz.volgoak.wordlearning.utils.SingleLiveEvent
 
 
 /**
@@ -24,34 +26,13 @@ class WordsViewModel(val id: Long) : ViewModel() {
     lateinit var provider: DataProvider
 
     val setData by lazy { provider.getSetById(id)}
-    val wordsData by lazy { provider.getWordsBySetId(id)}
+    val wordsData by lazy { provider.getWordsBySetIdLD(id)}
+    val startCardsData = SingleLiveEvent<Int>()
 
     private val executor = Executors.newSingleThreadExecutor()
 
     init {
         WordsApp.getsComponent().inject(this)
-    }
-
-    fun changeToDictionary(): LiveData<Boolean> {
-       /* if (wordsDisposable != null && !wordsDisposable!!.isDisposed) {
-            wordsDisposable!!.dispose()
-        }
-
-        if (setDisposable != null && !setDisposable!!.isDisposed) {
-            setDisposable!!.dispose()
-        }
-
-        val loadedCallback = MutableLiveData<Boolean>()
-
-        wordsDisposable = provider!!.dictionaryWordsFlowable
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ list ->
-                    loadedCallback.postValue(true)
-                    selectedSetWordsData.postValue(list)
-                },  { Timber.e(it) })
-
-        return loadedCallback*/
-        return MutableLiveData<Boolean>()
     }
 
     fun changeCurrentSetStatus() {
@@ -82,16 +63,16 @@ class WordsViewModel(val id: Long) : ViewModel() {
 
     fun resetWordsProgress(positions: List<Int>) {
         val set = setData.value
-        if (set != null && positions.size != 0) {
+        if (set != null && positions.isNotEmpty()) {
             executor.submit {
-                /*val wordsArray = arrayOfNulls<Word>(positions.size)
+                val wordsList = mutableListOf<Word>()
                 val words = provider.getWordsBySetId(set.id)
                 for (a in positions.indices) {
                     val word = words[positions[a]]
                     word.resetProgress()
-                    wordsArray[a] = word
+                    wordsList.add(word)
                 }
-                provider!!.updateWords(*wordsArray)*/
+                provider.updateWords(wordsList)
             }
         }
     }
@@ -100,20 +81,20 @@ class WordsViewModel(val id: Long) : ViewModel() {
         val set = setData.value
         if (set != null && positions.isNotEmpty()) {
             executor.submit {
-                /*al wordsArray = arrayOfNulls<Word>(positions.size)
-                val words = provider!!.getWordsBySetId(set.id)
+                val wordsList = mutableListOf<Word>()
+                val words = provider.getWordsBySetId(set.id)
                 for (a in positions.indices) {
                     val word = words[positions[a]]
                     word.status = status
-                    wordsArray[a] = word
+                    wordsList.add(word)
                 }
-                provider!!.updateWords(*wordsArray)*/
+                provider.updateWords(wordsList)
             }
         }
     }
 
     fun updateSetStatus(set: Set) {
-        executor.submit { provider!!.updateSetStatus(set) }
+        executor.submit { provider.updateSetStatus(set) }
     }
 
     fun insertWord(newWord: Word) {

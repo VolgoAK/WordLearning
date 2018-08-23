@@ -92,7 +92,7 @@ class SingleSetFragment : Fragment() {
         val transitionName = arguments!!.getString(EXTRA_TRANSITION_NAME)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mBinding!!.setIvTitle.transitionName = transitionName
+            mBinding.setIvTitle.transitionName = transitionName
         }
 
         manageTrainingStatusMenu()
@@ -102,13 +102,13 @@ class SingleSetFragment : Fragment() {
         }
 
         //Avoid bug with incorrect title position
-        mBinding!!.appbarSetact.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+        mBinding.appbarSetact.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
             if (Math.abs(verticalOffset) >= appBarLayout.totalScrollRange - 35) {
-                mBinding!!.collapsingToolbarSetAct.isTitleEnabled = false
-                mBinding!!.setToolbar.title = mSetName
+                mBinding.collapsingToolbarSetAct.isTitleEnabled = false
+                mBinding.setToolbar.title = mSetName
             } else {
-                mBinding!!.collapsingToolbarSetAct.isTitleEnabled = true
-                mBinding!!.setToolbar.title = ""
+                mBinding.collapsingToolbarSetAct.isTitleEnabled = true
+                mBinding.setToolbar.title = ""
             }
         }
 
@@ -134,45 +134,37 @@ class SingleSetFragment : Fragment() {
     }
 
     private fun onWords(words: MutableList<Word>) {
-        if(recyclerAdapter == null) {
+        if (recyclerAdapter == null) {
             mBinding.rvSetAc.setHasFixedSize(true)
-            val llm = LinearLayoutManager(context)
-            llm.orientation = LinearLayoutManager.VERTICAL
-            mBinding.rvSetAc.layoutManager = llm
+            mBinding.rvSetAc.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
             recyclerAdapter = WordsRecyclerAdapter(context!!, words, mBinding.rvSetAc)
 
             if (mWordsCallBack != null) {
-                recyclerAdapter!!.setChoiceMode(mWordsCallBack!!.choiceMode!!)
+                recyclerAdapter!!.setChoiceMode(mWordsCallBack!!.choiceMode)
             }
-
-            /* recyclerAdapter.setAdapterClickListener((root, position, id) -> {
-             if (mActionMode != null) {
-                 mActionMode.invalidate();
-             } else {
-                 mFragmentListener.startCards(position);
-             }
-         });
-
-         recyclerAdapter.setAdapterLongClickListener((root, position, id) -> {
-
-             if (mActionMode == null) {
-                 AppCompatActivity activity = (AppCompatActivity) getActivity();
-                 //set action mode to fragment toolbar only in single mode
-                 if (mSingleFragMode) activity.setSupportActionBar(mBinding.setToolbar);
-
-                 mWordsCallBack = new WordsActionModeCallback();
-                 mWordsCallBack.choiceMode.setChecked(position, true);
-                 activity.startSupportActionMode(mWordsCallBack);
-
-                 return true;
-             } else return false;
-         });*/
-
+            recyclerAdapter!!.onClick = { _, position ->
+                viewModel.startCardsData.value = position
+            }
+            recyclerAdapter!!.onLongClick = { word, position ->
+                if (mActionMode == null) {
+                    startActionMode(position)
+                }
+            }
             mBinding.rvSetAc.adapter = recyclerAdapter
         } else {
             recyclerAdapter!!.changeData(words)
         }
+    }
+
+    private fun startActionMode(position: Int) {
+        mBinding.appbarSetact.setExpanded(false, true)
+        mBinding.setAddFab.hide()
+        mBinding.setResetFab.hide()
+        mBinding.setTrainingFab.hide()
+        mWordsCallBack = WordsActionModeCallback()
+        mWordsCallBack!!.choiceMode.setChecked(position, true)
+        (activity as AppCompatActivity).startSupportActionMode(mWordsCallBack!!)
     }
 
     override fun onStart() {
@@ -201,7 +193,7 @@ class SingleSetFragment : Fragment() {
     private fun loadSetInformation(set: Set) {
         //set title
         mSetName = set.name
-        mBinding!!.collapsingToolbarSetAct.title = mSetName
+        mBinding.collapsingToolbarSetAct.title = mSetName
 
         //load title image
         val imageRes = set.imageUrl
@@ -211,7 +203,7 @@ class SingleSetFragment : Fragment() {
 
         Picasso.get()
                 .load(imageFile)
-                .into(mBinding!!.setIvTitle, object : Callback {
+                .into(mBinding.setIvTitle, object : Callback {
                     override fun onSuccess() {
                         startPostponedEnterTransition()
                     }
@@ -221,17 +213,13 @@ class SingleSetFragment : Fragment() {
                     }
                 })
 
-
-        val setStatus = set.status
-        mSetInDictionary = setStatus == DataContract.Sets.IN_DICTIONARY
+        mSetInDictionary = set.status == DataContract.Sets.IN_DICTIONARY
 
         prepareSetStatusFabs()
 
-//        mBinding.setAddFab.setOnClickListener { v -> viewModel!!.changeCurrentSetStatus().observe(this, ???({ this.onStatusChanged(it) })) }
-
-        mBinding.setResetFab.setOnClickListener { v -> resetSetProgress() }
-
-        mBinding.setTrainingFab.setOnClickListener { v -> showCoolDialog() }
+        mBinding.setAddFab.setOnClickListener { viewModel.changeCurrentSetStatus() }
+        mBinding.setResetFab.setOnClickListener { resetSetProgress() }
+        mBinding.setTrainingFab.setOnClickListener { showCoolDialog() }
     }
 
     private fun prepareSetStatusFabs() {
@@ -283,9 +271,12 @@ class SingleSetFragment : Fragment() {
         Snackbar.make(view!!.findViewById(R.id.coordinator_setact), message, BaseTransientBottomBar.LENGTH_LONG).show()
     }
 
-    fun resetSetProgress() {
-        Snackbar.make(view!!.findViewById(R.id.coordinator_setact), R.string.reset_progress_question, BaseTransientBottomBar.LENGTH_LONG)
-                .setAction(R.string.reset) { v -> viewModel!!.resetCurrentSetProgress() }.show()
+    private fun resetSetProgress() {
+        Snackbar.make(view!!.findViewById(R.id.coordinator_setact),
+                R.string.reset_progress_question,
+                BaseTransientBottomBar.LENGTH_LONG)
+                .setAction(R.string.reset) {
+                    viewModel.resetCurrentSetProgress() }.show()
     }
 
     /*fun changeWordsStatus(positions: List<Int>, newStatus: Int) {
@@ -316,34 +307,29 @@ class SingleSetFragment : Fragment() {
 
     internal inner class WordsActionModeCallback : ActionMode.Callback {
 
-        var choiceMode: MultiChoiceMode? = null
+        var choiceMode = MultiChoiceMode()
         //        TextView counter;
 
-        init {
-            choiceMode = MultiChoiceMode()
-        }
 
         fun onSaveInstanceState(instanceState: Bundle) {
-            if (choiceMode != null) {
-                choiceMode!!.onSaveInstanceState(instanceState)
-            }
+            choiceMode.onSaveInstanceState(instanceState)
         }
 
         fun onRestoreInstanceState(savedInstanceState: Bundle) {
-            choiceMode!!.restoreInstanceState(savedInstanceState)
+            choiceMode.restoreInstanceState(savedInstanceState)
         }
 
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             mode.menuInflater.inflate(R.menu.menu_set_frag_action_mode, menu)
-            recyclerAdapter!!.setChoiceMode(choiceMode!!)
+            recyclerAdapter!!.setChoiceMode(choiceMode)
             mActionMode = mode
             //            counter = new TextView(getContext());
-            mode.title = choiceMode!!.checkedCount.toString() + ""
+            mode.title = choiceMode.checkedCount.toString() + ""
             return true
         }
 
         override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
-            mode.title = choiceMode!!.checkedCount.toString() + ""
+            mode.title = choiceMode.checkedCount.toString() + ""
             return false
         }
 
@@ -351,30 +337,34 @@ class SingleSetFragment : Fragment() {
             val itemId = item.itemId
             when (itemId) {
                 R.id.menu_add_setfrag_action -> {
-                    viewModel!!.changeWordsStatus(choiceMode!!.checkedList, DataContract.Words.IN_DICTIONARY)
-                    mActionMode!!.finish()
+                    viewModel.changeWordsStatus(choiceMode.checkedList, DataContract.Words.IN_DICTIONARY)
+                    mActionMode?.finish()
                     return true
                 }
                 R.id.menu_remove_setfrag_action -> {
-                    viewModel!!.changeWordsStatus(choiceMode!!.checkedList, DataContract.Words.OUT_OF_DICTIONARY)
-                    mActionMode!!.finish()
+                    viewModel.changeWordsStatus(choiceMode.checkedList, DataContract.Words.OUT_OF_DICTIONARY)
+                    mActionMode?.finish()
                     return true
                 }
                 R.id.menu_reset_setfrag_action -> {
-                    viewModel!!.resetWordsProgress(choiceMode!!.checkedList)
-                    mActionMode!!.finish()
+                    viewModel.resetWordsProgress(choiceMode.checkedList)
+                    mActionMode?.finish()
                     return true
                 }
             }
-            mActionMode!!.finish()
+            mActionMode?.finish()
             return false
         }
 
         override fun onDestroyActionMode(mode: ActionMode) {
-            choiceMode!!.clearChecks()
-            recyclerAdapter!!.setChoiceMode(null!!)
+            choiceMode.clearChecks()
+            recyclerAdapter!!.setChoiceMode(null)
             mActionMode = null
             mWordsCallBack = null
+            mBinding.appbarSetact.setExpanded(true, true)
+            mBinding.setTrainingFab.show()
+            mBinding.setResetFab.show()
+            mBinding.setAddFab.show()
         }
     }
-}// Required empty public constructor
+}

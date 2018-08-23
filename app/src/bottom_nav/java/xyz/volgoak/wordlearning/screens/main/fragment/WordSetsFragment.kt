@@ -17,6 +17,7 @@ import com.attiladroid.data.entities.Theme
 import kotlinx.android.synthetic.main.fragment_word_sets.*
 import xyz.volgoak.wordlearning.R
 import xyz.volgoak.wordlearning.adapter.SetsRecyclerAdapter
+import xyz.volgoak.wordlearning.extensions.observeSafe
 import xyz.volgoak.wordlearning.recycler.SingleChoiceMode
 import xyz.volgoak.wordlearning.screens.main.viewModel.MainViewModel
 
@@ -83,9 +84,7 @@ class WordSetsFragment : Fragment() {
         }
 
         viewModel.themesLD.observe(this, Observer { themes -> mThemes = themes })
-        viewModel.setsLD.observe(this, Observer { list ->
-            list?.let { onSetsReady(it) }
-        })
+        viewModel.setsLD.observeSafe(this) { onSetsReady(it)}
 
     }
 
@@ -164,7 +163,7 @@ class WordSetsFragment : Fragment() {
                 viewModel.changeSetStatus(set)
             }
 
-            mRecyclerAdapter!!.onClick = { set ->
+            mRecyclerAdapter!!.onClick = { set, _ ->
                 viewModel.openSet(set.id)
             }
 
@@ -173,10 +172,4 @@ class WordSetsFragment : Fragment() {
             mRecyclerAdapter?.changeData(data)
         }
     }
-
-    interface SetsFragmentListener {
-        fun startSet(setId: Long, shared: View)
-    }
-
-
 }

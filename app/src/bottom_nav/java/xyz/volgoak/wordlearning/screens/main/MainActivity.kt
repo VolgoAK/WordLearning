@@ -21,6 +21,7 @@ import xyz.volgoak.wordlearning.activity.SettingsActivity
 import xyz.volgoak.wordlearning.activity.TrainingActivity
 import xyz.volgoak.wordlearning.admob.AdsManager
 import xyz.volgoak.wordlearning.admob.Banner
+import xyz.volgoak.wordlearning.extensions.observeSafe
 import xyz.volgoak.wordlearning.screens.main.adapter.PagerAdapter
 import xyz.volgoak.wordlearning.screens.main.fragment.StartFragment
 import xyz.volgoak.wordlearning.screens.main.fragment.TrainingSelectFragment
@@ -59,14 +60,9 @@ class MainActivity : NavigationActivity() {
     }
 
     private fun initSubscriptions() {
-        viewModel.titleLD.observe(this, Observer { title = it })
-        viewModel.startTrainingLD.observe(this, Observer {
-            it?.let { startTraining(it.first, it.second) }
-        })
-
-        viewModel.startSetLD.observe(this, Observer {
-            it?.let { startSet(it) }
-        })
+        viewModel.titleLD.observeSafe(this) { title = it }
+        viewModel.startTrainingLD.observeSafe(this) { startTraining(it.first, it.second) }
+        viewModel.startSetLD.observeSafe(this) { startSet(it) }
     }
 
     private fun startSet(id: Long) {

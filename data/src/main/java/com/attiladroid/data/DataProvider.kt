@@ -79,6 +79,10 @@ class DataProvider private constructor(
         wordDao.udateWords(*words)
     }
 
+    fun updateWords(words: List<Word>) {
+        wordDao.updateWords(words)
+    }
+
     // TODO: 1/7/18 Temp methods. Delete them and replace
     fun resetWordProgress(id: Long) {
         val word = wordDao.getWordById(id)
@@ -107,9 +111,9 @@ class DataProvider private constructor(
         }
     }
 
-    fun getWordsBySetId(setId: Long): LiveData<MutableList<Word>> {
-        return wordDao.getWordsBySetIdLiveData(setId)
-    }
+    fun getWordsBySetIdLD(setId: Long) = wordDao.getWordsBySetIdLiveData(setId)
+
+    fun getWordsBySetId(setId: Long) = wordDao.getWordsBySetId(setId)
 
     ///////////////////////////////////////////////////////////////////////////
     // Sets methods

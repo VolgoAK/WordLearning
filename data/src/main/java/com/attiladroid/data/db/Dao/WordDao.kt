@@ -33,6 +33,9 @@ interface WordDao {
     @Update
     fun udateWords(vararg words: Word)
 
+    @Update
+    fun updateWords(words: List<Word>)
+
     @Query("SELECT * FROM words_table WHERE _id = :id")
     fun getWordById(id: Long): Word
 

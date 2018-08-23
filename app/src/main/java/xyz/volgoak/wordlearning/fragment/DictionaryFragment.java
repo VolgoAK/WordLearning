@@ -66,7 +66,7 @@ public class DictionaryFragment extends Fragment {
         mBinding.rvRedactor.setAdapter(mRecyclerAdapter);
 
         viewModel = ViewModelProviders.of(getActivity()).get(WordsViewModel.class);
-        viewModel.changeToDictionary();
+//        viewModel.changeToDictionary();
         /*viewModel.getWordsForSet().observe(this, list -> {
             mRecyclerAdapter.changeData(Stream.of(list)
                 .sorted((w1, w2) -> Long.compare(w2.getAddedTime(), w1.getAddedTime()))

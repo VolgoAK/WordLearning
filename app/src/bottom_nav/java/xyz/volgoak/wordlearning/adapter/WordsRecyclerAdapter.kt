@@ -53,6 +53,10 @@ class WordsRecyclerAdapter(context: Context, wordList: MutableList<Word>, rv: Re
 
         init {
             rootView.setOnClickListener { v -> onControllerClick(this@WordsRowController, v, adapterPosition) }
+            rootView.setOnLongClickListener {
+                onLongClick(entities[adapterPosition], adapterPosition)
+                true
+            }
         }
 
         override fun bindController(dataEntity: DataEntity) {
