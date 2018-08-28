@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.annimon.stream.Stream;
 import com.attiladroid.data.entities.Word;
 
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.databinding.FragmentRedactorBinding;
-import xyz.volgoak.wordlearning.screens.set.viewModel.WordsViewModel;
+import xyz.volgoak.wordlearning.screens.set.viewModel.SingleSetViewModel;
 import xyz.volgoak.wordlearning.adapter.WordsRecyclerAdapter;
 
 /**
@@ -42,7 +41,7 @@ public class DictionaryFragment extends Fragment {
     private FragmentListener mFragmentListener;
 
     private FragmentRedactorBinding mBinding;
-    private WordsViewModel viewModel;
+    private SingleSetViewModel viewModel;
 
     public DictionaryFragment() {
         // Required empty public constructor
@@ -65,7 +64,7 @@ public class DictionaryFragment extends Fragment {
 //        mRecyclerAdapter.setAdapterClickListener((root, position, word) -> onWordClicked(position, (Word) word));
         mBinding.rvRedactor.setAdapter(mRecyclerAdapter);
 
-        viewModel = ViewModelProviders.of(getActivity()).get(WordsViewModel.class);
+        viewModel = ViewModelProviders.of(getActivity()).get(SingleSetViewModel.class);
 //        viewModel.changeToDictionary();
         /*viewModel.getWordsForSet().observe(this, list -> {
             mRecyclerAdapter.changeData(Stream.of(list)

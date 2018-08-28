@@ -11,9 +11,9 @@ import xyz.volgoak.wordlearning.screens.set.SingleSetFragment;
 import xyz.volgoak.wordlearning.screens.main.fragment.StartFragment;
 import xyz.volgoak.wordlearning.fragment.TimerFragment;
 import xyz.volgoak.wordlearning.fragment.TrainingFragment;
-import xyz.volgoak.wordlearning.fragment.WordCardsFragment;
+import xyz.volgoak.wordlearning.screens.set.WordCardsFragment;
 import xyz.volgoak.wordlearning.screens.main.fragment.WordSetsFragment;
-import xyz.volgoak.wordlearning.screens.set.viewModel.WordsViewModel;
+import xyz.volgoak.wordlearning.screens.set.viewModel.SingleSetViewModel;
 import xyz.volgoak.wordlearning.adapter.SetsRecyclerAdapter;
 import xyz.volgoak.wordlearning.screens.main.viewModel.MainViewModel;
 import com.attiladroid.data.update_managment.SetsLoaderService;
@@ -45,6 +45,6 @@ public interface DbComponent {
     void inject(SetsRecyclerAdapter adapter);
     void inject(SoundsManager manager);
 
-    void inject(WordsViewModel model);
+    void inject(SingleSetViewModel model);
     void inject(MainViewModel model);
 }

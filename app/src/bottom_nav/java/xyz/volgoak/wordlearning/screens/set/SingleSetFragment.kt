@@ -28,8 +28,9 @@ import xyz.volgoak.wordlearning.R
 import xyz.volgoak.wordlearning.adapter.WordsRecyclerAdapter
 import xyz.volgoak.wordlearning.data.StorageContract
 import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding
+import xyz.volgoak.wordlearning.extensions.observeSafe
 import xyz.volgoak.wordlearning.recycler.MultiChoiceMode
-import xyz.volgoak.wordlearning.screens.set.viewModel.WordsViewModel
+import xyz.volgoak.wordlearning.screens.set.viewModel.SingleSetViewModel
 import xyz.volgoak.wordlearning.utils.Guide
 import java.io.File
 
@@ -47,7 +48,7 @@ class SingleSetFragment : Fragment() {
     private var mSetInDictionary: Boolean = false
     private var mSetName = ""
 
-    lateinit var viewModel: WordsViewModel
+    lateinit var viewModel: SingleSetViewModel
 
     private val setId by lazy { arguments?.getLong(EXTRA_SET_ID) ?: -1L }
 
@@ -87,7 +88,7 @@ class SingleSetFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        viewModel = ViewModelProviders.of(activity!!, WordsViewModel.Factory(setId)).get(WordsViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity!!, SingleSetViewModel.Factory(setId)).get(SingleSetViewModel::class.java)
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_single_set, container, false)
         val transitionName = arguments!!.getString(EXTRA_TRANSITION_NAME)
 
@@ -112,12 +113,16 @@ class SingleSetFragment : Fragment() {
             }
         }
 
+        if(recyclerAdapter == null) {
+            initAdapter()
+        }
+        initRecycler()
+
         viewModel.wordsData
-                .observe(this, Observer { list -> list?.let { onWords(it) } })
+                .observeSafe(this) { onWords(it) }
         viewModel.setData.observe(this, Observer { set ->
             set?.let { loadSetInformation(it) }
         })
-
 
         mBinding.root.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
@@ -133,28 +138,30 @@ class SingleSetFragment : Fragment() {
         return mBinding.root
     }
 
-    private fun onWords(words: MutableList<Word>) {
-        if (recyclerAdapter == null) {
-            mBinding.rvSetAc.setHasFixedSize(true)
-            mBinding.rvSetAc.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+    private fun initRecycler() {
+        mBinding.rvSetAc.setHasFixedSize(true)
+        mBinding.rvSetAc.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        mBinding.rvSetAc.adapter = recyclerAdapter
+    }
 
-            recyclerAdapter = WordsRecyclerAdapter(context!!, words, mBinding.rvSetAc)
+    private fun initAdapter() {
+        recyclerAdapter = WordsRecyclerAdapter(context!!, mutableListOf(), mBinding.rvSetAc)
 
-            if (mWordsCallBack != null) {
-                recyclerAdapter!!.setChoiceMode(mWordsCallBack!!.choiceMode)
-            }
-            recyclerAdapter!!.onClick = { _, position ->
-                viewModel.startCardsData.value = position
-            }
-            recyclerAdapter!!.onLongClick = { word, position ->
-                if (mActionMode == null) {
-                    startActionMode(position)
-                }
-            }
-            mBinding.rvSetAc.adapter = recyclerAdapter
-        } else {
-            recyclerAdapter!!.changeData(words)
+        if (mWordsCallBack != null) {
+            recyclerAdapter!!.setChoiceMode(mWordsCallBack!!.choiceMode)
         }
+        recyclerAdapter!!.onClick = { _, position ->
+            viewModel.startCardsLD.value = position
+        }
+        recyclerAdapter!!.onLongClick = { word, position ->
+            if (mActionMode == null) {
+                startActionMode(position)
+            }
+        }
+    }
+
+    private fun onWords(words: MutableList<Word>) {
+        recyclerAdapter?.changeData(words)
     }
 
     private fun startActionMode(position: Int) {
@@ -242,22 +249,22 @@ class SingleSetFragment : Fragment() {
         titleToolbar.setNavigationIcon(R.drawable.ic_training_24dp)
 
         val wtCard = dialog.findViewById<CardView>(R.id.cv_word_trans_dialog)
-        /*wtCard.setOnClickListener { v ->
-            mFragmentListener!!.startTraining(TrainingFabric.WORD_TRANSLATION, mSetId)
+        wtCard.setOnClickListener {
+            viewModel.navigationLD.value = SingleSetViewModel.TrainingNavigation.START_TRAINING_WT
             dialog.dismiss()
         }
 
         val twCard = dialog.findViewById<CardView>(R.id.cv_trans_word_dialog)
-        twCard.setOnClickListener { v ->
-            mFragmentListener!!.startTraining(TrainingFabric.TRANSLATION_WORD, mSetId)
+        twCard.setOnClickListener {
+            viewModel.navigationLD.value = SingleSetViewModel.TrainingNavigation.START_TRAINING_TW
             dialog.dismiss()
         }
 
         val boolCard = dialog.findViewById<CardView>(R.id.cv_bool_dialog)
-        boolCard.setOnClickListener { v ->
-            mFragmentListener!!.startTraining(TrainingFabric.BOOL_TRAINING, mSetId)
+        boolCard.setOnClickListener {
+            viewModel.navigationLD.value = SingleSetViewModel.TrainingNavigation.START_TRAINING_BOOL
             dialog.dismiss()
-        }*/
+        }
 
         dialog.show()
     }

@@ -9,7 +9,7 @@ import com.takusemba.spotlight.Spotlight
 import timber.log.Timber
 import xyz.volgoak.wordlearning.R
 import xyz.volgoak.wordlearning.screens.set.SingleSetFragment
-import xyz.volgoak.wordlearning.fragment.WordCardsFragment
+import xyz.volgoak.wordlearning.screens.set.WordCardsFragment
 
 /**
  * Created by alex on 5/9/18.

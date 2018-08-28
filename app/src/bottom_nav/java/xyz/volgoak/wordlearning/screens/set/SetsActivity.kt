@@ -1,34 +1,24 @@
 package xyz.volgoak.wordlearning.screens.set
 
-import android.annotation.SuppressLint
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
-import com.attiladroid.data.DataContract
-import com.attiladroid.data.entities.Set
-import com.attiladroid.data.entities.Word
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_sets.*
 import xyz.volgoak.wordlearning.R
-import xyz.volgoak.wordlearning.R.id.*
+import xyz.volgoak.wordlearning.activity.TrainingActivity
 import xyz.volgoak.wordlearning.adapter.WordsRecyclerAdapter
 import xyz.volgoak.wordlearning.admob.AdsManager
 import xyz.volgoak.wordlearning.admob.Banner
-import xyz.volgoak.wordlearning.data.StorageContract
-import xyz.volgoak.wordlearning.extensions.setVisibility
-import xyz.volgoak.wordlearning.extensions.sinceLollipop
-import xyz.volgoak.wordlearning.screens.set.viewModel.WordsViewModel
-import java.io.File
+import xyz.volgoak.wordlearning.extensions.observeSafe
+import xyz.volgoak.wordlearning.screens.set.viewModel.SingleSetViewModel
+import xyz.volgoak.wordlearning.training_utils.TrainingFabric
 
 class SetsActivity : AppCompatActivity() {
 
-    lateinit var viewModel: WordsViewModel
+    lateinit var viewModel: SingleSetViewModel
 
     private var banner: Banner? = null
 
@@ -51,8 +41,8 @@ class SetsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sets)
 
-        viewModel = ViewModelProviders.of(this, WordsViewModel.Factory(setId))
-                .get(WordsViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, SingleSetViewModel.Factory(setId))
+                .get(SingleSetViewModel::class.java)
         initSubscriptions()
 
         if(supportFragmentManager.findFragmentById(R.id.fSetContainer) == null) {
@@ -75,12 +65,22 @@ class SetsActivity : AppCompatActivity() {
     }*/
 
     private fun initSubscriptions() {
-        /*viewModel.setData.observe(this, Observer { set ->
-            set?.let { onWordsSet(it) }
-        })
-        viewModel.wordsData.observe(this, Observer { words ->
-            words?.let { onWords(it)}
-        })*/
+        viewModel.navigationLD.observeSafe(this) { navigation ->
+            when(navigation) {
+                SingleSetViewModel.TrainingNavigation.START_TRAINING_TW -> startTraining(TrainingFabric.TRANSLATION_WORD)
+                SingleSetViewModel.TrainingNavigation.START_TRAINING_WT -> startTraining(TrainingFabric.WORD_TRANSLATION)
+                SingleSetViewModel.TrainingNavigation.START_TRAINING_BOOL -> startTraining(TrainingFabric.BOOL_TRAINING)
+            }
+        }
+        viewModel.startCardsLD.observeSafe(this) { position -> startCards(position)}
+    }
+
+    private fun startCards(position: Int) {
+        val cardsFragment = WordCardsFragment.newInstance(position)
+        supportFragmentManager.beginTransaction()
+                .add(R.id.fSetContainer, cardsFragment)
+                .addToBackStack(null)
+                .commit()
     }
 
     /*@SuppressLint("NewApi")
@@ -170,6 +170,14 @@ class SetsActivity : AppCompatActivity() {
         }
     }
 
+    private fun startTraining(type: Int) {
+        val intent = Intent(this, TrainingActivity::class.java).apply {
+            putExtra(TrainingActivity.EXTRA_SET_ID, setId)
+            putExtra(TrainingActivity.EXTRA_TRAINING_TYPE, type)
+        }
+        startActivity(intent)
+    }
+
     /*override fun startSet(setId: Long, shared: View) {
         val transaction = supportFragmentManager.beginTransaction()
         val singleMode = findViewById<View>(R.id.container_detail_sets_activity) == null
@@ -194,12 +202,7 @@ class SetsActivity : AppCompatActivity() {
         startTraining(type, mSelectedSetId)
     }
 
-    override fun startTraining(type: Int, setId: Long) {
-        val intent = Intent(this, TrainingActivity::class.java)
-        intent.putExtra(TrainingActivity.EXTRA_SET_ID, setId)
-        intent.putExtra(TrainingActivity.EXTRA_TRAINING_TYPE, type)
-        startActivity(intent)
-    }
+
 
     override fun startDictionary() {
        *//* val intent = Intent(this, MainActivity::class.java)

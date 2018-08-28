@@ -11,7 +11,6 @@ import java.util.concurrent.Executors
 import javax.inject.Inject
 
 import io.fabric.sdk.android.services.concurrency.AsyncTask
-import xyz.volgoak.wordlearning.R.string.word
 import xyz.volgoak.wordlearning.WordsApp
 import xyz.volgoak.wordlearning.utils.SingleLiveEvent
 
@@ -20,14 +19,15 @@ import xyz.volgoak.wordlearning.utils.SingleLiveEvent
  * Created by alex on 2/13/18.
  */
 
-class WordsViewModel(val id: Long) : ViewModel() {
+class SingleSetViewModel(val id: Long) : ViewModel() {
 
     @Inject
     lateinit var provider: DataProvider
 
     val setData by lazy { provider.getSetById(id)}
     val wordsData by lazy { provider.getWordsBySetIdLD(id)}
-    val startCardsData = SingleLiveEvent<Int>()
+    val startCardsLD = SingleLiveEvent<Int>()
+    val navigationLD = SingleLiveEvent<TrainingNavigation>()
 
     private val executor = Executors.newSingleThreadExecutor()
 
@@ -114,7 +114,13 @@ class WordsViewModel(val id: Long) : ViewModel() {
     @Suppress("UNCHECKED_CAST")
     class Factory(val id: Long): ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return WordsViewModel(id) as T
+            return SingleSetViewModel(id) as T
         }
+    }
+
+    enum class TrainingNavigation {
+        START_TRAINING_WT,
+        START_TRAINING_TW,
+        START_TRAINING_BOOL
     }
 }

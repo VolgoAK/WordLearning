@@ -1,8 +1,6 @@
 package xyz.volgoak.wordlearning.fragment
 
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -14,8 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import xyz.volgoak.wordlearning.R
-import com.attiladroid.data.entities.Set
-import xyz.volgoak.wordlearning.screens.set.viewModel.WordsViewModel
+import xyz.volgoak.wordlearning.screens.set.WordCardsFragment
+import xyz.volgoak.wordlearning.screens.set.viewModel.SingleSetViewModel
 
 
 /**
@@ -23,7 +21,7 @@ import xyz.volgoak.wordlearning.screens.set.viewModel.WordsViewModel
  */
 class ContainerFragment : Fragment() {
 
-    lateinit var viewModel: WordsViewModel
+    lateinit var viewModel: SingleSetViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -39,7 +37,7 @@ class ContainerFragment : Fragment() {
         toolbar.setNavigationOnClickListener { activity?.supportFragmentManager?.popBackStack() }
 
         /*//Observe title for toolbar
-        viewModel = ViewModelProviders.of(activity!!).get(WordsViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity!!).get(SingleSetViewModel::class.java)
         viewModel.currentSet.observe(this, Observer { set ->
             set?.let { toolbar.title = it.name }
         })*/
