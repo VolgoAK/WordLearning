@@ -1,5 +1,6 @@
 package xyz.volgoak.wordlearning.extensions
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.view.View

@@ -27,7 +27,8 @@ class SingleSetViewModel(val id: Long) : ViewModel() {
     val setData by lazy { provider.getSetById(id)}
     val wordsData by lazy { provider.getWordsBySetIdLD(id)}
     val startCardsLD = SingleLiveEvent<Int>()
-    val navigationLD = SingleLiveEvent<TrainingNavigation>()
+    val actionModeLD = SingleLiveEvent<Boolean>() // started - true, finished - false
+    val setStatusChangedLD = SingleLiveEvent<Int>()
 
     private val executor = Executors.newSingleThreadExecutor()
 
@@ -44,6 +45,7 @@ class SingleSetViewModel(val id: Long) : ViewModel() {
                 DataContract.Sets.IN_DICTIONARY
 
             current.status = newStatus
+            setStatusChangedLD.value = newStatus
             executor.submit {
                 provider.updateSetStatus(current)
             }

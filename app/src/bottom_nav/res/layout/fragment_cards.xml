@@ -5,16 +5,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="xyz.volgoak.wordlearning.screens.set.WordCardsFragment"
-        android:background="@color/white">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/cardsToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_constraintTop_toTopOf="parent"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
+        android:background="@color/white"
+        tools:context="xyz.volgoak.wordlearning.screens.set.WordCardsFragment">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvCards"
@@ -23,8 +15,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardsToolbar" />
-
+            app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabNext"

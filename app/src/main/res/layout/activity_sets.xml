@@ -1,26 +1,105 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinator_setact"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/transparent"
-    tools:context=".screens.set.SetsActivity">
+    >
 
-    <FrameLayout
-        android:id="@+id/fSetContainer"
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinator_setact"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/llBannerContainerSets"/>
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:background="@android:color/transparent"
+        tools:context="xyz.volgoak.wordlearning.screens.set.SetsActivity">
 
-    <LinearLayout
-        android:id="@+id/llBannerContainerSets"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-</android.support.constraint.ConstraintLayout>
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar_setact"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_image_height"
+            android:fitsSystemWindows="true"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar_set_act"
+                android:fitsSystemWindows="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:contentScrim="@color/colorPrimary"
+                app:expandedTitleMarginBottom="40dp"
+                app:expandedTitleTextAppearance="@style/expanded_title_text" >
+
+                <ImageView
+                    android:fitsSystemWindows="true"
+                    android:id="@+id/set_iv_title"
+                    android:scaleType="centerCrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_collapseMode="parallax"/>
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/set_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@null"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <FrameLayout
+                android:id="@+id/fSetContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+            <LinearLayout
+                android:id="@+id/llBannerContainerSets"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+
+        </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/set_add_fab"
+            android:layout_width="@dimen/fab_size"
+            android:layout_height="@dimen/fab_size"
+            android:elevation="8dp"
+            app:srcCompat="@drawable/ic_add_white_24dp"
+            app:layout_behavior=".CustomFloatingButtonBehavior"
+            app:behavior_order_in_row="1"
+            app:behavior_max_size="@dimen/fab_size"
+            app:behavior_min_size="@dimen/fab_min_size"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/set_training_fab"
+            android:layout_width="@dimen/fab_size"
+            android:layout_height="@dimen/fab_size"
+            android:elevation="8dp"
+            app:srcCompat="@drawable/ic_training_24dp"
+            app:layout_behavior=".CustomFloatingButtonBehavior"
+            app:behavior_order_in_row="2"
+            app:behavior_max_size="@dimen/fab_size"
+            app:behavior_min_size="@dimen/fab_min_size"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/set_reset_fab"
+            android:layout_width="@dimen/fab_size"
+            android:layout_height="@dimen/fab_size"
+            android:elevation="8dp"
+            app:srcCompat="@drawable/ic_reset_white_24dp"
+            app:layout_behavior=".CustomFloatingButtonBehavior"
+            app:behavior_max_size="@dimen/fab_size"
+            app:behavior_min_size="@dimen/fab_min_size"
+            app:behavior_order_in_row="3"/>
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

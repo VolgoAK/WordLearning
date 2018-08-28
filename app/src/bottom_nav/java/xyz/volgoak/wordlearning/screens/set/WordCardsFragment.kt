@@ -74,15 +74,6 @@ class WordCardsFragment : Fragment() {
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
-        (activity as AppCompatActivity).setSupportActionBar(binding.cardsToolbar)
-        (activity as AppCompatActivity).supportActionBar!!.setHomeButtonEnabled(true)
-        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        binding.cardsToolbar.setNavigationIcon(R.drawable.ic_back_toolbar)
-        binding.cardsToolbar.setNavigationOnClickListener { v -> activity!!.onBackPressed() }
-    }
-
     private fun initAdapter() {
         binding.rvCards.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
