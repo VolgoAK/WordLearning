@@ -163,7 +163,7 @@ class WordSetsFragment : Fragment() {
                 viewModel.changeSetStatus(set)
             }
 
-            mRecyclerAdapter!!.onClick = { set, _ ->
+            mRecyclerAdapter!!.onClick = { set, _ , _->
                 viewModel.openSet(set.id)
             }
 

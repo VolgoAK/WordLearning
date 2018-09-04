@@ -5,6 +5,8 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +43,10 @@ public class WordCardRowController extends RecyclerView.ViewHolder{
     public void bindController(DataEntity dataEntity) {
         settingsVisible = false;
         Word word = (Word) dataEntity;
+        //todo change with binding
+        CardView card = itemView.findViewById(R.id.cardWord);
+        ViewCompat.setTransitionName(card, word.getWord());
+
         binding.tvCardTranslation.setText(word.getTranslation());
         binding.tvCardTranscription.setText(word.getTranscription());
         binding.tvCardWord.setText(word.getWord());

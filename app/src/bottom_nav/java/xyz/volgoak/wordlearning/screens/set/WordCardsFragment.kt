@@ -5,6 +5,8 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
+import android.support.transition.Fade
+import android.support.transition.TransitionInflater
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -23,6 +25,7 @@ import timber.log.Timber
 import xyz.volgoak.wordlearning.R
 import xyz.volgoak.wordlearning.databinding.FragmentCardsBinding
 import xyz.volgoak.wordlearning.extensions.observeSafe
+import xyz.volgoak.wordlearning.extensions.sinceLollipop
 import xyz.volgoak.wordlearning.fragment.ContainerFragment.Companion.EXTRA_POSITION
 import xyz.volgoak.wordlearning.screens.set.viewModel.SingleSetViewModel
 import xyz.volgoak.wordlearning.recycler.CardsRecyclerAdapter
@@ -53,6 +56,16 @@ class WordCardsFragment : Fragment() {
             val fragment = WordCardsFragment()
             fragment.arguments = args
             return fragment
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sinceLollipop {
+            sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+//            enterTransition = Fade()
+//            exitTransition = Fade()
+            postponeEnterTransition()
         }
     }
 
@@ -119,5 +132,12 @@ class WordCardsFragment : Fragment() {
         }
 
         adapter.setDataList(words)
+
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                binding.root.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                startPostponedEnterTransition()
+            }
+        })
     }
 }

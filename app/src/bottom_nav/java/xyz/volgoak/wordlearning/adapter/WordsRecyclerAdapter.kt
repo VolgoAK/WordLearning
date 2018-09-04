@@ -2,6 +2,7 @@ package xyz.volgoak.wordlearning.adapter
 
 import android.content.Context
 import android.support.v4.content.ContextCompat
+import android.support.v4.view.ViewCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -52,7 +53,9 @@ class WordsRecyclerAdapter(context: Context, wordList: MutableList<Word>, rv: Re
         private val checkBox = rootView.findViewById<CheckBox>(R.id.cb_selected_dict_adapter)
 
         init {
-            rootView.setOnClickListener { v -> onControllerClick(this@WordsRowController, v, adapterPosition) }
+            rootView.setOnClickListener { v ->
+                onControllerClick(this@WordsRowController, v, adapterPosition, listOf(v))
+            }
             rootView.setOnLongClickListener {
                 onLongClick(entities[adapterPosition], adapterPosition)
                 true
@@ -61,7 +64,7 @@ class WordsRecyclerAdapter(context: Context, wordList: MutableList<Word>, rv: Re
 
         override fun bindController(dataEntity: DataEntity) {
             val word = dataEntity as Word
-
+            ViewCompat.setTransitionName(itemView, word.word)
             wordText.text = word.word
             translationText.text = word.translation
 

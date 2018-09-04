@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.support.transition.Fade
 import android.support.transition.TransitionInflater
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -17,9 +18,10 @@ import com.attiladroid.data.entities.Word
 import xyz.volgoak.wordlearning.R
 import xyz.volgoak.wordlearning.adapter.WordsRecyclerAdapter
 import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding
-import xyz.volgoak.wordlearning.extensions.observeSafe
+import xyz.volgoak.wordlearning.extensions.*
 import xyz.volgoak.wordlearning.recycler.MultiChoiceMode
 import xyz.volgoak.wordlearning.screens.set.viewModel.SingleSetViewModel
+import xyz.volgoak.wordlearning.utils.DetailsTransition
 import xyz.volgoak.wordlearning.utils.Guide
 
 
@@ -67,8 +69,9 @@ class SingleSetFragment : Fragment() {
             }
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+        sinceLollipop {
+            exitTransition = Fade()
+            sharedElementEnterTransition = DetailsTransition()
         }
     }
 
@@ -101,6 +104,10 @@ class SingleSetFragment : Fragment() {
             }
         })
 
+        sinceLollipop {
+            postponeEnterTransition()
+        }
+
         return mBinding.root
     }
 
@@ -116,9 +123,9 @@ class SingleSetFragment : Fragment() {
         if (mWordsCallBack != null) {
             recyclerAdapter!!.setChoiceMode(mWordsCallBack!!.choiceMode)
         }
-        recyclerAdapter!!.onClick = { _, position ->
+        recyclerAdapter!!.onClick = { _, position, shared ->
             if(mWordsCallBack == null)  {
-                viewModel.startCardsLD.value = position
+                (activity as SetsActivity).showCards(position, shared)
             }
         }
         recyclerAdapter!!.onLongClick = { word, position ->
@@ -130,6 +137,9 @@ class SingleSetFragment : Fragment() {
 
     private fun onWords(words: MutableList<Word>) {
         recyclerAdapter?.changeData(words)
+        mBinding.root.onPreDraw {
+            startPostponedEnterTransition()
+        }
     }
 
     private fun startActionMode(position: Int) {

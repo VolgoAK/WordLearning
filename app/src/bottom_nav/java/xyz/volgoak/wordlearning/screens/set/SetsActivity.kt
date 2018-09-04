@@ -9,6 +9,7 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.BaseTransientBottomBar
 import android.support.design.widget.Snackbar
+import android.support.transition.Fade
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
@@ -24,6 +25,7 @@ import xyz.volgoak.wordlearning.admob.AdsManager
 import xyz.volgoak.wordlearning.admob.Banner
 import xyz.volgoak.wordlearning.data.StorageContract
 import xyz.volgoak.wordlearning.databinding.ActivitySetsBinding
+import xyz.volgoak.wordlearning.extensions.addSharedElement
 import xyz.volgoak.wordlearning.extensions.observeSafe
 import xyz.volgoak.wordlearning.extensions.sinceLollipop
 import xyz.volgoak.wordlearning.screens.set.viewModel.SingleSetViewModel
@@ -43,6 +45,7 @@ class SetsActivity : AppCompatActivity() {
 
     companion object {
         private val EXTRA_SET_ID = "saved_set_id"
+        const val CONTAINER = R.id.fSetContainer
 
         fun getIntent(context: Context, setId: Long): Intent {
             return Intent(context, SetsActivity::class.java).apply {
@@ -145,6 +148,21 @@ class SetsActivity : AppCompatActivity() {
                 .add(R.id.fSetContainer, cardsFragment)
                 .addToBackStack(null)
                 .commit()
+    }
+
+    fun showCards(position: Int, shared: List<View>?) {
+        binding.appbarSetact.setExpanded(false, true)
+        supportFragmentManager?.beginTransaction()?.apply {
+            setReorderingAllowed(true)
+                    .replace(SetsActivity.CONTAINER, WordCardsFragment.newInstance(position))
+                    .apply {
+                        shared?.forEach {
+                            addSharedElement(it)
+                        }
+                    }
+                    .addToBackStack(null)
+                    .commit()
+        }
     }
 
     private fun showCoolDialog() {
