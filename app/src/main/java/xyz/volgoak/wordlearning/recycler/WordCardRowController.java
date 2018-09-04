@@ -46,6 +46,7 @@ public class WordCardRowController extends RecyclerView.ViewHolder{
         //todo change with binding
         CardView card = itemView.findViewById(R.id.cardWord);
         ViewCompat.setTransitionName(card, word.getWord());
+        ViewCompat.setTransitionName(binding.tvCardWord, word.getWord() + "text");
 
         binding.tvCardTranslation.setText(word.getTranslation());
         binding.tvCardTranscription.setText(word.getTranscription());

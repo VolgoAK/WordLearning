@@ -54,7 +54,7 @@ class WordsRecyclerAdapter(context: Context, wordList: MutableList<Word>, rv: Re
 
         init {
             rootView.setOnClickListener { v ->
-                onControllerClick(this@WordsRowController, v, adapterPosition, listOf(v))
+                onControllerClick(this@WordsRowController, v, adapterPosition, listOf(v, wordText))
             }
             rootView.setOnLongClickListener {
                 onLongClick(entities[adapterPosition], adapterPosition)
@@ -65,6 +65,7 @@ class WordsRecyclerAdapter(context: Context, wordList: MutableList<Word>, rv: Re
         override fun bindController(dataEntity: DataEntity) {
             val word = dataEntity as Word
             ViewCompat.setTransitionName(itemView, word.word)
+            ViewCompat.setTransitionName(wordText, word.word + "text")
             wordText.text = word.word
             translationText.text = word.translation
 
