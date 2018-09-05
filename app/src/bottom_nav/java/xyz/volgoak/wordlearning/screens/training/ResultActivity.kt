@@ -11,10 +11,11 @@ import xyz.volgoak.wordlearning.FragmentListener
 import xyz.volgoak.wordlearning.R
 import xyz.volgoak.wordlearning.admob.AdsManager
 import xyz.volgoak.wordlearning.admob.Banner
-import xyz.volgoak.wordlearning.fragment.NoWordsFragment
-import xyz.volgoak.wordlearning.fragment.ResultBoolFragment
-import xyz.volgoak.wordlearning.fragment.ResultsFragment
+
 import xyz.volgoak.wordlearning.screens.set.SetsActivity
+import xyz.volgoak.wordlearning.screens.training.fragment.NoWordsFragment
+import xyz.volgoak.wordlearning.screens.training.fragment.ResultBoolFragment
+import xyz.volgoak.wordlearning.screens.training.fragment.ResultsFragment
 import xyz.volgoak.wordlearning.training_utils.Results
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric
 

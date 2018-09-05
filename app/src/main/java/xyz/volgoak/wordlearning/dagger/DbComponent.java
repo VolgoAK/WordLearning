@@ -4,13 +4,9 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import xyz.volgoak.wordlearning.WordsApp;
-import xyz.volgoak.wordlearning.fragment.BoolTrainingFragment;
 import xyz.volgoak.wordlearning.fragment.DictionaryFragment;
-import xyz.volgoak.wordlearning.fragment.ResultsFragment;
 import xyz.volgoak.wordlearning.screens.set.SingleSetFragment;
 import xyz.volgoak.wordlearning.screens.main.fragment.StartFragment;
-import xyz.volgoak.wordlearning.fragment.TimerFragment;
-import xyz.volgoak.wordlearning.fragment.TrainingFragment;
 import xyz.volgoak.wordlearning.screens.set.WordCardsFragment;
 import xyz.volgoak.wordlearning.screens.main.fragment.WordSetsFragment;
 import xyz.volgoak.wordlearning.screens.set.viewModel.SingleSetViewModel;
@@ -19,6 +15,11 @@ import xyz.volgoak.wordlearning.screens.main.viewModel.MainViewModel;
 import com.attiladroid.data.update_managment.SetsLoaderService;
 import com.attiladroid.data.update_managment.FirebaseDownloadHelper;
 import com.attiladroid.data.update_managment.ImageDownloader;
+
+import xyz.volgoak.wordlearning.screens.training.fragment.BoolTrainingFragment;
+import xyz.volgoak.wordlearning.screens.training.fragment.ResultsFragment;
+import xyz.volgoak.wordlearning.screens.training.fragment.TimerFragment;
+import xyz.volgoak.wordlearning.screens.training.fragment.TrainingFragment;
 import xyz.volgoak.wordlearning.utils.SoundsManager;
 
 /**

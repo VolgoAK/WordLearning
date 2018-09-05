@@ -5,7 +5,7 @@
     <data>
         <variable
             name="fragment"
-            type="xyz.volgoak.wordlearning.fragment.TrainingFragment"/>
+            type="xyz.volgoak.wordlearning.screens.training.fragment.TrainingFragment"/>
 
         <import type="android.view.View"/>
         <import type="xyz.volgoak.wordlearning.training_utils.TrainingFabric"/>

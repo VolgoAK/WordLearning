@@ -12,9 +12,10 @@ import android.widget.LinearLayout;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.admob.AdsManager;
 import xyz.volgoak.wordlearning.admob.Banner;
-import xyz.volgoak.wordlearning.fragment.BoolTrainingFragment;
-import xyz.volgoak.wordlearning.fragment.TimerFragment;
-import xyz.volgoak.wordlearning.fragment.TrainingFragment;
+
+import xyz.volgoak.wordlearning.screens.training.fragment.BoolTrainingFragment;
+import xyz.volgoak.wordlearning.screens.training.fragment.TimerFragment;
+import xyz.volgoak.wordlearning.screens.training.fragment.TrainingFragment;
 import xyz.volgoak.wordlearning.training_utils.Results;
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
 

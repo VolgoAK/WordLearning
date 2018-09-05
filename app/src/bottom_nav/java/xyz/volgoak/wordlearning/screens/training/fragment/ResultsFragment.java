@@ -1,4 +1,4 @@
-package xyz.volgoak.wordlearning.fragment;
+package xyz.volgoak.wordlearning.screens.training.fragment;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
