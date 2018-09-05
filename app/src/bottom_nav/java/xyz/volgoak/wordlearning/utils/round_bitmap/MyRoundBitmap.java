@@ -194,6 +194,8 @@ public class MyRoundBitmap extends Drawable {
 
         final int minDimen = Math.min(mBitmapWidth, mBitmapHeight);
         final int maxDimen = Math.max(mBitmapWidth, mBitmapHeight);
+        int insetX = 0;
+        int insetY = 0;
         if (mCornerRadius > minDimen * 0.35f) {
             float maxInsect = (maxDimen - minDimen) * 0.5f;
             float maxRadius = minDimen * 0.5f;
@@ -202,8 +204,8 @@ public class MyRoundBitmap extends Drawable {
 
             boolean cutX = mBitmapWidth > mBitmapHeight;
             int inset = (int) (maxInsect * fraction);
-            int insetX = cutX ? inset : 0;
-            int insetY = !cutX ? inset : 0;
+            insetX = cutX ? inset : 0;
+            insetY = !cutX ? inset : 0;
 
             gravityCompatApply(mGravity, minDimen, minDimen, getBounds(), mDstRect);
             mDstRect.inset(insetX, insetY);
@@ -215,9 +217,9 @@ public class MyRoundBitmap extends Drawable {
 
         if (mBitmapShader != null) {
             // setup shader matrix
-            mShaderMatrix.setTranslate(mDstRectF.left, mDstRectF.top);
+            mShaderMatrix.setTranslate(mDstRectF.left - insetX, mDstRectF.top);
             mShaderMatrix.preScale(
-                    mDstRectF.width() / mBitmap.getWidth(),
+                    (mDstRectF.width() + insetX * 2) / mBitmap.getWidth(),
                     mDstRectF.height() / mBitmap.getHeight());
             mBitmapShader.setLocalMatrix(mShaderMatrix);
             mPaint.setShader(mBitmapShader);

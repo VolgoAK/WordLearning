@@ -16,11 +16,13 @@ import com.attiladroid.data.entities.Word
 import xyz.volgoak.wordlearning.R
 import xyz.volgoak.wordlearning.adapter.WordsRecyclerAdapter
 import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding
-import xyz.volgoak.wordlearning.extensions.*
-import xyz.volgoak.wordlearning.recycler.MultiChoiceMode
+import xyz.volgoak.wordlearning.extensions.observeSafe
+import xyz.volgoak.wordlearning.extensions.onPreDraw
+import xyz.volgoak.wordlearning.extensions.sinceLollipop
+import xyz.volgoak.wordlearning.adapter.choice_mode.MultiChoiceMode
 import xyz.volgoak.wordlearning.screens.set.viewModel.SingleSetViewModel
-import xyz.volgoak.wordlearning.utils.transitions.DetailsSupportTransition
 import xyz.volgoak.wordlearning.utils.Guide
+import xyz.volgoak.wordlearning.utils.transitions.DetailsSupportTransition
 
 
 /**
@@ -43,7 +45,6 @@ class SingleSetFragment : Fragment() {
 
         const val EXTRA_SET_ID = "set_id"
         const val SAVED_IS_MULTI_CHOICE = "is_multi_choice"
-        const val SAVED_CHOICE_MODE = "saved_choice_mode"
         const val EXTRA_TRANSITION_NAME = "extra_transition"
 
         fun newInstance(setId: Long, transitionName: String = ""): SingleSetFragment {
@@ -59,14 +60,6 @@ class SingleSetFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (savedInstanceState != null) {
-            val inMultiChoice = savedInstanceState.getBoolean(SAVED_IS_MULTI_CHOICE, false)
-            if (inMultiChoice) {
-                mWordsCallBack = WordsActionModeCallback()
-                mWordsCallBack!!.onRestoreInstanceState(savedInstanceState)
-            }
-        }
-
         sinceLollipop {
             exitTransition = Fade()
             sharedElementEnterTransition = DetailsSupportTransition()
@@ -78,18 +71,23 @@ class SingleSetFragment : Fragment() {
         viewModel = ViewModelProviders.of(activity!!, SingleSetViewModel.Factory(setId)).get(SingleSetViewModel::class.java)
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_single_set, container, false)
 
-        if (mWordsCallBack != null) {
-            (activity as AppCompatActivity).startSupportActionMode(mWordsCallBack!!)
-        }
-
         if (recyclerAdapter == null) {
             initAdapter()
         }
         initRecycler()
+        viewModel.wordsData.observeSafe(this) { onWords(it) }
 
-        viewModel.wordsData
-                .observeSafe(this) { onWords(it) }
+        if (savedInstanceState != null) {
+            val inMultiChoice = savedInstanceState.getBoolean(SAVED_IS_MULTI_CHOICE, false)
+            if (inMultiChoice) {
+                mWordsCallBack = WordsActionModeCallback()
+                mWordsCallBack!!.onRestoreInstanceState(savedInstanceState)
+            }
+        }
 
+        if (mWordsCallBack != null) {
+            (activity as AppCompatActivity).startSupportActionMode(mWordsCallBack!!)
+        }
 
         mBinding.root.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
@@ -122,7 +120,7 @@ class SingleSetFragment : Fragment() {
             recyclerAdapter!!.setChoiceMode(mWordsCallBack!!.choiceMode)
         }
         recyclerAdapter!!.onClick = { _, position, shared ->
-            if(mWordsCallBack == null)  {
+            if (mWordsCallBack == null) {
                 (activity as SetsActivity).showCards(position, shared)
             }
         }
@@ -149,17 +147,16 @@ class SingleSetFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        if (mWordsCallBack != null) {
+
+        mWordsCallBack?.let {
             outState.putBoolean(SAVED_IS_MULTI_CHOICE, true)
-            mWordsCallBack!!.onSaveInstanceState(outState)
+            it.onSaveInstanceState(outState)
         }
     }
 
     internal inner class WordsActionModeCallback : ActionMode.Callback {
 
         var choiceMode = MultiChoiceMode()
-        //        TextView counter;
-
 
         fun onSaveInstanceState(instanceState: Bundle) {
             choiceMode.onSaveInstanceState(instanceState)
@@ -171,15 +168,16 @@ class SingleSetFragment : Fragment() {
 
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             mode.menuInflater.inflate(R.menu.menu_set_frag_action_mode, menu)
-            recyclerAdapter!!.setChoiceMode(choiceMode)
+            recyclerAdapter?.setChoiceMode(choiceMode)
             mActionMode = mode
-            //            counter = new TextView(getContext());
-            mode.title = choiceMode.checkedCount.toString() + ""
+            choiceMode.checkedCountLD.observeSafe(this@SingleSetFragment) { count ->
+                mode.title = count.toString()
+            }
+
             return true
         }
 
         override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
-            mode.title = choiceMode.checkedCount.toString() + ""
             return false
         }
 

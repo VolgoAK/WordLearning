@@ -30,7 +30,6 @@ class MainViewModel(val app: Application) : AndroidViewModel(app) {
 
     val titleLD = MutableLiveData<String>()
     val startTrainingLD = SingleLiveEvent<Pair<Int, Long>>()
-    val startSetLD = SingleLiveEvent<Long>()
     val themesLD: LiveData<List<Theme>> by lazy { dataProvider.allThemes }
 
     private val setsDbLiveData by lazy { dataProvider.allSetsLd }
@@ -50,10 +49,6 @@ class MainViewModel(val app: Application) : AndroidViewModel(app) {
 
     fun startTraining(type: Int, setId: Long) {
         startTrainingLD.value = Pair(type, setId)
-    }
-
-    fun openSet(setId: Long) {
-        startSetLD.value = setId
     }
 
     fun changeTheme(theme: String) {

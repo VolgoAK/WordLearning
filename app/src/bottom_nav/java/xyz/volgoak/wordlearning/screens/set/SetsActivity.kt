@@ -15,6 +15,8 @@ import android.support.transition.Fade
 import android.support.v4.view.ViewCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.transition.Transition
+import android.transition.TransitionListenerAdapter
 import android.view.MenuItem
 import android.view.View
 import android.view.Window
@@ -29,9 +31,7 @@ import xyz.volgoak.wordlearning.admob.AdsManager
 import xyz.volgoak.wordlearning.admob.Banner
 import xyz.volgoak.wordlearning.data.StorageContract
 import xyz.volgoak.wordlearning.databinding.ActivitySetsBinding
-import xyz.volgoak.wordlearning.extensions.addSharedElement
-import xyz.volgoak.wordlearning.extensions.observeSafe
-import xyz.volgoak.wordlearning.extensions.sinceLollipop
+import xyz.volgoak.wordlearning.extensions.*
 import xyz.volgoak.wordlearning.screens.set.viewModel.SingleSetViewModel
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric
 import xyz.volgoak.wordlearning.utils.round_bitmap.MyRoundBitmapFactory
@@ -82,9 +82,29 @@ class SetsActivity : AppCompatActivity() {
             banner!!.setTargetView(binding.llBannerContainerSets)
         }
 
+
         sinceLollipop {
             postponeEnterTransition()
-            window.sharedElementEnterTransition = DetailsTransition()
+            window.sharedElementEnterTransition = DetailsTransition().apply {
+                onTransitionEnd {
+                    binding.setAddFab.show()
+                    binding.setTrainingFab.show()
+                    if(isSetInDictionary) binding.setResetFab.show()
+                }
+                onTransitionStart {
+                    binding.setAddFab.setVisibility(false)
+                    binding.setResetFab.setVisibility(false)
+                    binding.setTrainingFab.setVisibility(false)
+                }
+            }
+
+            window.sharedElementExitTransition.apply {
+                onTransitionStart {
+                    binding.setResetFab.hide()
+                    binding.setTrainingFab.hide()
+                    binding.setAddFab.hide()
+                }
+            }
         }
     }
 
@@ -115,10 +135,12 @@ class SetsActivity : AppCompatActivity() {
     }
 
 
+    @SuppressLint("NewApi")
     private fun loadSetInformation(set: Set) {
         //set title
         binding.collapsingToolbarSetAct.title = set.name
         ViewCompat.setTransitionName(binding.setIvTitle, set.name)
+
         loadImage(set.imageUrl)
 
         isSetInDictionary = set.status == DataContract.Sets.IN_DICTIONARY

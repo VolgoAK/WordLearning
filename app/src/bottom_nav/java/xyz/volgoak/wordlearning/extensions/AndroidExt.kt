@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.os.Handler
+import android.support.annotation.RequiresApi
 import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.ViewCompat
+import android.transition.Transition
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.Toast
@@ -47,4 +49,28 @@ fun sinceLollipop(block: () -> Unit) {
 
 fun FragmentTransaction.addSharedElement(view: View) {
     addSharedElement(view, ViewCompat.getTransitionName(view))
+}
+
+@RequiresApi(21)
+fun Transition.onTransitionEnd(block: () -> Unit) {
+    this.addListener(object : Transition.TransitionListener {
+        override fun onTransitionEnd(transition: Transition?) {
+            block.invoke()
+        }
+        override fun onTransitionResume(transition: Transition?) {}
+        override fun onTransitionPause(transition: Transition?) {}
+        override fun onTransitionCancel(transition: Transition?) {}
+        override fun onTransitionStart(transition: Transition?) {}
+    })
+}
+
+@RequiresApi(21)
+fun Transition.onTransitionStart(block: () -> Unit) {
+    this.addListener(object : Transition.TransitionListener {
+        override fun onTransitionEnd(transition: Transition?) {}
+        override fun onTransitionResume(transition: Transition?) {}
+        override fun onTransitionPause(transition: Transition?) {}
+        override fun onTransitionCancel(transition: Transition?) {}
+        override fun onTransitionStart(transition: Transition?) { block.invoke() }
+    })
 }

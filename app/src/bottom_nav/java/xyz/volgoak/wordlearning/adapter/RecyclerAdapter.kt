@@ -7,9 +7,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.attiladroid.data.entities.DataEntity
 import timber.log.Timber
-import xyz.volgoak.wordlearning.recycler.ChoiceMode
-import xyz.volgoak.wordlearning.recycler.MultiChoiceMode
-import xyz.volgoak.wordlearning.recycler.SingleChoiceMode
+import xyz.volgoak.wordlearning.adapter.choice_mode.ChoiceMode
+import xyz.volgoak.wordlearning.adapter.choice_mode.MultiChoiceMode
+import xyz.volgoak.wordlearning.adapter.choice_mode.SingleChoiceMode
 
 /**
  * Created by alex on 1/3/18.

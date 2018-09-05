@@ -1,6 +1,5 @@
 package xyz.volgoak.wordlearning.screens.main
 
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
@@ -27,7 +26,6 @@ import xyz.volgoak.wordlearning.screens.main.fragment.StartFragment
 import xyz.volgoak.wordlearning.screens.main.fragment.TrainingSelectFragment
 import xyz.volgoak.wordlearning.screens.main.fragment.WordSetsFragment
 import xyz.volgoak.wordlearning.screens.main.viewModel.MainViewModel
-import xyz.volgoak.wordlearning.screens.set.SetsActivity
 
 /**
  * Created by Alexander Karachev on 07.05.2017.
@@ -62,11 +60,6 @@ class MainActivity : NavigationActivity() {
     private fun initSubscriptions() {
         viewModel.titleLD.observeSafe(this) { title = it }
         viewModel.startTrainingLD.observeSafe(this) { startTraining(it.first, it.second) }
-        viewModel.startSetLD.observeSafe(this) { startSet(it) }
-    }
-
-    private fun startSet(id: Long) {
-        startActivity(SetsActivity.getIntent(this, id))
     }
 
     override fun onResume() {

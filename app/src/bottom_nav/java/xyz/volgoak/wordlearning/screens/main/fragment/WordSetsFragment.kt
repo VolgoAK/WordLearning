@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.fragment_word_sets.*
 import xyz.volgoak.wordlearning.R
 import xyz.volgoak.wordlearning.adapter.SetsRecyclerAdapter
 import xyz.volgoak.wordlearning.extensions.observeSafe
-import xyz.volgoak.wordlearning.recycler.SingleChoiceMode
 import xyz.volgoak.wordlearning.screens.main.viewModel.MainViewModel
 import xyz.volgoak.wordlearning.screens.set.SetsActivity
 
