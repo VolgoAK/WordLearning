@@ -1,4 +1,4 @@
-package xyz.volgoak.wordlearning.activity;
+package xyz.volgoak.wordlearning.screens.settings;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

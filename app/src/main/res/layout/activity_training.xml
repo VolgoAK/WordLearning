@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:orientation="vertical"
-    tools:context="xyz.volgoak.wordlearning.activity.TrainingActivity">
+    tools:context="xyz.volgoak.wordlearning.screens.training.TrainingActivity">
 
     <FrameLayout
         android:id="@+id/container_training"

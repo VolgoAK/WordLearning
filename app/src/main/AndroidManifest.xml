@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.SplashActivity"
+            android:name=".screens.splash.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,20 +26,20 @@
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".activity.TrainingActivity"
+            android:name=".screens.training.TrainingActivity"
             android:parentActivityName=".screens.main.MainActivity" />
         <activity
-            android:name=".activity.ResultActivity"
+            android:name=".screens.training.ResultActivity"
             android:parentActivityName=".screens.main.MainActivity" />
         <activity
-            android:name=".activity.AboutActivity"
+            android:name=".screens.about.AboutActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".screens.set.SetsActivity"
             android:label="@string/sets"
             android:theme="@style/AppTheme.SimpleCoordinatorTheme"/>
-        <activity android:name=".activity.SettingsActivity"/>
+        <activity android:name=".screens.settings.SettingsActivity"/>
 
         <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="false" />
         <meta-data android:name="firebase_analytics_collection_enabled" android:value="false" />

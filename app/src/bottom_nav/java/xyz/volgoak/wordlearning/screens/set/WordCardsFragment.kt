@@ -4,15 +4,10 @@ package xyz.volgoak.wordlearning.screens.set
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.transition.Fade
 import android.support.transition.TransitionInflater
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.PagerSnapHelper
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.SnapHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,14 +16,12 @@ import android.view.ViewTreeObserver
 import com.attiladroid.data.DataContract
 import com.attiladroid.data.entities.Word
 
-import timber.log.Timber
 import xyz.volgoak.wordlearning.R
 import xyz.volgoak.wordlearning.databinding.FragmentCardsBinding
 import xyz.volgoak.wordlearning.extensions.observeSafe
 import xyz.volgoak.wordlearning.extensions.sinceLollipop
-import xyz.volgoak.wordlearning.fragment.ContainerFragment.Companion.EXTRA_POSITION
 import xyz.volgoak.wordlearning.screens.set.viewModel.SingleSetViewModel
-import xyz.volgoak.wordlearning.recycler.CardsRecyclerAdapter
+import xyz.volgoak.wordlearning.screens.set.adapter.CardsRecyclerAdapter
 import xyz.volgoak.wordlearning.utils.Guide
 
 
@@ -95,12 +88,12 @@ class WordCardsFragment : Fragment() {
 
         adapter = CardsRecyclerAdapter()
 
-        adapter.setProgressResetListener { word ->
+        adapter.progressResetListener =  { word ->
             word.resetProgress()
             viewModel.updateWords(arrayOf(word))
         }
 
-        adapter.setRemoveListener { word ->
+        adapter.removeListener = { word ->
             val status = if (word.isInDictionary)
                 DataContract.Words.OUT_OF_DICTIONARY
             else

@@ -16,8 +16,8 @@ import kotlinx.android.synthetic.bottom_nav.activity_main_new.*
 import xyz.volgoak.wordlearning.AppRater
 import xyz.volgoak.wordlearning.R
 import xyz.volgoak.wordlearning.activity.NavigationActivity
-import xyz.volgoak.wordlearning.activity.SettingsActivity
-import xyz.volgoak.wordlearning.activity.TrainingActivity
+import xyz.volgoak.wordlearning.screens.settings.SettingsActivity
+import xyz.volgoak.wordlearning.screens.training.TrainingActivity
 import xyz.volgoak.wordlearning.admob.AdsManager
 import xyz.volgoak.wordlearning.admob.Banner
 import xyz.volgoak.wordlearning.extensions.observeSafe

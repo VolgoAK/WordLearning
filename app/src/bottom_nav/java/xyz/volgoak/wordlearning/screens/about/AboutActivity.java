@@ -1,4 +1,4 @@
-package xyz.volgoak.wordlearning.activity;
+package xyz.volgoak.wordlearning.screens.about;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;

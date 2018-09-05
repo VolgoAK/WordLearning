@@ -5,8 +5,6 @@ import android.os.Bundle
 
 import java.util.ArrayList
 
-import xyz.volgoak.wordlearning.recycler.ParcelableSparseBooleanArray
-
 /**
  * Created by Volgoak on 20.08.2017.
  */

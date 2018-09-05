@@ -1,4 +1,4 @@
-package xyz.volgoak.wordlearning.recycler;
+package xyz.volgoak.wordlearning.adapter.choice_mode;
 
 import android.os.Parcel;
 import android.os.Parcelable;

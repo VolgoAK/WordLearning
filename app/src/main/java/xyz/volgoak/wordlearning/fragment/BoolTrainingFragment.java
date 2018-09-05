@@ -49,9 +49,9 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
     public static final String EXTRA_SET_ID = "extra_set_id";
 
     @Inject
-    DataProvider dataProvider;
+    public DataProvider dataProvider;
     @Inject
-    SoundsManager soundsManager;
+    public SoundsManager soundsManager;
     private FragmentBoolTrainingBinding dataBinding;
     private TrainingBool trainingBool;
 
