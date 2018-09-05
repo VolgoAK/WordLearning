@@ -6,10 +6,13 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.design.widget.BaseTransientBottomBar
 import android.support.design.widget.Snackbar
 import android.support.transition.Fade
+import android.support.v4.view.ViewCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
@@ -19,6 +22,7 @@ import com.attiladroid.data.DataContract
 import com.attiladroid.data.entities.Set
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import com.squareup.picasso.Target
 import xyz.volgoak.wordlearning.R
 import xyz.volgoak.wordlearning.activity.TrainingActivity
 import xyz.volgoak.wordlearning.admob.AdsManager
@@ -30,6 +34,8 @@ import xyz.volgoak.wordlearning.extensions.observeSafe
 import xyz.volgoak.wordlearning.extensions.sinceLollipop
 import xyz.volgoak.wordlearning.screens.set.viewModel.SingleSetViewModel
 import xyz.volgoak.wordlearning.training_utils.TrainingFabric
+import xyz.volgoak.wordlearning.utils.round_bitmap.MyRoundBitmapFactory
+import xyz.volgoak.wordlearning.utils.transitions.DetailsTransition
 import java.io.File
 
 class SetsActivity : AppCompatActivity() {
@@ -54,6 +60,7 @@ class SetsActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sets)
@@ -73,6 +80,11 @@ class SetsActivity : AppCompatActivity() {
             banner = Banner(this)
             banner!!.loadAdRequest()
             banner!!.setTargetView(binding.llBannerContainerSets)
+        }
+
+        sinceLollipop {
+            postponeEnterTransition()
+            window.sharedElementEnterTransition = DetailsTransition()
         }
     }
 
@@ -102,29 +114,12 @@ class SetsActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("NewApi")
+
     private fun loadSetInformation(set: Set) {
         //set title
         binding.collapsingToolbarSetAct.title = set.name
-
-        //load title image
-        val imageRes = set.imageUrl
-        val imageDir = File(filesDir, StorageContract.IMAGES_FOLDER)
-        val imageFile = File(imageDir, imageRes)
-
-        Picasso.get()
-                .load(imageFile)
-                .into(binding.setIvTitle, object : Callback {
-                    override fun onSuccess() {
-                        sinceLollipop {
-                            startPostponedEnterTransition()
-                        }
-                    }
-
-                    override fun onError(e: Exception) {
-
-                    }
-                })
+        ViewCompat.setTransitionName(binding.setIvTitle, set.name)
+        loadImage(set.imageUrl)
 
         isSetInDictionary = set.status == DataContract.Sets.IN_DICTIONARY
 
@@ -133,6 +128,35 @@ class SetsActivity : AppCompatActivity() {
         binding.setAddFab.setOnClickListener { viewModel.changeCurrentSetStatus() }
         binding.setResetFab.setOnClickListener { resetSetProgress() }
         binding.setTrainingFab.setOnClickListener { showCoolDialog() }
+    }
+
+    @SuppressLint("NewApi")
+    private fun loadImage(imageUri: String) {
+        //load title image
+        val imageDir = File(filesDir, StorageContract.IMAGES_FOLDER)
+        val imageFile = File(imageDir, imageUri)
+
+        val target = object : Target {
+            override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+
+            }
+
+            override fun onBitmapFailed(e: java.lang.Exception?, errorDrawable: Drawable?) {
+
+            }
+
+            override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
+                val drawable = MyRoundBitmapFactory.create(resources, bitmap)
+                binding.setIvTitle.setImageDrawable(drawable)
+                sinceLollipop {
+                    startPostponedEnterTransition()
+                }
+            }
+        }
+
+        Picasso.get()
+                .load(imageFile)
+                .into(target)
     }
 
     private fun prepareSetStatusFabs() {

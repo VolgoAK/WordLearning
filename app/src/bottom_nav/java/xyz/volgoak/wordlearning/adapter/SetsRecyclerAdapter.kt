@@ -4,6 +4,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.support.v4.view.ViewCompat
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -49,13 +50,17 @@ class SetsRecyclerAdapter(entityList: MutableList<Set>, recyclerView: RecyclerVi
         private val civ: ImageView = mRoot.findViewById(R.id.civ_sets)
 
         init {
-            mRoot.setOnClickListener {
-                onControllerClick(this, mRoot, adapterPosition)
-            }
+
         }
 
         override fun bindController(dataEntity: DataEntity) {
             val set = dataEntity as Set
+            ViewCompat.setTransitionName(civ, set.name)
+
+            mCardRoot.setOnClickListener {
+                onControllerClick(this, mCardRoot, adapterPosition, listOf(civ))
+            }
+
             setNameTv.text = set.name
             setDescriptionTv.text = set.description
 

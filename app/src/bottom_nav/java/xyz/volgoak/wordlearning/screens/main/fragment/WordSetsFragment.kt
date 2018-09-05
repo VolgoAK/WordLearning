@@ -6,8 +6,11 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v4.util.Pair
+import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.PopupMenu
 import android.view.*
@@ -20,6 +23,7 @@ import xyz.volgoak.wordlearning.adapter.SetsRecyclerAdapter
 import xyz.volgoak.wordlearning.extensions.observeSafe
 import xyz.volgoak.wordlearning.recycler.SingleChoiceMode
 import xyz.volgoak.wordlearning.screens.main.viewModel.MainViewModel
+import xyz.volgoak.wordlearning.screens.set.SetsActivity
 
 /**
  * Created by Alexander Karachev on 07.05.2017.
@@ -163,8 +167,13 @@ class WordSetsFragment : Fragment() {
                 viewModel.changeSetStatus(set)
             }
 
-            mRecyclerAdapter!!.onClick = { set, _ , _->
-                viewModel.openSet(set.id)
+            mRecyclerAdapter!!.onClick = { set, _ , shared->
+                val pairs = shared?.map {
+                    Pair(it, ViewCompat.getTransitionName(it))
+                }?.toTypedArray() ?: arrayOf()
+
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, *pairs)
+                startActivity(SetsActivity.getIntent(activity!!, set.id), options.toBundle())
             }
 
             rv_setsfrag!!.adapter = mRecyclerAdapter

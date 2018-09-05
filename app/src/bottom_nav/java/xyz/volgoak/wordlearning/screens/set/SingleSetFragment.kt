@@ -3,11 +3,9 @@ package xyz.volgoak.wordlearning.screens.set
 
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.support.transition.Fade
-import android.support.transition.TransitionInflater
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.view.ActionMode
@@ -21,7 +19,7 @@ import xyz.volgoak.wordlearning.databinding.FragmentSingleSetBinding
 import xyz.volgoak.wordlearning.extensions.*
 import xyz.volgoak.wordlearning.recycler.MultiChoiceMode
 import xyz.volgoak.wordlearning.screens.set.viewModel.SingleSetViewModel
-import xyz.volgoak.wordlearning.utils.DetailsTransition
+import xyz.volgoak.wordlearning.utils.transitions.DetailsSupportTransition
 import xyz.volgoak.wordlearning.utils.Guide
 
 
@@ -71,7 +69,7 @@ class SingleSetFragment : Fragment() {
 
         sinceLollipop {
             exitTransition = Fade()
-            sharedElementEnterTransition = DetailsTransition()
+            sharedElementEnterTransition = DetailsSupportTransition()
         }
     }
 
