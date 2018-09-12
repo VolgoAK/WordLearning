@@ -20,8 +20,8 @@ import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.databinding.FragmentResultsBinding;
 
-import xyz.volgoak.wordlearning.training_utils.Results;
-import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
+import xyz.volgoak.wordlearning.screens.training.helpers.Results;
+import xyz.volgoak.wordlearning.screens.training.helpers.TrainingFabric;
 
 /**
  * Created by Alexander Karachev on 07.05.2017.

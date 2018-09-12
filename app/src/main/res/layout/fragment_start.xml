@@ -8,7 +8,7 @@
             name="listener"
             type="xyz.volgoak.wordlearning.FragmentListener"/>
 
-        <import type="xyz.volgoak.wordlearning.training_utils.TrainingFabric"/>
+        <import type="xyz.volgoak.wordlearning.screens.training.helpers.TrainingFabric"/>
 
     </data>
 

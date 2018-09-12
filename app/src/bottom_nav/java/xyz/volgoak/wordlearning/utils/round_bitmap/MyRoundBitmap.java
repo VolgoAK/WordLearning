@@ -217,10 +217,10 @@ public class MyRoundBitmap extends Drawable {
 
         if (mBitmapShader != null) {
             // setup shader matrix
-            mShaderMatrix.setTranslate(mDstRectF.left - insetX, mDstRectF.top);
+            mShaderMatrix.setTranslate(mDstRectF.left - insetX, mDstRectF.top - insetY);
             mShaderMatrix.preScale(
                     (mDstRectF.width() + insetX * 2) / mBitmap.getWidth(),
-                    mDstRectF.height() / mBitmap.getHeight());
+                    (mDstRectF.height() + insetY * 2) / mBitmap.getHeight());
             mBitmapShader.setLocalMatrix(mShaderMatrix);
             mPaint.setShader(mBitmapShader);
         }

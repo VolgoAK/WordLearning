@@ -16,8 +16,8 @@ import xyz.volgoak.wordlearning.admob.Banner;
 import xyz.volgoak.wordlearning.screens.training.fragment.BoolTrainingFragment;
 import xyz.volgoak.wordlearning.screens.training.fragment.TimerFragment;
 import xyz.volgoak.wordlearning.screens.training.fragment.TrainingFragment;
-import xyz.volgoak.wordlearning.training_utils.Results;
-import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
+import xyz.volgoak.wordlearning.screens.training.helpers.Results;
+import xyz.volgoak.wordlearning.screens.training.helpers.TrainingFabric;
 
 
 public class TrainingActivity extends AppCompatActivity implements TrainingFragment.ResultReceiver, TimerFragment.TimerListener {

@@ -25,11 +25,11 @@ import xyz.volgoak.wordlearning.R
 import xyz.volgoak.wordlearning.screens.training.TrainingActivity
 import xyz.volgoak.wordlearning.admob.AdsManager
 import xyz.volgoak.wordlearning.admob.Banner
-import xyz.volgoak.wordlearning.data.StorageContract
+import xyz.volgoak.wordlearning.StorageContract
 import xyz.volgoak.wordlearning.databinding.ActivitySetsBinding
 import xyz.volgoak.wordlearning.extensions.*
 import xyz.volgoak.wordlearning.screens.set.viewModel.SingleSetViewModel
-import xyz.volgoak.wordlearning.training_utils.TrainingFabric
+import xyz.volgoak.wordlearning.screens.training.helpers.TrainingFabric
 import xyz.volgoak.wordlearning.utils.round_bitmap.MyRoundBitmapFactory
 import xyz.volgoak.wordlearning.utils.transitions.DetailsTransition
 import java.io.File
@@ -82,6 +82,7 @@ class SetsActivity : AppCompatActivity() {
         sinceLollipop {
             postponeEnterTransition()
             window.sharedElementEnterTransition = DetailsTransition().apply {
+                duration = 3500
                 onTransitionEnd {
                     binding.setAddFab.show()
                     binding.setTrainingFab.show()

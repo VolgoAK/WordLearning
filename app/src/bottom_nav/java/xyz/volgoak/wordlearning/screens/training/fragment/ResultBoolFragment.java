@@ -13,8 +13,7 @@ import android.view.ViewGroup;
 import xyz.volgoak.wordlearning.FragmentListener;
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.databinding.FragmentResultBoolBinding;
-import xyz.volgoak.wordlearning.training_utils.Results;
-import xyz.volgoak.wordlearning.training_utils.TrainingFabric;
+import xyz.volgoak.wordlearning.screens.training.helpers.Results;
 import xyz.volgoak.wordlearning.utils.PreferenceContract;
 
 /**

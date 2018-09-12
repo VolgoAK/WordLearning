@@ -1,9 +1,6 @@
 package xyz.volgoak.wordlearning.screens.training.fragment;
 
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,14 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 
 import javax.inject.Inject;
 
 import xyz.volgoak.wordlearning.R;
 import xyz.volgoak.wordlearning.WordsApp;
-import xyz.volgoak.wordlearning.utils.AppearingAnimator;
 import xyz.volgoak.wordlearning.utils.SoundsManager;
 
 /**

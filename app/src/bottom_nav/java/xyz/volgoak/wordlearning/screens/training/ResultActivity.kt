@@ -16,8 +16,8 @@ import xyz.volgoak.wordlearning.screens.set.SetsActivity
 import xyz.volgoak.wordlearning.screens.training.fragment.NoWordsFragment
 import xyz.volgoak.wordlearning.screens.training.fragment.ResultBoolFragment
 import xyz.volgoak.wordlearning.screens.training.fragment.ResultsFragment
-import xyz.volgoak.wordlearning.training_utils.Results
-import xyz.volgoak.wordlearning.training_utils.TrainingFabric
+import xyz.volgoak.wordlearning.screens.training.helpers.Results
+import xyz.volgoak.wordlearning.screens.training.helpers.TrainingFabric
 
 /**
  * Created by Alexander Karachev on 07.05.2017.

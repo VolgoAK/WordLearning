@@ -15,7 +15,6 @@ import com.artitk.licensefragment.support.v4.RecyclerViewLicenseFragment;
 
 import java.util.ArrayList;
 
-import xyz.volgoak.wordlearning.AboutAppFragment;
 import xyz.volgoak.wordlearning.R;
 
 /**

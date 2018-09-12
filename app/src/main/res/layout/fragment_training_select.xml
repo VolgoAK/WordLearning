@@ -7,7 +7,7 @@
             name="viewModel"
             type="xyz.volgoak.wordlearning.screens.main.viewModel.MainViewModel" />
 
-        <import type="xyz.volgoak.wordlearning.training_utils.TrainingFabric"/>
+        <import type="xyz.volgoak.wordlearning.screens.training.helpers.TrainingFabric"/>
     </data>
 
     <android.support.constraint.ConstraintLayout

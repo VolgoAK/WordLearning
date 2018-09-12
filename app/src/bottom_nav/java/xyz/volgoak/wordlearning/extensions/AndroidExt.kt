@@ -2,12 +2,14 @@ package xyz.volgoak.wordlearning.extensions
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Resources
 import android.os.Build
 import android.os.Handler
 import android.support.annotation.RequiresApi
 import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.ViewCompat
 import android.transition.Transition
+import android.util.TypedValue
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.Toast
@@ -42,6 +44,13 @@ fun View.onPreDraw(block: () -> Unit) {
         }
     })
 }
+
+fun dpToPx(context: Context, dp : Float) : Float {
+    val r = context.getResources()
+    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics())
+}
+
+val Float.dpToPx: Float get() = this * Resources.getSystem().displayMetrics.density
 
 fun sinceLollipop(block: () -> Unit) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) block.invoke()

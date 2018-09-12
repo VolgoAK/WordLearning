@@ -14,8 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import xyz.volgoak.wordlearning.R;
-import xyz.volgoak.wordlearning.fragment.ContentLicenseFragment;
-import xyz.volgoak.wordlearning.fragment.SettingsFragment;
+import xyz.volgoak.wordlearning.screens.about.ContentLicenseFragment;
 
 public class SettingsActivity extends AppCompatActivity implements SettingsFragment.PreferenceFragmentListener {
 

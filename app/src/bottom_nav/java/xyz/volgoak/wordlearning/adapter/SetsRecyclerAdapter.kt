@@ -20,7 +20,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.picasso.Picasso
 import xyz.volgoak.wordlearning.R
-import xyz.volgoak.wordlearning.data.StorageContract
+import xyz.volgoak.wordlearning.StorageContract
 import java.io.File
 
 /**
