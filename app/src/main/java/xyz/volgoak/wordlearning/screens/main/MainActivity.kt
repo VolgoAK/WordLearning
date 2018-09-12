@@ -12,7 +12,8 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
-import kotlinx.android.synthetic.bottom_nav.activity_main_new.*
+import kotlinx.android.synthetic.main.activity_main_new.*
+
 import xyz.volgoak.wordlearning.utils.AppRater
 import xyz.volgoak.wordlearning.R
 import xyz.volgoak.wordlearning.screens.base.NavigationActivity
