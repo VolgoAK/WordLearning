@@ -15,7 +15,7 @@
 
     <ListPreference
         android:key="@string/preference_words_in_training_key"
-        android:title="%s"
+        android:title="@string/words_in_training"
         android:defaultValue="@string/words_in_training_default"
         android:summary="@string/words_in_training_description"
         android:entries="@array/words_in_training_values"

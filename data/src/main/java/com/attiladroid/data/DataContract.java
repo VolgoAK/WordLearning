@@ -11,6 +11,7 @@ public final class DataContract {
 
     public final static String DB_NAME = "NEW_WORDS_DATABASE";
     public static final int DB_VERSION = 17;
+    public static final long DICTIONARY_ID = -3;
 
     public static abstract class Words implements BaseColumns{
 

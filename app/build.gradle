@@ -43,6 +43,7 @@ ext {
     firebaseVersion = "11.8.0"
     daggerVersion = "2.15"
     components_version = "1.1.1"
+    coroutinesVersion = "0.25.3"
 }
 
 dependencies {
@@ -107,7 +108,11 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude module: 'recyclerview-v7'
     }
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
 }
 
 configurations.all {

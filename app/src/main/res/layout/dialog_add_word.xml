@@ -32,23 +32,25 @@
         android:textSize="@dimen/medium_text_size"
         app:layout_constraintTop_toBottomOf="@+id/et_word_redactor_dialog" />
 
-    <Button
+    <android.support.v7.widget.AppCompatButton
         android:id="@+id/bt_cancel_redactor_dialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/cancel"
         android:textSize="@dimen/small_text_size"
+        style="?attr/buttonBarButtonStyle"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/bt_add_redactor_dialog"
         app:layout_constraintTop_toBottomOf="@id/et_translation_redactor_dialog" />
 
-    <Button
+    <android.support.v7.widget.AppCompatButton
         android:id="@+id/bt_add_redactor_dialog"
         android:layout_width="0sp"
         android:layout_height="wrap_content"
         android:text="@string/add"
         android:textSize="@dimen/small_text_size"
+        style="?attr/buttonBarButtonStyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintLeft_toRightOf="@id/bt_cancel_redactor_dialog"

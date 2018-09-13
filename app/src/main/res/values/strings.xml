@@ -128,4 +128,9 @@
     <string name="click_and_open_card">Click any word to open as card</string>
     <string name="words_cards">Word cards</string>
     <string name="progress">Progress</string>
+
+    <string name="dictionary">Dictionary</string>
+    <string name="dictionary_description">Your dictionary</string>
+    <string name="choice_action">Choice action</string>
+    <string name="words_in_training">Words in a training</string>
 </resources>

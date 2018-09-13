@@ -3,6 +3,7 @@ package xyz.volgoak.wordlearning.screens.main.fragment
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
@@ -21,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_word_sets.*
 import xyz.volgoak.wordlearning.R
 import xyz.volgoak.wordlearning.adapter.SetsRecyclerAdapter
 import xyz.volgoak.wordlearning.extensions.observeSafe
+import xyz.volgoak.wordlearning.screens.dictionary.DictionaryActivity
 import xyz.volgoak.wordlearning.screens.main.viewModel.MainViewModel
 import xyz.volgoak.wordlearning.screens.set.SetsActivity
 
@@ -167,17 +169,25 @@ class WordSetsFragment : Fragment() {
             }
 
             mRecyclerAdapter!!.onClick = { set, _ , shared->
-                val pairs = shared?.map {
-                    Pair(it, ViewCompat.getTransitionName(it))
-                }?.toTypedArray() ?: arrayOf()
-
-                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, *pairs)
-                startActivity(SetsActivity.getIntent(activity!!, set.id), options.toBundle())
+                if(set.id == DataContract.DICTIONARY_ID) {
+                    startActivity(Intent(context!!, DictionaryActivity::class.java))
+                } else {
+                    startSetActivity(set.id, shared)
+                }
             }
 
             rv_setsfrag!!.adapter = mRecyclerAdapter
         } else {
             mRecyclerAdapter?.changeData(data)
         }
+    }
+
+    private fun startSetActivity(id: Long, shared: List<View>?) {
+        val pairs = shared?.map {
+            Pair(it, ViewCompat.getTransitionName(it))
+        }?.toTypedArray() ?: arrayOf()
+
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, *pairs)
+        startActivity(SetsActivity.getIntent(activity!!, id), options.toBundle())
     }
 }

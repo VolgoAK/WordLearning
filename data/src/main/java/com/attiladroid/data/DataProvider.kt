@@ -43,6 +43,9 @@ class DataProvider private constructor(
     val dictionaryWordsFlowable: Flowable<List<Word>>
         get() = wordDao.dictionaryWordsFlowable()
 
+    val dictionaryWordsLD: LiveData<List<Word>>
+        get() = wordDao.dictionaryWordsFlowableLD()
+
     val allSets: List<Set>
         get() = setsDao.allSets()
 

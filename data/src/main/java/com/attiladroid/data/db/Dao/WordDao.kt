@@ -5,10 +5,9 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
 import android.arch.persistence.room.Update
-import com.attiladroid.data.DataContract.*
-
+import com.attiladroid.data.DataContract.WordLinks
+import com.attiladroid.data.DataContract.Words
 import com.attiladroid.data.entities.Word
-
 import io.reactivex.Flowable
 
 /**
@@ -23,6 +22,9 @@ interface WordDao {
 
     @Query("SELECT * FROM words_table WHERE STATUS=" + Words.IN_DICTIONARY)
     fun dictionaryWordsFlowable(): Flowable<List<Word>>
+
+    @Query("SELECT * FROM words_table WHERE STATUS=" + Words.IN_DICTIONARY)
+    fun dictionaryWordsFlowableLD(): LiveData<List<Word>>
 
     @Insert
     fun insertWord(word: Word): Long

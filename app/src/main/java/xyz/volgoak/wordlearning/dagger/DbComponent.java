@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import xyz.volgoak.wordlearning.WordsApp;
 import xyz.volgoak.wordlearning.screens.dictionary.DictionaryFragment;
+import xyz.volgoak.wordlearning.screens.dictionary.DictionaryViewModel;
 import xyz.volgoak.wordlearning.screens.set.SingleSetFragment;
 import xyz.volgoak.wordlearning.screens.main.fragment.StartFragment;
 import xyz.volgoak.wordlearning.screens.set.WordCardsFragment;
@@ -48,4 +49,5 @@ public interface DbComponent {
 
     void inject(SingleSetViewModel model);
     void inject(MainViewModel model);
+    void inject(DictionaryViewModel model);
 }

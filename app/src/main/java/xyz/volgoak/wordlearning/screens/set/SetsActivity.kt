@@ -82,7 +82,6 @@ class SetsActivity : AppCompatActivity() {
         sinceLollipop {
             postponeEnterTransition()
             window.sharedElementEnterTransition = DetailsTransition().apply {
-                duration = 3500
                 onTransitionEnd {
                     binding.setAddFab.show()
                     binding.setTrainingFab.show()

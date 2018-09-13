@@ -5,25 +5,25 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.MutableLiveData
-import android.view.View
 import com.attiladroid.data.DataProvider
 import com.attiladroid.data.DataContract
 import com.attiladroid.data.entities.DictionaryInfo
 import com.attiladroid.data.entities.Theme
 import com.attiladroid.data.entities.Set
+import kotlinx.coroutines.experimental.CommonPool.executor
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.launch
 import timber.log.Timber
 import xyz.volgoak.wordlearning.R
 import xyz.volgoak.wordlearning.WordsApp
 
 import xyz.volgoak.wordlearning.extensions.toast
 import xyz.volgoak.wordlearning.utils.SingleLiveEvent
-import java.lang.ref.WeakReference
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
 class MainViewModel(val app: Application) : AndroidViewModel(app) {
-
-    private val executor = Executors.newFixedThreadPool(2)
 
     @Inject
     lateinit var dataProvider: DataProvider
@@ -32,7 +32,15 @@ class MainViewModel(val app: Application) : AndroidViewModel(app) {
     val startTrainingLD = SingleLiveEvent<Pair<Int, Long>>()
     val themesLD: LiveData<List<Theme>> by lazy { dataProvider.allThemes }
 
-    private val setsDbLiveData by lazy { dataProvider.allSetsLd }
+    private val allSetsLiveData by lazy {
+        MediatorLiveData<List<Set>>().apply {
+            addSource(dataProvider.allSetsLd) {
+                it?.let {
+                    value = it.toMutableList().apply { add(0, getDictionary()) }
+                }
+            }
+        }
+    }
     val setsLD by lazy { createSetsLiveData() }
     val dictionaryInfoLiveData: LiveData<DictionaryInfo> by lazy { dataProvider.dictionaryInfo }
 
@@ -52,13 +60,14 @@ class MainViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     fun changeTheme(theme: String) {
-        Timber.d(theme)
-        themesFilter = { set -> set.themeCodes!!.contains(theme) }
-        executor.submit {
-            val themeSet = setsDbLiveData.value
-                    ?.filter { themesFilter(it) }
-                    ?.toMutableList()
-            setsLD.postValue(themeSet)
+        themesFilter = { set -> set.themeCodes.contains(theme) }
+        launch(UI) {
+            val result = async {
+                allSetsLiveData.value
+                        ?.filter { themesFilter(it) }
+                        ?.toMutableList()
+            }
+            setsLD.value = result.await()
         }
     }
 
@@ -73,24 +82,23 @@ class MainViewModel(val app: Application) : AndroidViewModel(app) {
         }
 
         app.toast(message)
-
-        executor.submit {
+        async {
             dataProvider.updateSetStatus(set.copy(status = status))
         }
     }
 
     private fun createSetsLiveData() =
             MediatorLiveData<MutableList<Set>>().apply {
-                addSource(setsDbLiveData) { setList ->
+                addSource(allSetsLiveData) { setList ->
                     setList?.let {
                         postValue(it.filter { themesFilter(it) }.toMutableList())
                     }
                 }
             }
 
+    private fun getDictionary() = Set(DataContract.DICTIONARY_ID,
+            app.getString(R.string.dictionary),
+            app.getString(R.string.dictionary_description),
+            imageUrl = "dictionary.jpg")
 
-    override fun onCleared() {
-        super.onCleared()
-        executor.shutdown()
-    }
 }

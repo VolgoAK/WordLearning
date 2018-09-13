@@ -24,7 +24,6 @@
         <activity
             android:name=".screens.main.MainActivity"
             android:launchMode="singleTop" />
-
         <activity
             android:name=".screens.training.TrainingActivity"
             android:parentActivityName=".screens.main.MainActivity" />
@@ -34,15 +33,20 @@
         <activity
             android:name=".screens.about.AboutActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".screens.set.SetsActivity"
             android:label="@string/sets"
-            android:theme="@style/AppTheme.SimpleCoordinatorTheme"/>
-        <activity android:name=".screens.settings.SettingsActivity"/>
+            android:theme="@style/AppTheme.SimpleCoordinatorTheme" />
+        <activity android:name=".screens.settings.SettingsActivity" />
 
-        <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="false" />
-        <meta-data android:name="firebase_analytics_collection_enabled" android:value="false" />
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
+
+        <activity android:name=".screens.dictionary.DictionaryActivity"></activity>
     </application>
 
 </manifest>
