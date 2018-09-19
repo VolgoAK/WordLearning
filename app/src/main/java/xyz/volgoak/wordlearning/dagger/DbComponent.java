@@ -17,6 +17,7 @@ import com.attiladroid.data.update_managment.SetsLoaderService;
 import com.attiladroid.data.update_managment.FirebaseDownloadHelper;
 import com.attiladroid.data.update_managment.ImageDownloader;
 
+import xyz.volgoak.wordlearning.screens.training.TrainingViewModel;
 import xyz.volgoak.wordlearning.screens.training.fragment.BoolTrainingFragment;
 import xyz.volgoak.wordlearning.screens.training.fragment.ResultsFragment;
 import xyz.volgoak.wordlearning.screens.training.fragment.TimerFragment;
@@ -50,4 +51,5 @@ public interface DbComponent {
     void inject(SingleSetViewModel model);
     void inject(MainViewModel model);
     void inject(DictionaryViewModel model);
+    void inject(TrainingViewModel model);
 }

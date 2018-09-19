@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import javax.inject.Inject;
 
+import cat.ereza.customactivityoncrash.config.CaocConfig;
 import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 import xyz.volgoak.wordlearning.dagger.AppModule;
@@ -75,6 +76,10 @@ public class WordsApp extends Application {
         bundle.putBoolean("Release", BuildConfig.DEBUG);
         FirebaseAnalytics.getInstance(this).logEvent("Test", bundle);
         */
+
+        CaocConfig.Builder.create()
+                .logErrorOnRestart(true)
+                .showErrorDetails(BuildConfig.DEBUG).apply();
 
         AdsManager.INSTANCE.initAds(this);
     }

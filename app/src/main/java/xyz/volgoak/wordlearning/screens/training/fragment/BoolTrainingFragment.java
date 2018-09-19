@@ -58,7 +58,7 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
     private boolean paused = false;
     private long setId;
 
-    private TrainingFragment.ResultReceiver resultReceiver;
+//    private TrainingFragment.ResultReceiver resultReceiver;
 
     public static BoolTrainingFragment newInstance(long setId) {
 
@@ -86,7 +86,7 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
             onTrainingReady(trainingBool);
         } else {
             setId = getArguments().getLong(EXTRA_SET_ID, -1);
-            TrainingFabric.getBoolTrainingRx(setId, dataProvider)
+            TrainingFabric.INSTANCE.getBoolTrainingRx(setId, dataProvider)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this::onTrainingReady);
@@ -119,7 +119,7 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        resultReceiver = (TrainingFragment.ResultReceiver) context;
+//        resultReceiver = (TrainingFragment.ResultReceiver) context;
     }
 
     @Override
@@ -228,6 +228,6 @@ public class BoolTrainingFragment extends Fragment implements SwipeHolder.SwipeL
     public void finishTraining() {
         Results results = trainingBool.getResults();
         results.setId = setId;
-        resultReceiver.showResults(results);
+//        resultReceiver.showResults(results);
     }
 }

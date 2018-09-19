@@ -5,8 +5,8 @@ package xyz.volgoak.wordlearning.screens.training.helpers;
  */
 
 public class TrainingWord {
-    private String word;
-    private String[] vars;
+    public String word;
+    public String[] vars;
 
     public TrainingWord(String word, String[] vars){
         this.word = word;
