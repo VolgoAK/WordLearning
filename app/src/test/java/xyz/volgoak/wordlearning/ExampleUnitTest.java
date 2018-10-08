@@ -1,9 +1,5 @@
 package xyz.volgoak.wordlearning;
 
-import android.os.Bundle;
-import android.os.Parcel;
-import android.util.SparseBooleanArray;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,8 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import xyz.volgoak.wordlearning.recycler.MultiChoiceMode;
-import xyz.volgoak.wordlearning.recycler.ParcelableSparseBooleanArray;
+import xyz.volgoak.wordlearning.adapter.choice_mode.MultiChoiceMode;
 
 import static org.junit.Assert.*;
 

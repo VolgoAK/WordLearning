@@ -4,27 +4,31 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import xyz.volgoak.wordlearning.WordsApp;
-import xyz.volgoak.wordlearning.fragment.BoolTrainingFragment;
-import xyz.volgoak.wordlearning.fragment.DictionaryFragment;
-import xyz.volgoak.wordlearning.fragment.ResultsFragment;
-import xyz.volgoak.wordlearning.fragment.SingleSetFragment;
-import xyz.volgoak.wordlearning.fragment.StartFragment;
-import xyz.volgoak.wordlearning.fragment.TimerFragment;
-import xyz.volgoak.wordlearning.fragment.TrainingFragment;
-import xyz.volgoak.wordlearning.fragment.WordCardsFragment;
-import xyz.volgoak.wordlearning.fragment.WordSetsFragment;
-import xyz.volgoak.wordlearning.model.WordsViewModel;
-import xyz.volgoak.wordlearning.recycler.SetsRecyclerAdapter;
-import xyz.volgoak.wordlearning.services.SetsLoaderService;
-import xyz.volgoak.wordlearning.update.FirebaseDownloadHelper;
-import xyz.volgoak.wordlearning.update.ImageDownloader;
+import xyz.volgoak.wordlearning.screens.dictionary.DictionaryFragment;
+import xyz.volgoak.wordlearning.screens.dictionary.DictionaryViewModel;
+import xyz.volgoak.wordlearning.screens.set.SingleSetFragment;
+import xyz.volgoak.wordlearning.screens.main.fragment.StartFragment;
+import xyz.volgoak.wordlearning.screens.set.WordCardsFragment;
+import xyz.volgoak.wordlearning.screens.main.fragment.WordSetsFragment;
+import xyz.volgoak.wordlearning.screens.set.viewModel.SingleSetViewModel;
+import xyz.volgoak.wordlearning.adapter.SetsRecyclerAdapter;
+import xyz.volgoak.wordlearning.screens.main.viewModel.MainViewModel;
+import com.attiladroid.data.update_managment.SetsLoaderService;
+import com.attiladroid.data.update_managment.FirebaseDownloadHelper;
+import com.attiladroid.data.update_managment.ImageDownloader;
+
+import xyz.volgoak.wordlearning.screens.training.TrainingViewModel;
+import xyz.volgoak.wordlearning.screens.training.fragment.BoolTrainingFragment;
+import xyz.volgoak.wordlearning.screens.training.fragment.ResultsFragment;
+import xyz.volgoak.wordlearning.screens.training.fragment.TimerFragment;
+import xyz.volgoak.wordlearning.screens.training.fragment.TrainingFragment;
 import xyz.volgoak.wordlearning.utils.SoundsManager;
 
 /**
  * Created by alex on 1/7/18.
  */
 
-@Component(modules = {DbModule.class, DownloaderModule.class, AppModule.class})
+@Component(modules = {DbModule.class, AppModule.class})
 @Singleton
 public interface DbComponent {
     void inject(WordsApp app);
@@ -44,5 +48,8 @@ public interface DbComponent {
     void inject(SetsRecyclerAdapter adapter);
     void inject(SoundsManager manager);
 
-    void inject(WordsViewModel model);
+    void inject(SingleSetViewModel model);
+    void inject(MainViewModel model);
+    void inject(DictionaryViewModel model);
+    void inject(TrainingViewModel model);
 }

@@ -27,10 +27,9 @@
     <style name="AppTheme.SimpleCoordinatorTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item tools:targetApi="21"
-            name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item tools:targetApi="21"
-            name="android:statusBarColor">@android:color/transparent</item>
+        <item tools:targetApi="21" name="android:windowContentTransitions">true</item>
+        <item tools:targetApi="21" name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item tools:targetApi="21" name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="SplashTheme" parent="AppTheme.NoActionBar">

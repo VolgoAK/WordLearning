@@ -3,17 +3,14 @@ package xyz.volgoak.wordlearning.utils
 import android.app.Activity
 import android.content.Context
 import android.preference.PreferenceManager
-import android.support.design.widget.FloatingActionButton
 import android.view.View
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
 import com.takusemba.spotlight.SimpleTarget
 import com.takusemba.spotlight.Spotlight
 import timber.log.Timber
 import xyz.volgoak.wordlearning.R
-import xyz.volgoak.wordlearning.fragment.SingleSetFragment
-import xyz.volgoak.wordlearning.fragment.WordCardsFragment
+import xyz.volgoak.wordlearning.extensions.dpToPx
+import xyz.volgoak.wordlearning.screens.set.SingleSetFragment
+import xyz.volgoak.wordlearning.screens.set.WordCardsFragment
 
 /**
  * Created by alex on 5/9/18.
@@ -29,7 +26,7 @@ object Guide {
                 if (checkPref(it, CARDS_FRAG_PREF)) return
             }
 
-            val radius = Functions.dpToPx(it, 30f)
+            val radius = 30f.dpToPx
 
             runGuide(it,
                     titles = listOf(R.string.translation,
@@ -50,7 +47,7 @@ object Guide {
             if (checkPref(fragment.context!!, SETS_FRAG_PREF)) return
         }
 
-        val radius = Functions.dpToPx(fragment.context!!, 30f)
+        val radius = 30f.dpToPx
 
         runGuide(fragment.activity!!,
                 titles = listOf(R.string.start_training,
@@ -79,7 +76,7 @@ object Guide {
         val targetArray: Array<SimpleTarget?> = arrayOfNulls(titles.size)
 
         //Some times throwing an exception
-        //Can find cause. It's not a critical part of app, so just ignore it
+        //Can find cause. It's not a critical part of the app, so just ignore it
         try {
             for (i in 0 until titles.size) {
                 val point = activity.findViewById<View>(targets[i])

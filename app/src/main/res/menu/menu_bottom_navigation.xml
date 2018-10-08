@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/to_home"
+        app:showAsAction="always|withText"/>
+
+    <item
+        android:id="@+id/menu_training"
+        android:icon="@drawable/ic_training_24dp"
+        android:title="@string/training"
+        app:showAsAction="always|withText" />
+    <item
+        android:id="@+id/menu_sets"
+        android:icon="@drawable/ic_dictionary_white_24dp"
+        android:title="@string/sets"
+        app:showAsAction="always|withText" />
+
+</menu>

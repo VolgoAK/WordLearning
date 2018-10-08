@@ -1,7 +1,6 @@
 package xyz.volgoak.wordlearning.utils;
 
 import android.content.Context;
-import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
 import android.preference.PreferenceManager;

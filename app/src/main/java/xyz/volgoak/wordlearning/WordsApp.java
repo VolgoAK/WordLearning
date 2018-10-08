@@ -2,22 +2,25 @@ package xyz.volgoak.wordlearning;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.AsyncTask;
 
+import com.attiladroid.data.DataProvider;
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 
 import javax.inject.Inject;
 
+import cat.ereza.customactivityoncrash.config.CaocConfig;
 import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 import xyz.volgoak.wordlearning.dagger.AppModule;
+
+
 import xyz.volgoak.wordlearning.dagger.DaggerDbComponent;
 import xyz.volgoak.wordlearning.dagger.DbComponent;
 import xyz.volgoak.wordlearning.dagger.DbModule;
-import xyz.volgoak.wordlearning.dagger.DownloaderModule;
-import xyz.volgoak.wordlearning.data.DataProvider;
-import xyz.volgoak.wordlearning.update.DbUpdateManager;
+import com.attiladroid.data.update_managment.DbUpdateManager;
 import xyz.volgoak.wordlearning.admob.AdsManager;
 import xyz.volgoak.wordlearning.utils.ReleaseTree;
 import xyz.volgoak.wordlearning.utils.WordSpeaker;
@@ -47,7 +50,7 @@ public class WordsApp extends Application {
 
     private void initComponent() {
         sComponent = DaggerDbComponent.builder().dbModule(new DbModule(this))
-                .appModule(new AppModule(this)).downloaderModule(new DownloaderModule()).build();
+                .appModule(new AppModule(this)).build();
     }
 
     @Override
@@ -56,7 +59,9 @@ public class WordsApp extends Application {
         sComponent.inject(this);
 
         FirebaseAuth.getInstance().signInAnonymously();
-        DbUpdateManager.manageDbState(this, dataProvider);
+
+        AsyncTask.execute(() -> DbUpdateManager.INSTANCE.manageDbState(this, dataProvider));
+
 
         if(BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
@@ -71,6 +76,10 @@ public class WordsApp extends Application {
         bundle.putBoolean("Release", BuildConfig.DEBUG);
         FirebaseAnalytics.getInstance(this).logEvent("Test", bundle);
         */
+
+        CaocConfig.Builder.create()
+                .logErrorOnRestart(true)
+                .showErrorDetails(BuildConfig.DEBUG).apply();
 
         AdsManager.INSTANCE.initAds(this);
     }
