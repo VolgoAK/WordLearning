@@ -39,7 +39,7 @@ class DictionaryFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(activity!!).get(DictionaryViewModel::class.java)
+        viewModel = ViewModelProviders.of(requireActivity()).get(DictionaryViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

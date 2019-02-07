@@ -117,15 +117,15 @@ class TrainingActivity : AppCompatActivity() {
     }
 
     private fun onTimerFinished() {
-        val trainingFragment: Fragment
-        if (trainingType == TrainingFabric.BOOL_TRAINING) {
-            trainingFragment = BoolTrainingFragment.newInstance(setId)
+        val trainingFragment = if (trainingType == TrainingFabric.BOOL_TRAINING) {
+            BoolTrainingFragment.newInstance(setId)
         } else {
-            trainingFragment = TrainingFragment()
+            TrainingFragment()
         }
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container_training, trainingFragment)
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-        transaction.commit()
+
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.container_training, trainingFragment)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .commit()
     }
 }

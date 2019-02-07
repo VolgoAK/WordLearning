@@ -97,35 +97,38 @@ class TrainingViewModel(
             //todo move to preferences provider
             val preferences = PreferenceManager.getDefaultSharedPreferences(getApplication())
             val wordsLimit = preferences.getString(getApplication<WordsApp>().getString(R.string.preference_words_in_training_key), "10")
-            TrainingFabric.getSimpleTraining(type, setId, Integer.parseInt(wordsLimit), dataProvider)
-        }
-
-        task.await().apply {
-            if (this.isEmpty) {
-                noWordsLd.value = true
+            if(type == TrainingFabric.BOOL_TRAINING) {
+                TrainingFabric.getBoolTraining(setId, dataProvider)
             } else {
-                onTrainingReady(this.get())
+                TrainingFabric.getSimpleTraining(type, setId, Integer.parseInt(wordsLimit), dataProvider)
             }
         }
+
+        task.await()?.apply {
+            onTrainingReady(this)
+        } ?: kotlin.run {
+            noWordsLd.value = true
+        }
     }
 
-    fun pronounceWord() {
-        /* if (PreferenceManager.getDefaultSharedPreferences(context!!)
-                         .getBoolean(PreferenceContract.AUTO_PLAY_PRONOUN, true)) {
-             pronounceWord()
-         }
-         if (trainingType == TrainingFabric.WORD_TRANSLATION)
-             WordSpeaker.speakWord(mTrainingWord!!.word)*/
-    }
 
-    private fun onTrainingReady(training: Training) {
-        this.training = training
-        currentWord.value = training.firstWord
-        progressTextLD.value = training.progressString
-    }
+fun pronounceWord() {
+    /* if (PreferenceManager.getDefaultSharedPreferences(context!!)
+                     .getBoolean(PreferenceContract.AUTO_PLAY_PRONOUN, true)) {
+         pronounceWord()
+     }
+     if (trainingType == TrainingFabric.WORD_TRANSLATION)
+         WordSpeaker.speakWord(mTrainingWord!!.word)*/
+}
 
-    class Factory(val setId: Long, val type: Int, val application: Application) : ViewModelProvider.NewInstanceFactory() {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>) = TrainingViewModel(setId, type, application) as T
-    }
+private fun onTrainingReady(training: Training) {
+    this.training = training
+    currentWord.value = training.firstWord
+    progressTextLD.value = training.progressString
+}
+
+class Factory(val setId: Long, val type: Int, val application: Application) : ViewModelProvider.NewInstanceFactory() {
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel?> create(modelClass: Class<T>) = TrainingViewModel(setId, type, application) as T
+}
 }

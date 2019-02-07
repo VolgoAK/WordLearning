@@ -21,8 +21,8 @@ public class TrainingBool extends Training {
     private int rightInLine = 0;
 
 
-    public TrainingBool(List<PlayWord> playWords, int trainingType) {
-        super(playWords, trainingType);
+    public TrainingBool(List<PlayWord> playWords) {
+        super(playWords, TrainingFabric.BOOL_TRAINING);
     }
 
     public List<PlayWord> getInitialWords() {

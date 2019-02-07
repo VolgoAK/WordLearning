@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 
 import com.attiladroid.data.DataProvider;
 import com.crashlytics.android.Crashlytics;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -58,6 +59,7 @@ public class WordsApp extends Application {
         super.onCreate();
         sComponent.inject(this);
 
+        FirebaseApp.initializeApp(this);
         FirebaseAuth.getInstance().signInAnonymously();
 
         AsyncTask.execute(() -> DbUpdateManager.INSTANCE.manageDbState(this, dataProvider));
